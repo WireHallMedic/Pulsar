@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!1852;g
+!1998;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -28,7 +28,9 @@ s#l0
 %\011%uWidlerSuite%sAnimationManager.java
 %\011%uWidlerSuite%sFloodFill.java
 %\011Pulsar%sAI%sAIConstants.java
+%\011Pulsar%sGUI%sMainGameBGPanel.java
 %\011%uWidlerSuite%sRogueTilePanel.java
+%\011Pulsar%sGUI%sOuterPanel.java
 %\011%uWidlerSuite%sMovementScript.java
 %\011Pulsar%sZone%sZoneConstants.java
 %\011%uWidlerSuite%sTileAnimationManager.java
@@ -53,6 +55,7 @@ s#l0
 %\011%uWidlerSuite%sStraightLine.java
 %\011Pulsar%sActor%sActorConstants.java
 %\011%uWidlerSuite%sBorderBuilder.java
+%\011Pulsar%sGUI%sMainGameFGPanel.java
 %\011%uWidlerSuite%sVoronoi.java
 %\011%uWidlerSuite%sSmoothCA.java
 %\011%uWidlerSuite%sSpiralSearch.java
@@ -62,8 +65,9 @@ s#l0
 %\011%uWidlerSuite%sLayoutPanel.java
 %\011%uWidlerSuite%sShadowFoVHex.java
 %\011%uWidlerSuite%sWSTools.java
+%\011Pulsar%sGUI%sInnerPanel.java
 %\011%uWidlerSuite%sHexLine.java
-!1852;f
+!1998;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -79,7 +83,9 @@ s#l0
 %\011%uWidlerSuite%sAnimationManager.java
 %\011%uWidlerSuite%sFloodFill.java
 %\011Pulsar%sAI%sAIConstants.java
+%\011Pulsar%sGUI%sMainGameBGPanel.java
 %\011%uWidlerSuite%sRogueTilePanel.java
+%\011Pulsar%sGUI%sOuterPanel.java
 %\011%uWidlerSuite%sMovementScript.java
 %\011Pulsar%sZone%sZoneConstants.java
 %\011%uWidlerSuite%sTileAnimationManager.java
@@ -104,6 +110,7 @@ s#l0
 %\011%uWidlerSuite%sStraightLine.java
 %\011Pulsar%sActor%sActorConstants.java
 %\011%uWidlerSuite%sBorderBuilder.java
+%\011Pulsar%sGUI%sMainGameFGPanel.java
 %\011%uWidlerSuite%sVoronoi.java
 %\011%uWidlerSuite%sSmoothCA.java
 %\011%uWidlerSuite%sSpiralSearch.java
@@ -113,4 +120,5 @@ s#l0
 %\011%uWidlerSuite%sLayoutPanel.java
 %\011%uWidlerSuite%sShadowFoVHex.java
 %\011%uWidlerSuite%sWSTools.java
+%\011Pulsar%sGUI%sInnerPanel.java
 %\011%uWidlerSuite%sHexLine.java
