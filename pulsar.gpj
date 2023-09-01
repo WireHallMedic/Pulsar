@@ -12,13 +12,14 @@ s#i0
 s#k0
 s#j0
 s#l0
-!1998;g
+!2067;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
 %\011%uWidlerSuite%sBinarySpacePartitioning.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
 %\011%uWidlerSuite%sNoiseChoir.java
+%\011Pulsar%sGUI%sWSFont_16x16.png
 %\011%uWidlerSuite%sShadowFoV.java
 %\011%uWidlerSuite%sCP437.java
 %\011%uWidlerSuite%sNoiseObj.java
@@ -60,6 +61,7 @@ s#l0
 %\011%uWidlerSuite%sSmoothCA.java
 %\011%uWidlerSuite%sSpiralSearch.java
 %\011%uWidlerSuite%sShadowFoVRect.java
+%\011Pulsar%sGUI%sWSFont_8x16.png
 %\011%uWidlerSuite%sAStarOpenList.java
 %\011%uWidlerSuite%sFontLoader.java
 %\011%uWidlerSuite%sLayoutPanel.java
@@ -67,13 +69,14 @@ s#l0
 %\011%uWidlerSuite%sWSTools.java
 %\011Pulsar%sGUI%sInnerPanel.java
 %\011%uWidlerSuite%sHexLine.java
-!1998;f
+!2067;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
 %\011%uWidlerSuite%sBinarySpacePartitioning.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
 %\011%uWidlerSuite%sNoiseChoir.java
+%\011Pulsar%sGUI%sWSFont_16x16.png
 %\011%uWidlerSuite%sShadowFoV.java
 %\011%uWidlerSuite%sCP437.java
 %\011%uWidlerSuite%sNoiseObj.java
@@ -115,6 +118,7 @@ s#l0
 %\011%uWidlerSuite%sSmoothCA.java
 %\011%uWidlerSuite%sSpiralSearch.java
 %\011%uWidlerSuite%sShadowFoVRect.java
+%\011Pulsar%sGUI%sWSFont_8x16.png
 %\011%uWidlerSuite%sAStarOpenList.java
 %\011%uWidlerSuite%sFontLoader.java
 %\011%uWidlerSuite%sLayoutPanel.java
