@@ -1,3 +1,7 @@
+/*
+This panel is the main display area, and manages the different panels used.
+*/
+
 package Pulsar.GUI;
 
 import javax.swing.*;
