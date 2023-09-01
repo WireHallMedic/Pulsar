@@ -33,4 +33,24 @@ public class InnerPanel extends JPanel implements ComponentListener
          panel.setSize(this.getWidth(), this.getHeight());
       }
    }
+   
+   private void addPanel(JPanel panel)
+   {
+      panel.setLocation(0, 0);
+      panel.setSize(this.getWidth(), this.getHeight());
+      panel.setVisible(false);
+      panelList.add(panel);
+      this.add(panel);
+   }
+   
+   private void setVisiblePanel(JPanel panel)
+   {
+      for(JPanel listPanel : panelList)
+      {
+         if(listPanel == panel)
+            listPanel.setVisible(true);
+         else
+            listPanel.setVisible(false);
+      }
+   }
 }
