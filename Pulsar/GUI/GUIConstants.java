@@ -5,6 +5,8 @@ import WidlerSuite.*;
 
 public interface GUIConstants
 {
+   public static final int FRAMES_PER_SECOND = 60;
+   
    public static final int DEFAULT_WINDOW_WIDTH = 1150;
    public static final int DEFAULT_WINDOW_HEIGHT = 720;
    public static final int TERMINAL_WIDTH_TILES = 80;
@@ -13,6 +15,7 @@ public interface GUIConstants
    public static final int TERMINAL_TILE_HEIGHT_PIXELS = 16;
    public static final int MAP_WIDTH_TILES = 17;
    public static final int MAP_HEIGHT_TILES = 17;
+   public static final int MAP_X_INSET_TILES = 23;
    
    public static final Color BG_COLOR = Color.BLACK;
    

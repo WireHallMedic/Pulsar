@@ -12,26 +12,29 @@ public class OuterPanel extends JPanel implements ComponentListener, GUIConstant
 {
    private InnerPanel innerPanel;
    
-   public OuterPanel()
+   public OuterPanel(javax.swing.Timer timer)
    {
       setVisible(true);
       setLayout(null);
       setBackground(BG_COLOR);
       
-      innerPanel = new InnerPanel();
+      innerPanel = new InnerPanel(timer);
       this.add(innerPanel);
       
       addComponentListener(this);
-      center();
+      arrange();
    }
    
    public void componentHidden(ComponentEvent ce){}
    public void componentShown(ComponentEvent ce){}
    public void componentMoved(ComponentEvent ce){}
-   public void componentResized(ComponentEvent ce){center();}
+   public void componentResized(ComponentEvent ce){arrange();}
    
-   public void center()
+   public void arrange()
    {
+      if(getWidth() == 0 || getHeight() == 0)
+         return;
+         
       double sizeMult = Math.min(getHeight() / (TERMINAL_TILE_HEIGHT_PIXELS * (double)TERMINAL_HEIGHT_TILES), 
                                  getWidth()  / (TERMINAL_TILE_WIDTH_PIXELS * (double)TERMINAL_WIDTH_TILES));
       int innerWidth = (int)(sizeMult * TERMINAL_TILE_WIDTH_PIXELS) * TERMINAL_WIDTH_TILES;
@@ -39,5 +42,6 @@ public class OuterPanel extends JPanel implements ComponentListener, GUIConstant
       
       innerPanel.setSize(innerWidth, innerHeight);
       innerPanel.setLocation((getWidth() - innerWidth) / 2, (getHeight() - innerHeight) / 2);
+      innerPanel.arrange(sizeMult);
    }
 }
