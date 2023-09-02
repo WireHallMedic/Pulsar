@@ -4,6 +4,7 @@ This is the map portion of the main game screen.
 
 package Pulsar.GUI;
 
+import Pulsar.Engine.*;
 import WidlerSuite.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -21,5 +22,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
       {
          setTile(x, y, '.', Color.YELLOW, Color.BLACK);
       }
+      
+      GameEngine.setMapPanel(this);
    }
 }

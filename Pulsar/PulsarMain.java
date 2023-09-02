@@ -2,6 +2,7 @@ package Pulsar;
 
 import javax.swing.*;
 import Pulsar.GUI.*;
+import Pulsar.Engine.*;
 
 public class PulsarMain extends JFrame implements GUIConstants
 {
@@ -30,5 +31,7 @@ public class PulsarMain extends JFrame implements GUIConstants
    public static void main(String[] args)
    {
       PulsarMain frame = new PulsarMain();
+      
+      GameEngine.newGame();
    }
 }

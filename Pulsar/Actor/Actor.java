@@ -23,8 +23,14 @@ public class Actor
    public Actor(int icon)
    {
       mapLoc = new Coord(-1, -1);
-      sprite = GUIConstants.SQUARE_TILE_PALETTE.getUnboundTile(icon, Color.WHITE.getRGB(), Color.GRAY.getRGB(), 
-                                                               OuterPanel.getSizeMultiplier(), UnboundTile.CIRCLE_BACKGROUND);
+      createSprite(icon, Color.WHITE.getRGB(), Color.GRAY.getRGB());
+   }
+   
+   public void createSprite(int icon, int fgColor, int bgColor)
+   {
+      sprite = GUIConstants.SQUARE_TILE_PALETTE.getUnboundTile(
+         icon, fgColor, bgColor, OuterPanel.getSizeMultiplier(), UnboundTile.CIRCLE_BACKGROUND);
+      sprite.setAffectedByAge(false);
    }
    
    public void setAllLocs(Coord l){setAllLocs(l.x, l.y);}
