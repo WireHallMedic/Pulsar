@@ -32,8 +32,8 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
       addPanel(mainGameFGPanel);
       addPanel(mainGameBGPanel);
       
-      setMainGamePanelActive();
       setVisible(true);
+      setMainGamePanelActive();
    }
    
    private void addPanel(RogueTilePanel panel)
@@ -67,14 +67,13 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
    {
       int singleTileWidth = (int)(sizeMult * 8);
       int singleTileHeight = (int)(sizeMult * 16);
-      int squareTileSize = singleTileHeight;
       
       for(RogueTilePanel panel : panelList)
       {
          if(panel instanceof MainGameFGPanel)
          {
             mainGameFGPanel.setLocation(MAP_X_INSET_TILES * singleTileWidth, singleTileHeight);
-            mainGameFGPanel.setSize(squareTileSize * MAP_WIDTH_TILES, squareTileSize * MAP_HEIGHT_TILES);
+            mainGameFGPanel.setSize(singleTileWidth *( MAP_WIDTH_TILES * 2), singleTileHeight * MAP_HEIGHT_TILES);
          }
          else
          {

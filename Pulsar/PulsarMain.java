@@ -3,8 +3,9 @@ package Pulsar;
 import javax.swing.*;
 import Pulsar.GUI.*;
 import Pulsar.Engine.*;
+import java.awt.event.*;
 
-public class PulsarMain extends JFrame implements GUIConstants
+public class PulsarMain extends JFrame implements GUIConstants, WindowStateListener
 {
    public static final String VERSION_NUMBER = "0.0.1";
    public static javax.swing.Timer timer;
@@ -21,14 +22,19 @@ public class PulsarMain extends JFrame implements GUIConstants
       timer = new javax.swing.Timer(1000 / FRAMES_PER_SECOND, null);
       setVisible(true);
       
-      inputManager = new InputManager(this);
-      
       outerPanel = new OuterPanel(timer);
       this.add(outerPanel);
       
-      outerPanel.arrange();
+      inputManager = new InputManager(this);
+      addWindowStateListener(this);
       
       timer.start();
+      outerPanel.arrange();
+   }
+   
+   public void windowStateChanged(WindowEvent we)
+   {
+      outerPanel.arrange();
    }
    
    public static void main(String[] args)
@@ -36,5 +42,6 @@ public class PulsarMain extends JFrame implements GUIConstants
       PulsarMain frame = new PulsarMain();
       
       GameEngine.newGame();
+      frame.outerPanel.arrange();
    }
 }

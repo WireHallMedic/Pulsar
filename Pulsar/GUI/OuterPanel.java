@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
-public class OuterPanel extends JPanel implements ComponentListener, GUIConstants
+public class OuterPanel extends JPanel implements GUIConstants, ComponentListener
 {
    private InnerPanel innerPanel;
    private static double sizeMult = 1.0;
@@ -23,21 +23,22 @@ public class OuterPanel extends JPanel implements ComponentListener, GUIConstant
       this.add(innerPanel);
       
       addComponentListener(this);
+      
       arrange();
    }
-   
-   public static double getSizeMultiplier(){return sizeMult;}
    
    public void componentHidden(ComponentEvent ce){}
    public void componentShown(ComponentEvent ce){}
    public void componentMoved(ComponentEvent ce){}
    public void componentResized(ComponentEvent ce){arrange();}
    
+   public static double getSizeMultiplier(){return sizeMult;}
+   
    public void arrange()
    {
       if(getWidth() == 0 || getHeight() == 0)
          return;
-         
+      
       double sizeMult = Math.min(getHeight() / (TERMINAL_TILE_HEIGHT_PIXELS * (double)TERMINAL_HEIGHT_TILES), 
                                  getWidth()  / (TERMINAL_TILE_WIDTH_PIXELS * (double)TERMINAL_WIDTH_TILES));
       int innerWidth = (int)(sizeMult * TERMINAL_TILE_WIDTH_PIXELS) * TERMINAL_WIDTH_TILES;
