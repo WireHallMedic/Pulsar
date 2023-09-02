@@ -19,6 +19,7 @@ public class GameEngine
 	public static void setActorList(Vector<Actor> a){actorList = a;}
    public static void setMapPanel(MainGameFGPanel mp){mapPanel = mp;}
    
+   
 	public static void setPlayer(Actor p)
    {
       if(player != null)
