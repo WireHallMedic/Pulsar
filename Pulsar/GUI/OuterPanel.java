@@ -11,6 +11,7 @@ import java.awt.*;
 public class OuterPanel extends JPanel implements ComponentListener, GUIConstants
 {
    private InnerPanel innerPanel;
+   private static double sizeMult = 1.0;
    
    public OuterPanel(javax.swing.Timer timer)
    {
@@ -24,6 +25,8 @@ public class OuterPanel extends JPanel implements ComponentListener, GUIConstant
       addComponentListener(this);
       arrange();
    }
+   
+   public static double getSizeMultiplier(){return sizeMult;}
    
    public void componentHidden(ComponentEvent ce){}
    public void componentShown(ComponentEvent ce){}
