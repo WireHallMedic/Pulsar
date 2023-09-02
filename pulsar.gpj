@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2171;g
+!2208;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -71,8 +71,9 @@ s#l0
 %\011%uWidlerSuite%sWSTools.java
 %\011Pulsar%sGUI%sInnerPanel.java
 %\011Pulsar%sGUI%sPlayerPanel.java
+%\011Pulsar%sEngine%sGameEngine.java
 %\011%uWidlerSuite%sHexLine.java
-!2171;f
+!2208;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -131,4 +132,5 @@ s#l0
 %\011%uWidlerSuite%sWSTools.java
 %\011Pulsar%sGUI%sInnerPanel.java
 %\011Pulsar%sGUI%sPlayerPanel.java
+%\011Pulsar%sEngine%sGameEngine.java
 %\011%uWidlerSuite%sHexLine.java
