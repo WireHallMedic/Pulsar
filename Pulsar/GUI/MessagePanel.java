@@ -49,10 +49,10 @@ public class MessagePanel extends InfoPanel
    public static void addMessage(String message){addMessage(message, DEFAULT_MESSAGE_COLOR);}
    public static void addMessage(String message, Color messageColor)
    {
-      messageList.insertElementAt(message, 0);
-      messageColorList.insertElementAt(messageColor, 0);
-      messageList.removeElementAt(HEIGHT_TILES);
-      messageColorList.removeElementAt(HEIGHT_TILES);
+      messageList.add(message);
+      messageColorList.add(messageColor);
+      messageList.removeElementAt(0);
+      messageColorList.removeElementAt(0);
    }
    
    @Override
@@ -64,7 +64,7 @@ public class MessagePanel extends InfoPanel
          Color color = messageColorList.elementAt(i);
          if(msg.length() > WIDTH_TILES)
             msg = msg.substring(0, WIDTH_TILES);
-         write(X_ORIGIN, Y_ORIGIN + i, msg, color.getRGB(), Color.RED.getRGB(), WIDTH_TILES, 1);
+         write(X_ORIGIN, Y_ORIGIN + i, msg, color.getRGB(), Color.BLACK.getRGB(), WIDTH_TILES, 1);
       }
       super.actionPerformed(ae);
    }
