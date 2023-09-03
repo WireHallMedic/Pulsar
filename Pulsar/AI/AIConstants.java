@@ -5,6 +5,7 @@ public interface AIConstants
    public enum ACTION
    {
       STEP,
-      DELAY;
+      DELAY,
+      CONTEXT_SENSITIVE;
    }
 }

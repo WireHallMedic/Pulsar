@@ -28,6 +28,7 @@ public class InputManager implements KeyListener, AIConstants
          case KeyEvent.VK_NUMPAD2 : target = new Coord(playerLoc.x, playerLoc.y + 1); break;
          case KeyEvent.VK_NUMPAD3 : target = new Coord(playerLoc.x + 1, playerLoc.y + 1); break;
          case KeyEvent.VK_NUMPAD4 : target = new Coord(playerLoc.x - 1, playerLoc.y); break;
+         case KeyEvent.VK_NUMPAD5 : target = new Coord(playerLoc.x, playerLoc.y); break;
          case KeyEvent.VK_NUMPAD6 : target = new Coord(playerLoc.x + 1, playerLoc.y); break;
          case KeyEvent.VK_NUMPAD7 : target = new Coord(playerLoc.x - 1, playerLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD8 : target = new Coord(playerLoc.x, playerLoc.y - 1); break;
@@ -40,7 +41,8 @@ public class InputManager implements KeyListener, AIConstants
       if(target != null)
       {
          player.getAI().setPendingTarget(target);
-         player.getAI().setPendingAction(ACTION.STEP);
+         player.getAI().setPendingAction(ACTION.CONTEXT_SENSITIVE);
+         player.getAI().interpertContext();
       }
    }
    

@@ -7,7 +7,7 @@ public interface ZoneConstants extends CP437
    public enum TILE_TYPE
    {
       CLEAR (250, "Clear", true, true, true),
-      HIGH_WALL ('#', "Wall", true, true, true),
+      HIGH_WALL ('#', "Wall", false, false, false),
       NULL (' ', "", false, false, false);
       
       public int iconIndex;

@@ -84,6 +84,24 @@ public class GameEngine implements Runnable
          mapPanel.add(a.getSprite());
    }
    
+   public static Actor getActorAt(int x, int y){return getActorAt(new Coord(x, y));}
+   public static Actor getActorAt(Coord c)
+   {
+      Actor actor = null;
+      for(int i = 0; i < actorList.size(); i++)
+      {
+         if(actorList.elementAt(i).getMapLoc().equals(c))
+            return actor;
+      }
+      return actor;
+   }
+   
+   public static boolean isActorAt(int x, int y){return isActorAt(new Coord(x, y));}
+   public static boolean isActorAt(Coord c)
+   {
+      return getActorAt(c) != null;
+   }
+   
    public static void add(MovementScript ms){mapPanel.add(ms);}
    public static void addLocking(MovementScript ms){mapPanel.addLocking(ms);}
    public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}

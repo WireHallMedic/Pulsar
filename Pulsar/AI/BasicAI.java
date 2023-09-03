@@ -72,6 +72,25 @@ public class BasicAI implements AIConstants
       clearPlan();
    }
    
+   public void interpertContext()
+   {
+      if(self.getMapLoc().equals(pendingTarget))
+      {
+         setPendingAction(ACTION.DELAY);
+      }
+      else if(self.canStep(pendingTarget))
+      {
+         setPendingAction(ACTION.STEP);
+      }
+      // no possible action
+      else
+      {
+         MessagePanel.addMessage("Can't step there.");
+         clearPlan();
+      }
+      
+   }
+   
    // carrying out the actions
    //////////////////////////////////////////////////////////////////
    private void doStep()

@@ -1,6 +1,7 @@
 package Pulsar.Actor;
 
 import WidlerSuite.*;
+import Pulsar.Engine.*;
 import Pulsar.GUI.*;
 import Pulsar.AI.*;
 import java.awt.*;
@@ -95,6 +96,12 @@ public class Actor implements ActorConstants
    public double getSpriteYOffset()
    {
       return sprite.getYOffset();
+   }
+   
+   public boolean canStep(Coord c){return canStep(c.x, c.y);}
+   public boolean canStep(int x, int y)
+   {
+      return GameEngine.getZoneMap().getTile(x, y).isLowPassable() && !GameEngine.isActorAt(x, y);
    }
    
    // AI/turn methods
