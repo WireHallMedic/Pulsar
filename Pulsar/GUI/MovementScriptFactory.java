@@ -53,13 +53,52 @@ public class MovementScriptFactory implements GUIConstants
       UnboundTile ut = actor.getSprite();
       int xStep = getXDirectionTo(ut.getXLoc(), origin.x);
       int yStep = getYDirectionTo(ut.getYLoc(), origin.y);
-      int frames_per_direction = 3;
+      int framesPerDirection = 3;
       MovementScript ms = new MovementScript(ut);
-      ms.setLength(delay + frames_per_direction + frames_per_direction);
-      for(int i = 0; i < frames_per_direction; i++)
+      ms.setLength(delay + framesPerDirection + framesPerDirection);
+      for(int i = 0; i < framesPerDirection; i++)
       {
          ms.setOffset(delay + i, 0.0 - (NORMAL_MOVE_SPEED * xStep), 0.0 - (NORMAL_MOVE_SPEED * yStep));
-         ms.setOffset(delay + i + frames_per_direction, NORMAL_MOVE_SPEED * xStep, NORMAL_MOVE_SPEED * yStep);
+         ms.setOffset(delay + i + framesPerDirection, NORMAL_MOVE_SPEED * xStep, NORMAL_MOVE_SPEED * yStep);
+      }
+      ms.setNonlocksTargetOnEnd(true);
+      return ms;
+   }
+   
+   public static MovementScript getMeleeScript(Actor actor, Coord target)
+   {
+      UnboundTile ut = actor.getSprite();
+      int xStep = getXDirectionTo(ut.getXLoc(), target.x);
+      int yStep = getYDirectionTo(ut.getYLoc(), target.y);
+      MovementScript ms = new MovementScript(ut);
+      ms.setOffset(0, 0.0 - (SLOW_MOVE_SPEED * xStep), 0.0 - (SLOW_MOVE_SPEED * yStep));
+      ms.setOffset(1, 0.0 - (SLOW_MOVE_SPEED * xStep), 0.0 - (SLOW_MOVE_SPEED * yStep));
+      ms.setOffset(2, 0.0 - (SLOW_MOVE_SPEED * xStep), 0.0 - (SLOW_MOVE_SPEED * yStep));
+      ms.setOffset(3, FAST_MOVE_SPEED * xStep, FAST_MOVE_SPEED * yStep);
+      ms.setOffset(4, FAST_MOVE_SPEED * xStep, FAST_MOVE_SPEED * yStep);
+      ms.setOffset(5, FAST_MOVE_SPEED * xStep, FAST_MOVE_SPEED * yStep);
+      ms.setOffset(6, 0.0 - (NORMAL_MOVE_SPEED * xStep), 0.0 - (NORMAL_MOVE_SPEED * yStep));
+      ms.setOffset(7, 0.0 - (NORMAL_MOVE_SPEED * xStep), 0.0 - (NORMAL_MOVE_SPEED * yStep));
+      ms.setOffset(8, 0.0 - (NORMAL_MOVE_SPEED * xStep), 0.0 - (NORMAL_MOVE_SPEED * yStep));
+      ms.setOffset(9, 0.0 - (NORMAL_MOVE_SPEED * xStep), 0.0 - (NORMAL_MOVE_SPEED * yStep));
+      ms.setOffset(10, 0.0 - (NORMAL_MOVE_SPEED * xStep), 0.0 - (NORMAL_MOVE_SPEED * yStep));
+      ms.setOffset(11, 0.0 - (NORMAL_MOVE_SPEED * xStep), 0.0 - (NORMAL_MOVE_SPEED * yStep));
+      ms.setNonlocksTargetOnEnd(true);
+      return ms;
+   }
+   
+   public static MovementScript getShootScript(Actor actor, Coord target)
+   {
+      UnboundTile ut = actor.getSprite();
+      int xStep = getXDirectionTo(ut.getXLoc(), target.x);
+      int yStep = getYDirectionTo(ut.getYLoc(), target.y);
+      int framesPerDirection = 2;
+      MovementScript ms = new MovementScript(ut);
+      ms.setLength(framesPerDirection + framesPerDirection);
+      for(int i = 0; i < framesPerDirection; i++)
+      {
+         ms.setOffset(i, NORMAL_MOVE_SPEED * xStep, NORMAL_MOVE_SPEED * yStep);
+         ms.setOffset(i + framesPerDirection, 0.0 - (NORMAL_MOVE_SPEED * xStep), 0.0 - (NORMAL_MOVE_SPEED * yStep));
       }
       ms.setNonlocksTargetOnEnd(true);
       return ms;

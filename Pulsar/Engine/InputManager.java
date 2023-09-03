@@ -32,7 +32,9 @@ public class InputManager implements KeyListener, AIConstants
          case KeyEvent.VK_NUMPAD7 : target = new Coord(playerLoc.x - 1, playerLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD8 : target = new Coord(playerLoc.x, playerLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD9 : target = new Coord(playerLoc.x + 1, playerLoc.y - 1); break;
-         case KeyEvent.VK_SPACE : debug(); break;
+         case KeyEvent.VK_I : debug('i'); break;
+         case KeyEvent.VK_M : debug('m'); break;
+         case KeyEvent.VK_S : debug('s'); break;
       }
       
       if(target != null)
@@ -42,13 +44,19 @@ public class InputManager implements KeyListener, AIConstants
       }
    }
    
-   public void debug()
+   public void debug(char arg)
    {
       Actor player = GameEngine.getPlayer();
       MainGameFGPanel mapPanel = GameEngine.getMapPanel();
       Coord origin = new Coord(player.getMapLoc());
       origin.x = origin.x + 1;
-      MovementScript ms = MovementScriptFactory.getImpactScript(player, origin, 15);
+      MovementScript ms = null;
+      switch(arg)
+      {
+         case 'i' : ms = MovementScriptFactory.getImpactScript(player, origin, 0); break;
+         case 'm' : ms = MovementScriptFactory.getMeleeScript(player, origin); break;
+         case 's' : ms = MovementScriptFactory.getShootScript(player, origin); break;
+      }
       mapPanel.addLocking(ms);
    }
 }
