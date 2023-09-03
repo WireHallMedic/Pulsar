@@ -12,8 +12,8 @@ public class MapTile implements ZoneConstants
 
 
 	public int getIconIndex(){return iconIndex;}
-	public int getFgColor(){return fgColor;}
-	public int getBgColor(){return bgColor;}
+	public int getFGColor(){return fgColor;}
+	public int getBGColor(){return bgColor;}
 	public String getName(){return name;}
 	public boolean isLowPassable(){return lowPassable;}
 	public boolean isHighPassable(){return highPassable;}
@@ -21,8 +21,8 @@ public class MapTile implements ZoneConstants
 
 
 	public void setIconIndex(int i){iconIndex = i;}
-	public void setFgColor(int f){fgColor = f;}
-	public void setBgColor(int b){bgColor = b;}
+	public void setFGColor(int f){fgColor = f;}
+	public void setBGColor(int b){bgColor = b;}
 	public void setName(String n){name = n;}
 	public void setLowPassable(boolean l){lowPassable = l;}
 	public void setHighPassable(boolean h){highPassable = h;}

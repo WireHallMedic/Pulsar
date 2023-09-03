@@ -9,15 +9,18 @@ public class GameEngine
 {
    private static Actor player = null;
 	private static Vector<Actor> actorList = new Vector<Actor>();
+   private static ZoneMap zoneMap = null;
    private static MainGameFGPanel mapPanel = null;
 
 
 	public static Actor getPlayer(){return player;}
 	public static Vector<Actor> getActorList(){return actorList;}
+   public static ZoneMap getZoneMap(){return zoneMap;}
 
 
 	public static void setActorList(Vector<Actor> a){actorList = a;}
    public static void setMapPanel(MainGameFGPanel mp){mapPanel = mp;}
+   public static void setZoneMap(ZoneMap zm){zoneMap = zm;}
    
    
 	public static void setPlayer(Actor p)
@@ -74,5 +77,6 @@ public class GameEngine
       Actor e = new Actor('e');
       e.setAllLocs(4, 3);
       add(e);
+      zoneMap = ZoneMapFactory.getTestMap();
    }
 }

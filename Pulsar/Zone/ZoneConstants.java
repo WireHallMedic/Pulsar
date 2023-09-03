@@ -6,7 +6,7 @@ public interface ZoneConstants extends CP437
 {
    public enum TILE_TYPE
    {
-      CLEAR (MIDDLE_DOT_CHAR, "Clear", true, true, true),
+      CLEAR (250, "Clear", true, true, true),
       HIGH_WALL ('#', "Wall", true, true, true),
       NULL (' ', "", false, false, false);
       
