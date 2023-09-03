@@ -44,8 +44,11 @@ public class InputManager implements KeyListener, AIConstants
    
    public void debug()
    {
-      Coord playerLoc = GameEngine.getPlayer().getMapLoc();
-      Coord spriteLoc = new Coord(GameEngine.getPlayer().getSprite().getXLoc(), GameEngine.getPlayer().getSprite().getYLoc());
-      MessagePanel.addMessage("MapLoc = " + playerLoc + ", SpriteLoc = " + spriteLoc);
+      Actor player = GameEngine.getPlayer();
+      MainGameFGPanel mapPanel = GameEngine.getMapPanel();
+      Coord origin = new Coord(player.getMapLoc());
+      origin.x = origin.x + 1;
+      MovementScript ms = MovementScriptFactory.getImpactScript(player, origin, 15);
+      mapPanel.addLocking(ms);
    }
 }

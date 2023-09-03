@@ -23,6 +23,7 @@ public class GameEngine implements Runnable
 	public static Actor getPlayer(){return player;}
 	public static Vector<Actor> getActorList(){return actorList;}
    public static ZoneMap getZoneMap(){return zoneMap;}
+   public static MainGameFGPanel getMapPanel(){return mapPanel;}
 
 
 	public static void setActorList(Vector<Actor> a){actorList = a;}
