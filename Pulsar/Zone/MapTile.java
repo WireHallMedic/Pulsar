@@ -38,5 +38,16 @@ public class MapTile implements ZoneConstants
       highPassable = hp;
       transparent = t;
    }
+   
+   public MapTile(MapTile that)
+   {
+      this.iconIndex = that.iconIndex;
+      this.fgColor = that.fgColor;
+      this.bgColor = that.bgColor;
+      this.name = that.name;
+      this.lowPassable = that.lowPassable;
+      this.highPassable = that.highPassable;
+      this.transparent = that.transparent;
+   }
 
 }
