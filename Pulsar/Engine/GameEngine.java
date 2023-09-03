@@ -91,7 +91,7 @@ public class GameEngine implements Runnable
    
    public static void newGame()
    {
-      Actor p = new Actor('@');
+      Actor p = ActorFactory.getPlayer();
       p.setAllLocs(2, 3);
       setPlayer(p);
       Actor e = new Actor('e');

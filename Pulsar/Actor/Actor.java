@@ -8,18 +8,21 @@ import java.awt.*;
 
 public class Actor implements ActorConstants
 {
+   private String name;
 	private Coord mapLoc;
 	private UnboundTile sprite;
    private int turnEnergy;
    private BasicAI ai;
 
 
+   public String getName(){return name;}
 	public Coord getMapLoc(){return new Coord(mapLoc);}
 	public UnboundTile getSprite(){return sprite;}
    public int getTurnEnergy(){return turnEnergy;}
    public BasicAI getAI(){return ai;}
 
 
+   public void setName(String n){name = n;}
 	public void setMapLoc(Coord m){setMapLoc(m.x, m.y);}
 	public void setMapLoc(int x, int y){mapLoc = new Coord(x, y);}
 	public void setSprite(UnboundTile s){sprite = s;}
@@ -27,12 +30,20 @@ public class Actor implements ActorConstants
    public void setAI(BasicAI newAI){ai = newAI;}
 
 
-   public Actor(int icon)
+   public Actor(int icon){this(icon, "Unknown Actor");}
+   public Actor(int icon, String n)
    {
+      name = n;
       mapLoc = new Coord(-1, -1);
       createSprite(icon, Color.WHITE.getRGB(), Color.GRAY.getRGB());
       turnEnergy = 0;
       ai = new BasicAI(this);
+   }
+   
+   @Override
+   public String toString()
+   {
+      return getName();
    }
    
    public void createSprite(int icon, int fgColor, int bgColor)

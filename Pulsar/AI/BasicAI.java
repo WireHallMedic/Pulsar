@@ -59,6 +59,9 @@ public class BasicAI implements AIConstants
       if(this instanceof PlayerAI)
          color = Color.YELLOW;
       MessagePanel.addMessage(self + " does " + pendingAction + " to " + pendingTarget, color);
+      
+      if(pendingAction == ACTION.STEP)
+         doStep();
    }
    
    public void shiftPendingToPrevious()
@@ -67,5 +70,11 @@ public class BasicAI implements AIConstants
       previousAction = pendingAction;
       clearPlan();
    }
-
+   
+   // carrying out the actions
+   //////////////////////////////////////////////////////////////////
+   private void doStep()
+   {
+      self.setAllLocs(pendingTarget);
+   }
 }
