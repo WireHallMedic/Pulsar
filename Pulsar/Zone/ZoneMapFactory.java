@@ -4,8 +4,8 @@ public class ZoneMapFactory implements ZoneConstants
 {
    public static ZoneMap getTestMap()
    {
-      int w = 10;
-      int h = 10;
+      int w = 15;
+      int h = 15;
       ZoneMap m = new ZoneMap(w, h, MapTileFactory.getTile(TILE_TYPE.CLEAR));
       addBorder(m, MapTileFactory.getTile(TILE_TYPE.HIGH_WALL));
       return m;

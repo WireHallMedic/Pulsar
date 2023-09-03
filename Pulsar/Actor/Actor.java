@@ -48,4 +48,24 @@ public class Actor
       sprite.setXOffset(0.0);
       sprite.setYOffset(0.0);
    }
+   
+   public int getSpriteXLoc()
+   {
+      return sprite.getXLoc();
+   }
+   
+   public int getSpriteYLoc()
+   {
+      return sprite.getYLoc();
+   }
+   
+   public double getSpriteXOffset()
+   {
+      return sprite.getXOffset();
+   }
+   
+   public double getSpriteYOffset()
+   {
+      return sprite.getYOffset();
+   }
 }
