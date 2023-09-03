@@ -4,10 +4,11 @@ import java.util.*;
 import Pulsar.Actor.*;
 import Pulsar.Zone.*;
 import Pulsar.GUI.*;
+import Pulsar.AI.*;
 import java.lang.*;
 import WidlerSuite.*;
 
-public class GameEngine implements Runnable
+public class GameEngine implements Runnable, AIConstants
 {
    private static Actor player = null;
 	private static Vector<Actor> actorList = new Vector<Actor>();
@@ -87,13 +88,14 @@ public class GameEngine implements Runnable
    public static Actor getActorAt(int x, int y){return getActorAt(new Coord(x, y));}
    public static Actor getActorAt(Coord c)
    {
-      Actor actor = null;
       for(int i = 0; i < actorList.size(); i++)
       {
          if(actorList.elementAt(i).getMapLoc().equals(c))
-            return actor;
+         {
+            return actorList.elementAt(i);
+         }
       }
-      return actor;
+      return null;
    }
    
    public static boolean isActorAt(int x, int y){return isActorAt(new Coord(x, y));}
@@ -161,6 +163,8 @@ public class GameEngine implements Runnable
          {
             if(!(curActor.hasPlan()))
                curActor.plan();
+            if(curActor.getAI().getPendingAction() == ACTION.CONTEXT_SENSITIVE)
+               curActor.getAI().interpertContext();
             if(curActor.hasPlan())
                if(!mapPanel.isAnimationLocked())
                   curActor.act();

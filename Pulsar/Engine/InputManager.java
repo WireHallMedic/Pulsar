@@ -36,18 +36,23 @@ public class InputManager implements KeyListener, AIConstants
          case KeyEvent.VK_I : debug('i'); break;
          case KeyEvent.VK_M : debug('m'); break;
          case KeyEvent.VK_S : debug('s'); break;
+         case KeyEvent.VK_E : debug('e'); break;
       }
       
       if(target != null)
       {
          player.getAI().setPendingTarget(target);
          player.getAI().setPendingAction(ACTION.CONTEXT_SENSITIVE);
-         player.getAI().interpertContext();
       }
    }
    
    public void debug(char arg)
    {
+      if(arg == 'e')
+      {
+         System.out.println(GameEngine.isActorAt(GameEngine.getPlayer().getMapLoc()));
+         return;
+      }
       Actor player = GameEngine.getPlayer();
       MainGameFGPanel mapPanel = GameEngine.getMapPanel();
       Coord origin = new Coord(player.getMapLoc());
