@@ -4,13 +4,19 @@ import java.util.*;
 import Pulsar.Actor.*;
 import Pulsar.Zone.*;
 import Pulsar.GUI.*;
+import java.lang.*;
 
-public class GameEngine
+public class GameEngine implements Runnable
 {
    private static Actor player = null;
 	private static Vector<Actor> actorList = new Vector<Actor>();
    private static ZoneMap zoneMap = null;
    private static MainGameFGPanel mapPanel = null;
+   private static int initiativeIndex;
+   private static boolean runFlag = true;
+   
+   // non-static variables
+   Thread thread;
 
 
 	public static Actor getPlayer(){return player;}
@@ -33,6 +39,7 @@ public class GameEngine
       player = p;
       actorList.add(player);
       addToMapPanel(player);
+      initiativeIndex = 0;
    }
    
    public static void clearActorList()
@@ -53,8 +60,14 @@ public class GameEngine
    
    public static void remove(Actor a)
    {
-      actorList.remove(a);
-      removeFromMapPanel(a);
+      int actorIndex = actorList.indexOf(a);
+      if(actorIndex > -1)
+      {
+         actorList.remove(a);
+         removeFromMapPanel(a);
+         if(actorIndex >= initiativeIndex)
+            initiativeIndex--;
+      }
    }
    
    private static void removeFromMapPanel(Actor a)
@@ -69,6 +82,13 @@ public class GameEngine
          mapPanel.add(a.getSprite());
    }
    
+   private static void incrementInitiative()
+   {
+      initiativeIndex++;
+      if(initiativeIndex >= actorList.size())
+         initiativeIndex = 0;
+   }
+   
    public static void newGame()
    {
       Actor p = new Actor('@');
@@ -78,5 +98,50 @@ public class GameEngine
       e.setAllLocs(4, 3);
       add(e);
       zoneMap = ZoneMapFactory.getTestMap();
+   }
+   
+   public static void end()
+   {
+      runFlag = false;
+   }
+   
+   // non-static section
+   ////////////////////////////////////////////////////////////////////
+   public GameEngine()
+   {
+      thread = new Thread(this);
+   }
+   
+   public void begin()
+   {
+      runFlag = true;
+      thread = new Thread(this);
+      thread.start();
+   }
+   
+   public void run()
+   {
+      initiativeIndex = 0;
+      Actor curActor = null;
+      while(true)
+      {
+         if(actorList.size() == 0)
+            continue;
+         
+         curActor = actorList.elementAt(initiativeIndex);
+         // charge current actor
+         curActor.charge();
+         // act if able
+         if(curActor.isReadyToAct())
+         {
+            if(!(curActor.hasPlan()))
+               curActor.plan();
+            if(curActor.hasPlan())
+               curActor.act();
+         }
+         // increment if acted
+         if(!(curActor.isReadyToAct()))
+            incrementInitiative();
+      }
    }
 }
