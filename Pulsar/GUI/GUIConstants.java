@@ -22,6 +22,7 @@ public interface GUIConstants
    public static final Color DEFAULT_TILE_FG_COLOR = Color.WHITE;
    public static final Color DEFAULT_TILE_BG_COLOR = new Color(16, 16, 16);
    public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
+   public static final Color DEFAULT_MESSAGE_COLOR = Color.CYAN;
    
    public static final String WINDOW_TITLE = "Pulsar: A Sci-Fi Roguelike";
    

@@ -2,6 +2,8 @@ package Pulsar.AI;
 
 import Pulsar.Actor.*;
 import WidlerSuite.*;
+import Pulsar.GUI.*;
+import java.awt.*;
 
 public class BasicAI implements AIConstants
 {
@@ -53,7 +55,10 @@ public class BasicAI implements AIConstants
    
    public void act()
    {
-      System.out.println(self + " does " + pendingAction + " to " + pendingTarget);
+      Color color = Color.WHITE;
+      if(this instanceof PlayerAI)
+         color = Color.YELLOW;
+      MessagePanel.addMessage(self + " does " + pendingAction + " to " + pendingTarget, color);
    }
    
    public void shiftPendingToPrevious()
