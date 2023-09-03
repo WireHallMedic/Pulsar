@@ -16,7 +16,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
 {
 	public MainGameFGPanel()
    {
-      super(MAP_WIDTH_TILES, MAP_HEIGHT_TILES, SQUARE_TILE_PALETTE);
+      super(MAP_WIDTH_TILES + 2, MAP_HEIGHT_TILES + 2, SQUARE_TILE_PALETTE);
       setSize(50, 50);
       
       GameEngine.setMapPanel(this);
@@ -33,7 +33,10 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
          MapTile tile;
          int x_corner = player.getSpriteXLoc() - (columns() / 2);
          int y_corner = player.getSpriteYLoc() - (rows() / 2);
+         double xScroll = 0.0 - player.getSprite().getXOffset();
+         double yScroll = 0.0 - player.getSprite().getYOffset();
          setCornerTile(x_corner, y_corner);
+         setScroll(xScroll, yScroll);
          
          for(int x = 0; x < columns(); x++)
          for(int y = 0; y < rows(); y++)
@@ -44,5 +47,23 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
       }
       
       super.actionPerformed(ae);
+   }
+   
+   public void addNonlocking(MovementScript ms)
+   {
+      add(ms);
+   }
+   
+   public void addLocking(MovementScript ms)
+   {
+      UnboundTile ut = (UnboundTile)ms.getTarget();
+      remove(ut);
+      addLocking(ut);
+      add(ms);
+   }
+   
+   public boolean isOnLockList(Actor a)
+   {
+      return animationManager.getLockList().contains(a.getSprite());
    }
 }

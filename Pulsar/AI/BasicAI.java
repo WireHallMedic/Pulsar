@@ -3,6 +3,7 @@ package Pulsar.AI;
 import Pulsar.Actor.*;
 import WidlerSuite.*;
 import Pulsar.GUI.*;
+import Pulsar.Engine.*;
 import java.awt.*;
 
 public class BasicAI implements AIConstants
@@ -75,6 +76,9 @@ public class BasicAI implements AIConstants
    //////////////////////////////////////////////////////////////////
    private void doStep()
    {
-      self.setAllLocs(pendingTarget);
+      //self.setAllLocs(pendingTarget);
+      MovementScript ms = MovementScriptFactory.getWalkingScript(self, pendingTarget);
+      self.setMapLoc(pendingTarget);
+      GameEngine.addLocking(ms);
    }
 }

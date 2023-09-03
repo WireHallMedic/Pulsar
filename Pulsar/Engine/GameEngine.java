@@ -5,6 +5,7 @@ import Pulsar.Actor.*;
 import Pulsar.Zone.*;
 import Pulsar.GUI.*;
 import java.lang.*;
+import WidlerSuite.*;
 
 public class GameEngine implements Runnable
 {
@@ -82,6 +83,11 @@ public class GameEngine implements Runnable
          mapPanel.add(a.getSprite());
    }
    
+   public static void add(MovementScript ms){mapPanel.add(ms);}
+   public static void addLocking(MovementScript ms){mapPanel.addLocking(ms);}
+   public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}
+   
+   
    private static void incrementInitiative()
    {
       initiativeIndex++;
@@ -137,11 +143,23 @@ public class GameEngine implements Runnable
             if(!(curActor.hasPlan()))
                curActor.plan();
             if(curActor.hasPlan())
-               curActor.act();
+               if(!mapPanel.isAnimationLocked())
+                  curActor.act();
          }
          // increment if acted
          if(!(curActor.isReadyToAct()))
             incrementInitiative();
+         cleanUpSprites();
+      }
+   }
+   
+   public void cleanUpSprites()
+   {
+      for(int i = 0; i < actorList.size(); i++)
+      {
+         Actor curActor = actorList.elementAt(i);
+         if(!mapPanel.isOnLockList(curActor))
+            curActor.reconcileSprite();
       }
    }
 }

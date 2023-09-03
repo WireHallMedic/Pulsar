@@ -40,6 +40,14 @@ public class Actor implements ActorConstants
       ai = new BasicAI(this);
    }
    
+   public void reconcileSprite()
+   {
+      sprite.setXLoc(mapLoc.x);
+      sprite.setYLoc(mapLoc.y);
+      sprite.setXOffset(0.0);
+      sprite.setYOffset(0.0);
+   }
+   
    @Override
    public String toString()
    {

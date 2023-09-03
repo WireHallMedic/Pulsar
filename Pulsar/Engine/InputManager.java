@@ -5,6 +5,7 @@ import java.awt.event.*;
 import WidlerSuite.*;
 import Pulsar.Actor.*;
 import Pulsar.AI.*;
+import Pulsar.GUI.*;
 
 public class InputManager implements KeyListener, AIConstants
 {
@@ -23,14 +24,6 @@ public class InputManager implements KeyListener, AIConstants
       Coord target = null;
       switch(ke.getKeyCode())
       {
-        //  case KeyEvent.VK_NUMPAD1 : GameEngine.getPlayer().setAllLocs(playerLoc.x - 1, playerLoc.y + 1); break;
-//          case KeyEvent.VK_NUMPAD2 : GameEngine.getPlayer().setAllLocs(playerLoc.x, playerLoc.y + 1); break;
-//          case KeyEvent.VK_NUMPAD3 : GameEngine.getPlayer().setAllLocs(playerLoc.x + 1, playerLoc.y + 1); break;
-//          case KeyEvent.VK_NUMPAD4 : GameEngine.getPlayer().setAllLocs(playerLoc.x - 1, playerLoc.y); break;
-//          case KeyEvent.VK_NUMPAD6 : GameEngine.getPlayer().setAllLocs(playerLoc.x + 1, playerLoc.y); break;
-//          case KeyEvent.VK_NUMPAD7 : GameEngine.getPlayer().setAllLocs(playerLoc.x - 1, playerLoc.y - 1); break;
-//          case KeyEvent.VK_NUMPAD8 : GameEngine.getPlayer().setAllLocs(playerLoc.x, playerLoc.y - 1); break;
-//          case KeyEvent.VK_NUMPAD9 : GameEngine.getPlayer().setAllLocs(playerLoc.x + 1, playerLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD1 : target = new Coord(playerLoc.x - 1, playerLoc.y + 1); break;
          case KeyEvent.VK_NUMPAD2 : target = new Coord(playerLoc.x, playerLoc.y + 1); break;
          case KeyEvent.VK_NUMPAD3 : target = new Coord(playerLoc.x + 1, playerLoc.y + 1); break;
@@ -39,6 +32,7 @@ public class InputManager implements KeyListener, AIConstants
          case KeyEvent.VK_NUMPAD7 : target = new Coord(playerLoc.x - 1, playerLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD8 : target = new Coord(playerLoc.x, playerLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD9 : target = new Coord(playerLoc.x + 1, playerLoc.y - 1); break;
+         case KeyEvent.VK_SPACE : debug(); break;
       }
       
       if(target != null)
@@ -46,5 +40,12 @@ public class InputManager implements KeyListener, AIConstants
          player.getAI().setPendingTarget(target);
          player.getAI().setPendingAction(ACTION.STEP);
       }
+   }
+   
+   public void debug()
+   {
+      Coord playerLoc = GameEngine.getPlayer().getMapLoc();
+      Coord spriteLoc = new Coord(GameEngine.getPlayer().getSprite().getXLoc(), GameEngine.getPlayer().getSprite().getYLoc());
+      MessagePanel.addMessage("MapLoc = " + playerLoc + ", SpriteLoc = " + spriteLoc);
    }
 }

@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2519;g
+!2564;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -47,6 +47,7 @@ s#l0
 %\011%uWidlerSuite%sLineIntersection.java
 %\011%uWidlerSuite%sTilePalette.java
 %\011Pulsar%sEngine%sEngineConstants.java
+%\011Pulsar%sGUI%sMovementScriptFactory.java
 %\011Pulsar%sSound%sSoundConstants.java
 %\011%uWidlerSuite%sDoubleDeck.java
 %\011Pulsar%sPulsarMain.java
@@ -82,7 +83,7 @@ s#l0
 %\011Pulsar%sEngine%sGameEngine.java
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
-!2519;f
+!2564;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -117,6 +118,7 @@ s#l0
 %\011%uWidlerSuite%sLineIntersection.java
 %\011%uWidlerSuite%sTilePalette.java
 %\011Pulsar%sEngine%sEngineConstants.java
+%\011Pulsar%sGUI%sMovementScriptFactory.java
 %\011Pulsar%sSound%sSoundConstants.java
 %\011%uWidlerSuite%sDoubleDeck.java
 %\011Pulsar%sPulsarMain.java
