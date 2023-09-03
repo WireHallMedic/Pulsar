@@ -83,9 +83,15 @@ public class BasicAI implements AIConstants
          setPendingAction(ACTION.STEP);
       }
       // no possible action
+      else if(GameEngine.isActorAt(pendingTarget))
+      {
+         MessagePanel.addMessage("There's a dude there.");
+         clearPlan();
+      }
+      // no possible action
       else
       {
-         MessagePanel.addMessage("Can't step there.");
+         MessagePanel.addMessage("That's a wall.");
          clearPlan();
       }
       
