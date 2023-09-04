@@ -8,7 +8,7 @@ public class ActorFactory implements ActorConstants
 {
    public static Actor getPlayer()
    {
-      Actor a = new Actor('@', "Player");
+      Player a = new Player();
       a.setAI(new PlayerAI(a));
       return a;
    }
