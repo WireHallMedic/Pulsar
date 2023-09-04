@@ -14,6 +14,7 @@ public class Actor implements ActorConstants
 	private UnboundTile sprite;
    private int turnEnergy;
    private BasicAI ai;
+   private int visionRange;
 
 
    public String getName(){return name;}
@@ -21,6 +22,7 @@ public class Actor implements ActorConstants
 	public UnboundTile getSprite(){return sprite;}
    public int getTurnEnergy(){return turnEnergy;}
    public BasicAI getAI(){return ai;}
+   public int getVisionRange(){return visionRange;}
 
 
    public void setName(String n){name = n;}
@@ -29,6 +31,7 @@ public class Actor implements ActorConstants
 	public void setSprite(UnboundTile s){sprite = s;}
    public void setTurnEnergy(int te){turnEnergy = te;}
    public void setAI(BasicAI newAI){ai = newAI;}
+   public void setVisionRange(int vr){visionRange = vr;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -39,6 +42,7 @@ public class Actor implements ActorConstants
       createSprite(icon, Color.WHITE.getRGB(), Color.GRAY.getRGB());
       turnEnergy = 0;
       ai = new BasicAI(this);
+      visionRange = DEFAULT_VISION_RANGE;
    }
    
    public void reconcileSprite()

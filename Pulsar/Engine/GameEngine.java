@@ -1,6 +1,7 @@
 package Pulsar.Engine;
 
 import java.util.*;
+import java.awt.*;
 import Pulsar.Actor.*;
 import Pulsar.Zone.*;
 import Pulsar.GUI.*;
@@ -104,6 +105,15 @@ public class GameEngine implements Runnable, AIConstants
       return getActorAt(c) != null;
    }
    
+   public static boolean playerCanSee(Actor a){return playerCanSee(a.getMapLoc());}
+   public static boolean playerCanSee(Coord c){return playerCanSee(c.x, c.y);}
+   public static boolean playerCanSee(int x, int y)
+   {
+      double visionRange = (double)player.getVisionRange();
+      double distanceTo = WSTools.getDistance(player.getMapLoc().x, player.getMapLoc().y, x, y);
+      return visionRange >= distanceTo;
+   }
+   
    public static void add(MovementScript ms){mapPanel.add(ms);}
    public static void addLocking(MovementScript ms){mapPanel.addLocking(ms);}
    public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}
@@ -123,6 +133,10 @@ public class GameEngine implements Runnable, AIConstants
       setPlayer(p);
       Actor e = new Actor('e');
       e.setAllLocs(4, 3);
+      add(e);
+      e = new Actor('e');
+      e.setAllLocs(6, 3);
+      e.getSprite().setFGColor(Color.ORANGE.getRGB());
       add(e);
       zoneMap = ZoneMapFactory.getTestMap();
    }
