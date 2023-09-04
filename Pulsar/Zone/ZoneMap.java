@@ -8,12 +8,14 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	private int height;
 	private MapTile[][] tileArray;
 	private MapTile oobTile;
+   private boolean[][] transparencyMap;
 
 
 	public int getWidth(){return width;}
 	public int getHeight(){return height;}
 	public MapTile[][] getTileArray(){return tileArray;}
 	public MapTile getOobTile(){return oobTile;}
+   public boolean[][] getTransparencyMap(){return transparencyMap;}
 
 
 	public void setWidth(int w){width = w;}
@@ -27,9 +29,10 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       width = w;
       height = h;
       tileArray = new MapTile[width][height];
+      transparencyMap = new boolean[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
-         tileArray[x][y] = new MapTile(defaultTile);
+         setTile(x, y, new MapTile(defaultTile));
       oobTile = MapTileFactory.getTile(TILE_TYPE.NULL);
    }
    
@@ -44,7 +47,10 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void setTile(int x, int y, MapTile t)
    {
       if(isInBounds(x, y))
+      {
          tileArray[x][y] = t;
+         transparencyMap[x][y] = t.isTransparent();
+      }
    }
    
    public MapTile getTile(int x, int y)
@@ -53,4 +59,5 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          return tileArray[x][y];
       return new MapTile(oobTile);
    }
+   
 }
