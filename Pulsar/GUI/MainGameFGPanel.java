@@ -52,7 +52,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
             }
          }
       }
-      
+      setActorVisibility();
       super.actionPerformed(ae);
    }
    
@@ -72,5 +72,17 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
    public boolean isOnLockList(Actor a)
    {
       return animationManager.getLockList().contains(a.getSprite());
+   }
+   
+   private void setActorVisibility()
+   {
+      Actor player = GameEngine.getPlayer();
+      for(Actor actor : GameEngine.getActorList())
+      {
+         if(player.canSee(actor))
+            actor.getSprite().setVisible(true);
+         else
+            actor.getSprite().setVisible(false);
+      }
    }
 }

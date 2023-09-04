@@ -109,6 +109,7 @@ public class Actor implements ActorConstants
    }
    
    public boolean canSee(int x, int y){return canSee(new Coord(x, y));}
+   public boolean canSee(Actor target){return canSee(target.getMapLoc());}
    public boolean canSee(Coord target)
    {
       return WSTools.getAngbandMetric(getMapLoc(), target) <= getVisionRange() &&

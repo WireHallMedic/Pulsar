@@ -50,6 +50,8 @@ public class Player extends Actor implements GUIConstants
    @Override
    public boolean canSee(int x, int y){return canSee(new Coord(x, y));}
    @Override
+   public boolean canSee(Actor target){return canSee(target.getMapLoc());}
+   @Override
    public boolean canSee(Coord target)
    {
       if(visibilityMapCorner == null || visibilityMap == null)
