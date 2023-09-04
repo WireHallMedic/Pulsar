@@ -6,6 +6,7 @@ import WidlerSuite.*;
 import Pulsar.Actor.*;
 import Pulsar.AI.*;
 import Pulsar.GUI.*;
+import java.awt.*;
 
 public class InputManager implements KeyListener, AIConstants
 {
@@ -37,6 +38,7 @@ public class InputManager implements KeyListener, AIConstants
          case KeyEvent.VK_M : debug('m'); break;
          case KeyEvent.VK_S : debug('s'); break;
          case KeyEvent.VK_E : debug('e'); break;
+         case KeyEvent.VK_C : debug('c'); break;
       }
       
       if(target != null)
@@ -51,6 +53,12 @@ public class InputManager implements KeyListener, AIConstants
       if(arg == 'e')
       {
          System.out.println(GameEngine.isActorAt(GameEngine.getPlayer().getMapLoc()));
+         return;
+      }
+      if(arg == 'c')
+      {
+         Color c = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
+         MessagePanel.addMessage("Random color!", c);
          return;
       }
       Actor player = GameEngine.getPlayer();

@@ -49,10 +49,10 @@ public class MessagePanel extends InfoPanel
    public static void addMessage(String message){addMessage(message, DEFAULT_MESSAGE_COLOR);}
    public static void addMessage(String message, Color messageColor)
    {
-      messageList.add(message);
-      messageColorList.add(messageColor);
-      messageList.removeElementAt(0);
-      messageColorList.removeElementAt(0);
+      messageList.insertElementAt(message, 0);
+      messageColorList.insertElementAt(messageColor, 0);
+      messageList.removeElementAt(HEIGHT_TILES);
+      messageColorList.removeElementAt(HEIGHT_TILES);
    }
    
    @Override

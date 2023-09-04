@@ -56,11 +56,6 @@ public class BasicAI implements AIConstants
    
    public void act()
    {
-      Color color = Color.WHITE;
-      if(this instanceof PlayerAI)
-         color = Color.YELLOW;
-      MessagePanel.addMessage(self + " does " + pendingAction + " to " + pendingTarget, color);
-      
       if(pendingAction == ACTION.STEP)
          doStep();
    }
