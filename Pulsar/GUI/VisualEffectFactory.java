@@ -24,10 +24,8 @@ public class VisualEffectFactory implements GUIConstants
       double ySpeed = GUITools.getYSpeedTowards(source, origin);
       xSpeed *= SPRAY_BASE_SPEED;
       ySpeed *= SPRAY_BASE_SPEED;
-      xSpeed -= SPRAY_VARIABLE_SPEED;
-      ySpeed -= SPRAY_VARIABLE_SPEED;
-      xSpeed += GameEngine.random() * (2 * SPRAY_VARIABLE_SPEED);
-      ySpeed += GameEngine.random() * (2 * SPRAY_VARIABLE_SPEED);
+      xSpeed = GUITools.modifyByAmount(xSpeed, SPRAY_VARIABLE_SPEED);
+      ySpeed = GUITools.modifyByAmount(ySpeed, SPRAY_VARIABLE_SPEED);
       UnboundTile ut = getPalette().getUnboundTile(250, color.getRGB(), getSizeMultiplier());
       ut.setLoc(origin);
       ut.setLifespan(SPRAY_DURATION);
