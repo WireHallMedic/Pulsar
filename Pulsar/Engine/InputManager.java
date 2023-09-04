@@ -84,6 +84,7 @@ public class InputManager implements KeyListener, AIConstants
          MovementScript msd = MovementScriptFactory.getImpactScript(enemy, player.getMapLoc(), 0);
          mapPanel.addLocking(msa);
          mapPanel.addLocking(msd);
+         VisualEffectFactory.createSpray(enemy.getMapLoc(), player.getMapLoc(), Color.RED);
          return;
       }
       Actor player = GameEngine.getPlayer();

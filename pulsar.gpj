@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2596;g
+!2639;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -40,6 +40,7 @@ s#l0
 %\011%uWidlerSuite%sTileAnimationManager.java
 %\011%uWidlerSuite%sRoom.java
 %\011Pulsar%sAI%sPlayerAI.java
+%\011Pulsar%sGUI%sVisualEffectFactory.java
 %\011%uWidlerSuite%sUnboundInterface.java
 %\011%uWidlerSuite%sWSConstants.java
 %\011%uWidlerSuite%sDijkstraRing.java
@@ -84,7 +85,7 @@ s#l0
 %\011Pulsar%sEngine%sGameEngine.java
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
-!2596;f
+!2639;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -112,6 +113,7 @@ s#l0
 %\011%uWidlerSuite%sTileAnimationManager.java
 %\011%uWidlerSuite%sRoom.java
 %\011Pulsar%sAI%sPlayerAI.java
+%\011Pulsar%sGUI%sVisualEffectFactory.java
 %\011%uWidlerSuite%sUnboundInterface.java
 %\011%uWidlerSuite%sWSConstants.java
 %\011%uWidlerSuite%sDijkstraRing.java

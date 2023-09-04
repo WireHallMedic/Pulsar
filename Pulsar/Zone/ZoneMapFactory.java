@@ -8,7 +8,10 @@ public class ZoneMapFactory implements ZoneConstants
       int h = 15;
       ZoneMap m = new ZoneMap(w, h, MapTileFactory.getTile(TILE_TYPE.CLEAR));
       addBorder(m, MapTileFactory.getTile(TILE_TYPE.HIGH_WALL));
-      m.setTile(3, 4, MapTileFactory.getTile(TILE_TYPE.HIGH_WALL));
+      m.setTile(5, 5, MapTileFactory.getTile(TILE_TYPE.HIGH_WALL));
+      m.setTile(5, 6, MapTileFactory.getTile(TILE_TYPE.HIGH_WALL));
+      m.setTile(6, 5, MapTileFactory.getTile(TILE_TYPE.HIGH_WALL));
+      m.setTile(6, 6, MapTileFactory.getTile(TILE_TYPE.HIGH_WALL));
       
       return m;
    }

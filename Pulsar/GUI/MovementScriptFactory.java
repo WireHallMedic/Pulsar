@@ -5,17 +5,17 @@ import Pulsar.Actor.*;
 
 public class MovementScriptFactory implements GUIConstants
 {
-   private static int getXStep(int originX, int targetX)
+   public static int getXStep(int originX, int targetX)
    {
       return (int)(targetX - originX);
    }
    
-   private static int getYStep(int originY, int targetY)
+   public static int getYStep(int originY, int targetY)
    {
       return (int)(targetY - originY);
    }
    
-   private static int getXDirectionTo(int originX, int targetX)
+   public static int getXDirectionTo(int originX, int targetX)
    {
       if(originX > targetX)
          return -1;
@@ -24,7 +24,7 @@ public class MovementScriptFactory implements GUIConstants
       return 0;
    }
    
-   private static int getYDirectionTo(int originY, int targetY)
+   public static int getYDirectionTo(int originY, int targetY)
    {
       if(originY > targetY)
          return -1;
@@ -90,8 +90,8 @@ public class MovementScriptFactory implements GUIConstants
    public static MovementScript getShootScript(Actor actor, Coord target)
    {
       UnboundTile ut = actor.getSprite();
-      int xStep = getXDirectionTo(ut.getXLoc(), target.x);
-      int yStep = getYDirectionTo(ut.getYLoc(), target.y);
+      int xStep = getXDirectionTo(target.x, ut.getXLoc());
+      int yStep = getYDirectionTo(target.y, ut.getYLoc());
       int framesPerDirection = 2;
       MovementScript ms = new MovementScript(ut);
       ms.setLength(framesPerDirection + framesPerDirection);
