@@ -29,8 +29,8 @@ public class VisualEffectFactory implements GUIConstants
    
    public static void createSprayParticle(Coord origin, Coord source, Color color)
    {
-      int xDirection = MovementScriptFactory.getXDirectionTo(source.x, origin.x);
-      int yDirection = MovementScriptFactory.getYDirectionTo(source.y, origin.y);
+      int xDirection = GUITools.getXDirectionTo(source.x, origin.x);
+      int yDirection = GUITools.getYDirectionTo(source.y, origin.y);
       double xSpeed = (xDirection * SPRAY_BASE_SPEED);
       double ySpeed = (yDirection * SPRAY_BASE_SPEED);
       xSpeed -= SPRAY_VARIABLE_SPEED;

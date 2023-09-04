@@ -12,11 +12,12 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2639;g
+!2671;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
 %\011Pulsar%sEngine%sInputManager.java
+%\011Pulsar%sGUI%sGUITools.java
 %\011%uWidlerSuite%sBinarySpacePartitioning.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
 %\011%uWidlerSuite%sNoiseChoir.java
@@ -85,11 +86,12 @@ s#l0
 %\011Pulsar%sEngine%sGameEngine.java
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
-!2639;f
+!2671;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
 %\011Pulsar%sEngine%sInputManager.java
+%\011Pulsar%sGUI%sGUITools.java
 %\011%uWidlerSuite%sBinarySpacePartitioning.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
 %\011%uWidlerSuite%sNoiseChoir.java
