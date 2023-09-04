@@ -16,4 +16,10 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
                                  baseType.lowPassable, baseType.highPassable, baseType.transparent);
       return tile;
    }
+   
+   public static MapTile getDoor()
+   {
+      Door door = new Door(Color.WHITE.getRGB(), BG_COLOR.getRGB(), "Door");
+      return door;
+   }
 }

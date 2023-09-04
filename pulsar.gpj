@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2671;g
+!2735;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -36,6 +36,7 @@ s#l0
 %\011Pulsar%sActor%sActor.java
 %\011%uWidlerSuite%sRogueTilePanel.java
 %\011Pulsar%sGUI%sOuterPanel.java
+%\011Pulsar%sZone%sDoor.java
 %\011%uWidlerSuite%sMovementScript.java
 %\011Pulsar%sZone%sZoneConstants.java
 %\011%uWidlerSuite%sTileAnimationManager.java
@@ -56,6 +57,7 @@ s#l0
 %\011%uWidlerSuite%sRoguePanel.java
 %\011%uWidlerSuite%sSquirrelRNG.java
 %\011%uWidlerSuite%sUnboundString.java
+%\011Pulsar%sZone%sToggleTile.java
 %\011%uWidlerSuite%sVect.java
 %\011Pulsar%sAI%sBasicAI.java
 %\011%uWidlerSuite%sRectLine.java
@@ -86,7 +88,7 @@ s#l0
 %\011Pulsar%sEngine%sGameEngine.java
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
-!2671;f
+!2735;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -110,6 +112,7 @@ s#l0
 %\011Pulsar%sActor%sActor.java
 %\011%uWidlerSuite%sRogueTilePanel.java
 %\011Pulsar%sGUI%sOuterPanel.java
+%\011Pulsar%sZone%sDoor.java
 %\011%uWidlerSuite%sMovementScript.java
 %\011Pulsar%sZone%sZoneConstants.java
 %\011%uWidlerSuite%sTileAnimationManager.java
@@ -130,6 +133,7 @@ s#l0
 %\011%uWidlerSuite%sRoguePanel.java
 %\011%uWidlerSuite%sSquirrelRNG.java
 %\011%uWidlerSuite%sUnboundString.java
+%\011Pulsar%sZone%sToggleTile.java
 %\011%uWidlerSuite%sVect.java
 %\011Pulsar%sAI%sBasicAI.java
 %\011%uWidlerSuite%sRectLine.java
