@@ -1,6 +1,7 @@
 package Pulsar.GUI;
 
 import WidlerSuite.*;
+import Pulsar.Engine.*;
 
 public class GUITools implements GUIConstants
 {
@@ -47,5 +48,12 @@ public class GUITools implements GUIConstants
       vector.magnitude = 1000.0;
       Coord normalizedCoord = new Coord(vector);
       return normalizedCoord.y / 1000.0;
+   }
+   
+   public static double modifyByAmount(double base, double modifier)
+   {
+      double amt = base - modifier;
+      amt += GameEngine.random() * (2 * modifier);
+      return amt;
    }
 }

@@ -34,4 +34,39 @@ public class VisualEffectFactory implements GUIConstants
       ut.setSpeed(xSpeed, ySpeed);
       add(ut);
    }
+   
+   public static void createExplosion(Coord origin)
+   {
+      UnboundTile[] particleArray = new UnboundTile[16];
+      for(int i = 0; i < particleArray.length; i++)
+      {
+         Color color = Color.RED;
+         if(GameEngine.randomInt(0, 2) == 1)
+            color = Color.ORANGE;
+         particleArray[i] = getPalette().getUnboundTile('*', color.getRGB(), getSizeMultiplier());
+         particleArray[i].setLoc(origin);
+         particleArray[i].setLifespan(SPRAY_DURATION);
+      }
+      double diagonalSpeed = SPRAY_BASE_SPEED * .707;
+      particleArray[0].setSpeed(GUITools.modifyByAmount(0.0, SPRAY_VARIABLE_SPEED), GUITools.modifyByAmount(SPRAY_BASE_SPEED, SPRAY_VARIABLE_SPEED));
+      particleArray[1].setSpeed(GUITools.modifyByAmount(SPRAY_BASE_SPEED, SPRAY_VARIABLE_SPEED), GUITools.modifyByAmount(0.0, SPRAY_VARIABLE_SPEED));
+      particleArray[2].setSpeed(GUITools.modifyByAmount(0.0, SPRAY_VARIABLE_SPEED), -(GUITools.modifyByAmount(SPRAY_BASE_SPEED, SPRAY_VARIABLE_SPEED)));
+      particleArray[3].setSpeed(-(GUITools.modifyByAmount(SPRAY_BASE_SPEED, SPRAY_VARIABLE_SPEED)), GUITools.modifyByAmount(0.0, SPRAY_VARIABLE_SPEED));
+      particleArray[4].setSpeed(GUITools.modifyByAmount(diagonalSpeed, SPRAY_VARIABLE_SPEED), GUITools.modifyByAmount(diagonalSpeed, SPRAY_VARIABLE_SPEED));
+      particleArray[5].setSpeed(-(GUITools.modifyByAmount(diagonalSpeed, SPRAY_VARIABLE_SPEED)), GUITools.modifyByAmount(diagonalSpeed, SPRAY_VARIABLE_SPEED));
+      particleArray[6].setSpeed(GUITools.modifyByAmount(diagonalSpeed, SPRAY_VARIABLE_SPEED), -(GUITools.modifyByAmount(diagonalSpeed, SPRAY_VARIABLE_SPEED)));
+      particleArray[7].setSpeed(-(GUITools.modifyByAmount(diagonalSpeed, SPRAY_VARIABLE_SPEED)), -(GUITools.modifyByAmount(diagonalSpeed, SPRAY_VARIABLE_SPEED)));
+      
+      for(int i = 0; i < particleArray.length - 8; i++)
+      {
+         double xSpeed = -SPRAY_BASE_SPEED + (2 * GameEngine.random() * SPRAY_BASE_SPEED);
+         double ySpeed = -SPRAY_BASE_SPEED + (2 * GameEngine.random() * SPRAY_BASE_SPEED);
+         particleArray[8 + i].setSpeed(xSpeed, ySpeed);
+      }
+      
+      for(int i = 0; i < particleArray.length; i++)
+         add(particleArray[i]);
+         
+      
+   }
 }

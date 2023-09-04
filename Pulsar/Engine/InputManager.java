@@ -48,11 +48,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_L : GameEngine.setCursorLoc(playerLoc);
                               GameEngine.setGameMode(GameMode.LOOK); 
                               break;
-         case KeyEvent.VK_I : debug('i'); break;
-         case KeyEvent.VK_M : debug('m'); break;
-         case KeyEvent.VK_S : debug('s'); break;
-         case KeyEvent.VK_E : debug('e'); break;
-         case KeyEvent.VK_C : debug('c'); break;
          case KeyEvent.VK_Z : debug('z'); break;
          case KeyEvent.VK_X : debug('x'); break;
       }
@@ -120,13 +115,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       // combat timing
       if(arg == 'z')
       {
-         Actor player = GameEngine.getPlayer();
-         MainGameFGPanel mapPanel = GameEngine.getMapPanel();
-         Actor enemy = GameEngine.getActorList().elementAt(1);
-         MovementScript msa = MovementScriptFactory.getMeleeScript(player, enemy.getMapLoc());
-         MovementScript msd = MovementScriptFactory.getImpactScript(enemy, player.getMapLoc(), GUIConstants.MELEE_ATTACK_HIT_DELAY);
-         mapPanel.addLocking(msa);
-         mapPanel.addLocking(msd);
+         VisualEffectFactory.createExplosion(new Coord(1, 1));
          return;
       }
       if(arg == 'x')
