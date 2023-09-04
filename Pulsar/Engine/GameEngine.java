@@ -17,6 +17,7 @@ public class GameEngine implements Runnable, AIConstants
    private static MainGameFGPanel mapPanel = null;
    private static int initiativeIndex;
    private static boolean runFlag = true;
+   private static SquirrelRNG rng = new SquirrelRNG();
    
    // non-static variables
    Thread thread;
@@ -26,12 +27,18 @@ public class GameEngine implements Runnable, AIConstants
 	public static Vector<Actor> getActorList(){return actorList;}
    public static ZoneMap getZoneMap(){return zoneMap;}
    public static MainGameFGPanel getMapPanel(){return mapPanel;}
+   public static double random(){return rng.nextDouble();}
 
 
 	public static void setActorList(Vector<Actor> a){actorList = a;}
    public static void setMapPanel(MainGameFGPanel mp){mapPanel = mp;}
    public static void setZoneMap(ZoneMap zm){zoneMap = zm;}
    
+   
+   public static int randomInt(int lower, int upper)
+   {
+      return lower + (int)(random() * (upper - lower));
+   }
    
 	public static void setPlayer(Actor p)
    {
