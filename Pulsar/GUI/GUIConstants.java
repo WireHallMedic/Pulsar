@@ -29,8 +29,8 @@ public interface GUIConstants
    public static final double NORMAL_MOVE_SPEED = .1;
    public static final double FAST_MOVE_SPEED = .3;
    public static final int MELEE_ATTACK_HIT_DELAY = 5;
-   public static final double SPRAY_BASE_SPEED = .4;
-   public static final double SPRAY_VARIABLE_SPEED = .1;
+   public static final double SPRAY_BASE_SPEED = .3;
+   public static final double SPRAY_VARIABLE_SPEED = .05;
    public static final int SPRAY_DURATION = 10;
    
    public static final String WINDOW_TITLE = "Pulsar: A Sci-Fi Roguelike";

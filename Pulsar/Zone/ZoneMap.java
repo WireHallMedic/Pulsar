@@ -37,7 +37,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
          setTile(x, y, new MapTile(defaultTile));
-      oobTile = MapTileFactory.getTile(TILE_TYPE.NULL);
+      oobTile = MapTileFactory.getTile(TileType.NULL);
       fov = new ShadowFoVRect(transparencyMap);
    }
    
@@ -70,6 +70,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       }
    }
    
+   public MapTile getTile(Coord c){return getTile(c.x, c.y);}
    public MapTile getTile(int x, int y)
    {
       if(isInBounds(x, y))

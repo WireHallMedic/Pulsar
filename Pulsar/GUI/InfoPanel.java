@@ -8,6 +8,7 @@ import WidlerSuite.*;
 import java.awt.event.*;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
+import Pulsar.Zone.*;
 import java.util.*;
 
 public class InfoPanel extends RogueTilePanel implements GUIConstants
@@ -50,6 +51,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       return actorsToShow;
    }
    
+   // standard mode
    public void showNearbyObjects()
    {
       clearInfoPanel();
@@ -62,10 +64,40 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       }
    }
    
+   // look mode
+   public void showCursorLooking()
+   {
+      clearInfoPanel();
+      write(X_ORIGIN, Y_ORIGIN, "Look mode (escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
+      
+      MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
+      setTile(X_ORIGIN, Y_ORIGIN + 2, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
+      write(X_ORIGIN + 2, Y_ORIGIN + 2, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+      
+      Actor actor = GameEngine.getActorAt(GameEngine.getCursorLoc());
+      if(actor != null)
+      {
+         UnboundTile ut = actor.getSprite();
+         setTile(X_ORIGIN, Y_ORIGIN + 4, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
+         write(X_ORIGIN + 2, Y_ORIGIN + 4, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+      }
+   }
+   
+   // targeting mode
+   public void showCursorTargeting()
+   {
+      clearInfoPanel();
+   }
+   
    @Override
    public void actionPerformed(ActionEvent ae)
    {
-      showNearbyObjects();
+      switch(GameEngine.getGameMode())
+      {
+         case STANDARD  : showNearbyObjects(); break;
+         case LOOK      : showCursorLooking(); break;
+         case TARGETING : showCursorTargeting(); break;
+      }
       super.actionPerformed(ae);
    }
 }

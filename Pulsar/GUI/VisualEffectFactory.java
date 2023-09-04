@@ -13,7 +13,7 @@ public class VisualEffectFactory implements GUIConstants
    
    public static void createSpray(Coord origin, Coord source, Color color)
    {
-      int reps = GameEngine.randomInt(7, 14);
+      int reps = GameEngine.randomInt(8, 13);
       for(int i = 0; i < reps; i++)
          createSprayParticle(origin, source, color);
    }

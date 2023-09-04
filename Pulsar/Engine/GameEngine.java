@@ -9,7 +9,7 @@ import Pulsar.AI.*;
 import java.lang.*;
 import WidlerSuite.*;
 
-public class GameEngine implements Runnable, AIConstants
+public class GameEngine implements Runnable, AIConstants, EngineConstants
 {
    private static Actor player = null;
 	private static Vector<Actor> actorList = new Vector<Actor>();
@@ -18,6 +18,8 @@ public class GameEngine implements Runnable, AIConstants
    private static int initiativeIndex;
    private static boolean runFlag = true;
    private static SquirrelRNG rng = new SquirrelRNG();
+   private static GameMode gameMode = GameMode.STANDARD;
+   private static Coord cursorLoc = null;
    
    // non-static variables
    Thread thread;
@@ -28,11 +30,15 @@ public class GameEngine implements Runnable, AIConstants
    public static ZoneMap getZoneMap(){return zoneMap;}
    public static MainGameFGPanel getMapPanel(){return mapPanel;}
    public static double random(){return rng.nextDouble();}
+   public static GameMode getGameMode(){return gameMode;}
+   public static Coord getCursorLoc(){return new Coord(cursorLoc);}
 
 
 	public static void setActorList(Vector<Actor> a){actorList = a;}
    public static void setMapPanel(MainGameFGPanel mp){mapPanel = mp;}
    public static void setZoneMap(ZoneMap zm){zoneMap = zm;}
+   public static void setGameMode(GameMode gm){gameMode = gm;}
+   public static void setCursorLoc(Coord c){cursorLoc = new Coord(c);}
    
    
    public static int randomInt(int lower, int upper)

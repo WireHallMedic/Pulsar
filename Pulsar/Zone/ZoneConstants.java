@@ -4,7 +4,7 @@ import WidlerSuite.*;
 
 public interface ZoneConstants extends CP437
 {
-   public enum TILE_TYPE
+   public enum TileType
    {
       CLEAR (250, "Clear", true, true, true),
       HIGH_WALL ('#', "Wall", false, false, false),
@@ -16,7 +16,7 @@ public interface ZoneConstants extends CP437
       public boolean highPassable;
       public boolean transparent;
       
-      private TILE_TYPE(int i, String n, boolean lp, boolean hp, boolean t)
+      private TileType(int i, String n, boolean lp, boolean hp, boolean t)
       {
          iconIndex = i;
          name = n;

@@ -12,7 +12,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 
-public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
+public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, EngineConstants
 {
 	public MainGameFGPanel()
    {
@@ -31,24 +31,39 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
       if(zoneMap != null && player != null)
       {
          MapTile tile;
-         int x_corner = player.getSpriteXLoc() - (columns() / 2);
-         int y_corner = player.getSpriteYLoc() - (rows() / 2);
+         int xCorner = player.getSpriteXLoc() - (columns() / 2);
+         int yCorner = player.getSpriteYLoc() - (rows() / 2);
          double xScroll = 0.0 - player.getSprite().getXOffset();
          double yScroll = 0.0 - player.getSprite().getYOffset();
-         setCornerTile(x_corner, y_corner);
+         setCornerTile(xCorner, yCorner);
          setScroll(xScroll, yScroll);
          
          for(int x = 0; x < columns(); x++)
          for(int y = 0; y < rows(); y++)
          {
-            if(GameEngine.playerCanSee(x + x_corner, y + y_corner))
+            if(GameEngine.playerCanSee(x + xCorner, y + yCorner))
                {
-               tile = zoneMap.getTile(x + x_corner, y + y_corner);
+               tile = zoneMap.getTile(x + xCorner, y + yCorner);
                setTile(x, y, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
             }
             else
             {
                setTile(x, y, ' ', Color.WHITE, BG_COLOR);
+            }
+         }
+         
+         if(GameEngine.getGameMode() == GameMode.LOOK)
+         {
+            Coord cursorLoc = GameEngine.getCursorLoc();
+            if(cursorLoc != null)
+            {
+               if(animationManager.slowBlink())
+               {
+                  cursorLoc.x -= xCorner;
+                  cursorLoc.y -= yCorner;
+                  int bgColor = getBGColor(cursorLoc.x, cursorLoc.y);
+                  setTile(cursorLoc.x, cursorLoc.y, 224, TERMINAL_FG_COLOR.getRGB(), bgColor);
+               }
             }
          }
       }
