@@ -53,11 +53,6 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       return fov.isVisible(target);
    }
    
-   public void setPlayerViewArea(Coord loc, int radius)
-   {
-   
-   }
-   
    public boolean isInBounds(int x, int y)
    {
       return x >= 0 && 

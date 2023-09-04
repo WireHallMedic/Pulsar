@@ -106,12 +106,10 @@ public class GameEngine implements Runnable, AIConstants
    }
    
    public static boolean playerCanSee(Actor a){return playerCanSee(a.getMapLoc());}
-   public static boolean playerCanSee(Coord c){return playerCanSee(c.x, c.y);}
-   public static boolean playerCanSee(int x, int y)
+   public static boolean playerCanSee(int x, int y){return playerCanSee(new Coord(x, y));}
+   public static boolean playerCanSee(Coord target)
    {
-      Coord origin = player.getMapLoc();
-      Coord target = new Coord(x, y);
-      return zoneMap.canSee(origin, target, player.getVisionRange());
+      return player.canSee(target);
    }
    
    public static void add(MovementScript ms){mapPanel.add(ms);}

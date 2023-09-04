@@ -108,6 +108,13 @@ public class Actor implements ActorConstants
       return GameEngine.getZoneMap().getTile(x, y).isLowPassable() && !GameEngine.isActorAt(x, y);
    }
    
+   public boolean canSee(int x, int y){return canSee(new Coord(x, y));}
+   public boolean canSee(Coord target)
+   {
+      return WSTools.getAngbandMetric(getMapLoc(), target) <= getVisionRange() &&
+         GameEngine.getZoneMap().canSee(getMapLoc(), target, getVisionRange());
+   }
+   
    // AI/turn methods
    ////////////////////////////////////////////////////////////////////
    public boolean isReadyToAct()
