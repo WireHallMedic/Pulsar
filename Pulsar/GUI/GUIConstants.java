@@ -23,6 +23,7 @@ public interface GUIConstants
    public static final Color DEFAULT_TILE_BG_COLOR = new Color(16, 16, 16);
    public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
    public static final Color DEFAULT_MESSAGE_COLOR = Color.CYAN;
+   public static final Color PLAYER_COLOR = Color.ORANGE;
    
    public static final double SLOW_MOVE_SPEED = .05;
    public static final double NORMAL_MOVE_SPEED = .1;

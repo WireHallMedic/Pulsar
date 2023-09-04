@@ -1,6 +1,7 @@
 package Pulsar.Zone;
 
 import Pulsar.GUI.*;
+import WidlerSuite.*;
 
 public class ZoneMap implements ZoneConstants, GUIConstants
 {
@@ -9,6 +10,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	private MapTile[][] tileArray;
 	private MapTile oobTile;
    private boolean[][] transparencyMap;
+   private ShadowFoVRect fov;
 
 
 	public int getWidth(){return width;}
@@ -16,12 +18,14 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	public MapTile[][] getTileArray(){return tileArray;}
 	public MapTile getOobTile(){return oobTile;}
    public boolean[][] getTransparencyMap(){return transparencyMap;}
+   public ShadowFoVRect getFoV(){return fov;}
 
 
 	public void setWidth(int w){width = w;}
 	public void setHeight(int h){height = h;}
 	public void setTileArray(MapTile[][] t){tileArray = t;}
 	public void setOobTile(MapTile o){oobTile = o;}
+   public void setFoV(ShadowFoVRect newFoV){fov = newFoV;}
 
 
    public ZoneMap(int w, int h, MapTile defaultTile)
@@ -34,6 +38,24 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       for(int y = 0; y < height; y++)
          setTile(x, y, new MapTile(defaultTile));
       oobTile = MapTileFactory.getTile(TILE_TYPE.NULL);
+      fov = new ShadowFoVRect(transparencyMap);
+   }
+   
+   public void updateFoV()
+   {
+      fov.reset(transparencyMap);
+   }
+   
+   // quickly calculate if origin can see target
+   public boolean canSee(Coord origin, Coord target, int radius)
+   {
+      fov.calcCone(origin, radius, target);
+      return fov.isVisible(target);
+   }
+   
+   public void setPlayerViewArea(Coord loc, int radius)
+   {
+   
    }
    
    public boolean isInBounds(int x, int y)

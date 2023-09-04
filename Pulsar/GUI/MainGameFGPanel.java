@@ -41,8 +41,15 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants
          for(int x = 0; x < columns(); x++)
          for(int y = 0; y < rows(); y++)
          {
-            tile = zoneMap.getTile(x + x_corner, y + y_corner);
-            setTile(x, y, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
+            if(GameEngine.playerCanSee(x + x_corner, y + y_corner))
+               {
+               tile = zoneMap.getTile(x + x_corner, y + y_corner);
+               setTile(x, y, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
+            }
+            else
+            {
+               setTile(x, y, ' ', Color.WHITE, BG_COLOR);
+            }
          }
       }
       

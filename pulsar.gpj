@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2564;g
+!2596;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -74,6 +74,7 @@ s#l0
 %\011Pulsar%sGUI%sWSFont_8x16.png
 %\011Pulsar%sZone%sZoneMapFactory.java
 %\011%uWidlerSuite%sAStarOpenList.java
+%\011Pulsar%sActor%sPlayer.java
 %\011%uWidlerSuite%sFontLoader.java
 %\011%uWidlerSuite%sLayoutPanel.java
 %\011%uWidlerSuite%sShadowFoVHex.java
@@ -83,7 +84,7 @@ s#l0
 %\011Pulsar%sEngine%sGameEngine.java
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
-!2564;f
+!2596;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -145,6 +146,7 @@ s#l0
 %\011Pulsar%sGUI%sWSFont_8x16.png
 %\011Pulsar%sZone%sZoneMapFactory.java
 %\011%uWidlerSuite%sAStarOpenList.java
+%\011Pulsar%sActor%sPlayer.java
 %\011%uWidlerSuite%sFontLoader.java
 %\011%uWidlerSuite%sLayoutPanel.java
 %\011%uWidlerSuite%sShadowFoVHex.java
