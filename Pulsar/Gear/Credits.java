@@ -4,9 +4,9 @@ public class Credits extends GearObj implements GearConstants
 {
    private int amount;
    
-   public void getAmount(){return amount;}
+   public int getAmount(){return amount;}
    
-   public int setAmount(int amt){amount = amt;}
+   public void setAmount(int amt){amount = amt;}
    
    public Credits(int amt)
    {
@@ -17,7 +17,7 @@ public class Credits extends GearObj implements GearConstants
    @Override
    public String getName()
    {
-      return getAmount() + name;
+      return getSummary();
    }
    
    public void add(Credits that)
@@ -28,5 +28,10 @@ public class Credits extends GearObj implements GearConstants
    public void adjustAmount(int val)
    {
       amount += val;
+   }
+   
+   public String getSummary()
+   {
+      return getAmount() + " " + super.getName();
    }
 }

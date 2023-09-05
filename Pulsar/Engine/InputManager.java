@@ -6,6 +6,7 @@ import WidlerSuite.*;
 import Pulsar.Actor.*;
 import Pulsar.AI.*;
 import Pulsar.GUI.*;
+import Pulsar.Gear.*;
 import java.awt.*;
 
 public class InputManager implements KeyListener, AIConstants, EngineConstants
@@ -50,6 +51,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
                               break;
          case KeyEvent.VK_Z : debug('z'); break;
          case KeyEvent.VK_X : debug('x'); break;
+         case KeyEvent.VK_SPACE : debug(' '); break;
       }
       
       if(target != null)
@@ -101,6 +103,20 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    
    public void debug(char arg)
    {
+      if(arg == ' ')
+      {
+         Weapon weapon = new Weapon();
+         System.out.println(weapon.getSummary());
+         weapon.setAttacks(1);
+         System.out.println(weapon.getSummary());
+         weapon.setHeavy(true);
+         System.out.println(weapon.getSummary());
+         weapon.setMelee(true);
+         System.out.println(weapon.getSummary());
+         weapon.setHeavy(false);
+         System.out.println(weapon.getSummary());
+         return;
+      }
       if(arg == 'e')
       {
          System.out.println(GameEngine.isActorAt(GameEngine.getPlayer().getMapLoc()));

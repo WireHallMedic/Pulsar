@@ -6,4 +6,9 @@ public class Gadget extends GearObj implements GearConstants
    {
       super(GADGET_ICON, "Unknown Gadget");
    }
+   
+   public String getSummary()
+   {
+      return "";
+   }
 }
