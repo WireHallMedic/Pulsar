@@ -52,22 +52,22 @@ public class Weapon extends GearObj implements GearConstants
    
    private String getSingleShotSummary()
    {
-      return getDamagePerShotString() + " " + damageType.name + getTagString();
+      return getDamagePerShotString() + " " + getTagString();
    }
    
    private String getMultipleShotSummary()
    {
-      return "(" + getDamagePerShotString() + ")x" + attacks + " " + damageType.name + getTagString();
+      return "(" + getDamagePerShotString() + ")x" + attacks + " " + getTagString();
    }
    
    private String getTagString()
    {
-      if(melee && heavy)
-         return " [Melee, Heavy]";
-      if(!melee && heavy)
-         return " [Heavy]";
-      if(melee && !heavy)
-         return " [Melee]";
-      return "";
+      String tagString = "[" + damageType.name;
+      if(heavy)
+         tagString += ", Heavy";
+      if(melee)
+         tagString += ", Melee";
+      tagString += "]";
+      return tagString;
    }
 }
