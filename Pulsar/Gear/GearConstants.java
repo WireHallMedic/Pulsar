@@ -15,10 +15,10 @@ public interface GearConstants extends WSFontConstants
    
    public enum DamageType
    {
-      KINETIC  ("Kinetic"), 
-      THERMAL  ("Thermal"), 
-      CRYO     ("Cryo"), 
-      ELECTRO  ("Electro");
+      KINETIC  ("Kinetic"),      // basic damage type
+      THERMAL  ("Thermal"),      // good against organics, bad against inorganics, causes fires
+      CRYO     ("Cryo"),         // slows, freezes things, puts out fires
+      ELECTRO  ("Electro");      // good against inorganics and shields, interacts with liquids
       
       public String name;
       
@@ -30,11 +30,11 @@ public interface GearConstants extends WSFontConstants
    
    public enum WeaponTag
    {
-      SPREAD       ("Spread"),
-      MELEE        ("Melee"),
-      BLAST        ("Blast"),
-      LARGE_BLAST  ("Large Blast"),
-      HEAVY        ("Heavy");
+      SPREAD       ("Spread"),      // fires in a spread like a shotgun
+      MELEE        ("Melee"),       // attacks against adjacent actors only
+      BLAST        ("Blast"),       // 1-tile radius explosion
+      LARGE_BLAST  ("Large Blast"), // 2-tile radius explosion
+      HEAVY        ("Heavy");       // damages terrain
       
       public String name;
       
