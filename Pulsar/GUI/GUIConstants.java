@@ -33,6 +33,8 @@ public interface GUIConstants
    public static final double SPRAY_VARIABLE_SPEED = .05;
    public static final int SPRAY_DURATION = 10;
    
+   public static final char EXPLOSION_CHAR = 15;
+   
    public static final String WINDOW_TITLE = "Pulsar: A Sci-Fi Roguelike";
    
    public static TilePalette RECT_TILE_PALETTE = new TilePalette("Pulsar/GUI/WSFont_8x16.png", 16, 16);

@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2816;g
+!2848;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -68,6 +68,7 @@ s#l0
 %\011%uWidlerSuite%sStraightLine.java
 %\011Pulsar%sActor%sActorConstants.java
 %\011Pulsar%sActor%sActorFactory.java
+%\011Pulsar%sGear%sGearObj.java
 %\011%uWidlerSuite%sBorderBuilder.java
 %\011Pulsar%sGUI%sMainGameFGPanel.java
 %\011Pulsar%sGUI%sInfoPanel.java
@@ -90,7 +91,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!2816;f
+!2848;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -146,6 +147,7 @@ s#l0
 %\011%uWidlerSuite%sStraightLine.java
 %\011Pulsar%sActor%sActorConstants.java
 %\011Pulsar%sActor%sActorFactory.java
+%\011Pulsar%sGear%sGearObj.java
 %\011%uWidlerSuite%sBorderBuilder.java
 %\011Pulsar%sGUI%sMainGameFGPanel.java
 %\011Pulsar%sGUI%sInfoPanel.java

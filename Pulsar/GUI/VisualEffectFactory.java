@@ -6,7 +6,7 @@ import Pulsar.Engine.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class VisualEffectFactory implements GUIConstants, ActionListener
+public class VisualEffectFactory implements GUIConstants, ActionListener, CP437
 {
    private static TilePalette getPalette(){return GUIConstants.SQUARE_TILE_PALETTE;}
    private static double getSizeMultiplier(){return GameEngine.getMapPanel().getSizeMultiplier();}
@@ -51,7 +51,7 @@ public class VisualEffectFactory implements GUIConstants, ActionListener
          Color color = Color.RED;
          if(GameEngine.randomInt(0, 2) == 1)
             color = Color.ORANGE;
-         particleArray[i] = getPalette().getUnboundTile('*', color.getRGB(), getSizeMultiplier());
+         particleArray[i] = getPalette().getUnboundTile(EXPLOSION_CHAR, color.getRGB(), getSizeMultiplier());
          particleArray[i].setLoc(origin);
          particleArray[i].setLifespan(SPRAY_DURATION);
       }
