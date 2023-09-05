@@ -28,6 +28,9 @@ public class PulsarMain extends JFrame implements GUIConstants, WindowStateListe
       inputManager = new InputManager(this);
       addWindowStateListener(this);
       
+      VisualEffectFactory veFactory = new VisualEffectFactory();
+      timer.addActionListener(veFactory);
+      
       timer.start();
       outerPanel.arrange();
    }

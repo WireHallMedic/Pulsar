@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2773;g
+!2816;g
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -26,6 +26,7 @@ s#l0
 %\011%uWidlerSuite%sCP437.java
 %\011%uWidlerSuite%sNoiseObj.java
 %\011Pulsar%sGUI%sGUIConstants.java
+%\011Pulsar%sGUI%sDelayedVisualEffect.java
 %\011%uWidlerSuite%sAStarNode.java
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011%uWidlerSuite%sAnimationManager.java
@@ -89,7 +90,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!2773;f
+!2816;f
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -103,6 +104,7 @@ s#l0
 %\011%uWidlerSuite%sCP437.java
 %\011%uWidlerSuite%sNoiseObj.java
 %\011Pulsar%sGUI%sGUIConstants.java
+%\011Pulsar%sGUI%sDelayedVisualEffect.java
 %\011%uWidlerSuite%sAStarNode.java
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011%uWidlerSuite%sAnimationManager.java

@@ -116,6 +116,9 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       if(arg == 'z')
       {
          VisualEffectFactory.createExplosion(new Coord(1, 1));
+         VisualEffectFactory.createExplosion(new Coord(2, 2), 10);
+         VisualEffectFactory.createExplosion(new Coord(1, 2), 20);
+         VisualEffectFactory.createExplosion(new Coord(2, 1), 30);
          return;
       }
       if(arg == 'x')

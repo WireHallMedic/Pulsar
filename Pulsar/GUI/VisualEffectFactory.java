@@ -3,23 +3,28 @@ package Pulsar.GUI;
 import java.awt.*;
 import WidlerSuite.*;
 import Pulsar.Engine.*;
+import java.awt.event.*;
+import java.util.*;
 
-public class VisualEffectFactory implements GUIConstants
+public class VisualEffectFactory implements GUIConstants, ActionListener
 {
    private static TilePalette getPalette(){return GUIConstants.SQUARE_TILE_PALETTE;}
    private static double getSizeMultiplier(){return GameEngine.getMapPanel().getSizeMultiplier();}
-   private static void add(UnboundTile ut){GameEngine.getMapPanel().add(ut);}
-   private static void add(MovementScript ms){GameEngine.getMapPanel().add(ms);}
+   public static void add(UnboundTile ut){GameEngine.getMapPanel().add(ut);}
+   public static void add(MovementScript ms){GameEngine.getMapPanel().add(ms);}
+   private static Vector<DelayedVisualEffect> delayList = new Vector<DelayedVisualEffect>();
 
    
-   public static void createSpray(Coord origin, Coord source, Color color)
+   public static void createSpray(Coord origin, Coord source, Color color){createSpray(origin, source, color, 0);}
+   public static void createSpray(Coord origin, Coord source, Color color, int delay)
    {
       int reps = GameEngine.randomInt(8, 13);
       for(int i = 0; i < reps; i++)
-         createSprayParticle(origin, source, color);
+         createSprayParticle(origin, source, color, delay);
    }
    
-   public static void createSprayParticle(Coord origin, Coord source, Color color)
+   public static void createSprayParticle(Coord origin, Coord source, Color color){createSprayParticle(origin, source, color, 0);}
+   public static void createSprayParticle(Coord origin, Coord source, Color color, int delay)
    {
       double xSpeed = GUITools.getXSpeedTowards(source, origin);
       double ySpeed = GUITools.getYSpeedTowards(source, origin);
@@ -31,10 +36,14 @@ public class VisualEffectFactory implements GUIConstants
       ut.setLoc(origin);
       ut.setLifespan(SPRAY_DURATION);
       ut.setSpeed(xSpeed, ySpeed);
-      add(ut);
+      if(delay > 0)
+         addWithDelay(ut, null, delay);
+      else
+         add(ut);
    }
    
-   public static void createExplosion(Coord origin)
+   public static void createExplosion(Coord origin){createExplosion(origin, 0);}
+   public static void createExplosion(Coord origin, int delay)
    {
       UnboundTile[] particleArray = new UnboundTile[16];
       for(int i = 0; i < particleArray.length; i++)
@@ -63,50 +72,54 @@ public class VisualEffectFactory implements GUIConstants
          particleArray[8 + i].setSpeed(xSpeed, ySpeed);
       }
       
-      for(int i = 0; i < particleArray.length; i++)
-         add(particleArray[i]);
+      if(delay > 0)
+      {
+         addWithDelay(particleArray, delay);
+      }
+      else
+      {
+         for(int i = 0; i < particleArray.length; i++)
+         {
+            add(particleArray[i]);
+         }
+      }
    }
    
-   private class DelayedVisualEffect
+   public static void addWithDelay(UnboundTile ut, MovementScript ms, int delay)
    {
-   	private UnboundTile unboundTile;
-   	private MovementScript movementScript;
-   	private int delay;
+      DelayedVisualEffect delayVE;
+      delayVE = new DelayedVisualEffect(ut, ms, delay);
+      delayList.add(delayVE);
+   }
    
-   
-   	public UnboundTile getUnboundTile(){return unboundTile;}
-   	public MovementScript getMovementScript(){return movementScript;}
-   	public int getDelay(){return delay;}
-   
-   
-   	public void setUnboundTile(UnboundTile u){unboundTile = u;}
-   	public void setMovementScript(MovementScript m){movementScript = m;}
-   	public void setDelay(int d){delay = d;}
-
-
-      public DelayedVisualEffect(UnboundTile ut, MovementScript ms, int d)
+   public static void addWithDelay(UnboundTile[] utList, int delay)
+   {
+      for(UnboundTile ut : utList)
       {
-         unboundTile = ut;
-         movementScript = ms;
-         delay = d;
-      }
-      
-      public void increment()
-      {
-         delay--;
-      }
-      
-      public boolean shouldTrigger()
-      {
-         return delay <= 0;
-      }
-      
-      public void trigger()
-      {
-         if(unboundTile != null)
-            add(unboundTile);
-         if(movementScript != null)
-            add(movementScript);
+         addWithDelay(ut, null, delay);
       }
    }
+   
+   
+   
+   // non-static stuff
+   /////////////////////////////////////////////////////////////////////////////
+   
+   // hook this up to the timer for delays
+   public void actionPerformed(ActionEvent ae)
+   {
+      for(int i = 0; i < delayList.size(); i++)
+      {
+         DelayedVisualEffect ve = delayList.elementAt(i);
+         ve.increment();
+         if(ve.shouldTrigger())
+         {
+            ve.trigger();
+            delayList.remove(ve);
+            i--;
+         }
+      }
+   }
+   
+
 }

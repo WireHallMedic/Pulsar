@@ -65,8 +65,8 @@ public class MovementScriptFactory implements GUIConstants
    public static MovementScript getShootScript(Actor actor, Coord target)
    {
       UnboundTile ut = actor.getSprite();
-      double xStep = GUITools.getXSpeedTowards(new Coord(ut.getXLoc(), ut.getYLoc()), target);
-      double yStep = GUITools.getYSpeedTowards(new Coord(ut.getXLoc(), ut.getYLoc()), target);
+      double xStep = GUITools.getXSpeedTowards(target, new Coord(ut.getXLoc(), ut.getYLoc()));
+      double yStep = GUITools.getYSpeedTowards(target, new Coord(ut.getXLoc(), ut.getYLoc()));
       int framesPerDirection = 2;
       MovementScript ms = new MovementScript(ut);
       ms.setLength(framesPerDirection + framesPerDirection);
