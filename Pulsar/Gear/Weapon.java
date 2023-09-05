@@ -1,29 +1,28 @@
 package Pulsar.Gear;
 
+import java.util.*;
+
 public class Weapon extends GearObj implements GearConstants
 {	
 	private int baseDamage;
 	private int variableDamage;
 	private int attacks;
 	private DamageType damageType;
-	private boolean melee;
-	private boolean heavy;
+   private Vector<WeaponTag> weaponTags;
 
 
 	public int getBaseDamage(){return baseDamage;}
 	public int getVariableDamage(){return variableDamage;}
 	public int getAttacks(){return attacks;}
 	public DamageType getDamageType(){return damageType;}
-	public boolean isMelee(){return melee;}
-	public boolean isHeavy(){return heavy;}
+   public Vector<WeaponTag> getWeaponTags(){return weaponTags;}
 
 
 	public void setBaseDamage(int b){baseDamage = b;}
 	public void setVariableDamage(int v){variableDamage = v;}
 	public void setAttacks(int a){attacks = a;}
 	public void setDamageType(DamageType d){damageType = d;}
-	public void setMelee(boolean m){melee = m;}
-	public void setHeavy(boolean h){heavy = h;}
+   public void setWeaponTags(Vector<WeaponTag> wt){weaponTags = wt;}
 
 
    public Weapon()
@@ -33,8 +32,28 @@ public class Weapon extends GearObj implements GearConstants
       variableDamage = 3;
       attacks = 3;
       damageType = DamageType.KINETIC;
-      heavy = false;
-      melee = false;
+      weaponTags = new Vector<WeaponTag>();
+   }
+   
+   public void addWeaponTag(WeaponTag tag)
+   {
+      if(!weaponTags.contains(tag))
+         weaponTags.add(tag);
+   }
+   
+   public void removeWeaponTag(WeaponTag tag)
+   {
+      weaponTags.remove(tag);
+   }
+   
+   public boolean hasWeaponTag(WeaponTag tag)
+   {
+      for(WeaponTag listTag : weaponTags)
+      {
+         if(listTag == tag)
+            return true;
+      }
+      return false;
    }
    
    
@@ -63,10 +82,12 @@ public class Weapon extends GearObj implements GearConstants
    private String getTagString()
    {
       String tagString = "[" + damageType.name;
-      if(heavy)
-         tagString += ", Heavy";
-      if(melee)
-         tagString += ", Melee";
+      // based on enum rather than just iterating the list for constant order
+      for(WeaponTag tag : WeaponTag.values())
+      {
+         if(hasWeaponTag(tag))
+            tagString += ", " + tag.name;
+      }
       tagString += "]";
       return tagString;
    }

@@ -27,4 +27,20 @@ public interface GearConstants extends WSFontConstants
          name = n;
       }
    }
+   
+   public enum WeaponTag
+   {
+      SPREAD       ("Spread"),
+      MELEE        ("Melee"),
+      BLAST        ("Blast"),
+      LARGE_BLAST  ("Large Blast"),
+      HEAVY        ("Heavy");
+      
+      public String name;
+      
+      private WeaponTag(String n)
+      {
+         name = n;
+      }
+   }
 }
