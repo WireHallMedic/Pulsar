@@ -12,7 +12,8 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2848;g
+!2971;g
+%\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -31,9 +32,11 @@ s#l0
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011%uWidlerSuite%sAnimationManager.java
 %\011%uWidlerSuite%sFloodFill.java
+%\011Pulsar%sGear%sArmor.java
 %\011Pulsar%sGUI%sMessagePanel.java
 %\011Pulsar%sAI%sAIConstants.java
 %\011Pulsar%sGUI%sMainGameBGPanel.java
+%\011Pulsar%sGear%sWeapon.java
 %\011Pulsar%sActor%sActor.java
 %\011%uWidlerSuite%sRogueTilePanel.java
 %\011Pulsar%sGUI%sOuterPanel.java
@@ -56,6 +59,7 @@ s#l0
 %\011%uWidlerSuite%sDoubleDeck.java
 %\011Pulsar%sPulsarMain.java
 %\011%uWidlerSuite%sRoguePanel.java
+%\011Pulsar%sGear%sGadget.java
 %\011%uWidlerSuite%sSquirrelRNG.java
 %\011%uWidlerSuite%sUnboundString.java
 %\011Pulsar%sZone%sToggleTile.java
@@ -91,7 +95,8 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!2848;f
+!2971;f
+%\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -110,9 +115,11 @@ s#l0
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011%uWidlerSuite%sAnimationManager.java
 %\011%uWidlerSuite%sFloodFill.java
+%\011Pulsar%sGear%sArmor.java
 %\011Pulsar%sGUI%sMessagePanel.java
 %\011Pulsar%sAI%sAIConstants.java
 %\011Pulsar%sGUI%sMainGameBGPanel.java
+%\011Pulsar%sGear%sWeapon.java
 %\011Pulsar%sActor%sActor.java
 %\011%uWidlerSuite%sRogueTilePanel.java
 %\011Pulsar%sGUI%sOuterPanel.java
@@ -135,6 +142,7 @@ s#l0
 %\011%uWidlerSuite%sDoubleDeck.java
 %\011Pulsar%sPulsarMain.java
 %\011%uWidlerSuite%sRoguePanel.java
+%\011Pulsar%sGear%sGadget.java
 %\011%uWidlerSuite%sSquirrelRNG.java
 %\011%uWidlerSuite%sUnboundString.java
 %\011Pulsar%sZone%sToggleTile.java

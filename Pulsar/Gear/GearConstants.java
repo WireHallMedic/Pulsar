@@ -5,10 +5,10 @@ import WidlerSuite.*;
 
 public interface GearConstants
 {
-   public static final int DEFAULT_WEAPON_ICON = '}';
-   public static final int DEFAULT_SHIELD_ICON = ')';
-   public static final int DEFAULT_ARMOR_ICON = '&';
-   public static final int DEFAULT_GADGET_ICON = '+';
+   public static final int WEAPON_ICON = '}';
+   public static final int SHIELD_ICON = ')';
+   public static final int ARMOR_ICON = '&';
+   public static final int GADGET_ICON = '+';
    
    public static final Color DEFAULT_WEAPON_COLOR = Color.WHITE;
 }
