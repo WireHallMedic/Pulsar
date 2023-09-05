@@ -9,6 +9,7 @@ public class VisualEffectFactory implements GUIConstants
    private static TilePalette getPalette(){return GUIConstants.SQUARE_TILE_PALETTE;}
    private static double getSizeMultiplier(){return GameEngine.getMapPanel().getSizeMultiplier();}
    private static void add(UnboundTile ut){GameEngine.getMapPanel().add(ut);}
+   private static void add(MovementScript ms){GameEngine.getMapPanel().add(ms);}
 
    
    public static void createSpray(Coord origin, Coord source, Color color)
@@ -64,7 +65,48 @@ public class VisualEffectFactory implements GUIConstants
       
       for(int i = 0; i < particleArray.length; i++)
          add(particleArray[i]);
-         
+   }
+   
+   private class DelayedVisualEffect
+   {
+   	private UnboundTile unboundTile;
+   	private MovementScript movementScript;
+   	private int delay;
+   
+   
+   	public UnboundTile getUnboundTile(){return unboundTile;}
+   	public MovementScript getMovementScript(){return movementScript;}
+   	public int getDelay(){return delay;}
+   
+   
+   	public void setUnboundTile(UnboundTile u){unboundTile = u;}
+   	public void setMovementScript(MovementScript m){movementScript = m;}
+   	public void setDelay(int d){delay = d;}
+
+
+      public DelayedVisualEffect(UnboundTile ut, MovementScript ms, int d)
+      {
+         unboundTile = ut;
+         movementScript = ms;
+         delay = d;
+      }
       
+      public void increment()
+      {
+         delay--;
+      }
+      
+      public boolean shouldTrigger()
+      {
+         return delay <= 0;
+      }
+      
+      public void trigger()
+      {
+         if(unboundTile != null)
+            add(unboundTile);
+         if(movementScript != null)
+            add(movementScript);
+      }
    }
 }
