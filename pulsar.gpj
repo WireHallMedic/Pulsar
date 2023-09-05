@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!2971;g
+!3003;g
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -43,6 +43,7 @@ s#l0
 %\011Pulsar%sZone%sDoor.java
 %\011%uWidlerSuite%sMovementScript.java
 %\011Pulsar%sZone%sZoneConstants.java
+%\011Pulsar%sGear%sCredits.java
 %\011%uWidlerSuite%sTileAnimationManager.java
 %\011%uWidlerSuite%sRoom.java
 %\011Pulsar%sAI%sPlayerAI.java
@@ -95,7 +96,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!2971;f
+!3003;f
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -126,6 +127,7 @@ s#l0
 %\011Pulsar%sZone%sDoor.java
 %\011%uWidlerSuite%sMovementScript.java
 %\011Pulsar%sZone%sZoneConstants.java
+%\011Pulsar%sGear%sCredits.java
 %\011%uWidlerSuite%sTileAnimationManager.java
 %\011%uWidlerSuite%sRoom.java
 %\011Pulsar%sAI%sPlayerAI.java
