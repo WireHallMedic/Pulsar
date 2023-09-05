@@ -2,10 +2,11 @@ package Pulsar.AI;
 
 public interface AIConstants
 {
-   public enum ACTION
+   public enum ActorAction
    {
       STEP,
       DELAY,
-      CONTEXT_SENSITIVE;
+      CONTEXT_SENSITIVE,
+      TOGGLE;
    }
 }

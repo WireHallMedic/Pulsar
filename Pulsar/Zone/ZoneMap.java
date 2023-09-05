@@ -43,6 +43,9 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    
    public void updateFoV()
    {
+      for(int x = 0; x < tileArray.length; x++)
+      for(int y = 0; y < tileArray[0].length; y++)
+         transparencyMap[x][y] = tileArray[x][y].isTransparent();
       fov.reset(transparencyMap);
    }
    

@@ -11,7 +11,7 @@ import WidlerSuite.*;
 
 public class GameEngine implements Runnable, AIConstants, EngineConstants
 {
-   private static Actor player = null;
+   private static Player player = null;
 	private static Vector<Actor> actorList = new Vector<Actor>();
    private static ZoneMap zoneMap = null;
    private static MainGameFGPanel mapPanel = null;
@@ -25,7 +25,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    Thread thread;
 
 
-	public static Actor getPlayer(){return player;}
+	public static Player getPlayer(){return player;}
 	public static Vector<Actor> getActorList(){return actorList;}
    public static ZoneMap getZoneMap(){return zoneMap;}
    public static MainGameFGPanel getMapPanel(){return mapPanel;}
@@ -46,7 +46,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return lower + (int)(random() * (upper - lower));
    }
    
-	public static void setPlayer(Actor p)
+	public static void setPlayer(Player p)
    {
       if(player != null)
       {
@@ -139,7 +139,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public static void newGame()
    {
-      Actor p = ActorFactory.getPlayer();
+      Player p = ActorFactory.getPlayer();
       p.setAllLocs(2, 3);
       setPlayer(p);
       Actor e = new Actor('e');
@@ -188,7 +188,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          {
             if(!(curActor.hasPlan()))
                curActor.plan();
-            if(curActor.getAI().getPendingAction() == ACTION.CONTEXT_SENSITIVE)
+            if(curActor.getAI().getPendingAction() == ActorAction.CONTEXT_SENSITIVE)
                curActor.getAI().interpertContext();
             if(curActor.hasPlan())
                if(!mapPanel.isAnimationLocked())

@@ -55,7 +55,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       if(target != null)
       {
          player.getAI().setPendingTarget(target);
-         player.getAI().setPendingAction(ACTION.CONTEXT_SENSITIVE);
+         player.getAI().setPendingAction(ActorAction.CONTEXT_SENSITIVE);
       }
    }
    

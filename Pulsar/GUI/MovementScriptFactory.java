@@ -14,7 +14,8 @@ public class MovementScriptFactory implements GUIConstants
       int xStep = GUITools.getXStep(ut.getXLoc(), target.x);
       int yStep = GUITools.getYStep(ut.getYLoc(), target.y);
       MovementScript ms = new MovementScript(ut);
-      for(int i = 0; i < 10; i++)
+      int steps = (int)(1.0 / NORMAL_MOVE_SPEED);
+      for(int i = 0; i < steps; i++)
       {
          ms.setOffset(i, NORMAL_MOVE_SPEED * xStep, NORMAL_MOVE_SPEED * yStep);
       }

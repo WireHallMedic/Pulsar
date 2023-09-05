@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class ActorFactory implements ActorConstants
 {
-   public static Actor getPlayer()
+   public static Player getPlayer()
    {
       Player a = new Player();
       a.setAI(new PlayerAI(a));
