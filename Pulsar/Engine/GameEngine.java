@@ -192,7 +192,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                curActor.getAI().interpertContext();
             if(curActor.hasPlan())
                if(!mapPanel.isAnimationLocked())
+               {
                   curActor.act();
+                  InfoPanel.redraw();
+               }
          }
          // increment if acted
          if(!(curActor.isReadyToAct()))

@@ -17,6 +17,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    private static final int HEIGHT_TILES = MAP_HEIGHT_TILES;
    private static final int X_ORIGIN = TERMINAL_WIDTH_TILES - WIDTH_TILES - 1;
    private static final int Y_ORIGIN = 1;
+   public static boolean redrawF = true;
    
    public InfoPanel(int w, int h, TilePalette tp)
    {
@@ -27,6 +28,11 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
          setTile(x + X_ORIGIN, y + Y_ORIGIN, '.', TERMINAL_FG_COLOR, BG_COLOR);
       }
       write(X_ORIGIN + 5, Y_ORIGIN, "Info Panel", 10, 1);
+   }
+   
+   public static void redraw()
+   {
+      redrawF = true;
    }
    
    public void clearInfoPanel()
@@ -89,14 +95,23 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       clearInfoPanel();
    }
    
-   @Override
-   public void actionPerformed(ActionEvent ae)
+   private void doRedraw()
    {
       switch(GameEngine.getGameMode())
       {
          case STANDARD  : showNearbyObjects(); break;
          case LOOK      : showCursorLooking(); break;
          case TARGETING : showCursorTargeting(); break;
+      }
+   }
+   
+   @Override
+   public void actionPerformed(ActionEvent ae)
+   {
+      if(redrawF)
+      {
+         redrawF = false;
+         doRedraw();
       }
       super.actionPerformed(ae);
    }
