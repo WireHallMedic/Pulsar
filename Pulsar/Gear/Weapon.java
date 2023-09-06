@@ -8,21 +8,33 @@ public class Weapon extends GearObj implements GearConstants
 	private int variableDamage;
 	private int attacks;
 	private DamageType damageType;
-   private Vector<WeaponTag> weaponTags;
+	private Vector<WeaponTag> weaponTags;
+	private int curCharge;
+	private int maxCharge;
+	private int chargeCost;
+	private int rechargeRate;
 
 
 	public int getBaseDamage(){return baseDamage;}
 	public int getVariableDamage(){return variableDamage;}
 	public int getAttacks(){return attacks;}
 	public DamageType getDamageType(){return damageType;}
-   public Vector<WeaponTag> getWeaponTags(){return weaponTags;}
+	public Vector<WeaponTag> getWeaponTags(){return weaponTags;}
+	public int getCurCharge(){return curCharge;}
+	public int getMaxCharge(){return maxCharge;}
+	public int getChargeCost(){return chargeCost;}
+	public int getRechargeRate(){return rechargeRate;}
 
 
 	public void setBaseDamage(int b){baseDamage = b;}
 	public void setVariableDamage(int v){variableDamage = v;}
 	public void setAttacks(int a){attacks = a;}
 	public void setDamageType(DamageType d){damageType = d;}
-   public void setWeaponTags(Vector<WeaponTag> wt){weaponTags = wt;}
+	public void setWeaponTags(Vector<WeaponTag> w){weaponTags = w;}
+	public void setCurCharge(int c){curCharge = c;}
+	public void setMaxCharge(int m){maxCharge = m;}
+	public void setChargeCost(int c){chargeCost = c;}
+	public void setRechargeRate(int r){rechargeRate = r;}
 
 
    public Weapon()
@@ -33,6 +45,21 @@ public class Weapon extends GearObj implements GearConstants
       attacks = 3;
       damageType = DamageType.KINETIC;
       weaponTags = new Vector<WeaponTag>();
+      int curCharge = 20;
+      int maxCharge = 20;
+      chargeCost = 4;
+      rechargeRate = 1;
+   }
+   
+   public void fullyCharge()
+   {
+      curCharge = maxCharge;
+   }
+   
+   public void charge()
+   {
+      if(curCharge < maxCharge)
+         curCharge++;
    }
    
    public void addWeaponTag(WeaponTag tag)

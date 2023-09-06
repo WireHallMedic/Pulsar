@@ -42,7 +42,7 @@ public class Shield extends GearObj implements GearConstants
       return getCurCharge() + "/" + getMaxCharge() + ", Charge Delay: " + getChargeDelay() + ", Charge Rate: " + getChargeRate();
    }
    
-   public void increment()
+   public void charge()
    {
       if(curCharge < maxCharge)
       {
@@ -75,14 +75,5 @@ public class Shield extends GearObj implements GearConstants
          curCharge = curCharge - damage;
       }
       return remainingDamage;
-   }
-   
-   public static void test()
-   {
-   }
-   
-   public static void main(String[] args)
-   {
-      test();
    }
 }

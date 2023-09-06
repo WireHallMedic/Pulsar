@@ -48,13 +48,13 @@ public class GearTest implements GearConstants
       Assert.assertEquals("curCharge for Electro damage, shield breaks", shield.getCurCharge(), 0);
       
       for(int i = 0; i < 5; i++)
-         shield.increment();
+         shield.charge();
       Assert.assertEquals("Recharging, before recharge begins", shield.getCurCharge(), 0);
       for(int i = 0; i < 6; i++)
-         shield.increment();
+         shield.charge();
       Assert.assertEquals("Recharging, mid recharge", shield.getCurCharge(), 1);
       for(int i = 0; i < 10; i++)
-         shield.increment();
+         shield.charge();
       Assert.assertEquals("Recharging, post recharge", shield.getCurCharge(), 10);
    }
 
