@@ -69,7 +69,8 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    public void showCursorLooking()
    {
       clearInfoPanel();
-      write(X_ORIGIN, Y_ORIGIN, "Look mode (escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
+      write(X_ORIGIN, Y_ORIGIN, "Look mode", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
+      write(X_ORIGIN, Y_ORIGIN + 1, "(escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
       
       MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
       if(GameEngine.playerCanSee(GameEngine.getCursorLoc()))
@@ -89,14 +90,33 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       {
          write(X_ORIGIN, Y_ORIGIN + 2, "  Out of view.", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       }
-      
-
    }
    
    // targeting mode
    public void showCursorTargeting()
    {
       clearInfoPanel();
+      write(X_ORIGIN, Y_ORIGIN, "Targeting mode", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
+      write(X_ORIGIN, Y_ORIGIN + 1, "(escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
+      
+      MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
+      if(GameEngine.playerCanSee(GameEngine.getCursorLoc()))
+      {
+         setTile(X_ORIGIN, Y_ORIGIN + 2, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
+         write(X_ORIGIN + 2, Y_ORIGIN + 2, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         
+         Actor actor = GameEngine.getActorAt(GameEngine.getCursorLoc());
+         if(actor != null)
+         {
+            UnboundTile ut = actor.getSprite();
+            setTile(X_ORIGIN, Y_ORIGIN + 4, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
+            write(X_ORIGIN + 2, Y_ORIGIN + 4, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         }
+      }
+      else
+      {
+         write(X_ORIGIN, Y_ORIGIN + 2, "  Out of view.", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      }
    }
    
    private void redraw()

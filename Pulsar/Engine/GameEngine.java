@@ -125,6 +125,12 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return player.canSee(target);
    }
    
+   public static boolean blocksShooting(int x, int y){return blocksShooting(new Coord(x, y));}
+   public static boolean blocksShooting(Coord target)
+   {
+      return isActorAt(target) || !zoneMap.getTile(target).isHighPassable();
+   }
+   
    public static void add(MovementScript ms){mapPanel.add(ms);}
    public static void addLocking(MovementScript ms){mapPanel.addLocking(ms);}
    public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}

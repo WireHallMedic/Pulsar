@@ -27,6 +27,7 @@ public interface GUIConstants
    public static final Color SHIELD_COLOR = Color.WHITE;
    public static final Color DEFAULT_ACTOR_FG_COLOR = new Color(220, 220, 220);
    public static final Color DEFAULT_ACTOR_BG_COLOR = Color.GRAY;
+   public static final Color RETICULE_COLOR = Color.YELLOW;
    
    public static final double SLOW_MOVE_SPEED = .05;
    public static final double NORMAL_MOVE_SPEED = .2;
