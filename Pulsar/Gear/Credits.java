@@ -23,6 +23,7 @@ public class Credits extends GearObj implements GearConstants
    public void add(Credits that)
    {
       this.adjustAmount(that.getAmount());
+      that.setAmount(0);
    }
    
    public void adjustAmount(int val)

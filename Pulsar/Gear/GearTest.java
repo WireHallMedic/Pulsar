@@ -57,4 +57,14 @@ public class GearTest implements GearConstants
          shield.increment();
       Assert.assertEquals("Recharging, post recharge", shield.getCurCharge(), 10);
    }
+
+   /** A test that always fails. **/
+   @Test public void creditTest() 
+   {
+      Credits creditA = new Credits(10);
+      Credits creditB = new Credits(5);
+      creditA.add(creditB);
+      Assert.assertEquals("Calling object gets value", creditA.getAmount(), 15);
+      Assert.assertEquals("Argument object loses value", creditB.getAmount(), 0);
+   }
 }
