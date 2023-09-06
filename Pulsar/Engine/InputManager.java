@@ -20,15 +20,15 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    {
       parent.addKeyListener(this);
       toolkit = Toolkit.getDefaultToolkit();
+      if(!toolkit.getLockingKeyState(KeyEvent.VK_NUM_LOCK))
+      {
+         toolkit.setLockingKeyState(KeyEvent.VK_NUM_LOCK, true);
+         MessagePanel.addMessage("NumLock turned on");
+      }
    }
    
    public void keyPressed(KeyEvent ke)
    {
-      if(!toolkit.getLockingKeyState(KeyEvent.VK_NUM_LOCK))
-      {
-         MessagePanel.addMessage("Turn on NumLock.");
-         return;
-      }
       switch(GameEngine.getGameMode())
       {
          case STANDARD  :   standardModeKeyPressed(ke); break;
