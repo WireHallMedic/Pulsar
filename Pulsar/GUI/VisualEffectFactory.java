@@ -9,8 +9,12 @@ import java.util.*;
 
 public class VisualEffectFactory implements GUIConstants, ActionListener, WSFontConstants
 {
-   private static final double[] shieldFlickerXOffset = {.2, .5, .8, .1, .5, .8, .2, .5, .8};
-   private static final double[] shieldFlickerYOffset = {.2, .1, .2, .5, .5, .5, .8, .9, .8};
+   private static final double SHIELD_BREAK_DIAG_SPEED = .707 * SLOW_MOVE_SPEED;
+   private static final double SHIELD_BREAK_ORTHO_SPEED = SLOW_MOVE_SPEED;
+   private static final double[] SHIELD_FLICKER_X_OFFSET = {.2, .5, .8, .1, .5, .8, .2, .5, .8};
+   private static final double[] SHIELD_FLICKER_Y_OFFSET = {.2, .1, .2, .5, .5, .5, .8, .9, .8};
+   private static final double[] SHIELD_BREAK_X_SPEED = getShieldBreakXSpeeds();
+   private static final double[] SHIELD_BREAK_Y_SPEED = getShieldBreakYSpeeds();
    private static TilePalette getPalette(){return GUIConstants.SQUARE_TILE_PALETTE;}
    private static double getSizeMultiplier(){return GameEngine.getMapPanel().getSizeMultiplier();}
    public static void add(UnboundTile ut){GameEngine.getMapPanel().add(ut);}
@@ -94,16 +98,15 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
       int reps = 3;
       for(int delay = 0; delay < reps; delay++)
       {
-         for(int i = 0; i < shieldFlickerXOffset.length; i++)
+         for(int i = 0; i < SHIELD_FLICKER_X_OFFSET.length; i++)
          {
-            double xOffset = shieldFlickerXOffset[i] - .6;
-            double yOffset = shieldFlickerYOffset[i] - .6;
+            double xOffset = SHIELD_FLICKER_X_OFFSET[i] - .6;
+            double yOffset = SHIELD_FLICKER_Y_OFFSET[i] - .6;
             xOffset += GameEngine.random() * .2;
             yOffset += GameEngine.random() * .2;
             UnboundTile ut = getPalette().getUnboundTile(SMALL_BULLET_TILE, SHIELD_COLOR.getRGB(), getSizeMultiplier());
             ut.setXOffset(xOffset);
             ut.setYOffset(yOffset);
-            //ut.setLoc(target.getMapLoc());
             ut.setLifespan(flickerDuration);
             ut.setAnchorTile(target.getSprite());
             if(delay == 0)
@@ -111,6 +114,28 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
             else
                addWithDelay(ut, null, delay * flickerDuration);
          }
+      }
+   }
+   
+   public static void createShieldBreak(Actor target)
+   {
+      for(int i = 0; i < SHIELD_FLICKER_X_OFFSET.length; i++)
+      {
+         if(i == 4)
+            continue;
+         double xOffset = SHIELD_FLICKER_X_OFFSET[i] - .6;
+         double yOffset = SHIELD_FLICKER_Y_OFFSET[i] - .6;
+         xOffset += GameEngine.random() * .2;
+         yOffset += GameEngine.random() * .2;
+         UnboundTile ut = getPalette().getUnboundTile(SMALL_BULLET_TILE, SHIELD_COLOR.getRGB(), getSizeMultiplier());
+         ut.setXOffset(xOffset);
+         ut.setYOffset(yOffset);
+         double xSpeed = SHIELD_BREAK_X_SPEED[i] + (GameEngine.random() * SLOW_MOVE_SPEED * .5);
+         double ySpeed = SHIELD_BREAK_Y_SPEED[i] + (GameEngine.random() * SLOW_MOVE_SPEED * .5);
+         ut.setSpeed(SHIELD_BREAK_X_SPEED[i], SHIELD_BREAK_Y_SPEED[i]);
+         ut.setLifespan(10);
+         ut.setLoc(target.getMapLoc());
+         add(ut);
       }
    }
    
@@ -129,7 +154,39 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
       }
    }
    
+   private static double[] getShieldBreakXSpeeds()
+   {
+      double straight = 1.0 * SLOW_MOVE_SPEED;
+      double diag = .707 * SLOW_MOVE_SPEED;
+      double[] speedArr = new double[9];
+      speedArr[0] = -diag;
+      speedArr[1] = 0.0;
+      speedArr[2] = diag;
+      speedArr[3] = -straight;
+      speedArr[4] = 0.0;
+      speedArr[5] = straight;
+      speedArr[6] = -diag;
+      speedArr[7] = 0.0;
+      speedArr[8] = diag;
+      return speedArr;
+   }
    
+   private static double[] getShieldBreakYSpeeds()
+   {
+      double straight = 1.0 * SLOW_MOVE_SPEED;
+      double diag = .707 * SLOW_MOVE_SPEED;
+      double[] speedArr = new double[9];
+      speedArr[0] = -diag;
+      speedArr[1] = -straight;
+      speedArr[2] = -diag;
+      speedArr[3] = 0.0;
+      speedArr[4] = 0.0;
+      speedArr[5] = 0.0;
+      speedArr[6] = diag;
+      speedArr[7] = straight;
+      speedArr[8] = diag;
+      return speedArr;
+   }
    
    // non-static stuff
    /////////////////////////////////////////////////////////////////////////////

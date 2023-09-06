@@ -115,6 +115,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       if(arg == ' ')
       {
          VisualEffectFactory.createShieldFlicker(GameEngine.getPlayer());
+         VisualEffectFactory.createShieldBreak(GameEngine.getPlayer());
          return;
       }
       if(arg == 'e')
