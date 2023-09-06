@@ -2,6 +2,7 @@ package Pulsar.Actor;
 
 import WidlerSuite.*;
 import Pulsar.Engine.*;
+import Pulsar.Gear.*;
 import Pulsar.GUI.*;
 import Pulsar.AI.*;
 import java.awt.*;
@@ -15,6 +16,8 @@ public class Actor implements ActorConstants
    private int turnEnergy;
    private BasicAI ai;
    private int visionRange;
+   private Shield shield;
+   private Weapon weapon;
 
 
    public String getName(){return name;}
@@ -23,6 +26,8 @@ public class Actor implements ActorConstants
    public int getTurnEnergy(){return turnEnergy;}
    public BasicAI getAI(){return ai;}
    public int getVisionRange(){return visionRange;}
+   public Shield getShield(){return shield;}
+   public Weapon getWeapon(){return weapon;}
 
 
    public void setName(String n){name = n;}
@@ -32,6 +37,8 @@ public class Actor implements ActorConstants
    public void setTurnEnergy(int te){turnEnergy = te;}
    public void setAI(BasicAI newAI){ai = newAI;}
    public void setVisionRange(int vr){visionRange = vr;}
+   public void setShield(Shield s){shield = s;}
+   public void setWeapon(Weapon w){weapon = w;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -43,6 +50,8 @@ public class Actor implements ActorConstants
       turnEnergy = 0;
       ai = new BasicAI(this);
       visionRange = DEFAULT_VISION_RANGE;
+      setShield(null);
+      setWeapon(null);
    }
    
    public void reconcileSprite()
@@ -116,6 +125,18 @@ public class Actor implements ActorConstants
          GameEngine.getZoneMap().canSee(getMapLoc(), target, getVisionRange());
    }
    
+   // gear methods
+   ////////////////////////////////////////////////////////////////////
+   public boolean hasShield()
+   {
+      return getShield() != null;
+   }
+   
+   public boolean hasWeapon()
+   {
+      return getWeapon() != null;
+   }
+   
    // AI/turn methods
    ////////////////////////////////////////////////////////////////////
    public boolean isReadyToAct()
@@ -126,7 +147,13 @@ public class Actor implements ActorConstants
    public void charge()
    {
       if(!(isReadyToAct()))
+      {
          turnEnergy++;
+         if(hasShield())
+            getShield().charge();
+         if(hasWeapon())
+            getWeapon().charge();
+      }
    }
    
    public void discharge(int cost)
