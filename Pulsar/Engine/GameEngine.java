@@ -193,11 +193,13 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             if(curActor.getAI().getPendingAction() == ActorAction.CONTEXT_SENSITIVE)
                curActor.getAI().interpertContext();
             if(curActor.hasPlan())
-               if(!mapPanel.isAnimationLocked())
+            {
+               if(animationAllowsAction(curActor))
                {
                   curActor.act();
-                  InfoPanel.update();
+                  InfoPanel.updateInfoPanel();
                }
+            }
          }
          // increment if acted
          if(!(curActor.isReadyToAct()))
@@ -214,5 +216,38 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(!mapPanel.isOnLockList(curActor))
             curActor.reconcileSprite();
       }
+   }
+   
+   public boolean allLockingAreWalking()
+   {
+      Vector<Actor> lockingActorList = new Vector<Actor>();
+      
+      for(Actor a : actorList)
+      {
+         if(mapPanel.isOnLockList(a))
+            lockingActorList.add(a);
+      }
+      for(Actor a : lockingActorList)
+      {
+         if(a.getAI().getPreviousAction() != ActorAction.STEP)
+         {
+            return false;
+         }
+      }
+      return true;
+   }
+   
+   public boolean animationAllowsAction(Actor curActor)
+   {
+      // no animation lock, proceed
+      if(!mapPanel.isAnimationLocked())
+      {
+         return true;
+      }
+      
+      // NPCs can step if all locking actors are only stepping
+      if(allLockingAreWalking() && curActor != player && curActor.getAI().getPendingAction() == ActorAction.STEP)
+         return true;
+      return false;
    }
 }

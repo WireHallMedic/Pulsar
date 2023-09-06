@@ -27,7 +27,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case LOOK      :   lookModeKeyPressed(ke); break;
          case TARGETING :   targetingModeKeyPressed(ke); break;
       }
-      InfoPanel.update();
+      InfoPanel.updateInfoPanel();
    }
    
    public void standardModeKeyPressed(KeyEvent ke)

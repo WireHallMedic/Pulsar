@@ -176,7 +176,6 @@ public class Actor implements ActorConstants
    {
       ai.act();
       discharge(NORMAL_ACTION_COST);
-      ai.shiftPendingToPrevious();
    }
    
 }

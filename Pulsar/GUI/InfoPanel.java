@@ -30,7 +30,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       write(X_ORIGIN + 5, Y_ORIGIN, "Info Panel", 10, 1);
    }
    
-   public static void update()
+   public static void updateInfoPanel()
    {
       redrawF = true;
    }

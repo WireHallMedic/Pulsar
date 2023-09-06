@@ -10,21 +10,21 @@ import java.awt.*;
 public class BasicAI implements AIConstants
 {
 	protected Actor self;
-	protected ActorAction pendingActorAction;
+	protected ActorAction pendingAction;
 	protected Coord pendingTarget;
-	protected ActorAction previousActorAction;
+	protected ActorAction previousAction;
 	protected Coord previousTarget;
 
 
 	public Actor getSelf(){return self;}
-	public ActorAction getPendingAction(){return pendingActorAction;}
+	public ActorAction getPendingAction(){return pendingAction;}
 	public Coord getPendingTarget(){return new Coord(pendingTarget);}
-	public ActorAction getPreviousActorAction(){return previousActorAction;}
+	public ActorAction getPreviousAction(){return previousAction;}
 	public Coord getPreviousTarget(){return new Coord(previousTarget);}
 
 
 	public void setSelf(Actor s){self = s;}
-	public void setPendingAction(ActorAction p){pendingActorAction = p;}
+	public void setPendingAction(ActorAction p){pendingAction = p;}
 	public void setPendingTarget(Coord p){setPendingTarget(p.x, p.y);}
 	public void setPendingTarget(int x, int y){pendingTarget = new Coord(x, y);}
 
@@ -33,7 +33,7 @@ public class BasicAI implements AIConstants
    {
       self = s;
       previousTarget = null;
-      previousActorAction = null;
+      previousAction = null;
       clearPlan();
    }
    
@@ -46,27 +46,30 @@ public class BasicAI implements AIConstants
    
    public boolean hasPlan()
    {
-      return pendingActorAction != null && pendingTarget != null;
+      return pendingAction != null && pendingTarget != null;
    }
    
    public void clearPlan()
    {
-      pendingActorAction = null;
+      pendingAction = null;
       pendingTarget = null;
    }
    
    public void act()
    {
-      if(pendingActorAction == ActorAction.STEP)
+      if(pendingAction == ActorAction.STEP)
          doStep();
-      if(pendingActorAction == ActorAction.TOGGLE)
+      if(pendingAction == ActorAction.TOGGLE)
          doToggle();
+      if(pendingAction == ActorAction.DELAY)
+         doDelay();
+      shiftPendingToPrevious();
    }
    
    public void shiftPendingToPrevious()
    {
       previousTarget = pendingTarget;
-      previousActorAction = pendingActorAction;
+      previousAction = pendingAction;
       clearPlan();
    }
    
@@ -118,5 +121,10 @@ public class BasicAI implements AIConstants
          GameEngine.getZoneMap().updateFoV();
          GameEngine.getPlayer().updateFoV();
       }
+   }
+   
+   private void doDelay()
+   {
+      
    }
 }

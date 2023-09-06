@@ -20,7 +20,7 @@ public class MessagePanel extends InfoPanel
    private static Vector<String> messageList = getEmptyMessageList();
    private static Vector<Color> messageColorList = getEmptyMessageColorList();
    
-   public static boolean update(){redrawF = true;}
+   public static void updateMessagePanel(){redrawF = true;}
    
    public MessagePanel(int w, int h, TilePalette tp)
    {
