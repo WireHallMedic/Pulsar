@@ -90,7 +90,7 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
    
    public static void createShieldFlicker(Actor target)
    {
-      int flickerDuration = 5;
+      int flickerDuration = 3;
       int reps = 3;
       for(int delay = 0; delay < reps; delay++)
       {
