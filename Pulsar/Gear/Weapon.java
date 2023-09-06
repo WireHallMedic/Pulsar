@@ -62,6 +62,21 @@ public class Weapon extends GearObj implements GearConstants, Chargable
          curCharge++;
    }
    
+   public boolean canFire()
+   {
+      return getCurCharge() >= getChargeCost();
+   }
+   
+   public boolean fire()
+   {
+      if(canFire())
+      {
+         setCurCharge(getCurCharge() - getChargeCost());
+         return true;
+      }
+      return false;
+   }
+   
    public void addWeaponTag(WeaponTag tag)
    {
       if(!weaponTags.contains(tag))

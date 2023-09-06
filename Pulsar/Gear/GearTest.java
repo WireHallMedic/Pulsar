@@ -13,7 +13,7 @@ public class GearTest implements GearConstants
    @Before public void setUp() {
    }
    
-   public Shield getDefaultShield()
+   public Shield getTestShield()
    {
       Shield shield = new Shield();
    	shield.setMaxCharge(10);
@@ -22,27 +22,37 @@ public class GearTest implements GearConstants
       shield.fullyCharge();
       return shield;
    }
+   
+   public Weapon getTestWeapon()
+   {
+      Weapon weapon = new Weapon();
+	   weapon.setMaxCharge(20);
+	   weapon.setChargeCost(5);
+	   weapon.setChargeRate(1);
+      weapon.fullyCharge();
+      return weapon;
+   }
 
 
-   /** A test that always fails. **/
+   
    @Test public void shieldTest() 
    {
-      Shield shield = getDefaultShield();
+      Shield shield = getTestShield();
       int remainder = shield.applyDamage(6, DamageType.KINETIC);
       Assert.assertEquals("remainder for Kinetic damage, shield holds", remainder, 0);
       Assert.assertEquals("curCharge for Kinetic damage, shield holds", shield.getCurCharge(), 4);
       
-      shield = getDefaultShield();
+      shield = getTestShield();
       remainder = shield.applyDamage(12, DamageType.KINETIC);
       Assert.assertEquals("remainder for Kinetic damage, shield breaks", remainder, 2);
       Assert.assertEquals("curCharge for Kinetic damage, shield breaks", shield.getCurCharge(), 0);
       
-      shield = getDefaultShield();
+      shield = getTestShield();
       remainder = shield.applyDamage(3, DamageType.ELECTRO);
       Assert.assertEquals("remainder for Electro damage, shield holds", remainder, 0);
       Assert.assertEquals("curCharge for Electro damage, shield holds", shield.getCurCharge(), 4);
       
-      shield = getDefaultShield();
+      shield = getTestShield();
       remainder = shield.applyDamage(6, DamageType.ELECTRO);
       Assert.assertEquals("remainder for Electro damage, shield breaks", remainder, 2);
       Assert.assertEquals("curCharge for Electro damage, shield breaks", shield.getCurCharge(), 0);
@@ -58,7 +68,7 @@ public class GearTest implements GearConstants
       Assert.assertEquals("Recharging, post recharge", shield.getCurCharge(), 10);
    }
 
-   /** A test that always fails. **/
+   
    @Test public void creditTest() 
    {
       Credits creditA = new Credits(10);
@@ -66,5 +76,22 @@ public class GearTest implements GearConstants
       creditA.add(creditB);
       Assert.assertEquals("Calling object gets value", creditA.getAmount(), 15);
       Assert.assertEquals("Argument object loses value", creditB.getAmount(), 0);
+   }
+
+   
+   @Test public void weaponTest() 
+   {
+      Weapon weapon = getTestWeapon();
+      weapon.fire();
+      Assert.assertEquals("Firing uses charge", weapon.getCurCharge(), 15);
+      weapon.charge();
+      Assert.assertEquals("Recharges",  weapon.getCurCharge(), 16);
+      for(int i = 0; i < 5; i++)
+         weapon.charge();
+      Assert.assertEquals("Does not overcharge",  weapon.getCurCharge(), 20);
+      weapon.setCurCharge(0);
+      boolean fired = weapon.fire();
+      Assert.assertFalse("Does not fire when discharged",  fired);
+      
    }
 }
