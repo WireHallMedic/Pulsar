@@ -8,19 +8,27 @@ import Pulsar.AI.*;
 import Pulsar.GUI.*;
 import Pulsar.Gear.*;
 import java.awt.*;
+import java.awt.Toolkit.*;
 
 public class InputManager implements KeyListener, AIConstants, EngineConstants
 {
    public void keyTyped(KeyEvent ke){}
    public void keyReleased(KeyEvent ke){}
+   private Toolkit toolkit;
    
    public InputManager(JFrame parent)
    {
       parent.addKeyListener(this);
+      toolkit = Toolkit.getDefaultToolkit();
    }
    
    public void keyPressed(KeyEvent ke)
    {
+      if(!toolkit.getLockingKeyState(KeyEvent.VK_NUM_LOCK))
+      {
+         MessagePanel.addMessage("Turn on NumLock.");
+         return;
+      }
       switch(GameEngine.getGameMode())
       {
          case STANDARD  :   standardModeKeyPressed(ke); break;
@@ -60,10 +68,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          player.getAI().setPendingTarget(target);
          player.getAI().setPendingAction(ActorAction.CONTEXT_SENSITIVE);
       }
-      
-      System.out.println("Key pressed: " + ke);
-      System.out.println("Player pendingTarget: " + player.getAI().getPendingTarget());
-      System.out.println("Key playerPendingAction: " + player.getAI().getPendingAction());
    }
    
    public void targetingModeKeyPressed(KeyEvent ke)
