@@ -114,19 +114,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    {
       if(arg == ' ')
       {
-         Weapon weapon = new Weapon();
-         System.out.println(weapon.getSummary());
-         weapon.setAttacks(1);
-         System.out.println(weapon.getSummary());
-         weapon.setAttacks(3);
-         weapon.addWeaponTag(GearConstants.WeaponTag.MELEE);
-         System.out.println(weapon.getSummary());
-         weapon.addWeaponTag(GearConstants.WeaponTag.HEAVY);
-         System.out.println(weapon.getSummary());
-         weapon.removeWeaponTag(GearConstants.WeaponTag.MELEE);
-         System.out.println(weapon.getSummary());
-         Shield shield = new Shield();
-         System.out.println(shield.getSummary());
+         VisualEffectFactory.createShieldFlicker(GameEngine.getPlayer());
          return;
       }
       if(arg == 'e')

@@ -2,12 +2,15 @@ package Pulsar.GUI;
 
 import java.awt.*;
 import WidlerSuite.*;
+import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class VisualEffectFactory implements GUIConstants, ActionListener, CP437
+public class VisualEffectFactory implements GUIConstants, ActionListener, WSFontConstants
 {
+   private static final double[] shieldFlickerXOffset = {.2, .5, .8, .1, .5, .8, .2, .5, .8};
+   private static final double[] shieldFlickerYOffset = {.2, .1, .2, .5, .5, .5, .8, .9, .8};
    private static TilePalette getPalette(){return GUIConstants.SQUARE_TILE_PALETTE;}
    private static double getSizeMultiplier(){return GameEngine.getMapPanel().getSizeMultiplier();}
    public static void add(UnboundTile ut){GameEngine.getMapPanel().add(ut);}
@@ -32,7 +35,7 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, CP437
       ySpeed *= SPRAY_BASE_SPEED;
       xSpeed = GUITools.modifyByAmount(xSpeed, SPRAY_VARIABLE_SPEED);
       ySpeed = GUITools.modifyByAmount(ySpeed, SPRAY_VARIABLE_SPEED);
-      UnboundTile ut = getPalette().getUnboundTile(250, color.getRGB(), getSizeMultiplier());
+      UnboundTile ut = getPalette().getUnboundTile(SMALL_BULLET_TILE, color.getRGB(), getSizeMultiplier());
       ut.setLoc(origin);
       ut.setLifespan(SPRAY_DURATION);
       ut.setSpeed(xSpeed, ySpeed);
@@ -81,6 +84,32 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, CP437
          for(int i = 0; i < particleArray.length; i++)
          {
             add(particleArray[i]);
+         }
+      }
+   }
+   
+   public static void createShieldFlicker(Actor target)
+   {
+      int flickerDuration = 5;
+      int reps = 3;
+      for(int delay = 0; delay < reps; delay++)
+      {
+         for(int i = 0; i < shieldFlickerXOffset.length; i++)
+         {
+            double xOffset = shieldFlickerXOffset[i] - .6;
+            double yOffset = shieldFlickerYOffset[i] - .6;
+            xOffset += GameEngine.random() * .2;
+            yOffset += GameEngine.random() * .2;
+            UnboundTile ut = getPalette().getUnboundTile(SMALL_BULLET_TILE, SHIELD_COLOR.getRGB(), getSizeMultiplier());
+            ut.setXOffset(xOffset);
+            ut.setYOffset(yOffset);
+            //ut.setLoc(target.getMapLoc());
+            ut.setLifespan(flickerDuration);
+            ut.setAnchorTile(target.getSprite());
+            if(delay == 0)
+               add(ut);
+            else
+               addWithDelay(ut, null, delay * flickerDuration);
          }
       }
    }

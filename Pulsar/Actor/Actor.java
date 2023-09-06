@@ -8,7 +8,7 @@ import Pulsar.AI.*;
 import java.awt.*;
 
 
-public class Actor implements ActorConstants
+public class Actor implements ActorConstants, GUIConstants
 {
    private String name;
 	private Coord mapLoc;
@@ -46,7 +46,7 @@ public class Actor implements ActorConstants
    {
       name = n;
       mapLoc = new Coord(-1, -1);
-      createSprite(icon, Color.WHITE.getRGB(), Color.GRAY.getRGB());
+      createSprite(icon, DEFAULT_ACTOR_FG_COLOR.getRGB(), DEFAULT_ACTOR_BG_COLOR.getRGB());
       turnEnergy = 0;
       ai = new BasicAI(this);
       visionRange = DEFAULT_VISION_RANGE;

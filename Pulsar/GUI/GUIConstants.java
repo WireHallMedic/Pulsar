@@ -24,6 +24,9 @@ public interface GUIConstants
    public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
    public static final Color DEFAULT_MESSAGE_COLOR = Color.CYAN;
    public static final Color PLAYER_COLOR = Color.ORANGE;
+   public static final Color SHIELD_COLOR = Color.WHITE;
+   public static final Color DEFAULT_ACTOR_FG_COLOR = new Color(220, 220, 220);
+   public static final Color DEFAULT_ACTOR_BG_COLOR = Color.GRAY;
    
    public static final double SLOW_MOVE_SPEED = .05;
    public static final double NORMAL_MOVE_SPEED = .2;
