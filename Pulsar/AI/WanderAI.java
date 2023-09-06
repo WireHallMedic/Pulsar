@@ -26,22 +26,37 @@ public class WanderAI extends BasicAI
       {
          setPendingAction(ActorAction.DELAY);
          setPendingTarget(self.getMapLoc());
+         return;
       }
-      else
+      
+      // try and step
+      Coord target = getSteppableTile();
+      if(target != null)
       {
-         Coord stepDir = stepList[GameEngine.randomInt(0, 8)];
+         setPendingAction(ActorAction.STEP);
+         setPendingTarget(target);
+         return;
+      }
+      
+      // wait
+      setPendingAction(ActorAction.DELAY);
+      setPendingTarget(self.getMapLoc());
+   }
+   
+   private Coord getSteppableTile()
+   {
+      int stepIndex = GameEngine.randomInt(0, 8);
+      for(int i = 0; i < 8; i++)
+      {
+         Coord stepDir = stepList[stepIndex];
          Coord target = new Coord(stepDir.x + self.getMapLoc().x, stepDir.y + self.getMapLoc().y);
          if(self.canStep(target))
          {
-            setPendingAction(ActorAction.STEP);
-            setPendingTarget(target);
+            return target;
          }
-         else // can't step
-         {
-            setPendingAction(ActorAction.DELAY);
-            setPendingTarget(self.getMapLoc());
-         }
+         stepIndex = (stepIndex + 1) % 8;
       }
+      return null;
    }
    
    public static Coord[] getStepList()
