@@ -18,9 +18,9 @@ public class BasicAI implements AIConstants
 
 	public Actor getSelf(){return self;}
 	public ActorAction getPendingAction(){return pendingAction;}
-	public Coord getPendingTarget(){return new Coord(pendingTarget);}
+	public Coord getPendingTarget(){if(pendingTarget == null) return null; return new Coord(pendingTarget);}
 	public ActorAction getPreviousAction(){return previousAction;}
-	public Coord getPreviousTarget(){return new Coord(previousTarget);}
+	public Coord getPreviousTarget(){if(pendingTarget == null) return null; return new Coord(previousTarget);}
 
 
 	public void setSelf(Actor s){self = s;}
@@ -106,9 +106,16 @@ public class BasicAI implements AIConstants
    //////////////////////////////////////////////////////////////////
    private void doStep()
    {
-      MovementScript ms = MovementScriptFactory.getWalkingScript(self, pendingTarget);
-      self.setMapLoc(pendingTarget);
-      GameEngine.addLocking(ms);
+      if(GameEngine.playerCanSee(pendingTarget) || GameEngine.playerCanSee(self))
+      {
+         MovementScript ms = MovementScriptFactory.getWalkingScript(self, pendingTarget);
+         self.setMapLoc(pendingTarget);
+         GameEngine.addLocking(ms);
+      }
+      else
+      {
+         self.setAllLocs(pendingTarget);
+      }
    }
    
    private void doToggle()

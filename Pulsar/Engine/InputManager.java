@@ -60,6 +60,10 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          player.getAI().setPendingTarget(target);
          player.getAI().setPendingAction(ActorAction.CONTEXT_SENSITIVE);
       }
+      
+      System.out.println("Key pressed: " + ke);
+      System.out.println("Player pendingTarget: " + player.getAI().getPendingTarget());
+      System.out.println("Key playerPendingAction: " + player.getAI().getPendingAction());
    }
    
    public void targetingModeKeyPressed(KeyEvent ke)
