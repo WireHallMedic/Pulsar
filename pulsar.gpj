@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3003;g
+!3037;g
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -35,6 +35,7 @@ s#l0
 %\011Pulsar%sGear%sArmor.java
 %\011Pulsar%sGUI%sMessagePanel.java
 %\011Pulsar%sAI%sAIConstants.java
+%\011Pulsar%sGear%sChargable.java
 %\011Pulsar%sGUI%sMainGameBGPanel.java
 %\011Pulsar%sGear%sWeapon.java
 %\011Pulsar%sActor%sActor.java
@@ -96,7 +97,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3003;f
+!3037;f
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -119,6 +120,7 @@ s#l0
 %\011Pulsar%sGear%sArmor.java
 %\011Pulsar%sGUI%sMessagePanel.java
 %\011Pulsar%sAI%sAIConstants.java
+%\011Pulsar%sGear%sChargable.java
 %\011Pulsar%sGUI%sMainGameBGPanel.java
 %\011Pulsar%sGear%sWeapon.java
 %\011Pulsar%sActor%sActor.java
@@ -182,5 +184,5 @@ s#l0
 %\011Pulsar%sGear%sGearConstants.java
 !33;l
 %\011Pulsar%sGear%sGearTest.java
-!13;t
-jgrJUnit0xr	
+!62;t
+jgrJUnit0xr	%\011Pulsar%sGear%sGearTest.java	1694008761679:P	

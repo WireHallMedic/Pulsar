@@ -2,7 +2,7 @@ package Pulsar.Gear;
 
 import java.util.*;
 
-public class Weapon extends GearObj implements GearConstants
+public class Weapon extends GearObj implements GearConstants, Chargable
 {	
 	private int baseDamage;
 	private int variableDamage;
@@ -12,7 +12,7 @@ public class Weapon extends GearObj implements GearConstants
 	private int curCharge;
 	private int maxCharge;
 	private int chargeCost;
-	private int rechargeRate;
+	private int chargeRate;
 
 
 	public int getBaseDamage(){return baseDamage;}
@@ -23,7 +23,7 @@ public class Weapon extends GearObj implements GearConstants
 	public int getCurCharge(){return curCharge;}
 	public int getMaxCharge(){return maxCharge;}
 	public int getChargeCost(){return chargeCost;}
-	public int getRechargeRate(){return rechargeRate;}
+	public int getChargeRate(){return chargeRate;}
 
 
 	public void setBaseDamage(int b){baseDamage = b;}
@@ -34,7 +34,7 @@ public class Weapon extends GearObj implements GearConstants
 	public void setCurCharge(int c){curCharge = c;}
 	public void setMaxCharge(int m){maxCharge = m;}
 	public void setChargeCost(int c){chargeCost = c;}
-	public void setRechargeRate(int r){rechargeRate = r;}
+	public void setChargeRate(int r){chargeRate = r;}
 
 
    public Weapon()
@@ -48,7 +48,7 @@ public class Weapon extends GearObj implements GearConstants
       int curCharge = 20;
       int maxCharge = 20;
       chargeCost = 4;
-      rechargeRate = 1;
+      chargeRate = 1;
    }
    
    public void fullyCharge()

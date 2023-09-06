@@ -1,6 +1,6 @@
 package Pulsar.Gear;
 
-public class Shield extends GearObj implements GearConstants
+public class Shield extends GearObj implements GearConstants, Chargable
 {
 	private int curCharge;
 	private int maxCharge;
