@@ -22,12 +22,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    public InfoPanel(int w, int h, TilePalette tp)
    {
       super(w, h, tp);
-      for(int x = 0; x < WIDTH_TILES; x++)
-      for(int y = 0; y < HEIGHT_TILES; y++)
-      {
-         setTile(x + X_ORIGIN, y + Y_ORIGIN, '.', TERMINAL_FG_COLOR, BG_COLOR);
-      }
-      write(X_ORIGIN + 5, Y_ORIGIN, "Info Panel", 10, 1);
+      clearInfoPanel();
    }
    
    public static void updateInfoPanel()
@@ -77,16 +72,25 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       write(X_ORIGIN, Y_ORIGIN, "Look mode (escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
       
       MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
-      setTile(X_ORIGIN, Y_ORIGIN + 2, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
-      write(X_ORIGIN + 2, Y_ORIGIN + 2, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
-      
-      Actor actor = GameEngine.getActorAt(GameEngine.getCursorLoc());
-      if(actor != null)
+      if(GameEngine.playerCanSee(GameEngine.getCursorLoc()))
       {
-         UnboundTile ut = actor.getSprite();
-         setTile(X_ORIGIN, Y_ORIGIN + 4, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
-         write(X_ORIGIN + 2, Y_ORIGIN + 4, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         setTile(X_ORIGIN, Y_ORIGIN + 2, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
+         write(X_ORIGIN + 2, Y_ORIGIN + 2, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         
+         Actor actor = GameEngine.getActorAt(GameEngine.getCursorLoc());
+         if(actor != null)
+         {
+            UnboundTile ut = actor.getSprite();
+            setTile(X_ORIGIN, Y_ORIGIN + 4, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
+            write(X_ORIGIN + 2, Y_ORIGIN + 4, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         }
       }
+      else
+      {
+         write(X_ORIGIN, Y_ORIGIN + 2, "  Out of view.", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      }
+      
+
    }
    
    // targeting mode
