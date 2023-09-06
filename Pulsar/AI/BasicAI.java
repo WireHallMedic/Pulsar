@@ -9,11 +9,11 @@ import java.awt.*;
 
 public class BasicAI implements AIConstants
 {
-	private Actor self;
-	private ActorAction pendingActorAction;
-	private Coord pendingTarget;
-	private ActorAction previousActorAction;
-	private Coord previousTarget;
+	protected Actor self;
+	protected ActorAction pendingActorAction;
+	protected Coord pendingTarget;
+	protected ActorAction previousActorAction;
+	protected Coord previousTarget;
 
 
 	public Actor getSelf(){return self;}

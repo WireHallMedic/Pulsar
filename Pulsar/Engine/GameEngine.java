@@ -144,9 +144,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       setPlayer(p);
       Actor e = new Actor('e');
       e.setAllLocs(4, 3);
+      e.setAI(new WanderAI(e));
       add(e);
       e = new Actor('e');
       e.setAllLocs(6, 3);
+      e.setAI(new WanderAI(e));
       e.getSprite().setFGColor(Color.ORANGE.getRGB());
       add(e);
       zoneMap = ZoneMapFactory.getTestMap();
@@ -194,7 +196,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                if(!mapPanel.isAnimationLocked())
                {
                   curActor.act();
-                  InfoPanel.redraw();
+                  InfoPanel.update();
                }
          }
          // increment if acted

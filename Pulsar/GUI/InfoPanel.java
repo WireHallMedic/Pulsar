@@ -30,7 +30,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       write(X_ORIGIN + 5, Y_ORIGIN, "Info Panel", 10, 1);
    }
    
-   public static void redraw()
+   public static void update()
    {
       redrawF = true;
    }
@@ -95,7 +95,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       clearInfoPanel();
    }
    
-   private void doRedraw()
+   private void redraw()
    {
       switch(GameEngine.getGameMode())
       {
@@ -111,7 +111,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
       if(redrawF)
       {
          redrawF = false;
-         doRedraw();
+         redraw();
       }
       super.actionPerformed(ae);
    }
