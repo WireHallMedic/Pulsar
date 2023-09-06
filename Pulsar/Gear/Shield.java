@@ -32,6 +32,11 @@ public class Shield extends GearObj implements GearConstants
       timeSinceHit = 0;
    }
    
+   public void fullyCharge()
+   {
+      curCharge = maxCharge;
+   }
+   
    public String getSummary()
    {
       return getCurCharge() + "/" + getMaxCharge() + ", Charge Delay: " + getChargeDelay() + ", Charge Rate: " + getChargeRate();
@@ -74,45 +79,6 @@ public class Shield extends GearObj implements GearConstants
    
    public static void test()
    {
-      Shield shield = new Shield();
-      int remainder = shield.applyDamage(6, DamageType.KINETIC);
-      System.out.println("6 damage, kinetic");
-      System.out.println("Remainder: " + (remainder == 0));
-      System.out.println("curCharge: " + (shield.curCharge == 4));
-      
-      shield = new Shield();
-      remainder = shield.applyDamage(12, DamageType.KINETIC);
-      System.out.println("12 damage, kinetic");
-      System.out.println("Remainder: " + (remainder == 2));
-      System.out.println("curCharge: " + (shield.curCharge == 0));
-      
-      shield = new Shield();
-      remainder = shield.applyDamage(3, DamageType.ELECTRO);
-      System.out.println("3 damage, electro");
-      System.out.println("Remainder: " + (remainder == 0));
-      System.out.println("curCharge: " + (shield.curCharge == 4));
-      
-      shield = new Shield();
-      remainder = shield.applyDamage(6, DamageType.ELECTRO);
-      System.out.println("6 damage, electro");
-      System.out.println("Remainder: " + (remainder == 2));
-      System.out.println("curCharge: " + (shield.curCharge == 0));
-      
-      for(int i = 0; i < 5; i++)
-         shield.increment();
-      System.out.println("curCharge after 5 initiative counts: " + (shield.curCharge == 0) + " (" + shield.curCharge + ")");
-      for(int i = 0; i < 5; i++)
-         shield.increment();
-      System.out.println("curCharge after 5 initiative counts: " + (shield.curCharge == 0) + " (" + shield.curCharge + ")");
-      for(int i = 0; i < 5; i++)
-         shield.increment();
-      System.out.println("curCharge after 5 initiative counts: " + (shield.curCharge == 5) + " (" + shield.curCharge + ")");
-      for(int i = 0; i < 5; i++)
-         shield.increment();
-      System.out.println("curCharge after 5 initiative counts: " + (shield.curCharge == 10) + " (" + shield.curCharge + ")");
-      for(int i = 0; i < 5; i++)
-         shield.increment();
-      System.out.println("curCharge after 5 initiative counts: " + (shield.curCharge == 10) + " (" + shield.curCharge + ")");
    }
    
    public static void main(String[] args)
