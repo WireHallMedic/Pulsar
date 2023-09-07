@@ -54,6 +54,9 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       Actor lastTarget = GameEngine.getPlayer().getAI().getLastActorTargeted();
       if(lastTarget != null && lastTarget.isDead() == false)
          return lastTarget.getMapLoc();
+      Actor closestActor = GameEngine.getClosestVisibleActor(GameEngine.getPlayer());
+      if(closestActor != null)
+         return closestActor.getMapLoc();
       return GameEngine.getPlayer().getMapLoc();
    }
    
