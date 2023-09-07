@@ -21,6 +21,7 @@ public class Actor implements ActorConstants, GUIConstants
    private int curHealth;
    private int maxHealth;
    private Color bloodColor;
+   private Weapon unarmed;
 
 
    public String getName(){return name;}
@@ -30,10 +31,10 @@ public class Actor implements ActorConstants, GUIConstants
    public BasicAI getAI(){return ai;}
    public int getVisionRange(){return visionRange;}
    public Shield getShield(){return shield;}
-   public Weapon getWeapon(){return weapon;}
    public int getCurHealth(){return curHealth;}
    public int getMaxHealth(){return maxHealth;}
    public Color getBloodColor(){return bloodColor;}
+   public Weapon getUnarmedAttack(){return unarmed;}
 
 
    public void setName(String n){name = n;}
@@ -48,6 +49,7 @@ public class Actor implements ActorConstants, GUIConstants
    public void setCurHealth(int h){curHealth = h;}
    public void setMaxHealth(int h){maxHealth = h;}
    public void setBloodColor(Color c){bloodColor = c;}
+   public void setUnarmedAttack(Weapon w){unarmed = w;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -64,6 +66,7 @@ public class Actor implements ActorConstants, GUIConstants
       setCurHealth(20);
       setMaxHealth(20);
       setBloodColor(GUIConstants.HUMAN_BLOOD);
+      unarmed = Weapon.FIST;
    }
    
    public void reconcileSprite()
@@ -151,7 +154,14 @@ public class Actor implements ActorConstants, GUIConstants
    
    public boolean hasWeapon()
    {
-      return getWeapon() != null;
+      return weapon != null;
+   }
+   
+   public Weapon getWeapon()
+   {
+      if(hasWeapon())
+         return weapon;
+      return unarmed;
    }
    
    public int[] getShieldBar(int length)
@@ -164,6 +174,11 @@ public class Actor implements ActorConstants, GUIConstants
       {
          return GUITools.getBar(0, 20, length);
       }
+   }
+   
+   public int[] getWeaponBar(int length)
+   {
+      return GUITools.getBar(getWeapon().getCurCharge(), getWeapon().getMaxCharge(), length);
    }
    
    // health methods

@@ -4,6 +4,8 @@ import java.util.*;
 
 public class Weapon extends GearObj implements GearConstants, Chargable
 {	
+   public static final Weapon FIST = getFist();
+   
 	private int baseDamage;
 	private int variableDamage;
 	private int attacks;
@@ -37,9 +39,10 @@ public class Weapon extends GearObj implements GearConstants, Chargable
 	public void setChargeRate(int r){chargeRate = r;}
 
 
-   public Weapon()
+   public Weapon(){this("Unknown Weapon");}
+   public Weapon(String name)
    {
-      super(WEAPON_ICON, "Unknown Weapon");
+      super(WEAPON_ICON, name);
       baseDamage = 5;
       variableDamage = 3;
       attacks = 3;
@@ -49,6 +52,18 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       int maxCharge = 20;
       chargeCost = 4;
       chargeRate = 1;
+   }
+   
+   public static Weapon getFist()
+   {
+      Weapon w = new Weapon("Fist");
+      w.setBaseDamage(1);
+      w.setVariableDamage(0);
+      w.setAttacks(1);
+      w.setDamageType(DamageType.KINETIC);
+      w.addWeaponTag(WeaponTag.MELEE);
+      w.setChargeCost(0);
+      return w;
    }
    
    public void fullyCharge()
