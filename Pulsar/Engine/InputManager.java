@@ -133,7 +133,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       }
       if(arg == 'd')
       {
-         GameEngine.getPlayer().applyDamage(1);
+         GameEngine.getPlayer().applyDamage(4, GearConstants.DamageType.KINETIC);
          return;
       }
       // combat timing

@@ -57,6 +57,7 @@ public class Shield extends GearObj implements GearConstants, Chargable
       }
    }
    
+   // returns any spillover damage
    public int applyDamage(int damage, DamageType damageType)
    {
       timeSinceHit = 0;
@@ -75,5 +76,10 @@ public class Shield extends GearObj implements GearConstants, Chargable
          curCharge = curCharge - damage;
       }
       return remainingDamage;
+   }
+   
+   public boolean hasCharge()
+   {
+      return curCharge > 0;
    }
 }
