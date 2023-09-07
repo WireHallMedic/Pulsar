@@ -123,16 +123,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          {
             if(a != GameEngine.getPlayer())
             {
-               int curS = 0;
-               int maxS = 0;
-               int curH = a.getCurHealth();
-               int maxH = a.getMaxHealth();
-               if(a.hasShield())
-               {
-                  curS = a.getShield().getCurCharge();
-                  maxS = a.getShield().getMaxCharge();
-               }
-               System.out.println(curH + "/" + maxH + ", " + curS + "/" + maxH);
                target = a.getMapLoc();
                break;
             }

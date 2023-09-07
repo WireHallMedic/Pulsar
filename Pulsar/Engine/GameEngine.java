@@ -83,7 +83,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       {
          actorList.remove(a);
          removeFromMapPanel(a);
-         if(actorIndex >= initiativeIndex)
+         if(actorIndex < initiativeIndex)
             initiativeIndex--;
       }
    }
@@ -209,7 +209,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                {
                   curActor.act();
                   InfoPanel.updateInfoPanel();
-                  PlayerPanel.updatePlayerPanel();
                }
             }
          }
@@ -240,8 +239,12 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       for(int i = 0; i < actorList.size(); i++)
       {
-         if(actorList.elementAt(i).isDead())
-            remove(actorList.elementAt(i));
+         Actor a = actorList.elementAt(i);
+         if(a.isDead())
+         {
+            remove(a);
+            i--;
+         }
       }
    }
    
