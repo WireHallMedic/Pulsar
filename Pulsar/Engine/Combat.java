@@ -35,7 +35,7 @@ public class Combat
          }
       }
       
-      attacker.getWeapon().fire();
+      attacker.getWeapon().discharge();
    }
    
    private static Coord getActualTarget(Coord origin, Coord initialTarget)

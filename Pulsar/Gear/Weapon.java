@@ -48,8 +48,8 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       attacks = 3;
       damageType = DamageType.KINETIC;
       weaponTags = new Vector<WeaponTag>();
-      int curCharge = 20;
-      int maxCharge = 20;
+      curCharge = 20;
+      maxCharge = 20;
       chargeCost = 4;
       chargeRate = 1;
    }
@@ -82,14 +82,9 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       return getCurCharge() >= getChargeCost();
    }
    
-   public boolean fire()
+   public void discharge()
    {
-      if(canFire())
-      {
-         setCurCharge(getCurCharge() - getChargeCost());
-         return true;
-      }
-      return false;
+      setCurCharge(getCurCharge() - getChargeCost());
    }
    
    public void addWeaponTag(WeaponTag tag)
@@ -113,12 +108,55 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       return false;
    }
    
+   public int getRemainingShots()
+   {
+      return getCurCharge() / getChargeCost();
+   }
+   
+   public int getMaxShots()
+   {
+      return getMaxCharge() / getChargeCost();
+   }
+   
    
    public String getSummary()
    {
       if(attacks == 1)
          return getSingleShotSummary();
       return getMultipleShotSummary();
+   }
+   
+   public int[] getAmmoCountTiles()
+   {
+      int[] returnArr = new int[5];
+      if(getChargeCost() == 0)
+      {
+         returnArr[0] = ' ';
+         returnArr[1] = INFINITY_TILE;
+         returnArr[2] = '/';
+         returnArr[3] = ' ';
+         returnArr[4] = INFINITY_TILE;
+      }
+      else
+      {
+         if(getRemainingShots() < 10)
+            returnArr[0] = ' ';
+         else
+            returnArr[0] = (getRemainingShots() / 10) + '0';
+         returnArr[1] = (getRemainingShots() % 10) + '0';
+         returnArr[2] = '/';
+         if(getMaxShots() < 10)
+         {
+            returnArr[3] = (getMaxShots() % 10) + '0';;
+            returnArr[4] = ' ';
+         }
+         else
+         {
+            returnArr[3] = (getMaxShots() / 10) + '0';
+            returnArr[4] = (getMaxShots() % 10) + '0';
+         }
+      }
+      return returnArr;
    }
    
    private String getDamagePerShotString()

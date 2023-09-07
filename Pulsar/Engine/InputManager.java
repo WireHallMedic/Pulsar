@@ -87,10 +87,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_L : GameEngine.setCursorLoc(playerLoc);
                               GameEngine.setGameMode(GameMode.LOOK); 
                               break;
-         case KeyEvent.VK_F : GameEngine.setCursorLoc(getDefaultTargetingLocation());
-                              GameEngine.setGameMode(GameMode.TARGETING);
-                              setPlayerAction(ActorAction.ATTACK);
-                              break;
+         case KeyEvent.VK_F : attemptToShoot(); break;
          case KeyEvent.VK_Z : debug('z'); break;
          case KeyEvent.VK_X : debug('x'); break;
          case KeyEvent.VK_D : debug('d'); break;
@@ -144,6 +141,21 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_ESCAPE  : GameEngine.setGameMode(GameMode.STANDARD); return;
       }
       GameEngine.setCursorLoc(cursorLoc);
+   }
+   
+   private void attemptToShoot()
+   {
+      if(!GameEngine.getPlayer().getWeapon().canFire())
+      {
+         MessagePanel.addMessage("Your weapon does not have enough energy!");
+         Weapon w = GameEngine.getPlayer().getWeapon();
+         System.out.println(w.getCurCharge() + "/" + w.getMaxCharge() + ", need " + w.getChargeCost());
+         return;
+      }
+      GameEngine.setCursorLoc(getDefaultTargetingLocation());
+      GameEngine.setGameMode(GameMode.TARGETING);
+      setPlayerAction(ActorAction.ATTACK);
+                              
    }
    
    public void debug(char arg)
