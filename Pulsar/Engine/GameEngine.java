@@ -170,6 +170,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       runFlag = false;
    }
    
+   public static boolean isAnimationLocked()
+   {
+      return mapPanel.isAnimationLocked();
+   }
+   
    // non-static section
    ////////////////////////////////////////////////////////////////////
    public GameEngine()
@@ -271,7 +276,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public boolean animationAllowsAction(Actor curActor)
    {
       // no animation lock, proceed
-      if(!mapPanel.isAnimationLocked())
+      if(!isAnimationLocked())
       {
          return true;
       }

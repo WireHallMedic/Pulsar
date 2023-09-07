@@ -68,7 +68,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_SPACE : debug(' '); break;
       }
       
-      if(target != null)
+      if(target != null && GameEngine.isAnimationLocked() == false)
       {
          player.getAI().setPendingTarget(target);
          player.getAI().setPendingAction(ActorAction.CONTEXT_SENSITIVE);
