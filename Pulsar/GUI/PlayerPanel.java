@@ -58,11 +58,6 @@ public class PlayerPanel extends MessagePanel
          setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 1, shieldBar[i], SHIELD_COLOR, BG_COLOR);
          setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 2, healthBar[i], HEALTH_COLOR, BG_COLOR);
       }
-      
-      Color c = new Color(Integer.MAX_VALUE);
-      System.out.println(c.getRGB());
-      System.out.println(Integer.MAX_VALUE);
-      
    }
    
    @Override
