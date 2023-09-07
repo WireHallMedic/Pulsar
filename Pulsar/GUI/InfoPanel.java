@@ -18,10 +18,12 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    private static final int X_ORIGIN = TERMINAL_WIDTH_TILES - WIDTH_TILES - 1;
    private static final int Y_ORIGIN = 1;
    public static boolean redrawF = true;
+   private int barLength;
    
    public InfoPanel(int w, int h, TilePalette tp)
    {
       super(w, h, tp);
+      barLength = (WIDTH_TILES - 5) / 2;
       clearInfoPanel();
    }
    
@@ -57,10 +59,6 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    {
       clearInfoPanel();
       // show actors
-      int barLength = (WIDTH_TILES - 5) / 2;
-      String barBuffer = "";
-      for(int i = 0; i < barLength; i++)
-         barBuffer += " ";
       Vector<Actor> actorsToShow = getActorsToShow();
       for(int i = 0; i < actorsToShow.size() && i < HEIGHT_TILES; i++)
       {
@@ -68,15 +66,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
          Actor a = actorsToShow.elementAt(i);
          setTile(X_ORIGIN, Y_ORIGIN + yInset, a.getSprite().getIconIndex(), a.getSprite().getFGColor(), a.getSprite().getBGColor());
          write(X_ORIGIN + 2, Y_ORIGIN + yInset, a.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
-         write(X_ORIGIN + 1, Y_ORIGIN + yInset + 1, "[" + barBuffer + "]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), barLength + 2, 1);
-         write(X_ORIGIN + 3 + barLength, Y_ORIGIN + yInset + 1, "[" + barBuffer + "]", SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), barLength + 2, 1);
-         int[] healthBar = a.getHealthBar(barLength);
-         int[] shieldBar = a.getShieldBar(barLength);
-         for(int j = 0; j < barLength; j++)
-         {
-            setIcon(X_ORIGIN + 2 + j, Y_ORIGIN + yInset + 1, healthBar[j]); 
-            setIcon(X_ORIGIN + 4 + barLength + j, Y_ORIGIN + yInset + 1, shieldBar[j]); 
-         }
+         drawActorBars(a, 1, yInset + 1);
       }
       // show objects
    }
@@ -86,25 +76,26 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    {
       clearInfoPanel();
       write(X_ORIGIN, Y_ORIGIN, "Look mode", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
-      write(X_ORIGIN, Y_ORIGIN + 1, "(escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
+      write(X_ORIGIN, Y_ORIGIN + 1, " (escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
       
       MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
       if(GameEngine.playerCanSee(GameEngine.getCursorLoc()))
       {
-         setTile(X_ORIGIN, Y_ORIGIN + 2, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
-         write(X_ORIGIN + 2, Y_ORIGIN + 2, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         setTile(X_ORIGIN, Y_ORIGIN + 3, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
+         write(X_ORIGIN + 2, Y_ORIGIN + 3, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
          
          Actor actor = GameEngine.getActorAt(GameEngine.getCursorLoc());
          if(actor != null)
          {
             UnboundTile ut = actor.getSprite();
-            setTile(X_ORIGIN, Y_ORIGIN + 4, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
-            write(X_ORIGIN + 2, Y_ORIGIN + 4, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+            setTile(X_ORIGIN, Y_ORIGIN + 5, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
+            write(X_ORIGIN + 2, Y_ORIGIN + 5, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+            drawActorBars(actor, 1, 6);
          }
       }
       else
       {
-         write(X_ORIGIN, Y_ORIGIN + 2, "  Out of view.", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         write(X_ORIGIN, Y_ORIGIN + 3, "  Out of view.", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       }
    }
    
@@ -113,7 +104,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    {
       clearInfoPanel();
       write(X_ORIGIN, Y_ORIGIN, "Targeting mode", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
-      write(X_ORIGIN, Y_ORIGIN + 1, "(escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
+      write(X_ORIGIN, Y_ORIGIN + 1, " (escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
       
       MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
       if(GameEngine.playerCanSee(GameEngine.getCursorLoc()))
@@ -127,6 +118,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
             UnboundTile ut = actor.getSprite();
             setTile(X_ORIGIN, Y_ORIGIN + 4, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
             write(X_ORIGIN + 2, Y_ORIGIN + 4, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+            drawActorBars(actor, 1, 5);
          }
       }
       else
@@ -142,6 +134,22 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
          case STANDARD  : showNearbyObjects(); break;
          case LOOK      : showCursorLooking(); break;
          case TARGETING : showCursorTargeting(); break;
+      }
+   }
+   
+   private void drawActorBars(Actor a, int xInset, int yInset)
+   {
+      String barBuffer = "";
+      for(int i = 0; i < barLength; i++)
+         barBuffer += " ";
+      write(X_ORIGIN + xInset, Y_ORIGIN + yInset, "[" + barBuffer + "]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), barLength + 2, 1);
+      write(X_ORIGIN + xInset + 2 + barLength, Y_ORIGIN + yInset, "[" + barBuffer + "]", SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), barLength + 2, 1);
+      int[] healthBar = a.getHealthBar(barLength);
+      int[] shieldBar = a.getShieldBar(barLength);
+      for(int j = 0; j < barLength; j++)
+      {
+         setIcon(X_ORIGIN + 1 + xInset + j, Y_ORIGIN + yInset, healthBar[j]); 
+         setIcon(X_ORIGIN + 3 + xInset + barLength + j, Y_ORIGIN + yInset, shieldBar[j]); 
       }
    }
    
