@@ -63,6 +63,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
                               break;
          case KeyEvent.VK_Z : debug('z'); break;
          case KeyEvent.VK_X : debug('x'); break;
+         case KeyEvent.VK_D : debug('d'); break;
          case KeyEvent.VK_SPACE : debug(' '); break;
       }
       
@@ -128,6 +129,11 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       {
          Color c = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
          MessagePanel.addMessage("Random color!", c);
+         return;
+      }
+      if(arg == 'd')
+      {
+         GameEngine.getPlayer().applyDamage(1);
          return;
       }
       // combat timing

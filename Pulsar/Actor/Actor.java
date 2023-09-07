@@ -18,6 +18,8 @@ public class Actor implements ActorConstants, GUIConstants
    private int visionRange;
    private Shield shield;
    private Weapon weapon;
+   private int curHealth;
+   private int maxHealth;
 
 
    public String getName(){return name;}
@@ -28,6 +30,8 @@ public class Actor implements ActorConstants, GUIConstants
    public int getVisionRange(){return visionRange;}
    public Shield getShield(){return shield;}
    public Weapon getWeapon(){return weapon;}
+   public int getCurHealth(){return curHealth;}
+   public int getMaxHealth(){return maxHealth;}
 
 
    public void setName(String n){name = n;}
@@ -39,6 +43,8 @@ public class Actor implements ActorConstants, GUIConstants
    public void setVisionRange(int vr){visionRange = vr;}
    public void setShield(Shield s){shield = s;}
    public void setWeapon(Weapon w){weapon = w;}
+   public void setCurHealth(int h){curHealth = h;}
+   public void setMaxHealth(int h){maxHealth = h;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -52,6 +58,8 @@ public class Actor implements ActorConstants, GUIConstants
       visionRange = DEFAULT_VISION_RANGE;
       setShield(null);
       setWeapon(null);
+      setCurHealth(20);
+      setMaxHealth(20);
    }
    
    public void reconcileSprite()
@@ -135,6 +143,45 @@ public class Actor implements ActorConstants, GUIConstants
    public boolean hasWeapon()
    {
       return getWeapon() != null;
+   }
+   
+   public int[] getShieldBar(int length)
+   {
+      if(hasShield())
+      {
+         return GUITools.getBar(getShield().getCurCharge(), getShield().getMaxCharge(), length);
+      }
+      else
+      {
+         return GUITools.getBar(0, 20, length);
+      }
+   }
+   
+   // health methods
+   ////////////////////////////////////////////////////////////////////
+   public void fullyHeal()
+   {
+      setCurHealth(getMaxHealth());
+   }
+   
+   public void applyDamage(int d)
+   {
+      curHealth -= d;
+      
+      if(GameEngine.getPlayer() == this)
+      {
+         PlayerPanel.updatePlayerPanel();
+      }
+   }
+   
+   public boolean isDead()
+   {
+      return curHealth <= 0;
+   }
+   
+   public int[] getHealthBar(int length)
+   {
+      return GUITools.getBar(getCurHealth(), getMaxHealth(), length);
    }
    
    // AI/turn methods

@@ -206,13 +206,20 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                {
                   curActor.act();
                   InfoPanel.updateInfoPanel();
+                  PlayerPanel.updatePlayerPanel();
                }
             }
          }
          // increment if acted
          if(!(curActor.isReadyToAct()))
             incrementInitiative();
+         cleanUpDead();
          cleanUpSprites();
+         if(getPlayer().isDead())
+         {
+            MessagePanel.addMessage("You have died.", Color.RED);
+            break;
+         }
       }
    }
    
@@ -223,6 +230,15 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          Actor curActor = actorList.elementAt(i);
          if(!mapPanel.isOnLockList(curActor))
             curActor.reconcileSprite();
+      }
+   }
+   
+   public void cleanUpDead()
+   {
+      for(int i = 0; i < actorList.size(); i++)
+      {
+         if(actorList.elementAt(i).isDead())
+            remove(actorList.elementAt(i));
       }
    }
    
