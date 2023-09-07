@@ -19,12 +19,12 @@ public interface GUIConstants
    
    public static final Color BG_COLOR = Color.BLACK;
    public static final Color TERMINAL_FG_COLOR = Color.CYAN;
-   public static final Color DEFAULT_TILE_FG_COLOR = Color.WHITE;
+   public static final Color DEFAULT_TILE_FG_COLOR = new Color(254, 254, 254);
    public static final Color DEFAULT_TILE_BG_COLOR = new Color(16, 16, 16);
    public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
    public static final Color DEFAULT_MESSAGE_COLOR = Color.CYAN;
    public static final Color PLAYER_COLOR = Color.ORANGE;
-   public static final Color SHIELD_COLOR = Color.WHITE;
+   public static final Color SHIELD_COLOR = new Color(254, 254, 254);
    public static final Color HEALTH_COLOR = Color.RED;
    public static final Color DEFAULT_ACTOR_FG_COLOR = new Color(220, 220, 220);
    public static final Color DEFAULT_ACTOR_BG_COLOR = Color.GRAY;

@@ -50,6 +50,7 @@ public class PlayerPanel extends MessagePanel
       write(X_ORIGIN, Y_ORIGIN, "Player Panel", WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 1, "Shield [        ]", SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 2, "Health [        ]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      
       int[] shieldBar = GameEngine.getPlayer().getShieldBar(8);
       int[] healthBar = GameEngine.getPlayer().getHealthBar(8);
       for(int i = 0; i < 8; i++)
@@ -57,6 +58,11 @@ public class PlayerPanel extends MessagePanel
          setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 1, shieldBar[i], SHIELD_COLOR, BG_COLOR);
          setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 2, healthBar[i], HEALTH_COLOR, BG_COLOR);
       }
+      
+      Color c = new Color(Integer.MAX_VALUE);
+      System.out.println(c.getRGB());
+      System.out.println(Integer.MAX_VALUE);
+      
    }
    
    @Override
