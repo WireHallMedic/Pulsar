@@ -49,6 +49,33 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
          add(ut);
    }
    
+   public static void createRicochette(Coord origin, Coord source, Color color){createRicochette(origin, source, color, 0);}
+   public static void createRicochette(Coord origin, Coord source, Color color, int delay)
+   {
+      int reps = GameEngine.randomInt(10, 15);
+      for(int i = 0; i < reps; i++)
+         createRicochetteParticle(origin, source, color, delay);
+   }
+   
+   public static void createRicochetteParticle(Coord origin, Coord source, Color color){createSprayParticle(origin, source, color, 0);}
+   public static void createRicochetteParticle(Coord origin, Coord source, Color color, int delay)
+   {
+      double xSpeed = GUITools.getXSpeedTowards(origin, source);
+      double ySpeed = GUITools.getYSpeedTowards(origin, source);
+      xSpeed *= SPRAY_BASE_SPEED;
+      ySpeed *= SPRAY_BASE_SPEED;
+      xSpeed = GUITools.modifyByAmount(xSpeed, SPRAY_VARIABLE_SPEED);
+      ySpeed = GUITools.modifyByAmount(ySpeed, SPRAY_VARIABLE_SPEED);
+      UnboundTile ut = getPalette().getUnboundTile(SMALL_BULLET_TILE, color.getRGB(), getSizeMultiplier());
+      ut.setLoc(origin);
+      ut.setLifespan(SPRAY_DURATION);
+      ut.setSpeed(xSpeed, ySpeed);
+      if(delay > 0)
+         addWithDelay(ut, null, delay);
+      else
+         add(ut);
+   }
+   
    public static void createExplosion(Coord origin){createExplosion(origin, 0);}
    public static void createExplosion(Coord origin, int delay)
    {

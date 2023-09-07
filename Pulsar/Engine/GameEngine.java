@@ -83,7 +83,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       {
          actorList.remove(a);
          removeFromMapPanel(a);
-         if(actorIndex < initiativeIndex)
+         if(actorIndex <= initiativeIndex)
             initiativeIndex--;
       }
    }

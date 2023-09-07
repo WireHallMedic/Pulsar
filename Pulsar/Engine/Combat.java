@@ -4,6 +4,8 @@ import Pulsar.GUI.*;
 import Pulsar.Actor.*;
 import Pulsar.Gear.*;
 import WidlerSuite.*;
+import java.util.*;
+import java.awt.*;
 
 public class Combat
 {
@@ -11,6 +13,7 @@ public class Combat
    
    public static void resolveAttack(Actor attacker, Coord target)
    {
+      target = getActualTarget(attacker.getMapLoc(), target);
       // attacker animation
       if(GameEngine.playerCanSee(attacker))
       {
@@ -23,11 +26,32 @@ public class Combat
       {
          resolveAttackAgainstActor(attacker, defender);
       }
+      else
+      {
+         if(GameEngine.playerCanSee(target))
+         {
+            Color c = new Color(GameEngine.getZoneMap().getTile(target).getFGColor());
+            VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c);
+         }
+      }
       
       attacker.getWeapon().fire();
    }
    
-   public static void resolveAttackAgainstActor(Actor attacker, Actor defender)
+   private static Coord getActualTarget(Coord origin, Coord initialTarget)
+   {
+      if(origin.equals(initialTarget))
+         return origin;
+      Vector<Coord> lineOfFire = StraightLine.findLine(origin, initialTarget, StraightLine.REMOVE_ORIGIN);
+      for(Coord c : lineOfFire)
+      {
+         if(GameEngine.blocksShooting(c))
+            return c;
+      }
+      return initialTarget;
+   }
+   
+   private static void resolveAttackAgainstActor(Actor attacker, Actor defender)
    {
       boolean hasShieldBefore = defender.shieldIsUp();
       int startingHealth = defender.getCurHealth();
