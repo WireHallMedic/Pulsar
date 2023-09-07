@@ -39,6 +39,16 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       InfoPanel.updateInfoPanel();
    }
    
+   public void setPlayerAction(ActorAction action)
+   {
+      GameEngine.getPlayer().getAI().setPendingAction(action);
+   }
+   
+   public void setPlayerTarget(Coord target)
+   {
+      GameEngine.getPlayer().getAI().setPendingTarget(target);
+   }
+   
    public void standardModeKeyPressed(KeyEvent ke)
    {
       Actor player = GameEngine.getPlayer();
@@ -59,8 +69,9 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_L : GameEngine.setCursorLoc(playerLoc);
                               GameEngine.setGameMode(GameMode.LOOK); 
                               break;
-         case KeyEvent.VK_T : GameEngine.setCursorLoc(playerLoc);
-                              GameEngine.setGameMode(GameMode.TARGETING); 
+         case KeyEvent.VK_F : GameEngine.setCursorLoc(playerLoc);
+                              GameEngine.setGameMode(GameMode.TARGETING);
+                              setPlayerAction(ActorAction.ATTACK);
                               break;
          case KeyEvent.VK_Z : debug('z'); break;
          case KeyEvent.VK_X : debug('x'); break;
@@ -70,8 +81,8 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       
       if(target != null && GameEngine.isAnimationLocked() == false)
       {
-         player.getAI().setPendingTarget(target);
-         player.getAI().setPendingAction(ActorAction.CONTEXT_SENSITIVE);
+         setPlayerTarget(target);
+         setPlayerAction(ActorAction.CONTEXT_SENSITIVE);
       }
    }
    
@@ -90,6 +101,11 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_NUMPAD8 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD9 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1); break;
          case KeyEvent.VK_ESCAPE  : GameEngine.setGameMode(GameMode.STANDARD); return;
+         case KeyEvent.VK_F       :
+         case KeyEvent.VK_ENTER   : GameEngine.setGameMode(GameMode.STANDARD); 
+                                    setPlayerTarget(cursorLoc);
+                                    GameEngine.setGameMode(GameMode.STANDARD);
+                                    return;
       }
       GameEngine.setCursorLoc(cursorLoc);
    }

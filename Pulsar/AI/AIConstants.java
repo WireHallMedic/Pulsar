@@ -7,6 +7,7 @@ public interface AIConstants
       STEP,
       DELAY,
       CONTEXT_SENSITIVE,
-      TOGGLE;
+      TOGGLE,
+      ATTACK;
    }
 }

@@ -63,6 +63,8 @@ public class BasicAI implements AIConstants
          doToggle();
       if(pendingAction == ActorAction.DELAY)
          doDelay();
+      if(pendingAction == ActorAction.ATTACK)
+         doAttack();
       shiftPendingToPrevious();
    }
    
@@ -133,5 +135,10 @@ public class BasicAI implements AIConstants
    private void doDelay()
    {
       
+   }
+   
+   private void doAttack()
+   {
+      Combat.resolveAttack(self, pendingTarget);
    }
 }
