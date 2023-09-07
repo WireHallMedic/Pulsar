@@ -20,6 +20,7 @@ public class Actor implements ActorConstants, GUIConstants
    private Weapon weapon;
    private int curHealth;
    private int maxHealth;
+   private Color bloodColor;
 
 
    public String getName(){return name;}
@@ -32,6 +33,7 @@ public class Actor implements ActorConstants, GUIConstants
    public Weapon getWeapon(){return weapon;}
    public int getCurHealth(){return curHealth;}
    public int getMaxHealth(){return maxHealth;}
+   public Color getBloodColor(){return bloodColor;}
 
 
    public void setName(String n){name = n;}
@@ -45,6 +47,7 @@ public class Actor implements ActorConstants, GUIConstants
    public void setWeapon(Weapon w){weapon = w;}
    public void setCurHealth(int h){curHealth = h;}
    public void setMaxHealth(int h){maxHealth = h;}
+   public void setBloodColor(Color c){bloodColor = c;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -60,6 +63,7 @@ public class Actor implements ActorConstants, GUIConstants
       setWeapon(null);
       setCurHealth(20);
       setMaxHealth(20);
+      setBloodColor(GUIConstants.HUMAN_BLOOD);
    }
    
    public void reconcileSprite()
@@ -135,6 +139,11 @@ public class Actor implements ActorConstants, GUIConstants
    
    // gear methods
    ////////////////////////////////////////////////////////////////////
+   public boolean shieldIsUp()
+   {
+      return hasShield() && getShield().hasCharge();
+   }
+   
    public boolean hasShield()
    {
       return getShield() != null;

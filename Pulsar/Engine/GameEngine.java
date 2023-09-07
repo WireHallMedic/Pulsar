@@ -122,7 +122,8 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static boolean playerCanSee(int x, int y){return playerCanSee(new Coord(x, y));}
    public static boolean playerCanSee(Coord target)
    {
-      return player.canSee(target);
+      // null protection because will be null in unit testing
+      return player != null && player.canSee(target);
    }
    
    public static boolean blocksShooting(int x, int y){return blocksShooting(new Coord(x, y));}
