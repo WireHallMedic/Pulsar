@@ -17,11 +17,13 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
 {
    public static final Color[] TARGETING_GRADIENT = WSTools.getGradient(Color.BLACK, RETICULE_COLOR, 21);
    public static final Color[] BAD_TARGETING_GRADIENT = WSTools.getGradient(Color.BLACK, INVALID_RETICULE_COLOR, 21);
+   private Vector<UnboundTile> delayedRemovalList;
    
 	public MainGameFGPanel()
    {
       super(MAP_WIDTH_TILES + 2, MAP_HEIGHT_TILES + 2, SQUARE_TILE_PALETTE);
       setSize(50, 50);
+      delayedRemovalList = new Vector<UnboundTile>();
       
       GameEngine.setMapPanel(this);
    }
@@ -31,6 +33,22 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    {
       ZoneMap zoneMap = GameEngine.getZoneMap();
       Actor player = GameEngine.getPlayer();
+      
+      for(int i = 0; i < delayedRemovalList.size(); i++)
+      {
+         UnboundTile ut = delayedRemovalList.elementAt(i);
+         if(!shouldDelayRemoval(ut))
+         {
+            System.out.println("Removing");
+            super.remove(ut);
+            delayedRemovalList.removeElementAt(i);
+            i--;
+         }
+         if(!shouldDelayRemoval(ut))
+         {
+            System.out.println("Not removing");
+         }
+      }
       
       if(zoneMap != null && player != null)
       {
@@ -117,9 +135,43 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
       add(ms);
    }
    
-   public boolean isOnLockList(Actor a)
+   public boolean isOnLockList(Actor a){return isOnLockList(a.getSprite());}
+   public boolean isOnLockList(UnboundTile ut)
    {
-      return animationManager.getLockList().contains(a.getSprite());
+      return animationManager.getLockList().contains(ut);
+   }
+   
+   public boolean shouldDelayRemoval(UnboundTile ut)
+   {
+      return isOnLockList(ut) || hasScriptFor(ut);
+   }
+   
+   public boolean hasScriptFor(UnboundTile ut)
+   {
+      for(MovementScript script : animationManager.getScriptList())
+      {
+         if(script.getTarget() == ut)
+            return true;
+      }
+      return false;
+   }
+   
+   public void remove(UnboundTile ut)
+   {
+      if(shouldDelayRemoval(ut))
+      {
+         delayedRemovalList.add(ut);
+      }
+      else
+      {
+         super.remove(ut);
+      }
+   }
+   
+   // actors are removed by expiration to avoid being readded by movement scripts
+   public void remove(Actor a)
+   {
+      a.getSprite().forceExpire();
    }
    
    private void setActorVisibility()

@@ -91,7 +91,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static void removeFromMapPanel(Actor a)
    {
       if(mapPanel != null)
-         mapPanel.remove(a.getSprite());
+         mapPanel.remove(a);
    }
    
    private static void addToMapPanel(Actor a)
@@ -215,6 +215,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          // increment if acted
          if(!(curActor.isReadyToAct()))
             incrementInitiative();
+         // do cleanup
          cleanUpDead();
          cleanUpSprites();
          if(getPlayer().isDead())
