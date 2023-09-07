@@ -5,7 +5,7 @@ import Pulsar.AI.*;
 import java.awt.*;
 import Pulsar.Gear.*;
 
-public class ActorFactory implements ActorConstants
+public class ActorFactory implements ActorConstants, GearConstants
 {
    public static Player getPlayer()
    {
@@ -13,6 +13,7 @@ public class ActorFactory implements ActorConstants
       a.setAI(new PlayerAI(a));
       Weapon weapon = new Weapon();
       weapon.setAttacks(1);
+      weapon.addWeaponTag(WeaponTag.MELEE);
       a.setWeapon(weapon);
       a.setShield(new Shield());
       a.setCurHealth(32);

@@ -162,18 +162,8 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    {
       if(arg == ' ')
       {
-         Vector<Actor> actorList = GameEngine.getActorList();
-         Coord target = null;
-         for(Actor a : actorList)
-         {
-            if(a != GameEngine.getPlayer())
-            {
-               target = a.getMapLoc();
-               break;
-            }
-         }
-         if(target != null)
-            Combat.resolveAttack(GameEngine.getPlayer(), target);
+         MovementScript msa = MovementScriptFactory.getAttackAnimation(GameEngine.getPlayer(), GameEngine.getActorList().elementAt(1).getMapLoc());
+         GameEngine.getMapPanel().addLocking(msa);
          return;
       }
       if(arg == 'e')

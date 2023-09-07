@@ -7,7 +7,7 @@ import WidlerSuite.*;
 import java.util.*;
 import java.awt.*;
 
-public class Combat
+public class Combat implements GUIConstants
 {
    public static MainGameFGPanel getMapPanel(){return GameEngine.getMapPanel();}
    
@@ -17,7 +17,7 @@ public class Combat
       // attacker animation
       if(GameEngine.playerCanSee(attacker))
       {
-         MovementScript msa = MovementScriptFactory.getShootScript(attacker, target);
+         MovementScript msa = MovementScriptFactory.getAttackAnimation(attacker, target);
          getMapPanel().addLocking(msa);
       }
       
@@ -56,6 +56,8 @@ public class Combat
       boolean hasShieldBefore = defender.shieldIsUp();
       int startingHealth = defender.getCurHealth();
       int[] damageArray = rollDamage(attacker.getWeapon());
+      int delay = attacker.getWeapon().isMelee() ? MELEE_ATTACK_HIT_DELAY : 0;
+      
       for(int i = 0; i < damageArray.length; i++)
       {
          defender.applyDamage(damageArray[i], attacker.getWeapon().getDamageType());
@@ -66,20 +68,20 @@ public class Combat
          // shield flicker
          if(hasShieldBefore)
          {
-            VisualEffectFactory.createShieldFlicker(defender);
+            VisualEffectFactory.createShieldFlicker(defender, delay);
             // shield break
             if(!defender.shieldIsUp())
             {
-               VisualEffectFactory.createShieldBreak(defender);
+               VisualEffectFactory.createShieldBreak(defender, delay);
             }
          }
          // blood spray
          if(defender.getCurHealth() < startingHealth)
          {
-            VisualEffectFactory.createSpray(defender.getMapLoc(), attacker.getMapLoc(), defender.getBloodColor());
+            VisualEffectFactory.createSpray(defender.getMapLoc(), attacker.getMapLoc(), defender.getBloodColor(), delay);
          }
          // target impact
-         MovementScript msd = MovementScriptFactory.getImpactScript(defender, attacker.getMapLoc(), 0);
+         MovementScript msd = MovementScriptFactory.getImpactScript(defender, attacker.getMapLoc(), delay);
          getMapPanel().addLocking(msd);
       }
    }

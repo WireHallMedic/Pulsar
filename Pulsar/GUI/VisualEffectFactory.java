@@ -119,14 +119,16 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
       }
    }
    
-   public static void createShieldFlicker(Actor target)
+   public static void createShieldFlicker(Actor target){createShieldFlicker(target, 0);}
+   public static void createShieldFlicker(Actor target, int delay)
    {
       int flickerDuration = 3;
       int reps = 3;
-      for(int delay = 0; delay < reps; delay++)
+      for(int subdelay = 0; subdelay < reps; subdelay++)
       {
          for(int i = 0; i < SHIELD_FLICKER_X_OFFSET.length; i++)
          {
+            int totalDelay = (subdelay * flickerDuration) + delay;
             double xOffset = SHIELD_FLICKER_X_OFFSET[i] - .6;
             double yOffset = SHIELD_FLICKER_Y_OFFSET[i] - .6;
             xOffset += GameEngine.random() * .2;
@@ -136,15 +138,16 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
             ut.setYOffset(yOffset);
             ut.setLifespan(flickerDuration);
             ut.setAnchorTile(target.getSprite());
-            if(delay == 0)
+            if(totalDelay == 0)
                add(ut);
             else
-               addWithDelay(ut, null, delay * flickerDuration);
+               addWithDelay(ut, null, totalDelay);
          }
       }
    }
    
-   public static void createShieldBreak(Actor target)
+   public static void createShieldBreak(Actor target){createShieldBreak(target, 0);}
+   public static void createShieldBreak(Actor target, int delay)
    {
       for(int i = 0; i < SHIELD_FLICKER_X_OFFSET.length; i++)
       {
@@ -162,7 +165,10 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
          ut.setSpeed(SHIELD_BREAK_X_SPEED[i], SHIELD_BREAK_Y_SPEED[i]);
          ut.setLifespan(10);
          ut.setLoc(target.getMapLoc());
-         add(ut);
+         if(delay == 0)
+            add(ut);
+         else
+            addWithDelay(ut, null, delay);
       }
    }
    

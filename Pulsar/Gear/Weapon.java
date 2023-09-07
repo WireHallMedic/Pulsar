@@ -108,6 +108,16 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       return false;
    }
    
+   public boolean isMelee()
+   {
+      return hasWeaponTag(WeaponTag.MELEE);
+   }
+   
+   public boolean isHeavy()
+   {
+      return hasWeaponTag(WeaponTag.HEAVY);
+   }
+   
    public int getRemainingShots()
    {
       return getCurCharge() / getChargeCost();
