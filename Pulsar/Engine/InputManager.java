@@ -49,6 +49,14 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       GameEngine.getPlayer().getAI().setPendingTarget(target);
    }
    
+   public Coord getDefaultTargetingLocation()
+   {
+      Actor lastTarget = GameEngine.getPlayer().getAI().getLastActorTargeted();
+      if(lastTarget != null && lastTarget.isDead() == false)
+         return lastTarget.getMapLoc();
+      return GameEngine.getPlayer().getMapLoc();
+   }
+   
    public void standardModeKeyPressed(KeyEvent ke)
    {
       Actor player = GameEngine.getPlayer();
@@ -69,7 +77,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_L : GameEngine.setCursorLoc(playerLoc);
                               GameEngine.setGameMode(GameMode.LOOK); 
                               break;
-         case KeyEvent.VK_F : GameEngine.setCursorLoc(playerLoc);
+         case KeyEvent.VK_F : GameEngine.setCursorLoc(getDefaultTargetingLocation());
                               GameEngine.setGameMode(GameMode.TARGETING);
                               setPlayerAction(ActorAction.ATTACK);
                               break;

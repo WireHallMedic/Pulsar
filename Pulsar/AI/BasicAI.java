@@ -14,6 +14,7 @@ public class BasicAI implements AIConstants
 	protected Coord pendingTarget;
 	protected ActorAction previousAction;
 	protected Coord previousTarget;
+   protected Actor lastActorTargeted;
 
 
 	public Actor getSelf(){return self;}
@@ -21,12 +22,14 @@ public class BasicAI implements AIConstants
 	public Coord getPendingTarget(){if(pendingTarget == null) return null; return new Coord(pendingTarget);}
 	public ActorAction getPreviousAction(){return previousAction;}
 	public Coord getPreviousTarget(){if(pendingTarget == null) return null; return new Coord(previousTarget);}
+   public Actor getLastActorTargeted(){return lastActorTargeted;}
 
 
 	public void setSelf(Actor s){self = s;}
 	public void setPendingAction(ActorAction p){pendingAction = p;}
 	public void setPendingTarget(Coord p){setPendingTarget(p.x, p.y);}
 	public void setPendingTarget(int x, int y){pendingTarget = new Coord(x, y);}
+   public void setLastActorTargeted(Actor a){lastActorTargeted = a;}
 
 
    public BasicAI(Actor s)
@@ -34,6 +37,7 @@ public class BasicAI implements AIConstants
       self = s;
       previousTarget = null;
       previousAction = null;
+      lastActorTargeted = null;
       clearPlan();
    }
    
@@ -139,6 +143,7 @@ public class BasicAI implements AIConstants
    
    private void doAttack()
    {
+      lastActorTargeted = GameEngine.getActorAt(pendingTarget);
       Combat.resolveAttack(self, pendingTarget);
    }
 }
