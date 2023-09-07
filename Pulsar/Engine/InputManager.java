@@ -57,6 +57,13 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       return GameEngine.getPlayer().getMapLoc();
    }
    
+   public void cancelAction()
+   {
+      GameEngine.getPlayer().getAI().clearPlan();
+      GameEngine.setGameMode(GameMode.STANDARD);
+      MessagePanel.addMessage("Action cancelled");
+   }
+   
    public void standardModeKeyPressed(KeyEvent ke)
    {
       Actor player = GameEngine.getPlayer();
@@ -108,10 +115,9 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_NUMPAD7 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD8 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD9 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1); break;
-         case KeyEvent.VK_ESCAPE  : GameEngine.setGameMode(GameMode.STANDARD); return;
+         case KeyEvent.VK_ESCAPE  : cancelAction(); return;
          case KeyEvent.VK_F       :
-         case KeyEvent.VK_ENTER   : GameEngine.setGameMode(GameMode.STANDARD); 
-                                    setPlayerTarget(cursorLoc);
+         case KeyEvent.VK_ENTER   : setPlayerTarget(cursorLoc);
                                     GameEngine.setGameMode(GameMode.STANDARD);
                                     return;
       }
