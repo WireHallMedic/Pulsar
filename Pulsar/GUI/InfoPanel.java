@@ -56,13 +56,29 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    public void showNearbyObjects()
    {
       clearInfoPanel();
+      // show actors
+      int barLength = (WIDTH_TILES - 5) / 2;
+      String barBuffer = "";
+      for(int i = 0; i < barLength; i++)
+         barBuffer += " ";
       Vector<Actor> actorsToShow = getActorsToShow();
       for(int i = 0; i < actorsToShow.size() && i < HEIGHT_TILES; i++)
       {
+         int yInset = 2 * i;
          Actor a = actorsToShow.elementAt(i);
-         setTile(X_ORIGIN, Y_ORIGIN + i, a.getSprite().getIconIndex(), a.getSprite().getFGColor(), a.getSprite().getBGColor());
-         write(X_ORIGIN + 2, Y_ORIGIN + i, a.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         setTile(X_ORIGIN, Y_ORIGIN + yInset, a.getSprite().getIconIndex(), a.getSprite().getFGColor(), a.getSprite().getBGColor());
+         write(X_ORIGIN + 2, Y_ORIGIN + yInset, a.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         write(X_ORIGIN + 1, Y_ORIGIN + yInset + 1, "[" + barBuffer + "]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), barLength + 2, 1);
+         write(X_ORIGIN + 3 + barLength, Y_ORIGIN + yInset + 1, "[" + barBuffer + "]", SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), barLength + 2, 1);
+         int[] healthBar = a.getHealthBar(barLength);
+         int[] shieldBar = a.getShieldBar(barLength);
+         for(int j = 0; j < barLength; j++)
+         {
+            setIcon(X_ORIGIN + 2 + j, Y_ORIGIN + yInset + 1, healthBar[j]); 
+            setIcon(X_ORIGIN + 4 + barLength + j, Y_ORIGIN + yInset + 1, healthBar[j]); 
+         }
       }
+      // show objects
    }
    
    // look mode

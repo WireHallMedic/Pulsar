@@ -4,6 +4,7 @@ import java.util.*;
 import java.awt.*;
 import Pulsar.Actor.*;
 import Pulsar.Zone.*;
+import Pulsar.Gear.*;
 import Pulsar.GUI.*;
 import Pulsar.AI.*;
 import java.lang.*;
@@ -152,6 +153,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       Actor e = new Actor('e');
       e.setName("Enemy 1");
       e.setAllLocs(4, 1);
+      e.setShield(new Shield());
       e.setAI(new WanderAI(e));
       add(e);
       e = new Actor('e');

@@ -9,6 +9,7 @@ import Pulsar.GUI.*;
 import Pulsar.Gear.*;
 import java.awt.*;
 import java.awt.Toolkit.*;
+import java.util.*;
 
 public class InputManager implements KeyListener, AIConstants, EngineConstants
 {
@@ -116,8 +117,18 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    {
       if(arg == ' ')
       {
-         VisualEffectFactory.createShieldFlicker(GameEngine.getPlayer());
-         VisualEffectFactory.createShieldBreak(GameEngine.getPlayer());
+         Vector<Actor> actorList = GameEngine.getActorList();
+         Coord target = null;
+         for(Actor a : actorList)
+         {
+            if(a != GameEngine.getPlayer())
+            {
+               target = a.getMapLoc();
+               break;
+            }
+         }
+         if(target != null)
+            Combat.resolveAttack(GameEngine.getPlayer(), target);
          return;
       }
       if(arg == 'e')
