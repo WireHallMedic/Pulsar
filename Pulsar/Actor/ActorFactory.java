@@ -11,7 +11,9 @@ public class ActorFactory implements ActorConstants
    {
       Player a = new Player();
       a.setAI(new PlayerAI(a));
-      a.setWeapon(new Weapon());
+      Weapon weapon = new Weapon();
+      weapon.setAttacks(1);
+      a.setWeapon(weapon);
       a.setShield(new Shield());
       a.setCurHealth(32);
       a.setMaxHealth(32);

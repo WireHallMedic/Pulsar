@@ -75,7 +75,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
          for(int j = 0; j < barLength; j++)
          {
             setIcon(X_ORIGIN + 2 + j, Y_ORIGIN + yInset + 1, healthBar[j]); 
-            setIcon(X_ORIGIN + 4 + barLength + j, Y_ORIGIN + yInset + 1, healthBar[j]); 
+            setIcon(X_ORIGIN + 4 + barLength + j, Y_ORIGIN + yInset + 1, shieldBar[j]); 
          }
       }
       // show objects
