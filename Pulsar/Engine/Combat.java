@@ -11,44 +11,65 @@ public class Combat implements GUIConstants
 {
    public static MainGameFGPanel getMapPanel(){return GameEngine.getMapPanel();}
    
-   public static void resolveAttack(Actor attacker, Coord target)
+   public static void resolveAttack(Actor attacker, Coord initialTarget)
    {
-      target = getActualTarget(attacker.getMapLoc(), target);
+      boolean isSpread = attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.SPREAD);
+      Vector<Coord> targetList = getActualTargets(attacker.getMapLoc(), initialTarget, isSpread);
       // attacker animation
       if(GameEngine.playerCanSee(attacker))
       {
-         MovementScript msa = MovementScriptFactory.getAttackAnimation(attacker, target);
+         MovementScript msa = MovementScriptFactory.getAttackAnimation(attacker, initialTarget);
          getMapPanel().addLocking(msa);
       }
-      
-      Actor defender = GameEngine.getActorAt(target);
-      if(defender != null)
+      for(Coord target : targetList)
       {
-         resolveAttackAgainstActor(attacker, defender);
-      }
-      else
-      {
-         if(GameEngine.playerCanSee(target))
+         Actor defender = GameEngine.getActorAt(target);
+         if(defender != null)
          {
-            Color c = new Color(GameEngine.getZoneMap().getTile(target).getFGColor());
-            VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c);
+            resolveAttackAgainstActor(attacker, defender);
+         }
+         else
+         {
+            if(GameEngine.playerCanSee(target))
+            {
+               Color c = new Color(GameEngine.getZoneMap().getTile(target).getFGColor());
+               VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c);
+            }
          }
       }
-      
       attacker.getWeapon().discharge();
    }
    
-   private static Coord getActualTarget(Coord origin, Coord initialTarget)
+   private static Vector<Coord> getActualTargets(Coord origin, Coord initialTarget, boolean isSpread)
    {
+      Vector<Coord> targetList = new Vector<Coord>();
+      // self
       if(origin.equals(initialTarget))
-         return origin;
-      Vector<Coord> lineOfFire = StraightLine.findLine(origin, initialTarget, StraightLine.REMOVE_ORIGIN);
-      for(Coord c : lineOfFire)
       {
-         if(GameEngine.blocksShooting(c))
-            return c;
+         targetList.add(origin);
+         return targetList;
       }
-      return initialTarget;
+      // shotgun targets
+      if(isSpread)
+      {
+         return getShotgunTargets(origin, initialTarget);
+      }
+      // something in the way for a line
+      else
+      {
+         Vector<Coord> lineOfFire = StraightLine.findLine(origin, initialTarget, StraightLine.REMOVE_ORIGIN);
+         for(Coord c : lineOfFire)
+         {
+            if(GameEngine.blocksShooting(c))
+            {
+               targetList.add(c);
+               return targetList;
+            }
+         }
+      }
+      // all clear single target
+      targetList.add(initialTarget);
+      return targetList;
    }
    
    private static void resolveAttackAgainstActor(Actor attacker, Actor defender)
@@ -96,5 +117,42 @@ public class Combat implements GUIConstants
          damage[i] += (int)(GameEngine.random() * (weapon.getVariableDamage() + 1));
       }
       return damage;
+   }
+   
+   public static Vector<Coord> getShotgunTargets(Coord origin, Coord target)
+   {
+      Vector<Coord> finalTargetList = new Vector<Coord>();
+      if(origin.equals(target))
+      {
+         finalTargetList.add(origin);
+         return finalTargetList;
+      }
+      Vector<Coord> targetList = EngineTools.getShotgunSprayTargets(origin, target);
+      for(Coord prospect : targetList)
+      {
+         Vector<Coord> line = StraightLine.findLine(origin, prospect, StraightLine.REMOVE_ORIGIN);
+         // target first blocking tile, or last tile if no blocking
+         for(int i = 0; i < line.size(); i++)
+         {
+            if(i == line.size() - 1 || GameEngine.blocksShooting(line.elementAt(i)))
+            {
+               // ignore if duplicate
+               boolean addF = true;
+               for(int j = 0; j < finalTargetList.size(); j++)
+               {
+                  if(finalTargetList.elementAt(j).equals(line.elementAt(i)))
+                  {
+                     addF = false;
+                     break;
+                  }
+               }
+               // otherwise add
+               if(addF)
+                  finalTargetList.add(line.elementAt(i));
+               break;
+            }
+         }
+      }
+      return finalTargetList;
    }
 }

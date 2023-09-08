@@ -1,34 +1,28 @@
 package Pulsar.Engine;
 
 import WidlerSuite.*;
+import java.util.*;
 
 public class EngineTools
 {
    public static final double SHOTGUN_SPRAY_ARC = 0.523599; // 30 degrees
-   public static final double SHOTGUN_SPRAY_ARC_INCREMENT = SHOTGUN_SPRAY_ARC / 4.0;
+   public static final double SHOTGUN_SPRAY_ARC_INCREMENT = SHOTGUN_SPRAY_ARC / 2.0;
+
    
-   public static double[] getShotgunSprayAngles(double theta)
-   {
-      double[] angleArr = new double[5];
-      angleArr[0] = theta - (SHOTGUN_SPRAY_ARC_INCREMENT * 2);
-      angleArr[1] = theta - SHOTGUN_SPRAY_ARC_INCREMENT;
-      angleArr[2] = theta;
-      angleArr[3] = theta + SHOTGUN_SPRAY_ARC_INCREMENT;
-      angleArr[4] = theta + (SHOTGUN_SPRAY_ARC_INCREMENT * 2);
-      return angleArr;
-   }
-   
-   public static Coord[] getShotgunSprayTargets(Coord origin, Coord target)
+   public static Vector<Coord> getShotgunSprayTargets(Coord origin, Coord target)
    {
       Vect straight = new Vect(origin, target);
-      double[] angleArr = getShotgunSprayAngles(straight.angle);
-      Coord[] coordArr = new Coord[5];
-      for(int i = 0; i < coordArr.length; i++)
+      double maxAngle = straight.angle + SHOTGUN_SPRAY_ARC_INCREMENT;
+      double minAngle = straight.angle - SHOTGUN_SPRAY_ARC_INCREMENT;
+      Coord maxCoord = new Coord(new Vect(maxAngle, 10));
+      Coord minCoord = new Coord(new Vect(minAngle, 10));
+      Vector<Coord> parallelLine = StraightLine.findLine(minCoord, maxCoord);
+      for(Coord c : parallelLine)
       {
-         Vect v = new Vect(angleArr[i], 9);
-         coordArr[i] = new Coord(v);
-         coordArr[i].add(origin);
+         c.x += origin.x;
+         c.y += origin.y;
       }
-      return coordArr;
+      
+      return parallelLine;
    }
 }

@@ -7,6 +7,7 @@ package Pulsar.GUI;
 import Pulsar.Engine.*;
 import Pulsar.Zone.*;
 import Pulsar.Actor.*;
+import Pulsar.Gear.*;
 import WidlerSuite.*;
 import javax.swing.*;
 import java.awt.event.*;
@@ -17,6 +18,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
 {
    public static final Color[] TARGETING_GRADIENT = WSTools.getGradient(Color.BLACK, RETICULE_COLOR, 21);
    public static final Color[] BAD_TARGETING_GRADIENT = WSTools.getGradient(Color.BLACK, INVALID_RETICULE_COLOR, 21);
+   public static final Color[] TERMINAL_GRADIENT = WSTools.getGradient(Color.BLACK, TERMINAL_FG_COLOR, 21);
    
 	public MainGameFGPanel()
    {
@@ -79,20 +81,49 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                Coord playerLoc = GameEngine.getPlayer().getMapLoc();
                playerLoc.x -= xCorner;
                playerLoc.y -= yCorner;
-               Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, cursorLoc, StraightLine.REMOVE_ORIGIN);
-               if(targetingLine.size() == 0)
-                  targetingLine.add(playerLoc);
-               boolean clearPath = true;
-               for(Coord c : targetingLine)
+               // shotgun targeting
+               if(player.getWeapon().hasWeaponTag(GearConstants.WeaponTag.SPREAD))
                {
-                  int fgColor = getFGColor(c);
-                  int iconIndex = getIcon(c);
-                  int bgColor = BAD_TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
-                  if(clearPath)
-                     bgColor = TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
-                  setTile(c.x, c.y, iconIndex, fgColor, bgColor);
-                  if(GameEngine.blocksShooting(c.x + xCorner, c.y + yCorner))
-                     clearPath = false;
+                  Vector<Coord> sprayTargets = EngineTools.getShotgunSprayTargets(playerLoc, cursorLoc);
+                  for(Coord sprayTarget : sprayTargets)
+                  {
+                     Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, sprayTarget, StraightLine.REMOVE_ORIGIN);
+                     boolean clearPath = true;
+                     for(Coord c : targetingLine)
+                     {
+                        if(GameEngine.playerCanSee(c.x + xCorner, c.y + yCorner))
+                        {
+                           int bgColor = BAD_TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
+                           if(clearPath)
+                              bgColor = TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
+                           setBGColor(c.x, c.y, bgColor);
+                           if(GameEngine.blocksShooting(c.x + xCorner, c.y + yCorner))
+                           clearPath = false;
+                        }
+                        else
+                           break;
+                     }
+                  }
+                  setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
+               }
+               else
+               // non-shotgun targeting
+               {
+                  Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, cursorLoc, StraightLine.REMOVE_ORIGIN);
+                  if(targetingLine.size() == 0)
+                     targetingLine.add(playerLoc);
+                  boolean clearPath = true;
+                  for(Coord c : targetingLine)
+                  {
+                     int fgColor = getFGColor(c);
+                     int iconIndex = getIcon(c);
+                     int bgColor = BAD_TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
+                     if(clearPath)
+                        bgColor = TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
+                     setTile(c.x, c.y, iconIndex, fgColor, bgColor);
+                     if(GameEngine.blocksShooting(c.x + xCorner, c.y + yCorner))
+                        clearPath = false;
+                  }
                }
             }
          }
