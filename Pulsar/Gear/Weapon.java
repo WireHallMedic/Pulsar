@@ -4,9 +4,7 @@ import java.util.*;
 
 public class Weapon extends GearObj implements GearConstants, Chargable
 {	
-   public static final Weapon FIST = getFist();
-   
-	private int baseDamage;
+   private int baseDamage;
 	private int variableDamage;
 	private int attacks;
 	private DamageType damageType;
@@ -52,18 +50,6 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       maxCharge = 20;
       chargeCost = 4;
       chargeRate = 1;
-   }
-   
-   public static Weapon getFist()
-   {
-      Weapon w = new Weapon("Fist");
-      w.setBaseDamage(1);
-      w.setVariableDamage(0);
-      w.setAttacks(1);
-      w.setDamageType(DamageType.KINETIC);
-      w.addWeaponTag(WeaponTag.MELEE);
-      w.setChargeCost(0);
-      return w;
    }
    
    public void fullyCharge()
@@ -171,7 +157,9 @@ public class Weapon extends GearObj implements GearConstants, Chargable
    
    private String getDamagePerShotString()
    {
-      return baseDamage + "-" + (baseDamage + variableDamage - 1);
+      if(variableDamage == 0)
+         return "" + baseDamage;
+      return baseDamage + "-" + (baseDamage + variableDamage);
    }
    
    private String getSingleShotSummary()

@@ -93,7 +93,7 @@ public class Combat implements GUIConstants
       for(int i = 0; i < damage.length; i++)
       {
          damage[i] = weapon.getBaseDamage();
-         damage[i] += (int)(GameEngine.random() * weapon.getVariableDamage());
+         damage[i] += (int)(GameEngine.random() * (weapon.getVariableDamage() + 1));
       }
       return damage;
    }

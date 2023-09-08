@@ -14,7 +14,7 @@ public interface GearConstants extends WSFontConstants
    public static final Color DEFAULT_WEAPON_COLOR = Color.WHITE;
    
    public static final int DEFAULT_BASE_DAMAGE = 6;
-   public static final int DEFAULT_VARIABLE_DAMAGE = 3;
+   public static final int DEFAULT_VARIABLE_DAMAGE = 2;
    
    public enum DamageType
    {

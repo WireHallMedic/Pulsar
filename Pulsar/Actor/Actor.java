@@ -66,7 +66,7 @@ public class Actor implements ActorConstants, GUIConstants
       setCurHealth(20);
       setMaxHealth(20);
       setBloodColor(GUIConstants.HUMAN_BLOOD);
-      unarmed = Weapon.FIST;
+      unarmed = WeaponFactory.getBasicWeapon(GearConstants.WeaponType.MELEE);
    }
    
    public void reconcileSprite()
