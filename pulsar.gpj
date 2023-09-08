@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3180;g
+!3218;g
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -64,6 +64,7 @@ s#l0
 %\011Pulsar%sPulsarMain.java
 %\011%uWidlerSuite%sRoguePanel.java
 %\011Pulsar%sGear%sGadget.java
+%\011Pulsar%sEngine%sEngineTools.java
 %\011%uWidlerSuite%sSquirrelRNG.java
 %\011%uWidlerSuite%sUnboundString.java
 %\011Pulsar%sZone%sToggleTile.java
@@ -101,7 +102,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3180;f
+!3218;f
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -153,6 +154,7 @@ s#l0
 %\011Pulsar%sPulsarMain.java
 %\011%uWidlerSuite%sRoguePanel.java
 %\011Pulsar%sGear%sGadget.java
+%\011Pulsar%sEngine%sEngineTools.java
 %\011%uWidlerSuite%sSquirrelRNG.java
 %\011%uWidlerSuite%sUnboundString.java
 %\011Pulsar%sZone%sToggleTile.java
