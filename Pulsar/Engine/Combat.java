@@ -13,8 +13,7 @@ public class Combat implements GUIConstants
    
    public static void resolveAttack(Actor attacker, Coord initialTarget)
    {
-      boolean isSpread = attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.SPREAD);
-      Vector<Coord> targetList = getActualTargets(attacker.getMapLoc(), initialTarget, isSpread);
+      Vector<Coord> targetList = getActualTargets(attacker.getMapLoc(), initialTarget, attacker.getWeapon());
       // attacker animation
       if(GameEngine.playerCanSee(attacker))
       {
@@ -40,7 +39,7 @@ public class Combat implements GUIConstants
       attacker.getWeapon().discharge();
    }
    
-   private static Vector<Coord> getActualTargets(Coord origin, Coord initialTarget, boolean isSpread)
+   private static Vector<Coord> getActualTargets(Coord origin, Coord initialTarget, Weapon weapon)
    {
       Vector<Coord> targetList = new Vector<Coord>();
       // self
@@ -50,21 +49,23 @@ public class Combat implements GUIConstants
          return targetList;
       }
       // shotgun targets
-      if(isSpread)
+      if(weapon.hasWeaponTag(GearConstants.WeaponTag.SPREAD))
       {
          return getShotgunTargets(origin, initialTarget);
       }
-      // something in the way for a line
-      else
+      // blast
+      if(weapon.hasWeaponTag(GearConstants.WeaponTag.BLAST))
       {
-         Vector<Coord> lineOfFire = StraightLine.findLine(origin, initialTarget, StraightLine.REMOVE_ORIGIN);
-         for(Coord c : lineOfFire)
+         return getBlastTargets(origin, initialTarget);
+      }
+      // something in the way for a line
+      Vector<Coord> lineOfFire = StraightLine.findLine(origin, initialTarget, StraightLine.REMOVE_ORIGIN);
+      for(Coord c : lineOfFire)
+      {
+         if(GameEngine.blocksShooting(c))
          {
-            if(GameEngine.blocksShooting(c))
-            {
-               targetList.add(c);
-               return targetList;
-            }
+            targetList.add(c);
+            return targetList;
          }
       }
       // all clear single target
@@ -154,5 +155,17 @@ public class Combat implements GUIConstants
          }
       }
       return finalTargetList;
+   }
+   
+   public static Vector<Coord> getBlastTargets(Coord origin, Coord target)
+   {
+      Coord detonationLoc = GameEngine.getDetonationLoc(origin, target);
+      Vector<Coord> blastList = new Vector<Coord>();
+      for(int x = -1; x < 2; x++)
+      for(int y = -1; y < 2; y++)
+      {
+         blastList.add(new Coord(detonationLoc.x +x, detonationLoc.y + y));
+      }
+      return blastList;
    }
 }

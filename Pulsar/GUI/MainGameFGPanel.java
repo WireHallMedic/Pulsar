@@ -109,29 +109,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                // blast targeting
                else if(player.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST))
                {
-       //            Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, cursorLoc, StraightLine.REMOVE_ORIGIN);
-//                   if(targetingLine.size() == 0)
-//                      targetingLine.add(playerLoc);
-//                   boolean clearPath = true;
-//                   Coord blockingLoc = null;
-//                   for(Coord c : targetingLine)
-//                   {
-//                      int fgColor = getFGColor(c);
-//                      int iconIndex = getIcon(c);
-//                      int bgColor = BAD_TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
-//                      if(clearPath)
-//                         bgColor = TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
-//                      setTile(c.x, c.y, iconIndex, fgColor, bgColor);
-//                      if(GameEngine.blocksShooting(c.x + xCorner, c.y + yCorner))
-//                      {
-//                         if(blockingLoc == null)
-//                            blockingLoc = new Coord(c);
-//                         clearPath = false;
-//                      }
-//                   }
-//                   Coord blastLocation = blockingLoc;
-//                   if(blastLocation == null)
-//                      blastLocation = cursorLoc;
                   Coord blastLocation = GameEngine.getDetonationLoc(GameEngine.getPlayer().getMapLoc(), GameEngine.getCursorLoc());
                   for(int x = -1; x < 2; x++)
                   for(int y = -1; y < 2; y++)
