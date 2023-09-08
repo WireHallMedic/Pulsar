@@ -29,12 +29,19 @@ public class Combat implements GUIConstants
          }
          else
          {
-            if(GameEngine.playerCanSee(target))
+            // blasts don't generate ricochettes
+            if(!attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST) &&
+               GameEngine.playerCanSee(target))
             {
                Color c = new Color(GameEngine.getZoneMap().getTile(target).getFGColor());
                VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c);
             }
          }
+      }
+      // blasts generate explosions
+      if(attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST))
+      {
+         VisualEffectFactory.createExplosion(targetList.elementAt(4));
       }
       attacker.getWeapon().discharge();
    }
