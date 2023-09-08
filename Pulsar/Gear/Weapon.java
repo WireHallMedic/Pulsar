@@ -60,7 +60,7 @@ public class Weapon extends GearObj implements GearConstants, Chargable
    public void charge()
    {
       if(curCharge < maxCharge)
-         curCharge++;
+         curCharge += chargeRate;
    }
    
    public boolean canFire()

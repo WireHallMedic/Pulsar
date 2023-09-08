@@ -248,13 +248,13 @@ public class Actor implements ActorConstants, GUIConstants
    
    public void charge()
    {
-      if(!(isReadyToAct()))
+      if(!isReadyToAct())
       {
          turnEnergy++;
          if(hasShield())
-            getShield().charge();
+            shield.charge();
          if(hasWeapon())
-            getWeapon().charge();
+            weapon.charge();
       }
    }
    

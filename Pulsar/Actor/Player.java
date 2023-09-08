@@ -28,11 +28,23 @@ public class Player extends Actor implements GUIConstants
       usingPrimaryWeapon = true;
    }
    
+   @Override
+   public void charge()
+   {
+      if(!isReadyToAct())
+      {
+         if(hasSecondaryWeapon())
+            secondaryWeapon.charge();
+      }
+      super.charge();
+   }
+   
    // weapon stuff
    public void setPrimaryWeapon(Weapon w){weapon = w;}
    public void setSecondaryWeapon(Weapon w){secondaryWeapon = w;}
    public Weapon getPrimaryWeapon(){return weapon;}
    public Weapon getSecondaryWeapon(){return secondaryWeapon;}
+   public boolean hasSecondaryWeapon(){return secondaryWeapon != null;}
    
    @Override
    public void setWeapon(Weapon w)
