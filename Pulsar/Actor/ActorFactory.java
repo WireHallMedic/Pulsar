@@ -13,7 +13,7 @@ public class ActorFactory implements ActorConstants, GearConstants
       a.setAI(new PlayerAI(a));
       Weapon weapon = new Weapon();
       weapon.setAttacks(1);
-     // weapon.addWeaponTag(WeaponTag.MELEE);
+      weapon.addWeaponTag(WeaponTag.MELEE);
       a.setWeapon(weapon);
       a.setShield(new Shield());
       a.setCurHealth(32);

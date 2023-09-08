@@ -188,13 +188,13 @@ public class Actor implements ActorConstants, GUIConstants
       setCurHealth(getMaxHealth());
    }
    
-   public void applyDamage(int damage, GearConstants.DamageType damageType)
+   public void applyDamage(int damage, GearConstants.DamageType damageType, boolean doAnimation)
    {
       if(hasShield())
       {
          boolean shieldUpBefore = shield.hasCharge();
          damage = shield.applyDamage(damage, damageType);
-         if(GameEngine.playerCanSee(this))
+         if(doAnimation && GameEngine.playerCanSee(this))
          {
             if(shieldUpBefore)
             {

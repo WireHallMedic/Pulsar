@@ -60,7 +60,7 @@ public class Combat implements GUIConstants
       
       for(int i = 0; i < damageArray.length; i++)
       {
-         defender.applyDamage(damageArray[i], attacker.getWeapon().getDamageType());
+         defender.applyDamage(damageArray[i], attacker.getWeapon().getDamageType(), false);
       }
       
       if(GameEngine.playerCanSee(defender))
