@@ -152,6 +152,25 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return isActorAt(target) || !zoneMap.getTile(target).isHighPassable();
    }
    
+   // returns, in order of preference: location of an actor on the line, loc immedeatly preceeding a wall, target
+   public static Coord getDetonationLoc(int xOrigin, int yOrigin, int xTarget, int yTarget){return getDetonationLoc(new Coord(xOrigin, yOrigin), new Coord(xTarget, yTarget));}
+   public static Coord getDetonationLoc(Coord origin, Coord target)
+   {
+      if(origin.equals(target))
+         return origin;
+      Vector<Coord> lineOfFire = StraightLine.findLine(origin, target, StraightLine.REMOVE_ORIGIN);
+      Coord lastGoodTarget = origin;
+      for(Coord loc : lineOfFire)
+      {
+         if(isActorAt(loc))
+            return loc;
+         if(!zoneMap.getTile(loc).isHighPassable())
+            return lastGoodTarget;
+         lastGoodTarget = loc;
+      }
+      return lastGoodTarget;
+   }
+   
    public static void add(MovementScript ms){mapPanel.add(ms);}
    public static void addLocking(MovementScript ms){mapPanel.addLocking(ms);}
    public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}

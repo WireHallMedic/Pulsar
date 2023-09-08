@@ -68,7 +68,7 @@ public class PlayerPanel extends MessagePanel
       }
       
       write(X_ORIGIN, Y_ORIGIN + 5, player.getWeapon().getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 6, player.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN, Y_ORIGIN + 6, player.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 3);
    }
    
    @Override
