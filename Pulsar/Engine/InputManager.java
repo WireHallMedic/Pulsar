@@ -88,7 +88,9 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
                               GameEngine.setGameMode(GameMode.LOOK); 
                               break;
          case KeyEvent.VK_F : attemptToShoot(); break;
-         case KeyEvent.VK_Z : debug('z'); break;
+         case KeyEvent.VK_Z : setPlayerTarget(new Coord());
+                              setPlayerAction(ActorAction.SWITCH_WEAPONS);
+                              break;
          case KeyEvent.VK_X : debug('x'); break;
          case KeyEvent.VK_D : debug('d'); break;
          case KeyEvent.VK_SPACE : debug(' '); break;
@@ -182,14 +184,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          return;
       }
       // combat timing
-      if(arg == 'z')
-      {
-         VisualEffectFactory.createExplosion(new Coord(1, 1));
-         VisualEffectFactory.createExplosion(new Coord(2, 2), 10);
-         VisualEffectFactory.createExplosion(new Coord(1, 2), 20);
-         VisualEffectFactory.createExplosion(new Coord(2, 1), 30);
-         return;
-      }
       if(arg == 'x')
       {
          Actor player = GameEngine.getPlayer();

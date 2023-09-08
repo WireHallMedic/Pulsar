@@ -10,18 +10,18 @@ import java.awt.*;
 
 public class Actor implements ActorConstants, GUIConstants
 {
-   private String name;
-	private Coord mapLoc;
-	private UnboundTile sprite;
-   private int turnEnergy;
-   private BasicAI ai;
-   private int visionRange;
-   private Shield shield;
-   private Weapon weapon;
-   private int curHealth;
-   private int maxHealth;
-   private Color bloodColor;
-   private Weapon unarmed;
+   protected String name;
+	protected Coord mapLoc;
+	protected UnboundTile sprite;
+   protected int turnEnergy;
+   protected BasicAI ai;
+   protected int visionRange;
+   protected Shield shield;
+   protected Weapon weapon;
+   protected int curHealth;
+   protected int maxHealth;
+   protected Color bloodColor;
+   protected Weapon unarmed;
 
 
    public String getName(){return name;}

@@ -8,6 +8,7 @@ public interface AIConstants
       DELAY,
       CONTEXT_SENSITIVE,
       TOGGLE,
-      ATTACK;
+      ATTACK,
+      SWITCH_WEAPONS;
    }
 }

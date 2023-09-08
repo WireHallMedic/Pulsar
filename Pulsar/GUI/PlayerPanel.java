@@ -66,6 +66,9 @@ public class PlayerPanel extends MessagePanel
          setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 2, healthBar[i], HEALTH_COLOR, BG_COLOR);
          setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 3, weaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
       }
+      
+      write(X_ORIGIN, Y_ORIGIN + 5, player.getWeapon().getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN, Y_ORIGIN + 6, player.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
    }
    
    @Override

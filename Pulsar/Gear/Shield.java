@@ -25,8 +25,8 @@ public class Shield extends GearObj implements GearConstants, Chargable
    public Shield()
    {
       super(SHIELD_ICON, "Unknown Shield");
-      curCharge = 10;
-      maxCharge = 10;
+      curCharge = 20;
+      maxCharge = 20;
       chargeDelay = 10;
       chargeRate = 1;
       timeSinceHit = 0;

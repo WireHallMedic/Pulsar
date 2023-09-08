@@ -5,11 +5,14 @@ import Pulsar.GUI.*;
 import WidlerSuite.*;
 import Pulsar.Engine.*;
 import Pulsar.Zone.*;
+import Pulsar.Gear.*;
 
 public class Player extends Actor implements GUIConstants
 {
    private boolean[][] visibilityMap;
    private Coord visibilityMapCorner;
+   private Weapon secondaryWeapon;
+   private boolean usingPrimaryWeapon;
    
    private static final int VISIBILITY_MAP_WIDTH = MAP_WIDTH_TILES + 2;
    private static final int VISIBILITY_MAP_HEIGHT = MAP_HEIGHT_TILES + 2;
@@ -21,6 +24,48 @@ public class Player extends Actor implements GUIConstants
       getSprite().setFGColor(PLAYER_COLOR.getRGB());
       visibilityMap = null;
       visibilityMapCorner = null;
+      secondaryWeapon = null;
+      usingPrimaryWeapon = true;
+   }
+   
+   // weapon stuff
+   public void setPrimaryWeapon(Weapon w){weapon = w;}
+   public void setSecondaryWeapon(Weapon w){secondaryWeapon = w;}
+   public Weapon getPrimaryWeapon(){return weapon;}
+   public Weapon getSecondaryWeapon(){return secondaryWeapon;}
+   
+   @Override
+   public void setWeapon(Weapon w)
+   {
+      if(usingPrimaryWeapon)
+         setPrimaryWeapon(w);
+      else
+         setSecondaryWeapon(w);
+   }
+   
+   public void switchWeapons()
+   {
+      usingPrimaryWeapon = !usingPrimaryWeapon;
+   }
+   
+   @Override
+   public boolean hasWeapon()
+   {
+      if(usingPrimaryWeapon)
+         return weapon != null;
+      return secondaryWeapon != null;
+   }
+   
+   @Override
+   public Weapon getWeapon()
+   {
+      if(hasWeapon())
+      {
+         if(usingPrimaryWeapon)
+            return weapon;
+         return secondaryWeapon;
+      }
+      return unarmed;
    }
    
    public void updateFoV()

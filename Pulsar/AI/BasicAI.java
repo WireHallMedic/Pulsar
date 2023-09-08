@@ -69,6 +69,8 @@ public class BasicAI implements AIConstants
          doDelay();
       if(pendingAction == ActorAction.ATTACK)
          doAttack();
+      if(pendingAction == ActorAction.SWITCH_WEAPONS)
+         doWeaponSwitch();
       shiftPendingToPrevious();
    }
    
@@ -145,5 +147,14 @@ public class BasicAI implements AIConstants
    {
       lastActorTargeted = GameEngine.getActorAt(pendingTarget);
       Combat.resolveAttack(self, pendingTarget);
+   }
+   
+   private void doWeaponSwitch()
+   {
+      if(self instanceof Player)
+      {
+         Player pSelf = (Player)self;
+         pSelf.switchWeapons();
+      }
    }
 }

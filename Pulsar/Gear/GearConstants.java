@@ -13,6 +13,9 @@ public interface GearConstants extends WSFontConstants
    
    public static final Color DEFAULT_WEAPON_COLOR = Color.WHITE;
    
+   public static final int DEFAULT_BASE_DAMAGE = 6;
+   public static final int DEFAULT_VARIABLE_DAMAGE = 3;
+   
    public enum DamageType
    {
       KINETIC  ("Kinetic"),      // basic damage type
@@ -39,6 +42,23 @@ public interface GearConstants extends WSFontConstants
       public String name;
       
       private WeaponTag(String n)
+      {
+         name = n;
+      }
+   }
+   
+   public enum WeaponType
+   {
+      RIFLE          ("Rifle"),
+      BATTLE_RIFLE   ("Battle Rifle"),
+      AUTORIFLE      ("Autorifle"),
+      SHOTGUN        ("Shotgun"),
+      MELEE          ("Melee"),
+      PLASMA         ("Plasma Launcher");
+      
+      public String name;
+      
+      private WeaponType(String n)
       {
          name = n;
       }
