@@ -149,7 +149,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       {
          MessagePanel.addMessage("Your weapon does not have enough energy!");
          Weapon w = GameEngine.getPlayer().getWeapon();
-         System.out.println(w.getCurCharge() + "/" + w.getMaxCharge() + ", need " + w.getChargeCost());
          return;
       }
       GameEngine.setCursorLoc(getDefaultTargetingLocation());

@@ -65,6 +65,10 @@ public class Combat implements GUIConstants
       
       if(GameEngine.playerCanSee(defender))
       {
+         // target impact
+         MovementScript msd = MovementScriptFactory.getImpactScript(defender, attacker.getMapLoc(), delay);
+         getMapPanel().addLocking(msd);
+         
          // shield flicker
          if(hasShieldBefore)
          {
@@ -80,9 +84,6 @@ public class Combat implements GUIConstants
          {
             VisualEffectFactory.createSpray(defender.getMapLoc(), attacker.getMapLoc(), defender.getBloodColor(), delay);
          }
-         // target impact
-         MovementScript msd = MovementScriptFactory.getImpactScript(defender, attacker.getMapLoc(), delay);
-         getMapPanel().addLocking(msd);
       }
    }
    

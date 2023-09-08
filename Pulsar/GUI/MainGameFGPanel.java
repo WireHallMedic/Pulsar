@@ -22,6 +22,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    {
       super(MAP_WIDTH_TILES + 2, MAP_HEIGHT_TILES + 2, SQUARE_TILE_PALETTE);
       setSize(50, 50);
+      drawLockListFirst();
       
       GameEngine.setMapPanel(this);
    }
