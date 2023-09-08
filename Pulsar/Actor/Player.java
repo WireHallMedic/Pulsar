@@ -80,6 +80,22 @@ public class Player extends Actor implements GUIConstants
       return unarmed;
    }
    
+   public Weapon getAltWeapon()
+   {
+      if(hasWeapon())
+      {
+         if(!usingPrimaryWeapon)
+            return weapon;
+         return secondaryWeapon;
+      }
+      return unarmed;
+   }
+   
+   public int[] getAltWeaponBar(int length)
+   {
+      return GUITools.getBar(getAltWeapon().getCurCharge(), getAltWeapon().getMaxCharge(), length);
+   }
+   
    public void updateFoV()
    {
       ZoneMap map = GameEngine.getZoneMap();

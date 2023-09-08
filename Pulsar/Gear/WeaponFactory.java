@@ -10,9 +10,9 @@ public class WeaponFactory implements GearConstants
       w.setVariableDamage(DEFAULT_VARIABLE_DAMAGE);
       w.setAttacks(1);
       w.setDamageType(DamageType.KINETIC);
-      w.setMaxCharge(24 * 5);
-      w.setChargeCost(24);
-      w.setChargeRate(4);
+      w.setMaxCharge(BASE_WEAPON_CHARGE_COST * 5);
+      w.setChargeCost(BASE_WEAPON_CHARGE_COST);
+      w.setChargeRate(BASE_WEAPON_CHARGE_RATE);
       switch(baseType)
       {
          case RIFLE        :
@@ -26,7 +26,7 @@ public class WeaponFactory implements GearConstants
             w.setAttacks(5);
             break;
          case SHOTGUN      :
-            w.setChargeCost(30);
+            w.setChargeCost(BASE_WEAPON_CHARGE_COST * 5 / 4);
             w.addWeaponTag(WeaponTag.SPREAD);
             break;
          case MELEE        : 
@@ -37,7 +37,8 @@ public class WeaponFactory implements GearConstants
             break;
          case PLASMA       :
             w.setBaseDamage(DEFAULT_BASE_DAMAGE * 2);
-            w.setChargeCost(36);
+            w.setChargeCost(BASE_WEAPON_CHARGE_COST * 2);
+            w.setMaxCharge(w.getChargeCost() * 3);
             w.addWeaponTag(WeaponTag.BLAST);
             w.addWeaponTag(WeaponTag.HEAVY);
             break;
