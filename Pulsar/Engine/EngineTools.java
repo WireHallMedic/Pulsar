@@ -25,4 +25,11 @@ public class EngineTools
       
       return parallelLine;
    }
+   
+   public static Coord getTileTowards(Coord origin, Coord target)
+   {
+      if(origin.equals(target))
+         return origin;
+      return StraightLine.findLine(origin, target, StraightLine.REMOVE_ORIGIN).elementAt(0);
+   }
 }

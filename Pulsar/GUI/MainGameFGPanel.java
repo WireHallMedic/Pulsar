@@ -120,8 +120,23 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                   }
                   setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
                }
+               // melee targeting
+               else if(player.getWeapon().hasWeaponTag(GearConstants.WeaponTag.MELEE))
+               {
+                  Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, cursorLoc, StraightLine.REMOVE_ORIGIN);
+                  if(targetingLine.size() == 0)
+                     targetingLine.add(playerLoc);
+                  for(int i = 0; i < targetingLine.size(); i++)
+                  {
+                     Coord c = targetingLine.elementAt(i);
+                     int bgColor = BAD_TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
+                     if(i == 0)
+                        bgColor = TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
+                     setBGColor(c.x, c.y, bgColor);
+                  }
+               }
+               // straight line targeting
                else
-               // non-shotgun targeting
                {
                   Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, cursorLoc, StraightLine.REMOVE_ORIGIN);
                   if(targetingLine.size() == 0)

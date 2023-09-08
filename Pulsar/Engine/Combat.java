@@ -29,12 +29,22 @@ public class Combat implements GUIConstants
          }
          else
          {
-            // blasts don't generate ricochettes
-            if(!attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST) &&
-               GameEngine.playerCanSee(target))
+            if(GameEngine.playerCanSee(target))
             {
-               Color c = new Color(GameEngine.getZoneMap().getTile(target).getFGColor());
-               VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c);
+               boolean shouldGenerateRicochette = true;
+               // melee attacks only generate ricochettes on !highPassable
+               if(attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.MELEE) &&
+                  GameEngine.getZoneMap().getTile(target).isHighPassable())
+                  shouldGenerateRicochette = false;
+               // blasts don't generate ricochettes
+               if(attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST))
+                  shouldGenerateRicochette = false;
+               if(shouldGenerateRicochette)
+               {
+                  int delay = attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.MELEE) ? MELEE_ATTACK_HIT_DELAY : 0;
+                  Color c = new Color(GameEngine.getZoneMap().getTile(target).getFGColor());
+                  VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c, delay);
+               }
             }
          }
       }
@@ -64,6 +74,12 @@ public class Combat implements GUIConstants
       if(weapon.hasWeaponTag(GearConstants.WeaponTag.BLAST))
       {
          return getBlastTargets(origin, initialTarget);
+      }
+      // melee
+      if(weapon.hasWeaponTag(GearConstants.WeaponTag.MELEE))
+      {
+         targetList.add(EngineTools.getTileTowards(origin, initialTarget));
+         return targetList;
       }
       // something in the way for a line
       Vector<Coord> lineOfFire = StraightLine.findLine(origin, initialTarget, StraightLine.REMOVE_ORIGIN);

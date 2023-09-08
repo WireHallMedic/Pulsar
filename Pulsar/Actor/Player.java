@@ -71,23 +71,19 @@ public class Player extends Actor implements GUIConstants
    @Override
    public Weapon getWeapon()
    {
-      if(hasWeapon())
-      {
-         if(usingPrimaryWeapon)
-            return weapon;
+      if(usingPrimaryWeapon && weapon != null)
+         return weapon;
+      if(!usingPrimaryWeapon && secondaryWeapon != null)
          return secondaryWeapon;
-      }
       return unarmed;
    }
    
    public Weapon getAltWeapon()
    {
-      if(hasWeapon())
-      {
-         if(!usingPrimaryWeapon)
-            return weapon;
+      if(!usingPrimaryWeapon && weapon != null)
+         return weapon;
+      if(usingPrimaryWeapon && secondaryWeapon != null)
          return secondaryWeapon;
-      }
       return unarmed;
    }
    
