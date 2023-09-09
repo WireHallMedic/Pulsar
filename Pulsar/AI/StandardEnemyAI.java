@@ -29,8 +29,31 @@ public class StandardEnemyAI extends WanderAI implements AIConstants
       // no visible enemy
       if(nearestEnemy == null)
       {
-         super.plan();
-         return;
+         Coord lastEnemyLoc = self.getMemory().getNearestLastKnown();
+         // remember enemies, but none visible
+         if(lastEnemyLoc != null)
+         {
+            Coord stepTowards = getStepTowards(lastEnemyLoc);
+            // can path to last seen
+            if(stepTowards != null)
+            {
+               setPendingTarget(stepTowards);
+               setPendingAction(ActorAction.STEP);
+               return;
+            }
+            // cannot path to last seen
+            else
+            {
+               super.plan();
+               return;
+            }
+         }
+         else
+         // no known enemies
+         {
+            super.plan();
+            return;
+         }
       }
       // has visible enemy
       else

@@ -51,20 +51,20 @@ public class ActorMemory implements AIConstants
       }
    }
    
-   public Actor getNearestLastKnown()
+   public Coord getNearestLastKnown()
    {
       int curDistance = 1000;
-      Actor curActor = null;
+      Coord curLoc = null;
       for(MemoryObj memory : enemyList)
       {
          int prospectDistance = EngineTools.getDistanceTo(self.getMapLoc(), memory.lastKnownLocation);
          if(prospectDistance < curDistance)
          {
             curDistance = prospectDistance;
-            curActor = memory.actor;
+            curLoc = memory.lastKnownLocation;
          }
       }
-      return curActor;
+      return curLoc;
    }
    
    public void noteActor(Actor actor)
