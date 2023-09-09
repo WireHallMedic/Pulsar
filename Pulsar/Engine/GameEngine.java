@@ -165,6 +165,17 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return target;
    }
    
+   public static Vector<Actor> getVisibleEnemies(Actor origin)
+   {
+      Vector<Actor> visibleEnemyList = new Vector<Actor>();
+      for(Actor a : actorList)
+      {
+         if(origin.isHostile(a) && origin.canSee(a))
+            visibleEnemyList.add(a);
+      }
+      return visibleEnemyList;
+   }
+   
    public static boolean blocksShooting(int x, int y){return blocksShooting(new Coord(x, y));}
    public static boolean blocksShooting(Coord target)
    {
@@ -235,11 +246,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       Actor e = ActorFactory.getTestEnemy();
       e.setAllLocs(7, 3);
       e.setShield(new Shield());
-    //  add(e);
+      add(e);
       e = ActorFactory.getMeleeTestEnemy();
       e.setAllLocs(6, 3);
       e.getSprite().setFGColor(Color.ORANGE.getRGB());
-      add(e);
+   //   add(e);
       e = ActorFactory.getGoat();
       e.setAllLocs(3, 8);
       add(e);

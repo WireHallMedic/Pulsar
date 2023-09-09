@@ -68,7 +68,7 @@ public class StandardEnemyAI extends WanderAI implements AIConstants
          else
          // weapon is not charged
          {
-            planMoveToCover(nearestEnemy);
+            planMoveToCover();
             if(hasPlan())
                return;
          }

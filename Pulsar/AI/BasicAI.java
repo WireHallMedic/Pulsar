@@ -178,14 +178,24 @@ public class BasicAI implements AIConstants
       return path.elementAt(0);
    }
    
-   // find nearest tile the target does not have line of effect to
-   protected Coord getNearestSafeTile(Coord target)
+   // find nearest tile the target does not have line of effect to any visible enemies
+   protected Coord getNearestSafeTile()
    {
+      Vector<Actor> enemyList = GameEngine.getVisibleEnemies(self);
       SpiralSearch search = new SpiralSearch(GameEngine.getZoneMap().getLowPassMap(), self.getMapLoc());
       Coord searchLoc = search.getNext();
       while(searchLoc != null)
       {
-         if(!GameEngine.hasClearShotIgnoring(target, searchLoc, self.getMapLoc()))
+         boolean safeF = true;
+         for(Actor enemy : enemyList)
+         {
+            if(GameEngine.hasClearShotIgnoring(enemy.getMapLoc(), searchLoc, self.getMapLoc()))
+            {
+               safeF = false;
+               break;
+            }
+         }
+         if(safeF)
             return searchLoc;
          searchLoc = search.getNext();
       }
@@ -311,9 +321,9 @@ public class BasicAI implements AIConstants
    }
    
    // move towards the nearest tile that target does not have line of effect to
-   protected void planMoveToCover(Actor target)
+   protected void planMoveToCover()
    {
-      Coord safeLoc = getNearestSafeTile(target.getMapLoc());
+      Coord safeLoc = getNearestSafeTile();
       if(safeLoc != null)
       {
          Coord stepTowards = getStepTowards(safeLoc);
