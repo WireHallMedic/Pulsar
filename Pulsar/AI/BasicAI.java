@@ -155,6 +155,8 @@ public class BasicAI implements AIConstants
    
    protected Coord getStepTowards(Coord target)
    {
+      if(EngineTools.isAdjacent(target, self.getMapLoc()))
+         return target;
       AStar pathing = new AStar();
       boolean[][] passMap = GameEngine.getZoneMap().getLowPassMap();
       for(Actor a : GameEngine.getActorList())
@@ -180,6 +182,28 @@ public class BasicAI implements AIConstants
       {
          if(!GameEngine.hasClearShotIgnoring(target, searchLoc, self.getMapLoc()))
             return searchLoc;
+         searchLoc = search.getNext();
+      }
+      return null;
+   }
+   
+   // find nearest tile from which to attack the target
+   protected Coord getNearestAttackTile(Actor target, Weapon weapon){return getNearestAttackTile(target.getMapLoc(), weapon);}
+   protected Coord getNearestAttackTile(Coord target, Weapon weapon)
+   {
+      if(weapon.isMelee())
+      {
+         return getStepTowards(target);
+      }
+      SpiralSearch search = new SpiralSearch(GameEngine.getZoneMap().getLowPassMap(), self.getMapLoc());
+      Coord searchLoc = search.getNext();
+      while(searchLoc != null)
+      {
+         if(GameEngine.hasClearShotIgnoring(searchLoc, target, self.getMapLoc()) &&
+            !GameEngine.isActorAt(searchLoc))
+         {
+            return searchLoc;
+         }
          searchLoc = search.getNext();
       }
       return null;
@@ -247,7 +271,7 @@ public class BasicAI implements AIConstants
    protected void planToAttack(Actor target, Weapon weapon)
    {
       // adjacent to enemy
-      if(EngineTools.areAdjacent(self, target))
+      if(EngineTools.isAdjacent(self, target))
       {
          setPendingTarget(target.getMapLoc());
          setPendingAction(ActorAction.ATTACK);
@@ -266,12 +290,16 @@ public class BasicAI implements AIConstants
          else
          // move towards
          {
-            Coord stepLoc = getStepTowards(target.getMapLoc());
-            if(stepLoc != null)
+            Coord nearestAttackTile = getNearestAttackTile(target, weapon);
+            if(nearestAttackTile != null)
             {
-               setPendingTarget(stepLoc);
-               setPendingAction(ActorAction.STEP);
-               return;
+               Coord stepLoc = getStepTowards(nearestAttackTile);
+               if(stepLoc != null)
+               {
+                  setPendingTarget(stepLoc);
+                  setPendingAction(ActorAction.STEP);
+                  return;
+               }
             }
          }
       }

@@ -214,13 +214,13 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       p.setAllLocs(2, 3);
       setPlayer(p);
       Actor e = ActorFactory.getTestEnemy();
-      e.setAllLocs(5, 3);
+      e.setAllLocs(7, 3);
       e.setShield(new Shield());
       add(e);
       e = ActorFactory.getMeleeTestEnemy();
       e.setAllLocs(6, 3);
       e.getSprite().setFGColor(Color.ORANGE.getRGB());
-     // add(e);
+      add(e);
       zoneMap = ZoneMapFactory.getTestMap();
    }
    

@@ -40,8 +40,8 @@ public class EngineTools
       return WSTools.getAngbandMetric(origin, target);
    }
    
-   public static boolean areAdjacent(Actor o, Actor t){return areAdjacent(o.getMapLoc(), t.getMapLoc());}
-   public static boolean areAdjacent(Coord origin, Coord target)
+   public static boolean isAdjacent(Actor o, Actor t){return isAdjacent(o.getMapLoc(), t.getMapLoc());}
+   public static boolean isAdjacent(Coord origin, Coord target)
    {
       return getDistanceTo(origin, target) < 2;
    }
