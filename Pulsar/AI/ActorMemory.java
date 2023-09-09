@@ -67,11 +67,23 @@ public class ActorMemory implements AIConstants
       return curLoc;
    }
    
-   public void noteActor(Actor actor)
+   private void alertFriends(Actor enemy)
+   {
+      for(MemoryObj friend : friendList)
+      {
+         if(self.canSee(friend.actor))
+            friend.actor.getMemory().noteActor(enemy, false);
+      }
+   }
+   
+   public void noteActor(Actor actor){noteActor(actor, true);}
+   public void noteActor(Actor actor, boolean tellFriends)
    {
       if(self.isHostile(actor))
       {
          noteMemoryList(actor, enemyList);
+         if(tellFriends)
+            alertFriends(actor);
       }
       if(self.isFriendly(actor))
       {
