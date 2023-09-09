@@ -25,6 +25,9 @@ public class Actor implements ActorConstants, GUIConstants
    protected Weapon unarmed;
    protected boolean startOfTurnPerformed;
    protected boolean flying;
+   protected int attackSpeed;
+   protected int moveSpeed;
+   protected int interactSpeed;
 
 
    public String getName(){return name;}
@@ -40,6 +43,9 @@ public class Actor implements ActorConstants, GUIConstants
    public Color getBloodColor(){return bloodColor;}
    public Weapon getUnarmedAttack(){return unarmed;}
    public boolean isFlying(){return flying;}
+   public int getAttackSpeed(){return attackSpeed;}
+   public int getMoveSpeed(){return moveSpeed;}
+   public int getInteractSpeed(){return interactSpeed;}
 
 
    public void setName(String n){name = n;}
@@ -57,6 +63,9 @@ public class Actor implements ActorConstants, GUIConstants
    public void setBloodColor(Color c){bloodColor = c;}
    public void setUnarmedAttack(Weapon w){unarmed = w;}
    public void setFlying(boolean f){flying = f;}
+   public void setAttackSpeed(int as){attackSpeed = as;}
+   public void setMoveSpeed(int ms){moveSpeed = ms;}
+   public void setInteractSpeed(int is){interactSpeed = is;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -77,6 +86,9 @@ public class Actor implements ActorConstants, GUIConstants
       unarmed = WeaponFactory.getBasicWeapon(GearConstants.WeaponType.MELEE);
       startOfTurnPerformed = false;
       flying = false;
+      attackSpeed = NORMAL_ACTION_COST;
+      moveSpeed = NORMAL_ACTION_COST;
+      interactSpeed = NORMAL_ACTION_COST;
    }
    
    public void reconcileSprite()
@@ -312,7 +324,6 @@ public class Actor implements ActorConstants, GUIConstants
    public void act()
    {
       ai.act();
-      discharge(NORMAL_ACTION_COST);
       endOfTurn();
    }
    

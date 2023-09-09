@@ -15,7 +15,7 @@ public class ActorFactory implements ActorConstants, GearConstants
      // weapon.addWeaponTag(WeaponTag.MELEE);
       a.setWeapon(weapon);
       //a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
-    //  a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
+      a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
       a.setShield(new Shield());
       a.setMaxHealth(50000);
       a.fullyHeal();
