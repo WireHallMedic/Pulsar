@@ -50,8 +50,8 @@ public class PlayerPanel extends MessagePanel
       clearPlayerPanel();
       Player player = GameEngine.getPlayer();
       write(X_ORIGIN, Y_ORIGIN, "Player Panel", WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 1, "Shield[        ]", SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 2, "Health[        ]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN, Y_ORIGIN + 1, "Health[        ]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN, Y_ORIGIN + 2, "Shield[        ]", SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 3, "Weapon[        ]", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 4, "AltWpn[        ]", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       int[] ammoCountArr = player.getWeapon().getAmmoCountTiles();
@@ -67,8 +67,8 @@ public class PlayerPanel extends MessagePanel
       int[] altWeaponBar = player.getAltWeaponBar(8);
       for(int i = 0; i < 8; i++)
       {
-         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 1, shieldBar[i], SHIELD_COLOR, BG_COLOR);
-         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 2, healthBar[i], HEALTH_COLOR, BG_COLOR);
+         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 1, healthBar[i], HEALTH_COLOR, BG_COLOR);
+         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 2, shieldBar[i], SHIELD_COLOR, BG_COLOR);
          setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 3, weaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
          setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 4, altWeaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
       }
