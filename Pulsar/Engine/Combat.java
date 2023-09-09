@@ -11,9 +11,9 @@ public class Combat implements GUIConstants
 {
    public static MainGameFGPanel getMapPanel(){return GameEngine.getMapPanel();}
    
-   public static void resolveAttack(Actor attacker, Coord initialTarget)
+   public static void resolveAttack(Actor attacker, Coord initialTarget, Weapon weapon)
    {
-      Vector<Coord> targetList = getActualTargets(attacker.getMapLoc(), initialTarget, attacker.getWeapon());
+      Vector<Coord> targetList = getActualTargets(attacker.getMapLoc(), initialTarget, weapon);
       // attacker animation
       if(GameEngine.playerCanSee(attacker))
       {
@@ -25,7 +25,7 @@ public class Combat implements GUIConstants
          Actor defender = GameEngine.getActorAt(target);
          if(defender != null)
          {
-            resolveAttackAgainstActor(attacker, defender);
+            resolveAttackAgainstActor(attacker, defender, weapon);
          }
          else
          {
@@ -33,15 +33,15 @@ public class Combat implements GUIConstants
             {
                boolean shouldGenerateRicochette = true;
                // melee attacks only generate ricochettes on !highPassable
-               if(attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.MELEE) &&
+               if(weapon.hasWeaponTag(GearConstants.WeaponTag.MELEE) &&
                   GameEngine.getZoneMap().getTile(target).isHighPassable())
                   shouldGenerateRicochette = false;
                // blasts don't generate ricochettes
-               if(attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST))
+               if(weapon.hasWeaponTag(GearConstants.WeaponTag.BLAST))
                   shouldGenerateRicochette = false;
                if(shouldGenerateRicochette)
                {
-                  int delay = attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.MELEE) ? MELEE_ATTACK_HIT_DELAY : 0;
+                  int delay = weapon.hasWeaponTag(GearConstants.WeaponTag.MELEE) ? MELEE_ATTACK_HIT_DELAY : 0;
                   Color c = new Color(GameEngine.getZoneMap().getTile(target).getFGColor());
                   VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c, delay);
                }
@@ -49,11 +49,11 @@ public class Combat implements GUIConstants
          }
       }
       // blasts generate explosions
-      if(attacker.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST))
+      if(weapon.hasWeaponTag(GearConstants.WeaponTag.BLAST))
       {
          VisualEffectFactory.createExplosion(targetList.elementAt(4));
       }
-      attacker.getWeapon().discharge();
+      weapon.discharge();
    }
    
    private static Vector<Coord> getActualTargets(Coord origin, Coord initialTarget, Weapon weapon)
@@ -96,16 +96,16 @@ public class Combat implements GUIConstants
       return targetList;
    }
    
-   private static void resolveAttackAgainstActor(Actor attacker, Actor defender)
+   private static void resolveAttackAgainstActor(Actor attacker, Actor defender, Weapon weapon)
    {
       boolean hasShieldBefore = defender.shieldIsUp();
       int startingHealth = defender.getCurHealth();
-      int[] damageArray = rollDamage(attacker.getWeapon());
-      int delay = attacker.getWeapon().isMelee() ? MELEE_ATTACK_HIT_DELAY : 0;
+      int[] damageArray = rollDamage(weapon);
+      int delay = weapon.isMelee() ? MELEE_ATTACK_HIT_DELAY : 0;
       
       for(int i = 0; i < damageArray.length; i++)
       {
-         defender.applyDamage(damageArray[i], attacker.getWeapon().getDamageType(), false);
+         defender.applyDamage(damageArray[i], weapon.getDamageType(), false);
       }
       
       if(GameEngine.playerCanSee(defender))

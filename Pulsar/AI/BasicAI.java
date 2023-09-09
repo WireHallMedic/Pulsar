@@ -90,16 +90,15 @@ public class BasicAI implements AIConstants
    
    public void act()
    {
-      if(pendingAction == ActorAction.STEP)
-         doStep();
-      if(pendingAction == ActorAction.TOGGLE)
-         doToggle();
-      if(pendingAction == ActorAction.DELAY)
-         doDelay();
-      if(pendingAction == ActorAction.ATTACK)
-         doAttack();
-      if(pendingAction == ActorAction.SWITCH_WEAPONS)
-         doWeaponSwitch();
+      switch(pendingAction)
+      {
+         case STEP :             doStep(); break;
+         case TOGGLE :           doToggle(); break;
+         case DELAY :            doDelay(); break;
+         case ATTACK :           doAttack(); break;
+         case SWITCH_WEAPONS :   doWeaponSwitch(); break;
+         case UNARMED_ATTACK :   doUnarmedAttack(); break;
+      }
       shiftPendingToPrevious();
    }
    
@@ -124,11 +123,20 @@ public class BasicAI implements AIConstants
       {
          setPendingAction(ActorAction.TOGGLE);
       }
-      // no possible action
+      // actor
       else if(GameEngine.isActorAt(pendingTarget))
       {
-         MessagePanel.addMessage("There's a dude there.");
-         clearPlan();
+         // enemy, unarmed attack
+         if(isHostile(GameEngine.getActorAt(pendingTarget)))
+         {
+            setPendingAction(ActorAction.UNARMED_ATTACK);
+         }
+         else
+         // friendly, no action
+         {
+            MessagePanel.addMessage("There's a dude there.");
+            clearPlan();
+         }
       }
       // no possible action
       else
@@ -193,7 +201,13 @@ public class BasicAI implements AIConstants
    private void doAttack()
    {
       lastActorTargeted = GameEngine.getActorAt(pendingTarget);
-      Combat.resolveAttack(self, pendingTarget);
+      Combat.resolveAttack(self, pendingTarget, self.getWeapon());
+   }
+   
+   private void doUnarmedAttack()
+   {
+      lastActorTargeted = GameEngine.getActorAt(pendingTarget);
+      Combat.resolveAttack(self, pendingTarget, self.getUnarmedAttack());
    }
    
    private void doWeaponSwitch()

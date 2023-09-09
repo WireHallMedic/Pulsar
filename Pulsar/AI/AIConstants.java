@@ -9,6 +9,7 @@ public interface AIConstants
       CONTEXT_SENSITIVE,
       TOGGLE,
       ATTACK,
+      UNARMED_ATTACK,
       SWITCH_WEAPONS;
    }
    

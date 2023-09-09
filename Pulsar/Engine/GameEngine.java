@@ -152,6 +152,18 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return isActorAt(target) || !zoneMap.getTile(target).isHighPassable();
    }
    
+   public static boolean hasClearShot(Actor o, Actor t){return hasClearShot(o.getMapLoc(), t.getMapLoc());}
+   public static boolean hasClearShot(Coord origin, Coord target)
+   {
+      Vector<Coord> interveningTiles = StraightLine.findLine(origin, target, StraightLine.REMOVE_ORIGIN_AND_TARGET);
+      for(Coord c : interveningTiles)
+      {
+         if(blocksShooting(c))
+            return false;
+      }
+      return true;
+   }
+   
    // returns, in order of preference: location of an actor on the line, loc immedeatly preceeding a wall, target
    public static Coord getDetonationLoc(int xOrigin, int yOrigin, int xTarget, int yTarget){return getDetonationLoc(new Coord(xOrigin, yOrigin), new Coord(xTarget, yTarget));}
    public static Coord getDetonationLoc(Coord origin, Coord target)
@@ -190,12 +202,12 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       setPlayer(p);
       Actor e = ActorFactory.getTestEnemy();
       e.setName("Enemy 1");
-      e.setAllLocs(5, 1);
+      e.setAllLocs(5, 3);
       e.setShield(new Shield());
       add(e);
       e = ActorFactory.getTestEnemy();
       e.setName("Enemy 2");
-      e.setAllLocs(6, 1);
+      e.setAllLocs(6, 3);
       e.getSprite().setFGColor(Color.ORANGE.getRGB());
       add(e);
       zoneMap = ZoneMapFactory.getTestMap();
