@@ -18,6 +18,8 @@ public class BasicAI implements AIConstants
 	protected Coord previousTarget;
    protected Actor lastActorTargeted;
    protected Team team;
+   protected int pathfindingRadius;
+   protected boolean usesDoors;
 
 
 	public Actor getSelf(){return self;}
@@ -27,6 +29,8 @@ public class BasicAI implements AIConstants
 	public Coord getPreviousTarget(){if(pendingTarget == null) return null; return new Coord(previousTarget);}
    public Actor getLastActorTargeted(){return lastActorTargeted;}
    public Team getTeam(){return team;}
+   public int getPathfindingRadius(){return pathfindingRadius;}
+   public boolean getUsesDoors(){return usesDoors;}
 
 
 	public void setSelf(Actor s){self = s;}
@@ -35,6 +39,8 @@ public class BasicAI implements AIConstants
 	public void setPendingTarget(int x, int y){pendingTarget = new Coord(x, y);}
    public void setLastActorTargeted(Actor a){lastActorTargeted = a;}
    public void setTeam(Team t){team = t;}
+   public void setPathfindingRadius(int pr){pathfindingRadius = pr;}
+   public void setUsesDoors(boolean ud){usesDoors = ud;}
 
 
    public BasicAI(Actor s)
@@ -44,6 +50,8 @@ public class BasicAI implements AIConstants
       previousAction = null;
       lastActorTargeted = null;
       team = Team.VILLAIN;
+      pathfindingRadius = PATHFINDING_MAP_RADIUS;
+      usesDoors = true;
       clearPlan();
    }
    
@@ -163,19 +171,45 @@ public class BasicAI implements AIConstants
       if(EngineTools.isAdjacent(target, self.getMapLoc()))
          return target;
       AStar pathing = new AStar();
-      boolean[][] passMap = GameEngine.getZoneMap().getLowPassMap();
+ //     boolean[][] passMap = GameEngine.getZoneMap().getLowPassMap();
+      // get passability map
+      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);
+      Coord passMapInset = GameEngine.getZoneMap().getPassMapInset(self);
+      // modify stuff for reduced size
+      Coord adjustedSelfLoc = self.getMapLoc();
+      adjustedSelfLoc.subtract(passMapInset);
+      Coord adjustedTarget = new Coord(target);
+      adjustedTarget.subtract(passMapInset);
+      // check target is in search area
+      if(adjustedTarget.x < 0 ||
+         adjustedTarget.y < 0 ||
+         adjustedTarget.x >= passMap.length ||
+         adjustedTarget.y >= passMap[0].length)
+         return null;
+      // mark actor tiles as impassable
       for(Actor a : GameEngine.getActorList())
       {
-         passMap[a.getMapLoc().x][a.getMapLoc().y] = false;
+         Coord actorLoc = a.getMapLoc();
+         actorLoc.subtract(passMapInset);
+         if(actorLoc.x < 0 ||
+            actorLoc.y < 0 ||
+            actorLoc.x >= passMap.length ||
+            actorLoc.y >= passMap[0].length)
+            continue;
+         
+         passMap[actorLoc.x][actorLoc.y] = false;
       }
-      passMap[self.getMapLoc().x][self.getMapLoc().y] = true;
-      passMap[target.x][target.y] = GameEngine.getZoneMap().getTile(target).isLowPassable();
-      Vector<Coord> path = pathing.path(passMap, self.getMapLoc(), target);
+      // mark origin and target as passable
+      passMap[adjustedSelfLoc.x][adjustedSelfLoc.y] = true;
+      passMap[adjustedTarget.x][adjustedTarget.y] = GameEngine.getZoneMap().getTile(target).isLowPassable();
+      Vector<Coord> path = pathing.path(passMap, adjustedSelfLoc, adjustedTarget);
       if(path.size() == 0)
       {
          return null;
       }
-      return path.elementAt(0);
+      Coord stepLoc = path.elementAt(0);
+      stepLoc.add(passMapInset);
+      return stepLoc;
    }
    
    // find nearest tile the target does not have line of effect to any visible enemies

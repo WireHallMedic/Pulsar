@@ -1,6 +1,7 @@
 package Pulsar.Zone;
 
 import Pulsar.GUI.*;
+import Pulsar.Actor.*;
 import WidlerSuite.*;
 
 public class ZoneMap implements ZoneConstants, GUIConstants
@@ -94,6 +95,24 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       if(isInBounds(x, y))
          return tileArray[x][y];
       return new MapTile(oobTile);
+   }
+   
+   public boolean[][] getPassMap(Actor a)
+   {
+      int radius = a.getAI().getPathfindingRadius();
+      boolean[][] passMap = new boolean[radius + radius + 1][radius + radius + 1];
+      for(int x = 0; x < radius; x++)
+      for(int y = 0; y < radius; y++)
+         passMap[x][y] = getTile(x + a.getMapLoc().x - radius, y + a.getMapLoc().y - radius).isLowPassable();
+      return passMap;
+   }
+   
+   public Coord getPassMapInset(Actor a)
+   {
+      Coord inset = new Coord(a.getMapLoc());
+      inset.x -= a.getAI().getPathfindingRadius();
+      inset.y -= a.getAI().getPathfindingRadius();
+      return inset;
    }
    
    

@@ -3,6 +3,7 @@ package Pulsar.AI;
 public interface AIConstants
 {
    public static final int DEFAULT_MEMORY_DURATION = 16;
+   public static final int PATHFINDING_MAP_RADIUS = 10;
    
    public enum ActorAction
    {
