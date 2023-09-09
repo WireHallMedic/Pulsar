@@ -146,6 +146,25 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return target;
    }
    
+   public static Actor getClosestVisibleEnemy(Actor origin)
+   {
+      Actor target = null;
+      int distanceTo = 1000;
+      for(Actor prospect : actorList)
+      {
+         if(origin.isHostile(prospect) && origin.canSee(prospect))
+         {
+            int prospectDistance = WSTools.getAngbandMetric(origin.getMapLoc(), prospect.getMapLoc());
+            if(prospectDistance < distanceTo)
+            {
+               target = prospect;
+               distanceTo = prospectDistance;
+            }
+         }
+      }
+      return target;
+   }
+   
    public static boolean blocksShooting(int x, int y){return blocksShooting(new Coord(x, y));}
    public static boolean blocksShooting(Coord target)
    {

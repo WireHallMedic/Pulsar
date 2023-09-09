@@ -44,7 +44,6 @@ public class ActorMemory implements AIConstants
          list.elementAt(i).increment();
          if(list.elementAt(i).isExpired())
          {
-            System.out.println("Forget " + self + ":" + list.elementAt(i).actor);
             list.removeElementAt(i);
             i--;
          }
@@ -78,7 +77,6 @@ public class ActorMemory implements AIConstants
       }
       if(!foundActor)
       {
-         System.out.println("Notice " + self + ":" + actor);
          list.add(new MemoryObj(actor));
       }
    }
