@@ -3,6 +3,7 @@ package Pulsar.AI;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import java.util.*;
+import WidlerSuite.*;
 
 public class ActorMemory implements AIConstants
 {
@@ -50,6 +51,22 @@ public class ActorMemory implements AIConstants
       }
    }
    
+   public Actor getNearestLastKnown()
+   {
+      int curDistance = 1000;
+      Actor curActor = null;
+      for(MemoryObj memory : enemyList)
+      {
+         int prospectDistance = EngineTools.getDistanceTo(self.getMapLoc(), memory.lastKnownLocation);
+         if(prospectDistance < curDistance)
+         {
+            curDistance = prospectDistance;
+            curActor = memory.actor;
+         }
+      }
+      return curActor;
+   }
+   
    public void noteActor(Actor actor)
    {
       if(self.isHostile(actor))
@@ -70,7 +87,8 @@ public class ActorMemory implements AIConstants
       {
          if(memory.actor == actor)
          {
-            memory.lastSeen = 0;
+            memory.timeSinceSeen = 0;
+            memory.lastKnownLocation = actor.getMapLoc();
             foundActor = true;
             break;
          }
@@ -85,22 +103,24 @@ public class ActorMemory implements AIConstants
    private class MemoryObj
    {
       public Actor actor;
-      public int lastSeen;
+      public int timeSinceSeen;
+      public Coord lastKnownLocation;
       
       public MemoryObj(Actor a)
       {
          actor = a;
-         lastSeen = 0;
+         timeSinceSeen = 0;
+         lastKnownLocation = actor.getMapLoc();
       }
       
       public void increment()
       {
-         lastSeen++;
+         timeSinceSeen++;
       }
       
       public boolean isExpired()
       {
-         return lastSeen >= memoryDuration;
+         return timeSinceSeen >= memoryDuration;
       }
    }
 }
