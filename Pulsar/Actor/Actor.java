@@ -145,6 +145,11 @@ public class Actor implements ActorConstants, GUIConstants
       return this.getAI().isHostile(that);
    }
    
+   public boolean isFriendly(Actor that)
+   {
+      return this.getAI().isFriendly(that);
+   }
+   
    // gear methods
    ////////////////////////////////////////////////////////////////////
    public boolean shieldIsUp()

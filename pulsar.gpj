@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3256;g
+!3290;g
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -74,6 +74,7 @@ s#l0
 %\011%uWidlerSuite%sRectLine.java
 %\011Pulsar%sZone%sMapTileFactory.java
 %\011Pulsar%sEngine%sCombat.java
+%\011Pulsar%sAI%sActorMemory.java
 %\011%uWidlerSuite%sAStar.java
 %\011%uWidlerSuite%sCoord.java
 %\011%uWidlerSuite%sStraightLine.java
@@ -103,7 +104,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3256;f
+!3290;f
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -165,6 +166,7 @@ s#l0
 %\011%uWidlerSuite%sRectLine.java
 %\011Pulsar%sZone%sMapTileFactory.java
 %\011Pulsar%sEngine%sCombat.java
+%\011Pulsar%sAI%sActorMemory.java
 %\011%uWidlerSuite%sAStar.java
 %\011%uWidlerSuite%sCoord.java
 %\011%uWidlerSuite%sStraightLine.java

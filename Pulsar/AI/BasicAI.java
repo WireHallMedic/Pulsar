@@ -70,6 +70,11 @@ public class BasicAI implements AIConstants
       return getTeam().isHostile(that.getAI().getTeam());
    }
    
+   public boolean isFriendly(Actor that)
+   {
+      return getTeam().isFriendly(that.getAI().getTeam());
+   }
+   
    public Actor getNearestVisibleEnemy()
    {
       Actor curActor = null;

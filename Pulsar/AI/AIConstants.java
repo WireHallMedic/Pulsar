@@ -2,6 +2,8 @@ package Pulsar.AI;
 
 public interface AIConstants
 {
+   public static final int DEFAULT_MEMORY_DURATION = 16;
+   
    public enum ActorAction
    {
       STEP,
@@ -23,22 +25,23 @@ public interface AIConstants
       {
          if(this == that)
             return false;
-         if(this == PLAYER)
-         {
-            switch(that)
-            {
-               case VILLAIN : return true;
-               case NEUTRAL : return false;
-            }
-         }
-         if(this == VILLAIN)
-         {
+         if(this == PLAYER && that == VILLAIN)
             return true;
-         }
-         if(this == NEUTRAL)
-         {
-            return false;
-         }
+         if(this == VILLAIN)
+            return true;
+         if(this == NEUTRAL && that == VILLAIN)
+            return true;
+         return false;
+      }
+      
+      public boolean isFriendly(Team that)
+      {
+         if(this == that)
+            return true;
+         if(this == PLAYER && that == NEUTRAL)
+            return true;
+         if(this == NEUTRAL && that == PLAYER)
+            return true;
          return false;
       }
    }
