@@ -216,26 +216,7 @@ public class BasicAI implements AIConstants
    
    // find nearest tile with no line of effect to any visible enemies
    protected Coord getNearestSafeTile()
-   {/*
-      Vector<Actor> enemyList = GameEngine.getVisibleEnemies(self);
-      SpiralSearch search = new SpiralSearch(GameEngine.getZoneMap().getLowPassMap(), self.getMapLoc());
-      Coord searchLoc = search.getNext();
-      while(searchLoc != null)
-      {
-         boolean safeF = true;
-         for(Actor enemy : enemyList)
-         {
-            if(GameEngine.hasClearShotIgnoring(enemy.getMapLoc(), searchLoc, self.getMapLoc()))
-            {
-               safeF = false;
-               break;
-            }
-         }
-         if(safeF)
-            return searchLoc;
-         searchLoc = search.getNext();
-      }
-      return null;*/
+   {
       Vector<Actor> enemyList = GameEngine.getVisibleEnemies(self);
       boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);
       Coord passMapInset = GameEngine.getZoneMap().getPassMapInset(self);
@@ -272,10 +253,18 @@ public class BasicAI implements AIConstants
       {
          return getStepTowards(target);
       }
-      SpiralSearch search = new SpiralSearch(GameEngine.getZoneMap().getLowPassMap(), self.getMapLoc());
+      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);
+      Coord passMapInset = GameEngine.getZoneMap().getPassMapInset(self);
+      // modify stuff for reduced size
+      Coord adjustedSelfLoc = self.getMapLoc();
+      adjustedSelfLoc.subtract(passMapInset);
+      Coord adjustedTarget = new Coord(target);
+      adjustedTarget.subtract(passMapInset);
+      SpiralSearch search = new SpiralSearch(passMap, adjustedSelfLoc);
       Coord searchLoc = search.getNext();
       while(searchLoc != null)
       {
+         searchLoc.add(passMapInset);
          if(GameEngine.hasClearShotIgnoring(searchLoc, target, self.getMapLoc()) &&
             !GameEngine.isActorAt(searchLoc))
          {
