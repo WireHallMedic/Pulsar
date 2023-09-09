@@ -15,6 +15,7 @@ public class Actor implements ActorConstants, GUIConstants
 	protected UnboundTile sprite;
    protected int turnEnergy;
    protected BasicAI ai;
+   protected ActorMemory memory;
    protected int visionRange;
    protected Shield shield;
    protected Weapon weapon;
@@ -22,6 +23,7 @@ public class Actor implements ActorConstants, GUIConstants
    protected int maxHealth;
    protected Color bloodColor;
    protected Weapon unarmed;
+   protected boolean startOfTurnPerformed;
 
 
    public String getName(){return name;}
@@ -29,6 +31,7 @@ public class Actor implements ActorConstants, GUIConstants
 	public UnboundTile getSprite(){return sprite;}
    public int getTurnEnergy(){return turnEnergy;}
    public BasicAI getAI(){return ai;}
+   public ActorMemory getMemory(){return memory;}
    public int getVisionRange(){return visionRange;}
    public Shield getShield(){return shield;}
    public int getCurHealth(){return curHealth;}
@@ -43,6 +46,7 @@ public class Actor implements ActorConstants, GUIConstants
 	public void setSprite(UnboundTile s){sprite = s;}
    public void setTurnEnergy(int te){turnEnergy = te;}
    public void setAI(BasicAI newAI){ai = newAI;}
+   public void setMemory(ActorMemory m){memory = m;}
    public void setVisionRange(int vr){visionRange = vr;}
    public void setShield(Shield s){shield = s;}
    public void setWeapon(Weapon w){weapon = w;}
@@ -60,6 +64,7 @@ public class Actor implements ActorConstants, GUIConstants
       createSprite(icon, DEFAULT_ACTOR_FG_COLOR.getRGB(), DEFAULT_ACTOR_BG_COLOR.getRGB());
       turnEnergy = 0;
       ai = new BasicAI(this);
+      memory = new ActorMemory(this);
       visionRange = DEFAULT_VISION_RANGE;
       setShield(null);
       setWeapon(null);
@@ -67,6 +72,7 @@ public class Actor implements ActorConstants, GUIConstants
       setMaxHealth(20);
       setBloodColor(GUIConstants.HUMAN_BLOOD);
       unarmed = WeaponFactory.getBasicWeapon(GearConstants.WeaponType.MELEE);
+      startOfTurnPerformed = false;
    }
    
    public void reconcileSprite()
@@ -265,6 +271,7 @@ public class Actor implements ActorConstants, GUIConstants
             shield.charge();
          if(hasWeapon())
             weapon.charge();
+         memory.increment();
       }
    }
    
@@ -276,7 +283,21 @@ public class Actor implements ActorConstants, GUIConstants
    
    public void plan()
    {
+      if(!startOfTurnPerformed)
+         startOfTurn();
       ai.plan();
+   }
+   
+   private void startOfTurn()
+   {
+      updateMemory();
+      startOfTurnPerformed = true;
+   }
+   
+   private void endOfTurn()
+   {
+      updateMemory();
+      startOfTurnPerformed = false;
    }
    
    public boolean hasPlan()
@@ -288,6 +309,18 @@ public class Actor implements ActorConstants, GUIConstants
    {
       ai.act();
       discharge(NORMAL_ACTION_COST);
+      endOfTurn();
+   }
+   
+   public void updateMemory()
+   {
+      for(Actor a : GameEngine.getActorList())
+      {
+         if(canSee(a) && a != this)
+         {
+            memory.noteActor(a);
+         }
+      }
    }
    
 }

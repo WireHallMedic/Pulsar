@@ -31,7 +31,7 @@ public class ActorMemory implements AIConstants
       enemyList = new Vector<MemoryObj>();
    }
    
-   private void increment()
+   public void increment()
    {
       incrementList(friendList);
       incrementList(enemyList);
@@ -44,18 +44,24 @@ public class ActorMemory implements AIConstants
          list.elementAt(i).increment();
          if(list.elementAt(i).isExpired())
          {
+            System.out.println("Forget " + self + ":" + list.elementAt(i).actor);
             list.removeElementAt(i);
             i--;
          }
       }
    }
    
-   private void noteActor(Actor actor)
+   public void noteActor(Actor actor)
    {
       if(self.isHostile(actor))
+      {
          noteMemoryList(actor, enemyList);
+      }
       if(self.isFriendly(actor))
+      {
          noteMemoryList(actor, friendList);
+      }
+      // neutral actors are not remembered
    }
    
    private void noteMemoryList(Actor actor, Vector<MemoryObj> list)
@@ -72,6 +78,7 @@ public class ActorMemory implements AIConstants
       }
       if(!foundActor)
       {
+         System.out.println("Notice " + self + ":" + actor);
          list.add(new MemoryObj(actor));
       }
    }
