@@ -172,6 +172,21 @@ public class BasicAI implements AIConstants
          MessagePanel.addMessage("That's a wall.");
          clearPlan();
       }
+   }
+   
+   public void interpertUse()
+   {
+      // toggle tile
+      if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof ToggleTile)
+      {
+         setPendingAction(ActorAction.TOGGLE);
+      } 
+      else
+      // no possible action
+      {
+         MessagePanel.addMessage("Nothing to use there.");
+         clearPlan();
+      }
       
    }
    

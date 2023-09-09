@@ -13,6 +13,7 @@ public interface AIConstants
       TOGGLE,
       ATTACK,
       UNARMED_ATTACK,
+      USE,
       SWITCH_WEAPONS;
    }
    

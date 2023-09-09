@@ -91,15 +91,24 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_Z : setPlayerTarget(new Coord());
                               setPlayerAction(ActorAction.SWITCH_WEAPONS);
                               break;
+         case KeyEvent.VK_U : setPlayerAction(ActorAction.USE);
+                              MessagePanel.addMessage("Choose a direction.");
+                              break;
          case KeyEvent.VK_X : debug('x'); break;
          case KeyEvent.VK_D : debug('d'); break;
          case KeyEvent.VK_SPACE : debug(' '); break;
       }
       
-      if(target != null && GameEngine.isAnimationLocked() == false)
+      // have a target, don't have an action, allowed to act
+      if(target != null && player.getAI().getPendingAction() == null && GameEngine.isAnimationLocked() == false)
       {
          setPlayerTarget(target);
          setPlayerAction(ActorAction.CONTEXT_SENSITIVE);
+      }
+      // attempting to use something
+      if(target != null && player.getAI().getPendingAction() == ActorAction.USE && GameEngine.isAnimationLocked() == false)
+      {
+         setPlayerTarget(target);
       }
    }
    

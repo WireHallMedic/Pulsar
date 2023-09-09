@@ -307,8 +307,13 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          {
             if(!(curActor.hasPlan()))
                curActor.plan();
-            if(curActor.getAI().getPendingAction() == ActorAction.CONTEXT_SENSITIVE)
-               curActor.getAI().interpertContext();
+            if(curActor.hasPlan())
+            {
+               if(curActor.getAI().getPendingAction() == ActorAction.CONTEXT_SENSITIVE)
+                  curActor.getAI().interpertContext();
+               if(curActor.getAI().getPendingAction() == ActorAction.USE)
+                  curActor.getAI().interpertUse();
+            }
             if(curActor.hasPlan())
             {
                if(animationAllowsAction(curActor))
