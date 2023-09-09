@@ -36,10 +36,10 @@ public class StandardEnemyAI extends WanderAI implements AIConstants
       else
       {
          // adjacent to enemy
-         if(EngineTools.getDistanceTo(self, nearestEnemy) == 1)
+         if(EngineTools.areAdjacent(self, nearestEnemy))
          {
-            setPendingTarget(self.getMapLoc());
-            setPendingAction(ActorAction.DELAY);
+            setPendingTarget(nearestEnemy.getMapLoc());
+            setPendingAction(ActorAction.ATTACK);
             return;
          }
          // not adjacent

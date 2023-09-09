@@ -33,8 +33,8 @@ public class Player extends Actor implements GUIConstants
    {
       if(!isReadyToAct())
       {
-         if(hasSecondaryWeapon())
-            secondaryWeapon.charge();
+         if(hasAltWeapon())
+            getAltWeapon().charge();
       }
       super.charge();
    }
@@ -85,6 +85,11 @@ public class Player extends Actor implements GUIConstants
       if(usingPrimaryWeapon && secondaryWeapon != null)
          return secondaryWeapon;
       return unarmed;
+   }
+   
+   public boolean hasAltWeapon()
+   {
+      return getAltWeapon() != null;
    }
    
    public int[] getAltWeaponBar(int length)

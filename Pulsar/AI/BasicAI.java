@@ -154,7 +154,6 @@ public class BasicAI implements AIConstants
       {
          return null;
       }
-      System.out.println("Returning " + path.elementAt(0));
       return path.elementAt(0);
    }
    
