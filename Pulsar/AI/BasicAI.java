@@ -171,6 +171,20 @@ public class BasicAI implements AIConstants
       return path.elementAt(0);
    }
    
+   // find nearest tile the target does not have line of effect to
+   protected Coord getNearestSafeTile(Coord target)
+   {
+      SpiralSearch search = new SpiralSearch(GameEngine.getZoneMap().getLowPassMap(), self.getMapLoc());
+      Coord searchLoc = search.getNext();
+      while(searchLoc != null)
+      {
+         if(!GameEngine.hasClearShotIgnoring(target, searchLoc, self.getMapLoc()))
+            return searchLoc;
+         searchLoc = search.getNext();
+      }
+      return null;
+   }
+   
    // carrying out the actions
    //////////////////////////////////////////////////////////////////
    private void doStep()
@@ -261,6 +275,21 @@ public class BasicAI implements AIConstants
             }
          }
       }
-
+   }
+   
+   // move towards the nearest tile that target does not have line of effect to
+   protected void planMoveToCover(Actor target)
+   {
+      Coord safeLoc = getNearestSafeTile(target.getMapLoc());
+      if(safeLoc != null)
+      {
+         Coord stepTowards = getStepTowards(safeLoc);
+         if(stepTowards != null)
+         {
+            setPendingTarget(stepTowards);
+            setPendingAction(ActorAction.STEP);
+            return;
+         }
+      }
    }
 }

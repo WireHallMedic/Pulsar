@@ -32,4 +32,12 @@ public class ActorFactory implements ActorConstants, GearConstants
       a.fullyHeal();
       return a;
    }
+   
+   public static Actor getMeleeTestEnemy()
+   {
+      Actor a = getTestEnemy();
+      a.setName("Melee Test Enemy");
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
+      return a;
+   }
 }

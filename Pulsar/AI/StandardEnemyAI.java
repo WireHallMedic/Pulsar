@@ -35,9 +35,20 @@ public class StandardEnemyAI extends WanderAI implements AIConstants
       // has visible enemy
       else
       {
-         planToAttack(nearestEnemy, self.getWeapon());
-         if(hasPlan())
-            return;
+         // weapon is charged
+         if(canAttack())
+         {
+            planToAttack(nearestEnemy, self.getWeapon());
+            if(hasPlan())
+               return;
+         }
+         else
+         // weapon is not charged
+         {
+            planMoveToCover(nearestEnemy);
+            if(hasPlan())
+               return;
+         }
       }
       // default
       setPendingTarget(self.getMapLoc());

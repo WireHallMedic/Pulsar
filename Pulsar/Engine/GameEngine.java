@@ -164,6 +164,19 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return true;
    }
    
+   // used for planning, so an actor doesn't think they can hide behind themselves
+   public static boolean hasClearShotIgnoring(Actor o, Actor t, Actor i){return hasClearShotIgnoring(o.getMapLoc(), t.getMapLoc(), i.getMapLoc());}
+   public static boolean hasClearShotIgnoring(Coord origin, Coord target, Coord ignoring)
+   {
+      Vector<Coord> interveningTiles = StraightLine.findLine(origin, target, StraightLine.REMOVE_ORIGIN_AND_TARGET);
+      for(Coord c : interveningTiles)
+      {
+         if(blocksShooting(c) && !c.equals(ignoring))
+            return false;
+      }
+      return true;
+   }
+   
    // returns, in order of preference: location of an actor on the line, loc immedeatly preceeding a wall, target
    public static Coord getDetonationLoc(int xOrigin, int yOrigin, int xTarget, int yTarget){return getDetonationLoc(new Coord(xOrigin, yOrigin), new Coord(xTarget, yTarget));}
    public static Coord getDetonationLoc(Coord origin, Coord target)
@@ -201,15 +214,13 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       p.setAllLocs(2, 3);
       setPlayer(p);
       Actor e = ActorFactory.getTestEnemy();
-      e.setName("Enemy 1");
       e.setAllLocs(5, 3);
       e.setShield(new Shield());
       add(e);
-      e = ActorFactory.getTestEnemy();
-      e.setName("Enemy 2");
+      e = ActorFactory.getMeleeTestEnemy();
       e.setAllLocs(6, 3);
       e.getSprite().setFGColor(Color.ORANGE.getRGB());
-      add(e);
+     // add(e);
       zoneMap = ZoneMapFactory.getTestMap();
    }
    
