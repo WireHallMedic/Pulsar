@@ -7,6 +7,7 @@ import Pulsar.Actor.*;
 import Pulsar.AI.*;
 import Pulsar.GUI.*;
 import Pulsar.Gear.*;
+import Pulsar.*;
 import java.awt.*;
 import java.awt.Toolkit.*;
 import java.util.*;
@@ -16,9 +17,11 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    public void keyTyped(KeyEvent ke){}
    public void keyReleased(KeyEvent ke){}
    private Toolkit toolkit;
+   private PulsarMain parent;
    
-   public InputManager(JFrame parent)
+   public InputManager(PulsarMain p)
    {
+      parent = p;
       parent.addKeyListener(this);
       toolkit = Toolkit.getDefaultToolkit();
       if(!toolkit.getLockingKeyState(KeyEvent.VK_NUM_LOCK))
@@ -32,9 +35,10 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    {
       switch(GameEngine.getGameMode())
       {
-         case STANDARD  :   standardModeKeyPressed(ke); break;
-         case LOOK      :   lookModeKeyPressed(ke); break;
-         case TARGETING :   targetingModeKeyPressed(ke); break;
+         case STANDARD    :   standardModeKeyPressed(ke); break;
+         case LOOK        :   lookModeKeyPressed(ke); break;
+         case TARGETING   :   targetingModeKeyPressed(ke); break;
+         case OTHER_PANEL :   parent.keyPressed(ke); break;
       }
       InfoPanel.updateInfoPanel();
    }
@@ -93,6 +97,9 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
                               break;
          case KeyEvent.VK_U : setPlayerAction(ActorAction.USE);
                               MessagePanel.addMessage("Choose a direction.");
+                              break;
+         case KeyEvent.VK_C : InnerPanel.setActivePanel(CharacterPanel.class); 
+                              GameEngine.setGameMode(GameMode.OTHER_PANEL);
                               break;
          case KeyEvent.VK_X : debug('x'); break;
          case KeyEvent.VK_D : debug('d'); break;

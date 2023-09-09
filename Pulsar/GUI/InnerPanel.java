@@ -12,28 +12,37 @@ import WidlerSuite.*;
 
 public class InnerPanel extends JPanel implements GUIConstants, ActionListener
 {
+   private OuterPanel parent;
    private Vector<RogueTilePanel> panelList;
    private javax.swing.Timer timer;
    private MainGameBGPanel mainGameBGPanel;
    private MainGameFGPanel mainGameFGPanel;
+   private CharacterPanel characterPanel;
+   private static Class pendingPanelClass = null;
    
    private RogueTilePanel curPanel = null;
    
-   public InnerPanel(javax.swing.Timer t)
+   public static void setActivePanel(Class p){pendingPanelClass = p;}
+   
+   public InnerPanel(javax.swing.Timer t, OuterPanel p)
    {
       super();
+      parent = p;
       setBackground(Color.BLACK);
       timer = t;
       timer.addActionListener(this);
+      setLayout(null);
       
       panelList = new Vector<RogueTilePanel>();
       mainGameFGPanel = new MainGameFGPanel();
       mainGameBGPanel = new MainGameBGPanel();
+      characterPanel = new CharacterPanel();
       addPanel(mainGameFGPanel);
       addPanel(mainGameBGPanel);
+      addPanel(characterPanel);
       
       setVisible(true);
-      setMainGamePanelActive();
+      setCurPanel(mainGameBGPanel);
    }
    
    private void addPanel(RogueTilePanel panel)
@@ -42,6 +51,7 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
       panel.setSize(this.getWidth(), this.getHeight());
       panelList.add(panel);
       timer.addActionListener(panel);
+      panel.setVisible(false);
       this.add(panel);
    }
    
@@ -52,7 +62,7 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
       curPanel = panel;
       for(JPanel listPanel : panelList)
       {
-         if(listPanel == panel)
+         if(listPanel == curPanel)
             listPanel.setVisible(true);
          else
             listPanel.setVisible(false);
@@ -85,8 +95,26 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
       this.repaint();
    }
    
+   private void activateByClass()
+   {
+      for(RogueTilePanel panel : panelList)
+      {
+         if(panel.getClass() == pendingPanelClass)
+            setCurPanel(panel);
+      }
+      pendingPanelClass = null;
+   }
+   
+   public void keyPressed(KeyEvent ke)
+   {
+      if(curPanel == characterPanel)
+         characterPanel.keyPressed(ke);
+   }
+   
    public void actionPerformed(ActionEvent ae)
    {
+      if(pendingPanelClass != null)
+         activateByClass();
       this.repaint();
    }
 }

@@ -19,7 +19,7 @@ public class OuterPanel extends JPanel implements GUIConstants, ComponentListene
       setLayout(null);
       setBackground(BG_COLOR);
       
-      innerPanel = new InnerPanel(timer);
+      innerPanel = new InnerPanel(timer, this);
       this.add(innerPanel);
       
       addComponentListener(this);
@@ -47,5 +47,10 @@ public class OuterPanel extends JPanel implements GUIConstants, ComponentListene
       innerPanel.setSize(innerWidth, innerHeight);
       innerPanel.setLocation((getWidth() - innerWidth) / 2, (getHeight() - innerHeight) / 2);
       innerPanel.arrange(sizeMult);
+   }
+   
+   public void keyPressed(KeyEvent ke)
+   {
+      innerPanel.keyPressed(ke);
    }
 }

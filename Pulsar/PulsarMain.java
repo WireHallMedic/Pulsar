@@ -40,6 +40,12 @@ public class PulsarMain extends JFrame implements GUIConstants, WindowStateListe
       outerPanel.arrange();
    }
    
+   // received from InputManager when GameEngine.getGameMode() == OTHER_PANEL
+   public void keyPressed(KeyEvent ke)
+   {
+      outerPanel.keyPressed(ke);
+   }
+   
    public static void main(String[] args)
    {
       PulsarMain frame = new PulsarMain();

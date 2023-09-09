@@ -4,6 +4,6 @@ public interface EngineConstants
 {
    public enum GameMode
    {
-      STANDARD, TARGETING, LOOK;
+      STANDARD, TARGETING, LOOK, OTHER_PANEL;
    }
 }

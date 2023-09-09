@@ -22,6 +22,8 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
       super(TERMINAL_WIDTH_TILES, TERMINAL_HEIGHT_TILES, RECT_TILE_PALETTE);
       setSize(50, 50);
       setBorder();
+      setBackground(BG_COLOR);
+      write(1, 1, "Character Panel", TERMINAL_WIDTH_TILES - 2, 1);
    }
    
    private void setBorder()
@@ -47,4 +49,16 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
          }
       }
    }
+   
+   public void keyPressed(KeyEvent ke)
+   {
+      switch(ke.getKeyCode())
+      {
+         case KeyEvent.VK_ESCAPE :
+         case KeyEvent.VK_C : InnerPanel.setActivePanel(MainGameBGPanel.class); 
+                              GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
+                              break;
+      }
+   }
+   
 }
