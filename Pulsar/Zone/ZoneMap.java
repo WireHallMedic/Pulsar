@@ -11,6 +11,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	private MapTile oobTile;
    private boolean[][] transparencyMap;
    private ShadowFoVRect fov;
+   private boolean[][] lowPassMap;
+   private boolean[][] highPassMap;
 
 
 	public int getWidth(){return width;}
@@ -34,6 +36,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       height = h;
       tileArray = new MapTile[width][height];
       transparencyMap = new boolean[width][height];
+      lowPassMap = new boolean[width][height];
+      highPassMap = new boolean[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
          setTile(x, y, new MapTile(defaultTile));
@@ -46,6 +50,15 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       for(int x = 0; x < tileArray.length; x++)
       for(int y = 0; y < tileArray[0].length; y++)
          transparencyMap[x][y] = tileArray[x][y].isTransparent();
+      fov.reset(transparencyMap);
+   }
+   
+   public void update(int x, int y){update(new Coord(x, y));}
+   public void update(Coord c)
+   {
+      transparencyMap[c.x][c.y] = getTile(c).isTransparent();
+      lowPassMap[c.x][c.y] = getTile(c).isLowPassable();
+      highPassMap[c.x][c.y] = getTile(c).isHighPassable();
       fov.reset(transparencyMap);
    }
    
@@ -70,6 +83,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       {
          tileArray[x][y] = t;
          transparencyMap[x][y] = t.isTransparent();
+         lowPassMap[x][y] = t.isLowPassable();
+         highPassMap[x][y] = t.isHighPassable();
       }
    }
    
@@ -81,4 +96,23 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       return new MapTile(oobTile);
    }
    
+   
+   public boolean[][] getHighPassMap()
+   {
+      boolean[][] newMap = new boolean[width][height];
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+         newMap[x][y] = lowPassMap[x][y];
+      return newMap;
+   }
+   
+   
+   public boolean[][] getLowPassMap()
+   {
+      boolean[][] newMap = new boolean[width][height];
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+         newMap[x][y] = lowPassMap[x][y];
+      return newMap;
+   }
 }

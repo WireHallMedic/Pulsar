@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3218;g
+!3256;g
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -49,6 +49,7 @@ s#l0
 %\011Pulsar%sGear%sCredits.java
 %\011%uWidlerSuite%sTileAnimationManager.java
 %\011%uWidlerSuite%sRoom.java
+%\011Pulsar%sAI%sStandardEnemyAI.java
 %\011Pulsar%sAI%sPlayerAI.java
 %\011Pulsar%sGUI%sVisualEffectFactory.java
 %\011%uWidlerSuite%sUnboundInterface.java
@@ -102,7 +103,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3218;f
+!3256;f
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -139,6 +140,7 @@ s#l0
 %\011Pulsar%sGear%sCredits.java
 %\011%uWidlerSuite%sTileAnimationManager.java
 %\011%uWidlerSuite%sRoom.java
+%\011Pulsar%sAI%sStandardEnemyAI.java
 %\011Pulsar%sAI%sPlayerAI.java
 %\011Pulsar%sGUI%sVisualEffectFactory.java
 %\011%uWidlerSuite%sUnboundInterface.java

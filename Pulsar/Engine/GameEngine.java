@@ -190,7 +190,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       setPlayer(p);
       Actor e = ActorFactory.getTestEnemy();
       e.setName("Enemy 1");
-      e.setAllLocs(4, 1);
+      e.setAllLocs(5, 1);
       e.setShield(new Shield());
       add(e);
       e = ActorFactory.getTestEnemy();

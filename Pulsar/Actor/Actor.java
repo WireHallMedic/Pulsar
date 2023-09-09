@@ -140,6 +140,11 @@ public class Actor implements ActorConstants, GUIConstants
          GameEngine.getZoneMap().canSee(getMapLoc(), target, getVisionRange());
    }
    
+   public boolean isHostile(Actor that)
+   {
+      return this.getAI().isHostile(that);
+   }
+   
    // gear methods
    ////////////////////////////////////////////////////////////////////
    public boolean shieldIsUp()

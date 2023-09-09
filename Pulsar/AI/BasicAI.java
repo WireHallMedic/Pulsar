@@ -6,6 +6,7 @@ import Pulsar.GUI.*;
 import Pulsar.Engine.*;
 import Pulsar.Zone.*;
 import java.awt.*;
+import java.util.*;
 
 public class BasicAI implements AIConstants
 {
@@ -15,6 +16,7 @@ public class BasicAI implements AIConstants
 	protected ActorAction previousAction;
 	protected Coord previousTarget;
    protected Actor lastActorTargeted;
+   protected Team team;
 
 
 	public Actor getSelf(){return self;}
@@ -23,6 +25,7 @@ public class BasicAI implements AIConstants
 	public ActorAction getPreviousAction(){return previousAction;}
 	public Coord getPreviousTarget(){if(pendingTarget == null) return null; return new Coord(previousTarget);}
    public Actor getLastActorTargeted(){return lastActorTargeted;}
+   public Team getTeam(){return team;}
 
 
 	public void setSelf(Actor s){self = s;}
@@ -30,6 +33,7 @@ public class BasicAI implements AIConstants
 	public void setPendingTarget(Coord p){setPendingTarget(p.x, p.y);}
 	public void setPendingTarget(int x, int y){pendingTarget = new Coord(x, y);}
    public void setLastActorTargeted(Actor a){lastActorTargeted = a;}
+   public void setTeam(Team t){team = t;}
 
 
    public BasicAI(Actor s)
@@ -38,6 +42,7 @@ public class BasicAI implements AIConstants
       previousTarget = null;
       previousAction = null;
       lastActorTargeted = null;
+      team = Team.VILLAIN;
       clearPlan();
    }
    
@@ -57,6 +62,30 @@ public class BasicAI implements AIConstants
    {
       pendingAction = null;
       pendingTarget = null;
+   }
+   
+   public boolean isHostile(Actor that)
+   {
+      return getTeam().isHostile(that.getAI().getTeam());
+   }
+   
+   public Actor getNearestVisibleEnemy()
+   {
+      Actor curActor = null;
+      int curDist = 10000;
+      for(Actor prospect : GameEngine.getActorList())
+      {
+         if(isHostile(prospect) && self.canSee(prospect))
+         {
+            int prospectDist = EngineTools.getDistanceTo(self, prospect);
+            if(prospectDist < curDist)
+            {
+               curDist = prospectDist;
+               curActor = prospect;
+            }
+         }
+      }
+      return curActor;
    }
    
    public void act()
@@ -110,6 +139,25 @@ public class BasicAI implements AIConstants
       
    }
    
+   protected Coord getStepTowards(Coord target)
+   {
+      AStar pathing = new AStar();
+      boolean[][] passMap = GameEngine.getZoneMap().getLowPassMap();
+      for(Actor a : GameEngine.getActorList())
+      {
+         passMap[a.getMapLoc().x][a.getMapLoc().y] = false;
+      }
+      passMap[self.getMapLoc().x][self.getMapLoc().y] = true;
+      passMap[target.x][target.y] = GameEngine.getZoneMap().getTile(target).isLowPassable();
+      Vector<Coord> path = pathing.path(passMap, self.getMapLoc(), target);
+      if(path.size() == 0)
+      {
+         return null;
+      }
+      System.out.println("Returning " + path.elementAt(0));
+      return path.elementAt(0);
+   }
+   
    // carrying out the actions
    //////////////////////////////////////////////////////////////////
    private void doStep()
@@ -133,7 +181,7 @@ public class BasicAI implements AIConstants
       {
          ToggleTile tTile = (ToggleTile)tile;
          tTile.toggle();
-         GameEngine.getZoneMap().updateFoV();
+         GameEngine.getZoneMap().update(pendingTarget);
          GameEngine.getPlayer().updateFoV();
       }
    }

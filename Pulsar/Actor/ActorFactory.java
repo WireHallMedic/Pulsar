@@ -26,7 +26,8 @@ public class ActorFactory implements ActorConstants, GearConstants
    {
       Actor a = new Actor('e');
       a.setName("Test Enemy");
-      a.setAI(new WanderAI(a));
+      a.setAI(new StandardEnemyAI(a));
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
       a.setMaxHealth(20);
       a.fullyHeal();
       return a;

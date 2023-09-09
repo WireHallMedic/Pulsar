@@ -2,6 +2,7 @@ package Pulsar.Engine;
 
 import WidlerSuite.*;
 import java.util.*;
+import Pulsar.Actor.*;
 
 public class EngineTools
 {
@@ -31,5 +32,11 @@ public class EngineTools
       if(origin.equals(target))
          return origin;
       return StraightLine.findLine(origin, target, StraightLine.REMOVE_ORIGIN).elementAt(0);
+   }
+   
+   public static int getDistanceTo(Actor o, Actor t){return getDistanceTo(o.getMapLoc(), t.getMapLoc());}
+   public static int getDistanceTo(Coord origin, Coord target)
+   {
+      return WSTools.getAngbandMetric(origin, target);
    }
 }
