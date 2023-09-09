@@ -171,7 +171,6 @@ public class BasicAI implements AIConstants
       if(EngineTools.isAdjacent(target, self.getMapLoc()))
          return target;
       AStar pathing = new AStar();
- //     boolean[][] passMap = GameEngine.getZoneMap().getLowPassMap();
       // get passability map
       boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);
       Coord passMapInset = GameEngine.getZoneMap().getPassMapInset(self);
@@ -185,7 +184,9 @@ public class BasicAI implements AIConstants
          adjustedTarget.y < 0 ||
          adjustedTarget.x >= passMap.length ||
          adjustedTarget.y >= passMap[0].length)
+      {
          return null;
+      }
       // mark actor tiles as impassable
       for(Actor a : GameEngine.getActorList())
       {
@@ -195,8 +196,9 @@ public class BasicAI implements AIConstants
             actorLoc.y < 0 ||
             actorLoc.x >= passMap.length ||
             actorLoc.y >= passMap[0].length)
+         {
             continue;
-         
+         }
          passMap[actorLoc.x][actorLoc.y] = false;
       }
       // mark origin and target as passable

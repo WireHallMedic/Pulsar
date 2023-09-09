@@ -24,6 +24,7 @@ public class Actor implements ActorConstants, GUIConstants
    protected Color bloodColor;
    protected Weapon unarmed;
    protected boolean startOfTurnPerformed;
+   protected boolean flying;
 
 
    public String getName(){return name;}
@@ -38,6 +39,7 @@ public class Actor implements ActorConstants, GUIConstants
    public int getMaxHealth(){return maxHealth;}
    public Color getBloodColor(){return bloodColor;}
    public Weapon getUnarmedAttack(){return unarmed;}
+   public boolean isFlying(){return flying;}
 
 
    public void setName(String n){name = n;}
@@ -54,6 +56,7 @@ public class Actor implements ActorConstants, GUIConstants
    public void setMaxHealth(int h){maxHealth = h;}
    public void setBloodColor(Color c){bloodColor = c;}
    public void setUnarmedAttack(Weapon w){unarmed = w;}
+   public void setFlying(boolean f){flying = f;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -73,6 +76,7 @@ public class Actor implements ActorConstants, GUIConstants
       setBloodColor(GUIConstants.HUMAN_BLOOD);
       unarmed = WeaponFactory.getBasicWeapon(GearConstants.WeaponType.MELEE);
       startOfTurnPerformed = false;
+      flying = false;
    }
    
    public void reconcileSprite()

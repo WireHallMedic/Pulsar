@@ -241,16 +241,25 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void newGame()
    {
       Player p = ActorFactory.getPlayer();
-      p.setAllLocs(2, 5);
+      p.setAllLocs(2, 4);
       setPlayer(p);
       Actor e = ActorFactory.getTestEnemy();
       e.setAllLocs(7, 5);
       e.setShield(new Shield());
-      add(e);
+   //   add(e);
       e = ActorFactory.getMeleeTestEnemy();
-      e.setAllLocs(7, 6);
+  //    e.setAllLocs(7, 6);
+      e.setAllLocs(5, 4);
+      e.getSprite().setFGColor(Color.ORANGE.getRGB());
+      e.setFlying(true);
+      add(e);
+      
+      e = ActorFactory.getMeleeTestEnemy();
+      e.setAllLocs(6, 4);
       e.getSprite().setFGColor(Color.ORANGE.getRGB());
       add(e);
+      
+      
       e = ActorFactory.getGoat();
       e.setAllLocs(3, 8);
    //   add(e);

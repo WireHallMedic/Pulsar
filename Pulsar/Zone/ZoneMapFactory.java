@@ -13,6 +13,8 @@ public class ZoneMapFactory implements ZoneConstants
       m.setTile(6, 5, MapTileFactory.getTile(TileType.HIGH_WALL));
       m.setTile(6, 6, MapTileFactory.getTile(TileType.HIGH_WALL));
       m.setTile(5, 7, MapTileFactory.getDoor());
+      for(int y = 1; y < 6; y++)
+         m.setTile(3, y, MapTileFactory.getTile(TileType.LOW_WALL));
       
       return m;
    }

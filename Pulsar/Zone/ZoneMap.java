@@ -101,9 +101,18 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    {
       int radius = a.getAI().getPathfindingRadius();
       boolean[][] passMap = new boolean[radius + radius + 1][radius + radius + 1];
-      for(int x = 0; x < radius; x++)
-      for(int y = 0; y < radius; y++)
-         passMap[x][y] = getTile(x + a.getMapLoc().x - radius, y + a.getMapLoc().y - radius).isLowPassable();
+      for(int x = 0; x < (radius * 2) + 1; x++)
+      for(int y = 0; y < (radius * 2) + 1; y++)
+      {
+         int realXLoc = x + a.getMapLoc().x - radius;
+         int realYLoc = y + a.getMapLoc().y - radius;
+         if(a.getAI().getUsesDoors() && getTile(realXLoc, realYLoc) instanceof Door)
+            passMap[x][y] = true;
+         else if(a.isFlying())
+            passMap[x][y] = getTile(realXLoc, realYLoc).isHighPassable();
+         else
+            passMap[x][y] = getTile(realXLoc, realYLoc).isLowPassable();
+      }
       return passMap;
    }
    
