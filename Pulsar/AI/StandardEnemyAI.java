@@ -35,34 +35,9 @@ public class StandardEnemyAI extends WanderAI implements AIConstants
       // has visible enemy
       else
       {
-         // adjacent to enemy
-         if(EngineTools.areAdjacent(self, nearestEnemy))
-         {
-            setPendingTarget(nearestEnemy.getMapLoc());
-            setPendingAction(ActorAction.ATTACK);
+         planToAttack(nearestEnemy, self.getWeapon());
+         if(hasPlan())
             return;
-         }
-         // not adjacent
-         else
-         {
-            // has clear shot
-            if(GameEngine.hasClearShot(self, nearestEnemy))
-            {
-               setPendingTarget(nearestEnemy.getMapLoc());
-               setPendingAction(ActorAction.ATTACK);
-               return;
-            }
-            else
-            {
-               Coord stepLoc = getStepTowards(nearestEnemy.getMapLoc());
-               if(stepLoc != null)
-               {
-                  setPendingTarget(stepLoc);
-                  setPendingAction(ActorAction.STEP);
-                  return;
-               }
-            }
-         }
       }
       // default
       setPendingTarget(self.getMapLoc());

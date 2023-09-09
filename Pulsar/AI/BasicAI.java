@@ -5,6 +5,7 @@ import WidlerSuite.*;
 import Pulsar.GUI.*;
 import Pulsar.Engine.*;
 import Pulsar.Zone.*;
+import Pulsar.Gear.*;
 import java.awt.*;
 import java.util.*;
 
@@ -86,6 +87,11 @@ public class BasicAI implements AIConstants
          }
       }
       return curActor;
+   }
+   
+   public boolean canAttack()
+   {
+      return self.getWeapon().canFire();
    }
    
    public void act()
@@ -217,5 +223,44 @@ public class BasicAI implements AIConstants
          Player pSelf = (Player)self;
          pSelf.switchWeapons();
       }
+   }
+   
+   
+   // planning methods
+   //////////////////////////////////////////////////////////////////
+   
+   // attack if able, move to get clear shot if not
+   protected void planToAttack(Actor target, Weapon weapon)
+   {
+      // adjacent to enemy
+      if(EngineTools.areAdjacent(self, target))
+      {
+         setPendingTarget(target.getMapLoc());
+         setPendingAction(ActorAction.ATTACK);
+         return;
+      }
+      // not adjacent
+      else
+      {
+         // has clear shot with ranged weapon
+         if(GameEngine.hasClearShot(self, target) && !weapon.isMelee())
+         {
+            setPendingTarget(target.getMapLoc());
+            setPendingAction(ActorAction.ATTACK);
+            return;
+         }
+         else
+         // move towards
+         {
+            Coord stepLoc = getStepTowards(target.getMapLoc());
+            if(stepLoc != null)
+            {
+               setPendingTarget(stepLoc);
+               setPendingAction(ActorAction.STEP);
+               return;
+            }
+         }
+      }
+
    }
 }
