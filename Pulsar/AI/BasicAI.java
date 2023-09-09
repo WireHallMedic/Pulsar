@@ -214,15 +214,41 @@ public class BasicAI implements AIConstants
       return stepLoc;
    }
    
-   // find nearest tile the target does not have line of effect to any visible enemies
+   // find nearest tile with no line of effect to any visible enemies
    protected Coord getNearestSafeTile()
-   {
+   {/*
       Vector<Actor> enemyList = GameEngine.getVisibleEnemies(self);
       SpiralSearch search = new SpiralSearch(GameEngine.getZoneMap().getLowPassMap(), self.getMapLoc());
       Coord searchLoc = search.getNext();
       while(searchLoc != null)
       {
          boolean safeF = true;
+         for(Actor enemy : enemyList)
+         {
+            if(GameEngine.hasClearShotIgnoring(enemy.getMapLoc(), searchLoc, self.getMapLoc()))
+            {
+               safeF = false;
+               break;
+            }
+         }
+         if(safeF)
+            return searchLoc;
+         searchLoc = search.getNext();
+      }
+      return null;*/
+      Vector<Actor> enemyList = GameEngine.getVisibleEnemies(self);
+      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);
+      Coord passMapInset = GameEngine.getZoneMap().getPassMapInset(self);
+      // modify stuff for reduced size
+      Coord adjustedSelfLoc = self.getMapLoc();
+      adjustedSelfLoc.subtract(passMapInset);
+      
+      SpiralSearch search = new SpiralSearch(passMap, adjustedSelfLoc);
+      Coord searchLoc = search.getNext();
+      while(searchLoc != null)
+      {
+         boolean safeF = true;
+         searchLoc.add(passMapInset);
          for(Actor enemy : enemyList)
          {
             if(GameEngine.hasClearShotIgnoring(enemy.getMapLoc(), searchLoc, self.getMapLoc()))
