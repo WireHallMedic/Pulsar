@@ -37,8 +37,7 @@ public class StandardEnemyAI extends WanderAI implements AIConstants
             // can path to last seen
             if(stepTowards != null)
             {
-               setPendingTarget(stepTowards);
-               setPendingAction(ActorAction.STEP);
+               setStepTowards(stepTowards);
                return;
             }
             // cannot path to last seen

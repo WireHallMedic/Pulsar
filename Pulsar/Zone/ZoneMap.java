@@ -97,6 +97,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       return new MapTile(oobTile);
    }
    
+   // return a passability map accounting for movement type, door usage, and pathfinding radius
    public boolean[][] getPassMap(Actor a)
    {
       int radius = a.getAI().getPathfindingRadius();
@@ -104,14 +105,11 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       for(int x = 0; x < (radius * 2) + 1; x++)
       for(int y = 0; y < (radius * 2) + 1; y++)
       {
-         int realXLoc = x + a.getMapLoc().x - radius;
-         int realYLoc = y + a.getMapLoc().y - radius;
-         if(a.getAI().getUsesDoors() && getTile(realXLoc, realYLoc) instanceof Door)
+         Coord realLoc = new Coord(x + a.getMapLoc().x - radius, y + a.getMapLoc().y - radius);
+         if(a.getAI().getUsesDoors() && getTile(realLoc) instanceof Door)
             passMap[x][y] = true;
-         else if(a.isFlying())
-            passMap[x][y] = getTile(realXLoc, realYLoc).isHighPassable();
          else
-            passMap[x][y] = getTile(realXLoc, realYLoc).isLowPassable();
+            passMap[x][y] = isPassable(a, realLoc);
       }
       return passMap;
    }
@@ -122,6 +120,14 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       inset.x -= a.getAI().getPathfindingRadius();
       inset.y -= a.getAI().getPathfindingRadius();
       return inset;
+   }
+   
+   public boolean isPassable(Actor a, int x, int y){return isPassable(a, new Coord(x, y));}
+   public boolean isPassable(Actor a, Coord c)
+   {
+      if(a.isFlying())
+         return getTile(c.x, c.y).isHighPassable();
+      return getTile(c.x, c.y).isLowPassable();
    }
    
    

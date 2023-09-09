@@ -128,6 +128,15 @@ public class BasicAI implements AIConstants
       clearPlan();
    }
    
+   protected void setStepTowards(Coord target)
+   {
+      setPendingTarget(target);
+      if(getUsesDoors() && GameEngine.getZoneMap().getTile(target) instanceof Door && !GameEngine.getZoneMap().isPassable(self, target))
+         setPendingAction(ActorAction.TOGGLE);
+      else
+         setPendingAction(ActorAction.STEP);
+   }
+   
    public void interpertContext()
    {
       if(self.getMapLoc().equals(pendingTarget))
@@ -362,8 +371,7 @@ public class BasicAI implements AIConstants
                Coord stepLoc = getStepTowards(nearestAttackTile);
                if(stepLoc != null)
                {
-                  setPendingTarget(stepLoc);
-                  setPendingAction(ActorAction.STEP);
+                  setStepTowards(stepLoc);
                   return;
                }
             }
@@ -380,8 +388,7 @@ public class BasicAI implements AIConstants
          Coord stepTowards = getStepTowards(safeLoc);
          if(stepTowards != null)
          {
-            setPendingTarget(stepTowards);
-            setPendingAction(ActorAction.STEP);
+            setStepTowards(stepTowards);
             return;
          }
       }
