@@ -95,4 +95,18 @@ public class GUITools implements GUIConstants, WSFontConstants
       }
       return iconArray;
    }
+   
+   public static String initToSec(int init)
+   {
+      String sec = "";
+      switch(init)
+      {
+         case 0 : sec = "0"; break;
+         case 1 : sec = ".5"; break;
+         default : sec += (init / 2);
+            if(init % 2 == 1)
+               sec += ".5";
+      }
+      return sec + "s";
+   }
 }

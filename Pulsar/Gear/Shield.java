@@ -1,5 +1,7 @@
 package Pulsar.Gear;
 
+import Pulsar.GUI.*;
+
 public class Shield extends GearObj implements GearConstants, Chargable
 {
 	private int curCharge;
@@ -39,7 +41,18 @@ public class Shield extends GearObj implements GearConstants, Chargable
    
    public String getSummary()
    {
-      return getCurCharge() + "/" + getMaxCharge() + ", Charge Delay: " + getChargeDelay() + ", Charge Rate: " + getChargeRate();
+      return getChargeSummary() + getShortSummary();
+   }
+   
+   public String getChargeSummary()
+   {
+      return getCurCharge() + "/" + getMaxCharge();
+   }
+   
+   public String getShortSummary()
+   {
+      return "Charge Delay: " + GUITools.initToSec(getChargeDelay()) + 
+             ", Charge Rate: " + getChargeRate();
    }
    
    public void charge()

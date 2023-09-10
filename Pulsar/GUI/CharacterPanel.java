@@ -80,17 +80,13 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
    {
       clear();
       Player player = GameEngine.getPlayer();
+      int additionalYSpacing = 0;
       write(X_ORIGIN, Y_ORIGIN, player.getName(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 1, "Health [        ]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 2, "Shield [        ]", SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 4, "Weapon [        ]", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 6, "AltWpn [        ]", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      int[] ammoCountArr = player.getWeapon().getAmmoCountTiles();
-      for(int i = 0; i < ammoCountArr.length; i++)
-         setTile(X_ORIGIN + 17 + i, Y_ORIGIN + 4, ammoCountArr[i], TERMINAL_FG_COLOR, BG_COLOR);
-      ammoCountArr = player.getAltWeapon().getAmmoCountTiles();
-      for(int i = 0; i < ammoCountArr.length; i++)
-         setTile(X_ORIGIN + 17 + i, Y_ORIGIN + 6, ammoCountArr[i], TERMINAL_FG_COLOR, BG_COLOR);
+      write(X_ORIGIN, Y_ORIGIN + 3, "Weapon [        ]", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         
+      write(X_ORIGIN + 18, Y_ORIGIN + 3, player.getWeapon().getAmmoCount(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), 5, 1);
       
       int[] shieldBar = player.getShieldBar(8);
       int[] healthBar = player.getHealthBar(8);
@@ -100,22 +96,36 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
       {
          setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 1, healthBar[i], HEALTH_COLOR, BG_COLOR);
          setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 2, shieldBar[i], SHIELD_COLOR, BG_COLOR);
-         setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 4, weaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
-         setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 6, altWeaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
+         setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 3, weaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
       }
       
       String healthString = player.getCurHealth() + "/" + player.getMaxHealth();
-      write(X_ORIGIN + 24, Y_ORIGIN + 1, healthString, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 24, 2);
+      write(X_ORIGIN + 18, Y_ORIGIN + 1, healthString, HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 24, 2);
       if(player.getShield() != null)
       {
-         String shieldString = player.getShield().getName() + ": " + player.getShield().getSummary();
+         String chargeSummary = player.getShield().getChargeSummary();
+         if(chargeSummary.length() < 7)
+            chargeSummary = " " + chargeSummary;
+         write(X_ORIGIN + 17, Y_ORIGIN + 2, chargeSummary, SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), 7, 1);
+         String shieldString = player.getShield().getName() + ": " + player.getShield().getShortSummary();
          write(X_ORIGIN + 24, Y_ORIGIN + 2, shieldString, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 24, 2);
       }
       String weaponString = player.getWeapon().getName() + ": " + player.getWeapon().getSummary();
-      write(X_ORIGIN + 24, Y_ORIGIN + 4, weaponString, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 24, 2);
+      write(X_ORIGIN + 24, Y_ORIGIN + 3, weaponString, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 24, 2);
+      if(getIcon(X_ORIGIN + 24, Y_ORIGIN + 4) != ' ')
+         additionalYSpacing++;
+      
+      write(X_ORIGIN, Y_ORIGIN + 4 + additionalYSpacing, "AltWpn [        ]", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN + 18, Y_ORIGIN + 4 + additionalYSpacing, player.getAltWeapon().getAmmoCount(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), 5, 1);
+      for(int i = 0; i < 8; i++)
+      {
+         setTile(X_ORIGIN + 8 + i, Y_ORIGIN + 4 + additionalYSpacing, altWeaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
+      }
       weaponString = player.getAltWeapon().getName() + ": " + player.getAltWeapon().getSummary();
-      write(X_ORIGIN + 24, Y_ORIGIN + 6, weaponString, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 24, 2);
-     // write(X_ORIGIN + 22, Y_ORIGIN + 4, player.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 3);
+      write(X_ORIGIN + 24, Y_ORIGIN + 4 + additionalYSpacing, weaponString, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 24, 2);
+      if(getIcon(X_ORIGIN + 24, Y_ORIGIN + 5 + additionalYSpacing) != ' ')
+         additionalYSpacing++;
+      
    }
    
    public void clear()

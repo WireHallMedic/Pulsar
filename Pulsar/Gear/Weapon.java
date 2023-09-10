@@ -122,6 +122,13 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       return getMultipleShotSummary();
    }
    
+   public String getAmmoCount()
+   {
+      if(getChargeCost() == 0)
+         return (char)INFINITY_TILE + "/" + (char)INFINITY_TILE;
+      return getRemainingShots() + "/" + getMaxShots();
+   }
+   
    public int[] getAmmoCountTiles()
    {
       int[] returnArr = new int[5];
