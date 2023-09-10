@@ -44,8 +44,10 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    public Vector<Actor> getActorsToShow()
    {
       Vector<Actor> actorsToShow = new Vector<Actor>();
-      for(Actor a : GameEngine.getActorList())
+      Vector<Actor> actorList = GameEngine.getActorList();
+      for(int i = 0; i < actorList.size(); i++)
       {
+         Actor a = actorList.elementAt(i);
          if(a != GameEngine.getPlayer() && GameEngine.playerCanSee(a))
          {
             actorsToShow.add(a);

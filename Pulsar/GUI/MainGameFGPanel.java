@@ -208,8 +208,10 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    private void setActorVisibility()
    {
       Actor player = GameEngine.getPlayer();
-      for(Actor actor : GameEngine.getActorList())
+      Vector<Actor> actorList = GameEngine.getActorList();
+      for(int i = 0; i < actorList.size(); i++)
       {
+         Actor actor = actorList.elementAt(i);
          if(player.canSee(actor))
             actor.getSprite().setVisible(true);
          else

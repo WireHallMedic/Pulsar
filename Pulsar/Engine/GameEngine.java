@@ -18,7 +18,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static int initiativeIndex;
    private static boolean runFlag = true;
    private static SquirrelRNG rng = new SquirrelRNG();
-   private static GameMode gameMode = GameMode.STANDARD;
+   private static GameMode gameMode = GameMode.OTHER_PANEL;
    private static Coord cursorLoc = null;
    
    // non-static variables

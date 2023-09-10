@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3434;g
+!3468;g
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -92,6 +92,7 @@ s#l0
 %\011%uWidlerSuite%sSpiralSearch.java
 %\011Pulsar%sZone%sMapTile.java
 %\011Pulsar%sGear%sShieldFactory.java
+%\011Pulsar%sGUI%sTitlePanel.java
 %\011%uWidlerSuite%sShadowFoVRect.java
 %\011Pulsar%sGUI%sWSFont_8x16.png
 %\011Pulsar%sZone%sZoneMapFactory.java
@@ -108,7 +109,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3434;f
+!3468;f
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -188,6 +189,7 @@ s#l0
 %\011%uWidlerSuite%sSpiralSearch.java
 %\011Pulsar%sZone%sMapTile.java
 %\011Pulsar%sGear%sShieldFactory.java
+%\011Pulsar%sGUI%sTitlePanel.java
 %\011%uWidlerSuite%sShadowFoVRect.java
 %\011Pulsar%sGUI%sWSFont_8x16.png
 %\011Pulsar%sZone%sZoneMapFactory.java
