@@ -293,7 +293,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          turnEnergy++;
          if(hasShield())
             shield.charge();
-         if(hasWeapon())
+         if(weapon != null)
             weapon.charge();
          memory.increment();
       }

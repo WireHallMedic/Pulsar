@@ -33,8 +33,8 @@ public class Player extends Actor implements GUIConstants
    {
       if(!isReadyToAct())
       {
-         if(hasAltWeapon())
-            getAltWeapon().charge();
+         if(secondaryWeapon != null)
+            secondaryWeapon.charge();
       }
       super.charge();
    }
