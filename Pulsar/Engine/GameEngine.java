@@ -13,8 +13,6 @@ import WidlerSuite.*;
 public class GameEngine implements Runnable, AIConstants, EngineConstants
 {
    private static Player player = null;
-//	private static Vector<Actor> actorList = new Vector<Actor>();
-//   private static ZoneMap zoneMap = null;
    private static Zone curZone = null;
    private static MainGameFGPanel mapPanel = null;
    private static int initiativeIndex;
@@ -39,7 +37,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
 
 	public static void setActorList(Vector<Actor> a){if(curZone != null) curZone.setActorList(a);}
    public static void setMapPanel(MainGameFGPanel mp){mapPanel = mp;}
- //  public static void setZoneMap(ZoneMap zm){zoneMap = zm;}
    public static void setCurZone(Zone z){curZone = z;}
    public static void setGameMode(GameMode gm){gameMode = gm;}
    public static void setCursorLoc(Coord c){cursorLoc = new Coord(c);}
@@ -247,12 +244,50 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public static void newGame()
    {
-      ZoneMap zoneMap = ZoneMapFactory.getTestMap();
-      GameEngine.setCurZone(new Zone("Test Zone", -1, zoneMap));
+      ZoneMap map = ZoneMapFactory.getTestMap2();
+      GameEngine.setCurZone(new Zone("Test Zone", -1, map));
       
       Player p = ActorFactory.getPlayer();
-      p.setAllLocs(2, 10);
+      p.setAllLocs(2, 12);
       setPlayer(p);
+      
+      for(int i = 0; i < 12; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         {
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(1, 9);
+            Actor e = ActorFactory.getMeleeTestEnemy();
+            e.setAllLocs(c);
+            add(e);
+         }
+      }
+      for(int i = 0; i < 12; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         {
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(19, 28);
+            Actor e = ActorFactory.getMeleeTestEnemy();
+            e.setAllLocs(c);
+            add(e);
+         }
+      }
+      for(int i = 0; i < 5; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         {
+            c.x = randomInt(12, map.getWidth() - 1);
+            c.y = randomInt(9, 19);
+            Actor e = ActorFactory.getTestEnemy();
+            e.setAllLocs(c);
+            add(e);
+         }
+      }
+      /*
       Actor e = ActorFactory.getTestEnemy();
       e.setAllLocs(7, 5);
       e.setShield(new Shield());
@@ -274,7 +309,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       
       e = ActorFactory.getGoat();
       e.setAllLocs(3, 8);
-   //   add(e);
+   //   add(e);*/
    
    }
    

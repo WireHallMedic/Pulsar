@@ -26,9 +26,10 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants
    public static Actor getTestEnemy()
    {
       Actor a = new Actor('e');
-      a.setName("Test Enemy");
+      a.setName("Standard Enemy");
       a.setAI(new StandardEnemyAI(a));
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
+      a.setShield(ShieldFactory.getBasicShield());
       a.setMaxHealth(20);
       a.fullyHeal();
       return a;
@@ -37,9 +38,9 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants
    public static Actor getMeleeTestEnemy()
    {
       Actor a = getTestEnemy();
-      a.setName("Melee Test Enemy");
-      a.setAI(new StandardEnemyAI(a));
+      a.setName("Melee Enemy");
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
+      a.getWeapon().setBaseDamage(DEFAULT_BASE_DAMAGE * 2);
       return a;
    }
    
