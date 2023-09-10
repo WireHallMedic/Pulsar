@@ -13,8 +13,9 @@ import WidlerSuite.*;
 public class GameEngine implements Runnable, AIConstants, EngineConstants
 {
    private static Player player = null;
-	private static Vector<Actor> actorList = new Vector<Actor>();
-   private static ZoneMap zoneMap = null;
+//	private static Vector<Actor> actorList = new Vector<Actor>();
+//   private static ZoneMap zoneMap = null;
+   private static Zone curZone = null;
    private static MainGameFGPanel mapPanel = null;
    private static int initiativeIndex;
    private static boolean runFlag = true;
@@ -27,17 +28,19 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
 
 
 	public static Player getPlayer(){return player;}
-	public static Vector<Actor> getActorList(){return actorList;}
-   public static ZoneMap getZoneMap(){return zoneMap;}
+	public static Vector<Actor> getActorList(){if(curZone != null) return curZone.getActorList(); return null;}
+   public static ZoneMap getZoneMap(){if(curZone != null) return curZone.getMap(); return null;}
+   public static Zone getCurZone(){return curZone;}
    public static MainGameFGPanel getMapPanel(){return mapPanel;}
    public static double random(){return rng.nextDouble();}
    public static GameMode getGameMode(){return gameMode;}
    public static Coord getCursorLoc(){return new Coord(cursorLoc);}
 
 
-	public static void setActorList(Vector<Actor> a){actorList = a;}
+	public static void setActorList(Vector<Actor> a){if(curZone != null) curZone.setActorList(a);}
    public static void setMapPanel(MainGameFGPanel mp){mapPanel = mp;}
-   public static void setZoneMap(ZoneMap zm){zoneMap = zm;}
+ //  public static void setZoneMap(ZoneMap zm){zoneMap = zm;}
+   public static void setCurZone(Zone z){curZone = z;}
    public static void setGameMode(GameMode gm){gameMode = gm;}
    public static void setCursorLoc(Coord c){cursorLoc = new Coord(c);}
    
@@ -51,22 +54,24 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       if(player != null)
       {
-         actorList.remove(player);
+         remove(player);
          removeFromMapPanel(player);
       }
       player = p;
-      actorList.add(player);
+      add(player);
       addToMapPanel(player);
       initiativeIndex = 0;
    }
    
    public static void clearActorList()
    {
-      actorList = new Vector<Actor>();
+      if(curZone != null)
+         curZone.setActorList(new Vector<Actor>());
    }
    
    public static void add(Actor a)
    {
+      Vector<Actor> actorList = curZone.getActorList();
       if(actorList.contains(a))
       {
          System.out.println("Attempt to add duplicate actor.");
@@ -78,6 +83,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public static void remove(Actor a)
    {
+      Vector<Actor> actorList = curZone.getActorList();
       int actorIndex = actorList.indexOf(a);
       if(actorIndex > -1)
       {
@@ -103,6 +109,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static Actor getActorAt(int x, int y){return getActorAt(new Coord(x, y));}
    public static Actor getActorAt(Coord c)
    {
+      Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)
       {
          if(actorList.elementAt(i).getMapLoc().equals(c))
@@ -131,7 +138,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       Actor target = null;
       int distanceTo = 1000;
-      for(Actor prospect : actorList)
+      for(Actor prospect : curZone.getActorList())
       {
          if(origin != prospect && origin.canSee(prospect))
          {
@@ -150,7 +157,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       Actor target = null;
       int distanceTo = 1000;
-      for(Actor prospect : actorList)
+      for(Actor prospect : curZone.getActorList())
       {
          if(origin.isHostile(prospect) && origin.canSee(prospect))
          {
@@ -168,7 +175,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static Vector<Actor> getVisibleEnemies(Actor origin)
    {
       Vector<Actor> visibleEnemyList = new Vector<Actor>();
-      for(Actor a : actorList)
+      for(Actor a : curZone.getActorList())
       {
          if(origin.isHostile(a) && origin.canSee(a))
             visibleEnemyList.add(a);
@@ -179,7 +186,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static boolean blocksShooting(int x, int y){return blocksShooting(new Coord(x, y));}
    public static boolean blocksShooting(Coord target)
    {
-      return isActorAt(target) || !zoneMap.getTile(target).isHighPassable();
+      return isActorAt(target) || !getZoneMap().getTile(target).isHighPassable();
    }
    
    public static boolean hasClearShot(Actor o, Actor t){return hasClearShot(o.getMapLoc(), t.getMapLoc());}
@@ -219,7 +226,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       {
          if(isActorAt(loc))
             return loc;
-         if(!zoneMap.getTile(loc).isHighPassable())
+         if(!getZoneMap().getTile(loc).isHighPassable())
             return lastGoodTarget;
          lastGoodTarget = loc;
       }
@@ -234,12 +241,15 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static void incrementInitiative()
    {
       initiativeIndex++;
-      if(initiativeIndex >= actorList.size())
+      if(initiativeIndex >= curZone.getActorList().size())
          initiativeIndex = 0;
    }
    
    public static void newGame()
    {
+      ZoneMap zoneMap = ZoneMapFactory.getTestMap();
+      GameEngine.setCurZone(new Zone("Test Zone", -1, zoneMap));
+      
       Player p = ActorFactory.getPlayer();
       p.setAllLocs(2, 10);
       setPlayer(p);
@@ -265,7 +275,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       e = ActorFactory.getGoat();
       e.setAllLocs(3, 8);
    //   add(e);
-      zoneMap = ZoneMapFactory.getTestMap();
+   
    }
    
    public static void end()
@@ -294,6 +304,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public void run()
    {
+      Vector<Actor> actorList = curZone.getActorList();
       initiativeIndex = 0;
       Actor curActor = null;
       while(true)
@@ -342,6 +353,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public void cleanUpSprites()
    {
+      Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)
       {
          Actor curActor = actorList.elementAt(i);
@@ -352,6 +364,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public void cleanUpDead()
    {
+      Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)
       {
          Actor a = actorList.elementAt(i);
@@ -366,6 +379,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public boolean allLockingAreWalking()
    {
       Vector<Actor> lockingActorList = new Vector<Actor>();
+      Vector<Actor> actorList = curZone.getActorList();
       
       for(Actor a : actorList)
       {
