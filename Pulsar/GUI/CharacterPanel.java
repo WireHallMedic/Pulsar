@@ -126,6 +126,10 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
       if(getIcon(X_ORIGIN + 24, Y_ORIGIN + 5 + additionalYSpacing) != ' ')
          additionalYSpacing++;
       
+      String speedStr = "Attack Speed: " + GUITools.initToSec(player.getAttackSpeed()) + "     " +
+                        "Movement Speed: " + GUITools.initToSec(player.getMoveSpeed()) + "     " +
+                        "Interact Speed: " + GUITools.initToSec(player.getInteractSpeed());
+      write(X_ORIGIN, Y_ORIGIN + 6 + additionalYSpacing, speedStr, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
    }
    
    public void clear()
