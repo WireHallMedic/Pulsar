@@ -76,6 +76,8 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       Actor player = GameEngine.getPlayer();
       Coord playerLoc = player.getMapLoc();
       Coord target = null;
+      if(player.isDead())
+         return;
       
       switch(ke.getKeyCode())
       {

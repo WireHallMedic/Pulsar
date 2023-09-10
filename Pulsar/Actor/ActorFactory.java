@@ -17,7 +17,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants
       a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
       a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
       a.setShield(ShieldFactory.getBasicShield());
-      a.setMaxHealth(50000);
+      a.setMaxHealth(50);
       a.fullyHeal();
       a.setAlertness(Alertness.CAUTIOUS);
       return a;
@@ -39,6 +39,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants
    {
       Actor a = getTestEnemy();
       a.setName("Melee Enemy");
+      a.getSprite().setFGColor(Color.ORANGE.getRGB());
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
       a.getWeapon().setBaseDamage(DEFAULT_BASE_DAMAGE * 2);
       return a;
