@@ -43,6 +43,7 @@ public interface GUIConstants
    public static final double SPRAY_BASE_SPEED = .3;
    public static final double SPRAY_VARIABLE_SPEED = .05;
    public static final int SPRAY_DURATION = 10;
+   public static final double FLOAT_EFFECT_SPEED = SLOW_MOVE_SPEED;
    
    public static final char EXPLOSION_CHAR = 15;
    

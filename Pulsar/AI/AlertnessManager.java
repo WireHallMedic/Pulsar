@@ -4,6 +4,7 @@ A simple state machine for handling alertness
 
 package Pulsar.AI;
 
+import Pulsar.GUI.*;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import java.util.*;
@@ -41,8 +42,14 @@ public class AlertnessManager implements AIConstants
    
    public void recoverFromSurprise()
    {
-      System.out.println(self + " recovers from surprise");
       self.setAlertness(Alertness.ALERT);
+   }
+   
+   public void becomeSurprised()
+   {
+      self.setAlertness(Alertness.SURPRISED);
+      if(GameEngine.playerCanSee(self))
+         VisualEffectFactory.addSurpriseIndicator(self);
    }
    
    public void update(boolean canSeeEnemy)
@@ -51,26 +58,22 @@ public class AlertnessManager implements AIConstants
       {
          if(canSeeEnemy || isAwareOfEnemies())
          {
-            self.setAlertness(Alertness.SURPRISED);
-            System.out.println(self + " moves from inactive to surprised");
+            becomeSurprised();
          }
          else if(friendsAreWorried())
          {
             self.setAlertness(Alertness.CAUTIOUS);
-            System.out.println(self + " moves from inactive to cautious");
          }
       }
       if(self.getAlertness() == Alertness.RELAXED)
       {
          if(canSeeEnemy || isAwareOfEnemies())
          {
-            self.setAlertness(Alertness.SURPRISED);
-            System.out.println(self + " moves from relaxed to surprised");
+            becomeSurprised();
          }
          else if(friendsAreWorried())
          {
             self.setAlertness(Alertness.CAUTIOUS);
-            System.out.println(self + " moves from relaxed to cautious");
          }
       }
       if(self.getAlertness() == Alertness.SURPRISED)
@@ -82,7 +85,6 @@ public class AlertnessManager implements AIConstants
          if(canSeeEnemy || isAwareOfEnemies())
          {
             self.setAlertness(Alertness.ALERT);
-            System.out.println(self + " moves from cautious to alert");
          }
       }
       if(self.getAlertness() == Alertness.ALERT)
@@ -90,7 +92,6 @@ public class AlertnessManager implements AIConstants
          if(!canSeeEnemy && !isAwareOfEnemies())
          {
             self.setAlertness(Alertness.CAUTIOUS);
-            System.out.println(self + " moves from alert to cautious");
          }
       }
    }

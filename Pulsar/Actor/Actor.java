@@ -313,7 +313,6 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       {
          ai.setPendingAction(ActorAction.DELAY);
          ai.setPendingTarget(getMapLoc());
-         System.out.println(this + " passes turn due to surprise");
       }
       else
       {
