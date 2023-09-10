@@ -28,7 +28,7 @@ public class WeaponFactory implements GearConstants
          case SHOTGUN      :
             w.setChargeCost(BASE_WEAPON_CHARGE_COST * 5 / 4);
             w.setBaseDamage(DEFAULT_BASE_DAMAGE / 2);
-            w.setVariableDamage(DEFAULT_BASE_DAMAGE / 2);
+            w.setVariableDamage(DEFAULT_VARIABLE_DAMAGE / 2);
             w.setAttacks(5);
             w.addWeaponTag(WeaponTag.SPREAD);
             break;

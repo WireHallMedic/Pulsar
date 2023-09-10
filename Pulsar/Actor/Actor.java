@@ -315,7 +315,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          ai.setPendingTarget(getMapLoc());
          getAlertnessManager().recoverFromSurprise();
       }
-      if(isInactive())
+      else if(isInactive())
       {
          ai.setPendingAction(ActorAction.DELAY);
          ai.setPendingTarget(getMapLoc());

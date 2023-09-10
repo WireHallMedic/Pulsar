@@ -258,10 +258,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          {
             c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(1, 9);
-            Actor e = ActorFactory.getMeleeTestEnemy();
-            e.setAllLocs(c);
-            add(e);
          }
+         Actor e = ActorFactory.getMeleeTestEnemy();
+         e.setAllLocs(c);
+         add(e);
       }
       for(int i = 0; i < 12; i++)
       {
@@ -270,10 +270,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          {
             c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(19, 28);
-            Actor e = ActorFactory.getMeleeTestEnemy();
-            e.setAllLocs(c);
-            add(e);
          }
+         Actor e = ActorFactory.getMeleeTestEnemy();
+         e.setAllLocs(c);
+         add(e);
       }
       for(int i = 0; i < 5; i++)
       {
@@ -282,10 +282,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          {
             c.x = randomInt(12, map.getWidth() - 1);
             c.y = randomInt(9, 19);
-            Actor e = ActorFactory.getTestEnemy();
-            e.setAllLocs(c);
-            add(e);
          }
+         Actor e = ActorFactory.getTestEnemy();
+         e.setAllLocs(c);
+         add(e);
       }
       /*
       Actor e = ActorFactory.getTestEnemy();

@@ -55,7 +55,6 @@ public class ZoneMapFactory implements ZoneConstants
       };
       int w = rowArr[0].length();
       int h = rowArr.length;
-      System.out.println("" + w + ", " + h);
       ZoneMap m = new ZoneMap(w, h, MapTileFactory.getTile(TileType.CLEAR));
       for(int y = 0; y < h; y++)
       {
