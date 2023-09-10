@@ -109,13 +109,13 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       }
       
       // have a target, don't have an action, allowed to act
-      if(target != null && player.getAI().getPendingAction() == null && GameEngine.isAnimationLocked() == false)
+      if(target != null && player.getAI().getPendingAction() == null)// && GameEngine.isAnimationLocked() == false)
       {
          setPlayerTarget(target);
          setPlayerAction(ActorAction.CONTEXT_SENSITIVE);
       }
       // attempting to use something
-      if(target != null && player.getAI().getPendingAction() == ActorAction.USE && GameEngine.isAnimationLocked() == false)
+      if(target != null && player.getAI().getPendingAction() == ActorAction.USE)// && GameEngine.isAnimationLocked() == false)
       {
          setPlayerTarget(target);
       }
