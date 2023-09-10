@@ -93,7 +93,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_L : GameEngine.setCursorLoc(playerLoc);
                               GameEngine.setGameMode(GameMode.LOOK); 
                               break;
-         case KeyEvent.VK_F : attemptToShoot(); break;
+         case KeyEvent.VK_A : attemptToShoot(); break;
          case KeyEvent.VK_Z : setPlayerTarget(new Coord());
                               setPlayerAction(ActorAction.SWITCH_WEAPONS);
                               break;
@@ -136,7 +136,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          case KeyEvent.VK_NUMPAD8 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y - 1); break;
          case KeyEvent.VK_NUMPAD9 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1); break;
          case KeyEvent.VK_ESCAPE  : cancelAction(); return;
-         case KeyEvent.VK_F       :
+         case KeyEvent.VK_A       :
          case KeyEvent.VK_ENTER   : setPlayerTarget(cursorLoc);
                                     GameEngine.setGameMode(GameMode.STANDARD);
                                     return;

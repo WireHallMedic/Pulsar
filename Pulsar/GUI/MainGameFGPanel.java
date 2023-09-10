@@ -97,8 +97,9 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                            if(clearPath)
                               bgColor = TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
                            setBGColor(c.x, c.y, bgColor);
-                           if(GameEngine.blocksShooting(c.x + xCorner, c.y + yCorner))
-                           clearPath = false;
+                           //if(GameEngine.blocksShooting(c.x + xCorner, c.y + yCorner))
+                           if(!GameEngine.getZoneMap().getTile(c.x + xCorner, c.y + yCorner).isHighPassable())
+                              clearPath = false;
                         }
                         else
                            break;

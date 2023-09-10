@@ -155,7 +155,7 @@ public class Combat implements GUIConstants
       for(Coord prospect : targetList)
       {
          Vector<Coord> line = StraightLine.findLine(origin, prospect, StraightLine.REMOVE_ORIGIN);
-         // target first blocking tile, or last tile if no blocking
+         // target all actors plus first blocking tile or last tile if no blocking
          for(int i = 0; i < line.size(); i++)
          {
             if(i == line.size() - 1 || GameEngine.blocksShooting(line.elementAt(i)))
@@ -173,7 +173,9 @@ public class Combat implements GUIConstants
                // otherwise add
                if(addF)
                   finalTargetList.add(line.elementAt(i));
-               break;
+               // don't search farther if hits a wall
+               if(!GameEngine.getZoneMap().getTile(line.elementAt(i)).isHighPassable())
+                  break;
             }
          }
       }
