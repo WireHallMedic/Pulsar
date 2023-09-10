@@ -313,6 +313,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       {
          ai.setPendingAction(ActorAction.DELAY);
          ai.setPendingTarget(getMapLoc());
+         getAlertnessManager().recoverFromSurprise();
       }
       if(isInactive())
       {
@@ -334,8 +335,6 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    private void endOfTurn()
    {
       updateMemory();
-      if(isSurprised())
-         getAlertnessManager().recoverFromSurprise();
       startOfTurnPerformed = false;
    }
    
