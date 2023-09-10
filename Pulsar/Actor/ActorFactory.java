@@ -16,7 +16,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants
       a.setWeapon(weapon);
       //a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
       a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
-      a.setShield(new Shield());
+      a.setShield(ShieldFactory.getBasicShield());
       a.setMaxHealth(50000);
       a.fullyHeal();
       a.setAlertness(Alertness.CAUTIOUS);
@@ -48,6 +48,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants
       Actor a = getTestEnemy();
       a.setName("Wander Test Enemy");
       a.setAI(new WanderAI(a));
+      a.setAlertness(Alertness.INACTIVE);
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
       return a;
    }

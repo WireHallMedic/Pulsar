@@ -314,6 +314,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          ai.setPendingAction(ActorAction.DELAY);
          ai.setPendingTarget(getMapLoc());
       }
+      if(isInactive())
+      {
+         ai.setPendingAction(ActorAction.DELAY);
+         ai.setPendingTarget(getMapLoc());
+      }
       else
       {
          ai.plan();
@@ -342,6 +347,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public boolean isSurprised()
    {
       return getAlertness() == Alertness.SURPRISED;
+   }
+   
+   public boolean isInactive()
+   {
+      return getAlertness() == Alertness.INACTIVE;
    }
    
    public void act()

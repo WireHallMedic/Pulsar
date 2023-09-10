@@ -13,10 +13,17 @@ public interface GearConstants extends WSFontConstants
    
    public static final Color DEFAULT_WEAPON_COLOR = Color.WHITE;
    
+   // weapon defaults
    public static final int DEFAULT_BASE_DAMAGE = 6;
    public static final int DEFAULT_VARIABLE_DAMAGE = 2;
    public static final int BASE_WEAPON_CHARGE_COST = 24;
    public static final int BASE_WEAPON_CHARGE_RATE = 4;
+   
+   // shield defaults
+   public static final int DEFAULT_SHIELD_MAX_CHARGE = 20;
+   public static final int DEFAULT_SHIELD_CHARGE_RATE = 1;
+   public static final int DEFAULT_SHIELD_CHARGE_DELAY = 10;
+
    
    public enum DamageType
    {
