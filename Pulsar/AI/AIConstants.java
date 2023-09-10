@@ -47,4 +47,20 @@ public interface AIConstants
          return false;
       }
    }
+   
+   public enum Alertness
+   {
+      INACTIVE    ("Inactive"),
+      CURIOUS     ("Curious"),
+      SURPRISED   ("Surprised"),
+      CAUTIOUS    ("Cautious"),
+      ALERT       ("Alert");
+      
+      public String name;
+      
+      private Alertness(String n)
+      {
+         name = n;
+      }
+   }
 }
