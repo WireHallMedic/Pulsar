@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3328;g
+!3367;g
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -31,6 +31,7 @@ s#l0
 %\011%uWidlerSuite%sAStarNode.java
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011%uWidlerSuite%sAnimationManager.java
+%\011Pulsar%sAI%sAlertnessManager.java
 %\011Pulsar%sGear%sWeaponFactory.java
 %\011%uWidlerSuite%sFloodFill.java
 %\011Pulsar%sGear%sArmor.java
@@ -105,7 +106,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3328;f
+!3367;f
 %\011Pulsar%sGear%sShield.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011%uWidlerSuite%sUnboundTile.java
@@ -124,6 +125,7 @@ s#l0
 %\011%uWidlerSuite%sAStarNode.java
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011%uWidlerSuite%sAnimationManager.java
+%\011Pulsar%sAI%sAlertnessManager.java
 %\011Pulsar%sGear%sWeaponFactory.java
 %\011%uWidlerSuite%sFloodFill.java
 %\011Pulsar%sGear%sArmor.java
