@@ -14,10 +14,13 @@ import java.util.*;
 
 public class InputManager implements KeyListener, AIConstants, EngineConstants
 {
-   public void keyTyped(KeyEvent ke){}
-   public void keyReleased(KeyEvent ke){}
    private Toolkit toolkit;
    private PulsarMain parent;
+   private boolean shiftHeld;
+   private boolean upHeld;
+   private boolean downHeld;
+   private boolean leftHeld;
+   private boolean rightHeld;
    
    public InputManager(PulsarMain p)
    {
@@ -29,10 +32,38 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
          toolkit.setLockingKeyState(KeyEvent.VK_NUM_LOCK, true);
          MessagePanel.addMessage("NumLock turned on");
       }
+      shiftHeld = false;
+      upHeld = false;
+      downHeld = false;
+      rightHeld = false;
+      leftHeld = false;
+   }
+   
+   public void keyTyped(KeyEvent ke){}
+   
+   public void keyReleased(KeyEvent ke)
+   {
+      switch(ke.getKeyCode())
+      {
+         case KeyEvent.VK_SHIFT : shiftHeld = false; break;
+         case KeyEvent.VK_UP    : upHeld = false; break;
+         case KeyEvent.VK_DOWN  : downHeld = false; break;
+         case KeyEvent.VK_LEFT  : leftHeld = false; break;
+         case KeyEvent.VK_RIGHT : rightHeld = false; break;
+      }
    }
    
    public void keyPressed(KeyEvent ke)
    {
+      switch(ke.getKeyCode())
+      {
+         case KeyEvent.VK_SHIFT : shiftHeld = true; break;
+         case KeyEvent.VK_UP    : upHeld = true; break;
+         case KeyEvent.VK_DOWN  : downHeld = true; break;
+         case KeyEvent.VK_LEFT  : leftHeld = true; break;
+         case KeyEvent.VK_RIGHT : rightHeld = true; break;
+      }
+         
       switch(GameEngine.getGameMode())
       {
          case STANDARD    :   standardModeKeyPressed(ke); break;
@@ -79,33 +110,51 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       if(player.isDead())
          return;
       
-      switch(ke.getKeyCode())
+      if(shiftHeld)
       {
-         case KeyEvent.VK_NUMPAD1 : target = new Coord(playerLoc.x - 1, playerLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD2 : target = new Coord(playerLoc.x, playerLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD3 : target = new Coord(playerLoc.x + 1, playerLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD4 : target = new Coord(playerLoc.x - 1, playerLoc.y); break;
-         case KeyEvent.VK_NUMPAD5 : target = new Coord(playerLoc.x, playerLoc.y); break;
-         case KeyEvent.VK_NUMPAD6 : target = new Coord(playerLoc.x + 1, playerLoc.y); break;
-         case KeyEvent.VK_NUMPAD7 : target = new Coord(playerLoc.x - 1, playerLoc.y - 1); break;
-         case KeyEvent.VK_NUMPAD8 : target = new Coord(playerLoc.x, playerLoc.y - 1); break;
-         case KeyEvent.VK_NUMPAD9 : target = new Coord(playerLoc.x + 1, playerLoc.y - 1); break;
-         case KeyEvent.VK_L : GameEngine.setCursorLoc(playerLoc);
-                              GameEngine.setGameMode(GameMode.LOOK); 
-                              break;
-         case KeyEvent.VK_A : attemptToShoot(); break;
-         case KeyEvent.VK_Z : setPlayerTarget(new Coord());
-                              setPlayerAction(ActorAction.SWITCH_WEAPONS);
-                              break;
-         case KeyEvent.VK_U : setPlayerAction(ActorAction.USE);
-                              MessagePanel.addMessage("Choose a direction.");
-                              break;
-         case KeyEvent.VK_C : InnerPanel.setActivePanel(CharacterPanel.class); 
-                              GameEngine.setGameMode(GameMode.OTHER_PANEL);
-                              break;
-         case KeyEvent.VK_X : debug('x'); break;
-         case KeyEvent.VK_D : debug('d'); break;
-         case KeyEvent.VK_SPACE : debug(' '); break;
+         if(upHeld && rightHeld)
+            target = new Coord(playerLoc.x + 1, playerLoc.y - 1);
+         if(upHeld && leftHeld)
+            target = new Coord(playerLoc.x - 1, playerLoc.y - 1);
+         if(downHeld && rightHeld)
+            target = new Coord(playerLoc.x + 1, playerLoc.y + 1);
+         if(downHeld && leftHeld)
+            target = new Coord(playerLoc.x - 1, playerLoc.y + 1);
+      }
+      else
+      {
+         switch(ke.getKeyCode())
+         {
+            case KeyEvent.VK_NUMPAD1 : target = new Coord(playerLoc.x - 1, playerLoc.y + 1); break;
+            case KeyEvent.VK_DOWN    :
+            case KeyEvent.VK_NUMPAD2 : target = new Coord(playerLoc.x, playerLoc.y + 1); break;
+            case KeyEvent.VK_NUMPAD3 : target = new Coord(playerLoc.x + 1, playerLoc.y + 1); break;
+            case KeyEvent.VK_LEFT    :
+            case KeyEvent.VK_NUMPAD4 : target = new Coord(playerLoc.x - 1, playerLoc.y); break;
+            case KeyEvent.VK_NUMPAD5 : target = new Coord(playerLoc.x, playerLoc.y); break;
+            case KeyEvent.VK_RIGHT   :
+            case KeyEvent.VK_NUMPAD6 : target = new Coord(playerLoc.x + 1, playerLoc.y); break;
+            case KeyEvent.VK_NUMPAD7 : target = new Coord(playerLoc.x - 1, playerLoc.y - 1); break;
+            case KeyEvent.VK_UP      :
+            case KeyEvent.VK_NUMPAD8 : target = new Coord(playerLoc.x, playerLoc.y - 1); break;
+            case KeyEvent.VK_NUMPAD9 : target = new Coord(playerLoc.x + 1, playerLoc.y - 1); break;
+            case KeyEvent.VK_L : GameEngine.setCursorLoc(playerLoc);
+                                 GameEngine.setGameMode(GameMode.LOOK); 
+                                 break;
+            case KeyEvent.VK_A : attemptToShoot(); break;
+            case KeyEvent.VK_Z : setPlayerTarget(new Coord());
+                                 setPlayerAction(ActorAction.SWITCH_WEAPONS);
+                                 break;
+            case KeyEvent.VK_U : setPlayerAction(ActorAction.USE);
+                                 MessagePanel.addMessage("Choose a direction.");
+                                 break;
+            case KeyEvent.VK_C : InnerPanel.setActivePanel(CharacterPanel.class); 
+                                 GameEngine.setGameMode(GameMode.OTHER_PANEL);
+                                 break;
+            case KeyEvent.VK_X : debug('x'); break;
+            case KeyEvent.VK_D : debug('d'); break;
+            case KeyEvent.VK_SPACE : debug(' '); break;
+         }
       }
       
       // have a target, don't have an action, allowed to act
@@ -124,22 +173,40 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    public void targetingModeKeyPressed(KeyEvent ke)
    {
       Coord cursorLoc = GameEngine.getCursorLoc();
-      switch(ke.getKeyCode())
+      if(shiftHeld)
       {
-         case KeyEvent.VK_NUMPAD1 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD2 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD3 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD4 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y); break;
-         case KeyEvent.VK_NUMPAD5 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y); break;
-         case KeyEvent.VK_NUMPAD6 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y); break;
-         case KeyEvent.VK_NUMPAD7 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y - 1); break;
-         case KeyEvent.VK_NUMPAD8 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y - 1); break;
-         case KeyEvent.VK_NUMPAD9 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1); break;
-         case KeyEvent.VK_ESCAPE  : cancelAction(); return;
-         case KeyEvent.VK_A       :
-         case KeyEvent.VK_ENTER   : setPlayerTarget(cursorLoc);
-                                    GameEngine.setGameMode(GameMode.STANDARD);
-                                    return;
+         if(upHeld && rightHeld)
+            cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1);
+         if(upHeld && leftHeld)
+            cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y - 1);
+         if(downHeld && rightHeld)
+            cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y + 1);
+         if(downHeld && leftHeld)
+            cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y + 1);
+      }
+      else
+      {
+         switch(ke.getKeyCode())
+         {
+            case KeyEvent.VK_NUMPAD1 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y + 1); break;
+            case KeyEvent.VK_DOWN    :
+            case KeyEvent.VK_NUMPAD2 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y + 1); break;
+            case KeyEvent.VK_NUMPAD3 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y + 1); break;
+            case KeyEvent.VK_LEFT    :
+            case KeyEvent.VK_NUMPAD4 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y); break;
+            case KeyEvent.VK_NUMPAD5 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y); break;
+            case KeyEvent.VK_RIGHT   :
+            case KeyEvent.VK_NUMPAD6 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y); break;
+            case KeyEvent.VK_NUMPAD7 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y - 1); break;
+            case KeyEvent.VK_UP      :
+            case KeyEvent.VK_NUMPAD8 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y - 1); break;
+            case KeyEvent.VK_NUMPAD9 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1); break;
+            case KeyEvent.VK_ESCAPE  : cancelAction(); return;
+            case KeyEvent.VK_A       :
+            case KeyEvent.VK_ENTER   : setPlayerTarget(cursorLoc);
+                                       GameEngine.setGameMode(GameMode.STANDARD);
+                                       return;
+         }  
       }
       GameEngine.setCursorLoc(cursorLoc);
    }
@@ -147,18 +214,36 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    public void lookModeKeyPressed(KeyEvent ke)
    {
       Coord cursorLoc = GameEngine.getCursorLoc();
-      switch(ke.getKeyCode())
+      if(shiftHeld)
       {
-         case KeyEvent.VK_NUMPAD1 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD2 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD3 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y + 1); break;
-         case KeyEvent.VK_NUMPAD4 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y); break;
-         case KeyEvent.VK_NUMPAD5 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y); break;
-         case KeyEvent.VK_NUMPAD6 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y); break;
-         case KeyEvent.VK_NUMPAD7 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y - 1); break;
-         case KeyEvent.VK_NUMPAD8 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y - 1); break;
-         case KeyEvent.VK_NUMPAD9 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1); break;
-         case KeyEvent.VK_ESCAPE  : GameEngine.setGameMode(GameMode.STANDARD); return;
+         if(upHeld && rightHeld)
+            cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1);
+         if(upHeld && leftHeld)
+            cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y - 1);
+         if(downHeld && rightHeld)
+            cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y + 1);
+         if(downHeld && leftHeld)
+            cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y + 1);
+      }
+      else
+      {
+         switch(ke.getKeyCode())
+         {
+            case KeyEvent.VK_NUMPAD1 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y + 1); break;
+            case KeyEvent.VK_DOWN    :
+            case KeyEvent.VK_NUMPAD2 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y + 1); break;
+            case KeyEvent.VK_NUMPAD3 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y + 1); break;
+            case KeyEvent.VK_LEFT    :
+            case KeyEvent.VK_NUMPAD4 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y); break;
+            case KeyEvent.VK_NUMPAD5 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y); break;
+            case KeyEvent.VK_RIGHT   :
+            case KeyEvent.VK_NUMPAD6 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y); break;
+            case KeyEvent.VK_NUMPAD7 : cursorLoc = new Coord(cursorLoc.x - 1, cursorLoc.y - 1); break;
+            case KeyEvent.VK_UP      :
+            case KeyEvent.VK_NUMPAD8 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y - 1); break;
+            case KeyEvent.VK_NUMPAD9 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1); break;
+            case KeyEvent.VK_ESCAPE  : GameEngine.setGameMode(GameMode.STANDARD); return;
+         }
       }
       GameEngine.setCursorLoc(cursorLoc);
    }
