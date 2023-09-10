@@ -50,4 +50,22 @@ public class WeaponFactory implements GearConstants
       w.fullyCharge();
       return w;
    }
+   
+   public static Weapon getAlienClaws()
+   {
+      Weapon w = getBasicWeapon(WeaponType.MELEE);
+      w.setName("Claws");
+      w.setBaseDamage(DEFAULT_BASE_DAMAGE);
+      return w;
+   }
+   
+   public static Weapon getAlienSpit()
+   {
+      Weapon w = getBasicWeapon(WeaponType.SLUG_RIFLE);
+      w.setName("Acid Spit");
+      w.setBaseDamage(DEFAULT_BASE_DAMAGE);
+      w.setChargeCost(0);
+      w.setDamageType(DamageType.THERMAL);
+      return w;
+   }
 }

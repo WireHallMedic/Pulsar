@@ -17,7 +17,7 @@ public interface GUIConstants
    public static final int MAP_HEIGHT_TILES = 17;
    public static final int MAP_X_INSET_TILES = ((TERMINAL_WIDTH_TILES - (2 * MAP_WIDTH_TILES)) / 2);
    
-   public static final Color ALIEN_PURPLE = new Color(102, 0, 102);
+   public static final Color ALIEN_COLOR = new Color(102, 0, 102);
    public static final Color DULL_WHITE = new Color(220, 220, 220);
    public static final Color BG_COLOR = Color.BLACK;
    public static final Color TERMINAL_FG_COLOR = Color.CYAN;
@@ -34,7 +34,7 @@ public interface GUIConstants
    public static final Color INVALID_RETICULE_COLOR = Color.RED;
    public static final Color HUMAN_BLOOD = Color.RED;
    public static final Color ROBOT_BLOOD = Color.GRAY;
-   public static final Color ALIEN_BLOOD = ALIEN_PURPLE;
+   public static final Color ALIEN_BLOOD = ALIEN_COLOR;
    
    public static final double SLOW_MOVE_SPEED = .05;
    public static final double NORMAL_MOVE_SPEED = .2;

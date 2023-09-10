@@ -5,7 +5,7 @@ import Pulsar.AI.*;
 import java.awt.*;
 import Pulsar.Gear.*;
 
-public class ActorFactory implements ActorConstants, GearConstants, AIConstants
+public class ActorFactory implements ActorConstants, GearConstants, AIConstants, GUIConstants
 {
    public static Player getPlayer()
    {
@@ -64,6 +64,27 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
       a.setMaxHealth(20);
       a.fullyHeal();
+      return a;
+   }
+   
+   public static Actor getAlienWorker()
+   {
+      Actor a = new Actor('w');
+      a.setName("Formicaedes Worker");
+      a.setAI(new StandardEnemyAI(a));
+      a.setUnarmedAttack(WeaponFactory.getAlienClaws());
+      a.setBloodColor(GUIConstants.ALIEN_COLOR);
+      a.setColor(GUIConstants.ALIEN_COLOR);
+      a.setAI(new StandardEnemyAI(a));
+      return a;
+   }
+   
+   public static Actor getAlienHunter()
+   {
+      Actor a = getAlienWorker();
+      a.getSprite().setIconIndex('h');
+      a.setName("Formicaedes Hunter");
+      a.setWeapon(WeaponFactory.getAlienSpit());
       return a;
    }
 }

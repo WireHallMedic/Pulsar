@@ -99,6 +99,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       alertnessManager = new AlertnessManager(this);
    }
    
+   public void setColor(Color c)
+   {
+      getSprite().setFGColor(c.getRGB());
+   }
+   
    public void reconcileSprite()
    {
       sprite.setXLoc(mapLoc.x);

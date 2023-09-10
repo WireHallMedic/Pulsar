@@ -251,7 +251,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       p.setAllLocs(2, 12);
       setPlayer(p);
       
-      for(int i = 0; i < 12; i++)
+      for(int i = 0; i < 15; i++)
       {
          Coord c = new Coord(-1, -1);
          while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
@@ -259,11 +259,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(1, 9);
          }
-         Actor e = ActorFactory.getMeleeTestEnemy();
+         Actor e = ActorFactory.getAlienWorker();
          e.setAllLocs(c);
          add(e);
       }
-      for(int i = 0; i < 12; i++)
+      for(int i = 0; i < 15; i++)
       {
          Coord c = new Coord(-1, -1);
          while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
@@ -271,7 +271,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(19, 28);
          }
-         Actor e = ActorFactory.getMeleeTestEnemy();
+         Actor e = ActorFactory.getAlienWorker();
          e.setAllLocs(c);
          add(e);
       }
@@ -283,33 +283,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             c.x = randomInt(12, map.getWidth() - 1);
             c.y = randomInt(9, 19);
          }
-         Actor e = ActorFactory.getTestEnemy();
+         Actor e = ActorFactory.getAlienHunter();
          e.setAllLocs(c);
          add(e);
       }
-      /*
-      Actor e = ActorFactory.getTestEnemy();
-      e.setAllLocs(7, 5);
-      e.setShield(new Shield());
-  //    add(e);
-      e = ActorFactory.getWanderTestEnemy();
-      e.setName("Wander Test Enemy 1");
-  //    e.setAllLocs(7, 6);
-      e.setAllLocs(5, 4);
-      e.getSprite().setFGColor(Color.ORANGE.getRGB());
-      e.setFlying(true);
-      add(e);
-      
-      e = ActorFactory.getWanderTestEnemy();
-      e.setName("Wander Test Enemy 2");
-      e.setAllLocs(6, 4);
-      e.getSprite().setFGColor(Color.ORANGE.getRGB());
-      add(e);
-      
-      
-      e = ActorFactory.getGoat();
-      e.setAllLocs(3, 8);
-   //   add(e);*/
    
    }
    
