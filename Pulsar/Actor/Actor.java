@@ -8,7 +8,7 @@ import Pulsar.AI.*;
 import java.awt.*;
 
 
-public class Actor implements ActorConstants, GUIConstants
+public class Actor implements ActorConstants, GUIConstants, AIConstants
 {
    protected String name;
 	protected Coord mapLoc;
@@ -28,6 +28,7 @@ public class Actor implements ActorConstants, GUIConstants
    protected int attackSpeed;
    protected int moveSpeed;
    protected int interactSpeed;
+   protected Alertness alertness;
 
 
    public String getName(){return name;}
@@ -46,6 +47,7 @@ public class Actor implements ActorConstants, GUIConstants
    public int getAttackSpeed(){return attackSpeed;}
    public int getMoveSpeed(){return moveSpeed;}
    public int getInteractSpeed(){return interactSpeed;}
+   public Alertness getAlertness(){return alertness;}
 
 
    public void setName(String n){name = n;}
@@ -66,6 +68,7 @@ public class Actor implements ActorConstants, GUIConstants
    public void setAttackSpeed(int as){attackSpeed = as;}
    public void setMoveSpeed(int ms){moveSpeed = ms;}
    public void setInteractSpeed(int is){interactSpeed = is;}
+   public void setAlertness(Alertness a){alertness = a;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -89,6 +92,7 @@ public class Actor implements ActorConstants, GUIConstants
       attackSpeed = NORMAL_ACTION_COST;
       moveSpeed = NORMAL_ACTION_COST;
       interactSpeed = NORMAL_ACTION_COST;
+      alertness = Alertness.CURIOUS;
    }
    
    public void reconcileSprite()

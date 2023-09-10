@@ -6,7 +6,7 @@ package Pulsar.AI;
 
 import Pulsar.Actor.*;
 
-public class AlertnessManager
+public class AlertnessManager implements AIConstants
 {	
    private Actor self;
 
