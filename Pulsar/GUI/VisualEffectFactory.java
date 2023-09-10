@@ -172,6 +172,11 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
       }
    }
    
+   public static void addSurpriseIndicator(Actor a)
+   {
+      UnboundTile ut = getPalette().getUnboundTile(SMALL_BULLET_TILE, SHIELD_COLOR.getRGB(), getSizeMultiplier());
+   }
+   
    public static void addWithDelay(UnboundTile ut, MovementScript ms, int delay)
    {
       DelayedVisualEffect delayVE;

@@ -29,6 +29,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    protected int moveSpeed;
    protected int interactSpeed;
    protected Alertness alertness;
+   protected AlertnessManager alertnessManager;
 
 
    public String getName(){return name;}
@@ -48,6 +49,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public int getMoveSpeed(){return moveSpeed;}
    public int getInteractSpeed(){return interactSpeed;}
    public Alertness getAlertness(){return alertness;}
+   public AlertnessManager getAlertnessManager(){return alertnessManager;}
 
 
    public void setName(String n){name = n;}
@@ -69,6 +71,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public void setMoveSpeed(int ms){moveSpeed = ms;}
    public void setInteractSpeed(int is){interactSpeed = is;}
    public void setAlertness(Alertness a){alertness = a;}
+   public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -92,7 +95,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       attackSpeed = NORMAL_ACTION_COST;
       moveSpeed = NORMAL_ACTION_COST;
       interactSpeed = NORMAL_ACTION_COST;
-      alertness = Alertness.CURIOUS;
+      alertness = Alertness.RELAXED;
+      alertnessManager = new AlertnessManager(this);
    }
    
    public void reconcileSprite()
@@ -305,7 +309,16 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    {
       if(!startOfTurnPerformed)
          startOfTurn();
-      ai.plan();
+      if(isSurprised())
+      {
+         ai.setPendingAction(ActorAction.DELAY);
+         ai.setPendingTarget(getMapLoc());
+         System.out.println(this + " passes turn due to surprise");
+      }
+      else
+      {
+         ai.plan();
+      }
    }
    
    private void startOfTurn()
@@ -317,12 +330,19 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    private void endOfTurn()
    {
       updateMemory();
+      if(isSurprised())
+         getAlertnessManager().recoverFromSurprise();
       startOfTurnPerformed = false;
    }
    
    public boolean hasPlan()
    {
       return ai.hasPlan();
+   }
+   
+   public boolean isSurprised()
+   {
+      return getAlertness() == Alertness.SURPRISED;
    }
    
    public void act()
@@ -333,13 +353,17 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    
    public void updateMemory()
    {
+      boolean enemySighted = false;
       for(Actor a : GameEngine.getActorList())
       {
          if(canSee(a) && a != this)
          {
             memory.noteActor(a);
+            if(a.isHostile(this))
+               enemySighted = true;
          }
       }
+      alertnessManager.update(enemySighted);
    }
    
 }

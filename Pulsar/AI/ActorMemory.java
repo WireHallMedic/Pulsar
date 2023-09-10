@@ -111,6 +111,22 @@ public class ActorMemory implements AIConstants
       }
    }
    
+   public Vector<Actor> getFriends()
+   {
+      Vector<Actor> actorList = new Vector<Actor>();
+      for(MemoryObj memoryObj : friendList)
+         actorList.add(memoryObj.actor);
+      return actorList;
+   }
+   
+   public Vector<Actor> getEnemies()
+   {
+      Vector<Actor> actorList = new Vector<Actor>();
+      for(MemoryObj memoryObj : enemyList)
+         actorList.add(memoryObj.actor);
+      return actorList;
+   }
+   
    // private class for seeing other actors
    private class MemoryObj
    {

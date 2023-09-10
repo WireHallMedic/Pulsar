@@ -51,7 +51,7 @@ public interface AIConstants
    public enum Alertness
    {
       INACTIVE    ("Inactive"),
-      CURIOUS     ("Curious"),
+      RELAXED     ("Relaxed"),
       SURPRISED   ("Surprised"),
       CAUTIOUS    ("Cautious"),
       ALERT       ("Alert");

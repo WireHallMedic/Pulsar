@@ -5,7 +5,7 @@ import Pulsar.AI.*;
 import java.awt.*;
 import Pulsar.Gear.*;
 
-public class ActorFactory implements ActorConstants, GearConstants
+public class ActorFactory implements ActorConstants, GearConstants, AIConstants
 {
    public static Player getPlayer()
    {
@@ -19,6 +19,7 @@ public class ActorFactory implements ActorConstants, GearConstants
       a.setShield(new Shield());
       a.setMaxHealth(50000);
       a.fullyHeal();
+      a.setAlertness(Alertness.CAUTIOUS);
       return a;
    }
    
@@ -38,6 +39,15 @@ public class ActorFactory implements ActorConstants, GearConstants
       Actor a = getTestEnemy();
       a.setName("Melee Test Enemy");
       a.setAI(new StandardEnemyAI(a));
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
+      return a;
+   }
+   
+   public static Actor getWanderTestEnemy()
+   {
+      Actor a = getTestEnemy();
+      a.setName("Wander Test Enemy");
+      a.setAI(new WanderAI(a));
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
       return a;
    }
