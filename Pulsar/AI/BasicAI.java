@@ -119,13 +119,13 @@ public class BasicAI implements AIConstants
          case UNARMED_ATTACK :   doUnarmedAttack(); break;
       }
       shiftPendingToPrevious();
+      clearPlan();
    }
    
-   public void shiftPendingToPrevious()
+   protected void shiftPendingToPrevious()
    {
       previousTarget = pendingTarget;
       previousAction = pendingAction;
-      clearPlan();
    }
    
    protected void setStepTowards(Coord target)

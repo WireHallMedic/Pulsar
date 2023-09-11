@@ -242,6 +242,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          initiativeIndex = 0;
    }
    
+   
+   ////////////////////////////////////////////////////////////////////////////////
+   
    public static void newGame()
    {
       ZoneMap map = ZoneMapFactory.getTestMap2();
@@ -251,6 +254,20 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       p.setAllLocs(2, 12);
       setPlayer(p);
       
+      for(int i = 0; i < 5; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         {
+            c.x = randomInt(5, 15);
+            c.y = randomInt(10, 20);
+         }
+         Actor e = ActorFactory.getAlienWorker();
+         e.setAllLocs(c);
+         add(e);
+      }
+      
+      /*
       for(int i = 0; i < 10; i++)
       {
          Coord c = new Coord(-1, -1);
@@ -322,7 +339,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          Actor e = ActorFactory.getAlienWorker();
          e.setAllLocs(c);
          add(e);
-      }
+      }*/
    
    }
    
@@ -378,7 +395,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             if(curActor.hasPlan())
             {
                if(animationAllowsAction(curActor))
-               {
+               { 
                   curActor.act();
                   InfoPanel.updateInfoPanel();
                   PlayerPanel.updatePlayerPanel();
@@ -434,6 +451,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(mapPanel.isOnLockList(a))
             lockingActorList.add(a);
       }
+      
       for(Actor a : lockingActorList)
       {
          if(a.getAI().getPreviousAction() != ActorAction.STEP)
@@ -453,8 +471,16 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       }
       
       // NPCs can step if all locking actors are only stepping
-      if(allLockingAreWalking() && curActor != player && curActor.getAI().getPendingAction() == ActorAction.STEP)
-         return true;
+      if(allLockingAreWalking())
+      {
+         if(curActor != player)
+         {
+            if(curActor.getAI().getPendingAction() == ActorAction.STEP)
+            {
+               return true;
+            }
+         }
+      }
       return false;
    }
 }

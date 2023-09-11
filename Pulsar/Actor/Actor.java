@@ -338,7 +338,6 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public void discharge(int cost)
    {
       turnEnergy -= cost;
-      ai.clearPlan();
    }
    
    public void plan()
