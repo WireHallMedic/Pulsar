@@ -1,12 +1,13 @@
 package Pulsar.Gear;
 
+import Pulsar.Actor.*;
 import org.junit.Assert;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
 
-public class GearTest implements GearConstants
+public class GearTest implements GearConstants, ActorConstants
 {
    /** Fixture initialization (common initialization
     *  for all tests). **/
@@ -32,7 +33,12 @@ public class GearTest implements GearConstants
       weapon.fullyCharge();
       return weapon;
    }
-
+   
+   public Actor getTestActor()
+   {
+      Actor a = new Actor('a');
+      return a;
+   }
 
    
    @Test public void shieldTest() 
@@ -82,16 +88,33 @@ public class GearTest implements GearConstants
    @Test public void weaponTest() 
    {
       Weapon weapon = getTestWeapon();
-      weapon.fire();
+      weapon.discharge();
       Assert.assertEquals("Firing uses charge", weapon.getCurCharge(), 15);
       weapon.charge();
       Assert.assertEquals("Recharges",  weapon.getCurCharge(), 16);
       for(int i = 0; i < 5; i++)
          weapon.charge();
       Assert.assertEquals("Does not overcharge",  weapon.getCurCharge(), 20);
+      weapon.setCurCharge(weapon.getChargeCost() - 1);
+      Assert.assertFalse("Recognizes when ammo too low",  weapon.canFire());
       weapon.setCurCharge(0);
-      boolean fired = weapon.fire();
-      Assert.assertFalse("Does not fire when discharged",  fired);
+      Assert.assertFalse("Recognizes when out of ammo",  weapon.canFire());
+   }
+   
+   @Test public void armorSpeedTest() 
+   {
+      Armor armor = new Armor();
+      armor.setSpeedCap(FAST_ACTION_COST);
+      Actor actor = getTestActor();
+      actor.setArmor(armor);
       
+      Assert.assertEquals("Fast armor does not restrict or boost shooting", NORMAL_ACTION_COST, actor.getAttackSpeed());
+      Assert.assertEquals("Fast armor does not boost moving", NORMAL_ACTION_COST, actor.getMoveSpeed());
+      Assert.assertEquals("Fast armor does not boost interacting", NORMAL_ACTION_COST, actor.getInteractSpeed());
+      
+      armor.setSpeedCap(SLOW_ACTION_COST);
+      Assert.assertEquals("Slow armor does not restrict or boost shooting", NORMAL_ACTION_COST, actor.getAttackSpeed());
+      Assert.assertEquals("Slow armor restricts moving", SLOW_ACTION_COST, actor.getMoveSpeed());
+      Assert.assertEquals("Slow armor restricts interacting", SLOW_ACTION_COST, actor.getInteractSpeed());
    }
 }

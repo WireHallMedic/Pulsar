@@ -48,8 +48,6 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public Weapon getUnarmedAttack(){return unarmed;}
    public boolean isFlying(){return flying;}
    public int getAttackSpeed(){return attackSpeed;}
-   public int getMoveSpeed(){return moveSpeed;}
-   public int getInteractSpeed(){return interactSpeed;}
    public Alertness getAlertness(){return alertness;}
    public AlertnessManager getAlertnessManager(){return alertnessManager;}
 
@@ -241,6 +239,21 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       return GUITools.getBar(getWeapon().getCurCharge(), getWeapon().getMaxCharge(), length);
    }
    
+   
+   public int getMoveSpeed()
+   {
+      if(hasArmor() && armor.getSpeedCap() > moveSpeed)
+         return armor.getSpeedCap();
+      return moveSpeed;
+   }
+   
+   public int getInteractSpeed()
+   {
+      if(hasArmor() && armor.getSpeedCap() > interactSpeed)
+         return armor.getSpeedCap();
+      return interactSpeed;
+   }
+   
    // health methods
    ////////////////////////////////////////////////////////////////////
    public void fullyHeal()
@@ -254,8 +267,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       {
          boolean shieldUpBefore = shield.hasCharge();
          damage = shield.applyDamage(damage, damageType);
-         // hits that get through armor do min 1 damage
-         damage = Math.max(1, damage - getDamageReduction());
+         // hits that get through shield do min 1 damage
+         if(shield.getCurCharge() == 0)
+            damage = Math.max(1, damage - getDamageReduction());
          if(doAnimation && GameEngine.playerCanSee(this))
          {
             if(shieldUpBefore)

@@ -34,14 +34,34 @@ public class EngineTest {
       actor.fullyHeal();
       return actor;
    }
-
+   
+   public Actor getTestActorWithArmor()
+   {
+      Armor arm = new Armor();
+      arm.setDamageReduction(2);
+      Actor act = getTestActor();
+      act.setArmor(arm);
+      return act;
+   }
 
    
    @Test public void combatTest() {
       Actor attacker = getTestActor();
       Actor defender = getTestActor();
       
-      Combat.resolveAttackAgainstActor(attacker, defender);
-      Assert.assertEquals("Damage applied as expected", defender.getCurHealth(), 17);
+      Combat.resolveAttackAgainstActor(attacker, defender, attacker.getWeapon());
+      Assert.assertEquals("Damage applied as expected", 17, defender.getCurHealth());
+   }
+
+   
+   @Test public void combatTestArmor() {
+      Actor attacker = getTestActor();
+      Actor defender = getTestActorWithArmor();
+      
+      Combat.resolveAttackAgainstActor(attacker, defender, attacker.getWeapon());
+      Assert.assertEquals("Armor stops damage that gets through shields", 19, defender.getCurHealth());
+      defender.getArmor().setDamageReduction(5);
+      Combat.resolveAttackAgainstActor(attacker, defender, attacker.getWeapon());
+      Assert.assertEquals("Minimum non-shielded damage is 1 per hit", 16, defender.getCurHealth());
    }
 }

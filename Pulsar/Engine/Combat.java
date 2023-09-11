@@ -96,7 +96,7 @@ public class Combat implements GUIConstants
       return targetList;
    }
    
-   private static void resolveAttackAgainstActor(Actor attacker, Actor defender, Weapon weapon)
+   public static void resolveAttackAgainstActor(Actor attacker, Actor defender, Weapon weapon)
    {
       boolean hasShieldBefore = defender.shieldIsUp();
       int startingHealth = defender.getCurHealth();
