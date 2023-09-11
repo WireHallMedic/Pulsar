@@ -4,11 +4,21 @@ import WidlerSuite.*;
 import java.util.*;
 import Pulsar.Actor.*;
 
-public class EngineTools
+public class EngineTools implements ActorConstants
 {
    public static final double SHOTGUN_SPRAY_ARC = 0.523599; // 30 degrees
    public static final double SHOTGUN_SPRAY_ARC_INCREMENT = SHOTGUN_SPRAY_ARC / 2.0;
 
+   public static String getSpeedString(int speed)
+   {
+      switch(speed)
+      {
+         case SLOW_ACTION_COST   : return "Slow";
+         case NORMAL_ACTION_COST : return "Medium";
+         case FAST_ACTION_COST   : return "Fast";
+      }
+      return "Error";
+   }
    
    public static Vector<Coord> getShotgunSprayTargets(Coord origin, Coord target)
    {
