@@ -109,4 +109,13 @@ public class GUITools implements GUIConstants, WSFontConstants
       }
       return sec + "s";
    }
+   
+   public static String centerString(String input, int width)
+   {
+      int spacerWidth = (width - input.length()) / 2;
+      String spacer = "";
+      for(int i = 0; i < spacerWidth; i++)
+         spacer += " ";
+      return spacer + input + spacer;
+   }
 }

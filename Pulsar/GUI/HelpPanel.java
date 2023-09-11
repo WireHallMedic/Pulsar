@@ -63,15 +63,15 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
       switch(ke.getKeyCode())
       {
          case KeyEvent.VK_ESCAPE :
-         case KeyEvent.VK_H : InnerPanel.setActivePanel(MainGameBGPanel.class); 
-                              GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
-                              break;
+         case KeyEvent.VK_H :       InnerPanel.setActivePanel(MainGameBGPanel.class); 
+                                    GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
+                                    break;
          case KeyEvent.VK_NUMPAD4 :
-         case KeyEvent.VK_LEFT : previousPage();
-                                 break;
+         case KeyEvent.VK_LEFT :    previousPage();
+                                    break;
          case KeyEvent.VK_NUMPAD6 :
-         case KeyEvent.VK_RIGHT : nextPage();
-                                  break;
+         case KeyEvent.VK_RIGHT :   nextPage();
+                                    break;
       }
    }
    
@@ -122,78 +122,85 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
    public String[][] getPages()
    {
       String[] pageOne = {
-      "Page One",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Press Escape to exit"
+         GUITools.centerString("Key Bindings [^/$]", WIDTH_TILES),
+         "Numpad   Movement",
+         "Arrows   Movement; hold shift to allow diagonal input",
+         "  A      Attack; press again to confirm target",
+         "  U      Use; you will be prompted for a target",
+         "  Z      Switch weapons",
+         "  L      Look mode.",
+         "  C      Open character panel",
+         "  H      Open help panel (the one you're looking at)",
+         "Escape   Cancel",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
       String[] pageTwo = {
-      "Page Two",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Press Escape to exit"
+         GUITools.centerString("Page Two [^/$]", WIDTH_TILES),
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
       String[] pageThree = {
-      "Page Three",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "",
-      "Press Escape to exit"
+         GUITools.centerString("Page Three [^/$]", WIDTH_TILES),
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         "",
+         GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
       String[][] pageArr = {pageOne, pageTwo, pageThree};
+      for(int i = 0; i < pageArr.length; i++)
+      {
+         String newStr = pageArr[i][0];
+         newStr = newStr.replace("^", "" + (i + 1));
+         newStr = newStr.replace("$", "" + pageArr.length);
+         pageArr[i][0] = newStr;
+      }
       return pageArr;
    }
 }
