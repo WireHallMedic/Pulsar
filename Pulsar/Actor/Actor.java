@@ -19,6 +19,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    protected int visionRange;
    protected Shield shield;
    protected Weapon weapon;
+   protected Armor armor;
    protected int curHealth;
    protected int maxHealth;
    protected Color bloodColor;
@@ -40,6 +41,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public ActorMemory getMemory(){return memory;}
    public int getVisionRange(){return visionRange;}
    public Shield getShield(){return shield;}
+   public Armor getArmor(){return armor;}
    public int getCurHealth(){return curHealth;}
    public int getMaxHealth(){return maxHealth;}
    public Color getBloodColor(){return bloodColor;}
@@ -62,6 +64,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public void setVisionRange(int vr){visionRange = vr;}
    public void setShield(Shield s){shield = s;}
    public void setWeapon(Weapon w){weapon = w;}
+   public void setArmor(Armor a){armor = a;}
    public void setCurHealth(int h){curHealth = h;}
    public void setMaxHealth(int h){maxHealth = h;}
    public void setBloodColor(Color c){bloodColor = c;}
@@ -202,6 +205,18 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       return weapon != null;
    }
    
+   public boolean hasArmor()
+   {
+      return armor != null;
+   }
+   
+   public int getDamageReduction()
+   {
+      if(hasArmor())
+         return armor.getDamageReduction();
+      return 0;
+   }
+   
    public Weapon getWeapon()
    {
       if(hasWeapon())
@@ -239,6 +254,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       {
          boolean shieldUpBefore = shield.hasCharge();
          damage = shield.applyDamage(damage, damageType);
+         // hits that get through armor do min 1 damage
+         damage = Math.max(1, damage - getDamageReduction());
          if(doAnimation && GameEngine.playerCanSee(this))
          {
             if(shieldUpBefore)
