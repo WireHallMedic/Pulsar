@@ -97,7 +97,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                            if(clearPath)
                               bgColor = TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
                            setBGColor(c.x, c.y, bgColor);
-                           //if(GameEngine.blocksShooting(c.x + xCorner, c.y + yCorner))
                            if(!GameEngine.getZoneMap().getTile(c.x + xCorner, c.y + yCorner).isHighPassable())
                               clearPath = false;
                         }
@@ -105,7 +104,8 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                            break;
                      }
                   }
-                  setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
+                  if(GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner) && !GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
+                     setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
                }
                // blast targeting
                else if(player.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST))

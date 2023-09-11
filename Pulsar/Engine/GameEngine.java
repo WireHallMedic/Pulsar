@@ -254,20 +254,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       p.setAllLocs(2, 12);
       setPlayer(p);
       
-      for(int i = 0; i < 5; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
-         {
-            c.x = randomInt(5, 15);
-            c.y = randomInt(10, 20);
-         }
-         Actor e = ActorFactory.getAlienWorker();
-         e.setAllLocs(c);
-         add(e);
-      }
       
-      /*
       for(int i = 0; i < 10; i++)
       {
          Coord c = new Coord(-1, -1);
@@ -339,7 +326,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          Actor e = ActorFactory.getAlienWorker();
          e.setAllLocs(c);
          add(e);
-      }*/
+      }
    
    }
    
