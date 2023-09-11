@@ -22,7 +22,6 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
    public static final int HEIGHT_TILES = TERMINAL_HEIGHT_TILES - 2;
    private String[][] pageArray;
    private int curPageIndex;
-   private int maxPageIndex;
    
    
    public HelpPanel()
@@ -32,6 +31,7 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
       setBorder();
       setBackground(BG_COLOR);
       pageArray = getPages();
+      update();
    }
    
    private void setBorder()
@@ -66,7 +66,29 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
          case KeyEvent.VK_H : InnerPanel.setActivePanel(MainGameBGPanel.class); 
                               GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
                               break;
+         case KeyEvent.VK_NUMPAD4 :
+         case KeyEvent.VK_LEFT : previousPage();
+                                 break;
+         case KeyEvent.VK_NUMPAD6 :
+         case KeyEvent.VK_RIGHT : nextPage();
+                                  break;
       }
+   }
+   
+   public void nextPage()
+   {
+      curPageIndex++;
+      if(curPageIndex >= pageArray.length)
+         curPageIndex = 0;
+      update();
+   }
+   
+   public void previousPage()
+   {
+      curPageIndex--;
+      if(curPageIndex < 0)
+         curPageIndex = pageArray.length - 1;
+      update();
    }
    
    @Override
@@ -83,6 +105,9 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
    public void update()
    {
       clear();
+      String[] pageText = pageArray[curPageIndex];
+      for(int i = 0; i < pageText.length; i++)
+         write(X_ORIGIN, Y_ORIGIN + i, pageText[i], WIDTH_TILES, 1);
    }
    
    public void clear()
@@ -98,16 +123,75 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
    {
       String[] pageOne = {
       "Page One",
-      "a"
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Press Escape to exit"
       };
       String[] pageTwo = {
       "Page Two",
       "",
-      "blarg"
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Press Escape to exit"
       };
       String[] pageThree = {
       "Page Three",
-      "z"
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "Press Escape to exit"
       };
       String[][] pageArr = {pageOne, pageTwo, pageThree};
       return pageArr;
