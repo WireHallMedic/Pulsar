@@ -7,7 +7,7 @@ import WidlerSuite.*;
 import java.util.*;
 import java.awt.*;
 
-public class Combat implements GUIConstants
+public class Combat implements GUIConstants, GearConstants
 {
    public static MainGameFGPanel getMapPanel(){return GameEngine.getMapPanel();}
    
@@ -161,14 +161,16 @@ public class Combat implements GUIConstants
          finalTargetList.add(origin);
          return finalTargetList;
       }
-      Vector<Coord> targetList = EngineTools.getShotgunSprayTargets(origin, target);
+      Vector<Coord> targetList = EngineTools.getShotgunSprayLine(origin, target);
       for(Coord prospect : targetList)
       {
          Vector<Coord> line = StraightLine.findLine(origin, prospect, StraightLine.REMOVE_ORIGIN);
          // target all actors plus first blocking tile or last tile if no blocking
          for(int i = 0; i < line.size(); i++)
          {
-            if(i == line.size() - 1 || GameEngine.blocksShooting(line.elementAt(i)))
+            if(i == line.size() - 1 || // last tile in line
+               GameEngine.blocksShooting(line.elementAt(i)) || // tile blocks line of effect
+               EngineTools.getDistanceTo(origin, line.elementAt(i)) >= SHOTGUN_MAX_RANGE) // tile is max range
             {
                // ignore if duplicate
                boolean addF = true;
@@ -183,8 +185,8 @@ public class Combat implements GUIConstants
                // otherwise add
                if(addF)
                   finalTargetList.add(line.elementAt(i));
-               // don't search farther if hits a wall
-               if(!GameEngine.getZoneMap().getTile(line.elementAt(i)).isHighPassable())
+               // don't search farther if hits a wall or max range
+               if(!GameEngine.getZoneMap().getTile(line.elementAt(i)).isHighPassable() || EngineTools.getDistanceTo(origin, line.elementAt(i)) >= SHOTGUN_MAX_RANGE)
                   break;
             }
          }

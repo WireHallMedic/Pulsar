@@ -14,7 +14,7 @@ import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
 
-public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, EngineConstants
+public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, EngineConstants, GearConstants
 {
    public static final Color[] TARGETING_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, RETICULE_COLOR, 21);
    public static final Color[] BAD_TARGETING_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, INVALID_RETICULE_COLOR, 21);
@@ -84,14 +84,14 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                // shotgun targeting
                if(player.getWeapon().hasWeaponTag(GearConstants.WeaponTag.SPREAD))
                {
-                  Vector<Coord> sprayTargets = EngineTools.getShotgunSprayTargets(playerLoc, cursorLoc);
+                  Vector<Coord> sprayTargets = EngineTools.getShotgunSprayLine(playerLoc, cursorLoc);
                   for(Coord sprayTarget : sprayTargets)
                   {
                      Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, sprayTarget, StraightLine.REMOVE_ORIGIN);
                      boolean clearPath = true;
                      for(Coord c : targetingLine)
                      {
-                        if(GameEngine.playerCanSee(c.x + xCorner, c.y + yCorner))
+                        if(GameEngine.playerCanSee(c.x + xCorner, c.y + yCorner) && EngineTools.getDistanceTo(playerLoc, c) <= SHOTGUN_MAX_RANGE)
                         {
                            int bgColor = BAD_TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
                            if(clearPath)

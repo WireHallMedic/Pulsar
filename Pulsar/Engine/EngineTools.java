@@ -10,13 +10,13 @@ public class EngineTools implements ActorConstants, GearConstants
    public static final double SHOTGUN_SPRAY_ARC = 0.523599; // 30 degrees
    public static final double SHOTGUN_SPRAY_ARC_INCREMENT = SHOTGUN_SPRAY_ARC / 2.0;
    
-   public static Vector<Coord> getShotgunSprayTargets(Coord origin, Coord target)
+   public static Vector<Coord> getShotgunSprayLine(Coord origin, Coord target)
    {
       Vect straight = new Vect(origin, target);
       double maxAngle = straight.angle + SHOTGUN_SPRAY_ARC_INCREMENT;
       double minAngle = straight.angle - SHOTGUN_SPRAY_ARC_INCREMENT;
-      Coord maxCoord = new Coord(new Vect(maxAngle, SHOTGUN_MAX_RANGE));
-      Coord minCoord = new Coord(new Vect(minAngle, SHOTGUN_MAX_RANGE));
+      Coord maxCoord = new Coord(new Vect(maxAngle, 12));
+      Coord minCoord = new Coord(new Vect(minAngle, 12));
       Vector<Coord> parallelLine = StraightLine.findLine(minCoord, maxCoord);
       for(Coord c : parallelLine)
       {

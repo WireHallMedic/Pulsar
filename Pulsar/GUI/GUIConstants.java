@@ -31,7 +31,7 @@ public interface GUIConstants
    public static final Color LIGHT_GREEN = new Color(80, 240, 58);
    public static final Color BEIGE = new Color(239, 228, 176);
    public static final Color RED = new Color(188, 10, 2);
-   public static final Color CYAN = new Color(56, 254, 219);
+   public static final Color CYAN = Color.CYAN;//new Color(56, 254, 219);
    public static final Color YELLOW = new Color(245, 245, 89);
    public static final Color ORANGE = new Color(239, 125, 13);
    public static final Color PINK = new Color(238, 83, 185);
