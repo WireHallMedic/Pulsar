@@ -64,6 +64,8 @@ public class MessagePanel extends InfoPanel
          {
             String msg = messageList.elementAt(i);
             Color color = messageColorList.elementAt(i);
+            for(int j = 0; j < i; j++)
+               color = getDarker(color);
             if(msg.length() > WIDTH_TILES)
                msg = msg.substring(0, WIDTH_TILES);
             write(X_ORIGIN, Y_ORIGIN + i, msg, color.getRGB(), Color.BLACK.getRGB(), WIDTH_TILES, 1);
@@ -77,5 +79,13 @@ public class MessagePanel extends InfoPanel
       messageList = getEmptyMessageList();
       messageColorList = getEmptyMessageColorList();
       redrawF = true;
+   }
+   
+   public static Color getDarker(Color c)
+   {
+      int r = Math.max(c.getRed() - 40, 0);
+      int g = Math.max(c.getGreen() - 40, 0);
+      int b = Math.max(c.getBlue() - 40, 0);
+      return new Color(r, g, b);
    }
 }
