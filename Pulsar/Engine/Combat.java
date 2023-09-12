@@ -156,10 +156,11 @@ public class Combat implements GUIConstants, GearConstants
                VisualEffectFactory.createShieldBreak(defender, delay);
             }
          }
-         // blood spray
+         // blood spray and blood drip
          if(defender.getCurHealth() < startingHealth)
          {
             VisualEffectFactory.createSpray(defender.getMapLoc(), origin, defender.getBloodColor(), delay);
+            GameEngine.getZoneMap().getTile(defender.getMapLoc()).setFGColor(defender.getBloodColor().getRGB());
          }
       }
    }
