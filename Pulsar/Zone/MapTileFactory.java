@@ -32,4 +32,12 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       brokenTile.setBGColor(originalTile.getBGColor());
       return brokenTile;
    }
+   
+   public static MapTile getCrate()
+   {
+      MapTile tile = getTile(TileType.HIGH_WALL);
+      tile.setFGColor(BROWN.getRGB());
+      tile.setDurability(Durability.FRAGILE);
+      return tile;
+   }
 }
