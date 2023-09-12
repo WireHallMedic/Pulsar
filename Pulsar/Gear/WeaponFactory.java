@@ -2,6 +2,8 @@ package Pulsar.Gear;
 
 public class WeaponFactory implements GearConstants
 {
+   public static Weapon EXPLODING_BARREL = getExplodingBarrel();
+   
    public static Weapon getBasicWeapon(WeaponType baseType)
    {
       Weapon w = new Weapon(baseType.name);
@@ -73,6 +75,15 @@ public class WeaponFactory implements GearConstants
       w.setChargeCost(0);
       w.setDamageType(DamageType.THERMAL);
       w.setHitDescriptor("spits on");
+      return w;
+   }
+   
+   // used for environmental explosions
+   public static Weapon getExplodingBarrel()
+   {
+      Weapon w = getBasicWeapon(WeaponType.PLASMA);
+      w.setName("Exploding Barrel");
+      w.setChargeCost(0);
       return w;
    }
 }

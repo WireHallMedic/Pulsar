@@ -59,11 +59,31 @@ public class Combat implements GUIConstants, GearConstants
       {
          VisualEffectFactory.createExplosion(targetList.elementAt(4));
       }
+      // combat messages
       if(targetActorList.size() > 0 && involvesPlayer(attacker, targetActorList))
       {
          addCombatMessage(attacker, targetActorList, weapon);
       }
       weapon.discharge();
+   }
+   
+   public static void nonWeaponExplosion(int x, int y){nonWeaponExplosion(new Coord(x, y));}
+   public static void nonWeaponExplosion(Coord c)
+   {
+      Vector<Coord> targetList = getActualTargets(c, c, WeaponFactory.EXPLODING_BARREL);
+      for(Coord target : targetList)
+      {
+         Actor defender = GameEngine.getActorAt(target);
+         if(defender != null)
+         {
+            resolveAttackAgainstActor(c, defender, WeaponFactory.EXPLODING_BARREL);
+         }
+         if(tileDestructionCheck(target, WeaponFactory.EXPLODING_BARREL))
+         {
+            GameEngine.getZoneMap().breakTile(target);
+         }
+      }
+      VisualEffectFactory.createExplosion(c);
    }
    
    private static Vector<Coord> getActualTargets(Coord origin, Coord initialTarget, Weapon weapon)
@@ -73,7 +93,8 @@ public class Combat implements GUIConstants, GearConstants
       if(origin.equals(initialTarget))
       {
          targetList.add(origin);
-         return targetList;
+         if(!weapon.hasWeaponTag(GearConstants.WeaponTag.BLAST))
+            return targetList;
       }
       // shotgun targets
       if(weapon.hasWeaponTag(GearConstants.WeaponTag.SPREAD))
@@ -106,7 +127,8 @@ public class Combat implements GUIConstants, GearConstants
       return targetList;
    }
    
-   public static void resolveAttackAgainstActor(Actor attacker, Actor defender, Weapon weapon)
+   public static void resolveAttackAgainstActor(Actor attacker, Actor defender, Weapon weapon){resolveAttackAgainstActor(attacker.getMapLoc(), defender, weapon);}
+   public static void resolveAttackAgainstActor(Coord origin, Actor defender, Weapon weapon)
    {
       boolean hasShieldBefore = defender.shieldIsUp();
       int startingHealth = defender.getCurHealth();
@@ -121,7 +143,7 @@ public class Combat implements GUIConstants, GearConstants
       if(GameEngine.playerCanSee(defender))
       {
          // target impact
-         MovementScript msd = MovementScriptFactory.getImpactScript(defender, attacker.getMapLoc(), delay);
+         MovementScript msd = MovementScriptFactory.getImpactScript(defender, origin, delay);
          getMapPanel().addLocking(msd);
          
          // shield flicker
@@ -137,7 +159,7 @@ public class Combat implements GUIConstants, GearConstants
          // blood spray
          if(defender.getCurHealth() < startingHealth)
          {
-            VisualEffectFactory.createSpray(defender.getMapLoc(), attacker.getMapLoc(), defender.getBloodColor(), delay);
+            VisualEffectFactory.createSpray(defender.getMapLoc(), origin, defender.getBloodColor(), delay);
          }
       }
    }

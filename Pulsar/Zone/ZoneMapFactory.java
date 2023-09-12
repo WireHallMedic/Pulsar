@@ -1,5 +1,7 @@
 package Pulsar.Zone;
 
+import Pulsar.Engine.*;
+
 public class ZoneMapFactory implements ZoneConstants
 {
    public static ZoneMap getTestMap()
@@ -55,6 +57,19 @@ public class ZoneMapFactory implements ZoneConstants
       };
       int w = rowArr[0].length();
       int h = rowArr.length;
+      for(int i = 0; i < 25; i++)
+      {
+         int x = 0;
+         int y = 0;
+         while(rowArr[y].charAt(x) != '.')
+         {
+            x = GameEngine.randomInt(0, w);
+            y = GameEngine.randomInt(0, h);
+         }
+         char[] charArr = rowArr[y].toCharArray();
+         charArr[x] = '0';
+         rowArr[y] = new String(charArr);
+      }
       ZoneMap m = new ZoneMap(w, h, MapTileFactory.getTile(TileType.CLEAR));
       for(int y = 0; y < h; y++)
       {
@@ -70,6 +85,7 @@ public class ZoneMapFactory implements ZoneConstants
                case '=' : mapTile = MapTileFactory.getTile(TileType.LOW_WALL); break;
                case ':' : mapTile = MapTileFactory.getTile(TileType.WINDOW); break;
                case '/' : mapTile = MapTileFactory.getDoor(); break;
+               case '0' : mapTile = MapTileFactory.getExplodingBarrel(); break;
             }
             m.setTile(x, y, mapTile);
          }

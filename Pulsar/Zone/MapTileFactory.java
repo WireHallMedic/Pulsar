@@ -41,4 +41,23 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       tile.setDurability(Durability.FRAGILE);
       return tile;
    }
+   
+   public static MapTile getBarrel()
+   {
+      MapTile tile = getTile(TileType.LOW_WALL);
+      tile.setIconIndex('0');
+      tile.setName("Barrel");
+      tile.setFGColor(LIGHT_GREY.getRGB());
+      tile.setDurability(Durability.FRAGILE);
+      return tile;
+   }
+   
+   public static MapTile getExplodingBarrel()
+   {
+      MapTile tile = getBarrel();
+      tile.setName("Exploding Barrel");
+      tile.setFGColor(RED.getRGB());
+      tile.setOnDestructionEffect(OnDestructionEffect.EXPLOSION);
+      return tile;
+   }
 }

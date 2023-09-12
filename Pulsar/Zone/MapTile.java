@@ -10,6 +10,7 @@ public class MapTile implements ZoneConstants
 	private boolean highPassable;
 	private boolean transparent;
    private Durability durability;
+   private OnDestructionEffect destructionEffect;
 
 
 	public int getIconIndex(){return iconIndex;}
@@ -20,6 +21,7 @@ public class MapTile implements ZoneConstants
 	public boolean isHighPassable(){return highPassable;}
 	public boolean isTransparent(){return transparent;}
    public Durability getDurability(){return durability;}
+   public OnDestructionEffect getOnDestructionEffect(){return destructionEffect;}
 
 
 	public void setIconIndex(int i){iconIndex = i;}
@@ -30,6 +32,7 @@ public class MapTile implements ZoneConstants
 	public void setHighPassable(boolean h){highPassable = h;}
 	public void setTransparent(boolean t){transparent = t;}
    public void setDurability(Durability d){durability = d;}
+   public void setOnDestructionEffect(OnDestructionEffect de){destructionEffect = de;}
    
    public MapTile(int i, int fg, int bg, String n, boolean lp, boolean hp, boolean t)
    {
@@ -41,6 +44,7 @@ public class MapTile implements ZoneConstants
       highPassable = hp;
       transparent = t;
       durability = Durability.STANDARD;
+      destructionEffect = null;
    }
    
    public MapTile(MapTile that)
@@ -53,6 +57,12 @@ public class MapTile implements ZoneConstants
       this.highPassable = that.highPassable;
       this.transparent = that.transparent;
       this.durability = that.durability;
+      this.destructionEffect = that.destructionEffect;
+   }
+   
+   public boolean hasOnDestructionEffect()
+   {
+      return destructionEffect != null;
    }
 
 }

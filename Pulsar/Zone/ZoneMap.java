@@ -2,6 +2,7 @@ package Pulsar.Zone;
 
 import Pulsar.GUI.*;
 import Pulsar.Actor.*;
+import Pulsar.Engine.*;
 import WidlerSuite.*;
 
 public class ZoneMap implements ZoneConstants, GUIConstants
@@ -102,6 +103,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    {
       MapTile mt = getTile(x, y);
       setTile(x, y, MapTileFactory.getBroken(mt));
+      if(mt.hasOnDestructionEffect())
+         GameEngine.doDestructionEffect(x, y, mt);
    }
    
    // return a passability map accounting for movement type, door usage, and pathfinding radius

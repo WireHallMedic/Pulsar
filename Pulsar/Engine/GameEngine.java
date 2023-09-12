@@ -230,6 +230,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return lastGoodTarget;
    }
    
+   public static void doDestructionEffect(int x, int y, MapTile mt)
+   {
+      Combat.nonWeaponExplosion(x, y);
+   }
+   
    public static void add(MovementScript ms){mapPanel.add(ms);}
    public static void addLocking(MovementScript ms){mapPanel.addLocking(ms);}
    public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}

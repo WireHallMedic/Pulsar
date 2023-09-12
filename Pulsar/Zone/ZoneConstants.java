@@ -57,4 +57,9 @@ public interface ZoneConstants extends CP437
          return 0.0;
       }
    }
+   
+   public enum OnDestructionEffect
+   {
+      EXPLOSION, VACCUUM, FIRE;
+   }
 }
