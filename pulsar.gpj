@@ -12,8 +12,9 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3538;g
+!3575;g
 %\011%uWidlerSuite%sUnboundTile.java
+%\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
 %\011Pulsar%sGUI%sWSFont_16x16.png
 %\011%uWidlerSuite%sCP437.java
@@ -111,8 +112,9 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3538;f
+!3575;f
 %\011%uWidlerSuite%sUnboundTile.java
+%\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
 %\011Pulsar%sGUI%sWSFont_16x16.png
 %\011%uWidlerSuite%sCP437.java
@@ -210,8 +212,9 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!70;l
+!105;l
+%\011Pulsar%sActor%sActorTest.java
 %\011Pulsar%sEngine%sEngineTest.java
 %\011Pulsar%sGear%sGearTest.java
 !115;t
-jgrJUnit0xr	%\011Pulsar%sEngine%sEngineTest.java	1694448515355:P	%\011Pulsar%sGear%sGearTest.java	1694448515355:P	
+jgrJUnit0xr	%\011Pulsar%sEngine%sEngineTest.java	1694526263963:P	%\011Pulsar%sGear%sGearTest.java	1694526349314:P	

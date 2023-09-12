@@ -6,27 +6,27 @@ import Pulsar.Actor.*;
 public class Armor extends GearObj implements GearConstants, ActorConstants
 {	
 	private int damageReduction;
-	private int speedCap;
+	private ActionSpeed speedCap;
 
 
 	public int getDamageReduction(){return damageReduction;}
-	public int getSpeedCap(){return speedCap;}
+	public ActionSpeed getSpeedCap(){return speedCap;}
 
 
 	public void setDamageReduction(int d){damageReduction = d;}
-	public void setSpeedCap(int s){speedCap = s;}
+	public void setSpeedCap(ActionSpeed s){speedCap = s;}
 
 
    public Armor()
    {
       super(ARMOR_ICON, "Unknown Armor");
       damageReduction = 0;
-      speedCap = FAST_ACTION_COST;
+      speedCap = ActionSpeed.STANDARD;
    }
    
    public String getSummary()
    {
-      return "Damage Reduction: " + damageReduction + ", Max Move Speed: " + EngineTools.getSpeedString(speedCap);
+      return "Damage Reduction: " + damageReduction + ", Max Move Speed: " + speedCap.name;
    }
 
 }

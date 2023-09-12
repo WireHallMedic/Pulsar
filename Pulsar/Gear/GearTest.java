@@ -104,17 +104,17 @@ public class GearTest implements GearConstants, ActorConstants
    @Test public void armorSpeedTest() 
    {
       Armor armor = new Armor();
-      armor.setSpeedCap(FAST_ACTION_COST);
+      armor.setSpeedCap(ActionSpeed.FAST);
       Actor actor = getTestActor();
       actor.setArmor(armor);
       
-      Assert.assertEquals("Fast armor does not restrict or boost shooting", NORMAL_ACTION_COST, actor.getAttackSpeed());
-      Assert.assertEquals("Fast armor does not boost moving", NORMAL_ACTION_COST, actor.getMoveSpeed());
-      Assert.assertEquals("Fast armor does not boost interacting", NORMAL_ACTION_COST, actor.getInteractSpeed());
+      Assert.assertEquals("Fast armor does not restrict or boost shooting", ActionSpeed.STANDARD, actor.getAttackSpeed());
+      Assert.assertEquals("Fast armor does not boost moving", ActionSpeed.STANDARD, actor.getMoveSpeed());
+      Assert.assertEquals("Fast armor does not boost interacting", ActionSpeed.STANDARD, actor.getInteractSpeed());
       
-      armor.setSpeedCap(SLOW_ACTION_COST);
-      Assert.assertEquals("Slow armor does not restrict or boost shooting", NORMAL_ACTION_COST, actor.getAttackSpeed());
-      Assert.assertEquals("Slow armor restricts moving", SLOW_ACTION_COST, actor.getMoveSpeed());
-      Assert.assertEquals("Slow armor restricts interacting", SLOW_ACTION_COST, actor.getInteractSpeed());
+      armor.setSpeedCap(ActionSpeed.SLOW);
+      Assert.assertEquals("Slow armor does not restrict or boost shooting", ActionSpeed.STANDARD, actor.getAttackSpeed());
+      Assert.assertEquals("Slow armor restricts moving", ActionSpeed.SLOW, actor.getMoveSpeed());
+      Assert.assertEquals("Slow armor does not restrict or boost interacting", ActionSpeed.STANDARD, actor.getInteractSpeed());
    }
 }

@@ -313,7 +313,7 @@ public class BasicAI implements AIConstants
       {
          self.setAllLocs(pendingTarget);
       }
-      self.discharge(self.getMoveSpeed());
+      self.discharge(self.getMoveSpeed().timeCost);
    }
    
    private void doToggle()
@@ -326,28 +326,28 @@ public class BasicAI implements AIConstants
          GameEngine.getZoneMap().update(pendingTarget);
          GameEngine.getPlayer().updateFoV();
       }
-      self.discharge(self.getInteractSpeed());
+      self.discharge(self.getInteractSpeed().timeCost);
    }
    
    private void doDelay()
    {
-      self.discharge(Math.min(self.getMoveSpeed(),
-                     Math.min(self.getAttackSpeed(),
-                              self.getInteractSpeed())));
+      self.discharge(Math.min(self.getMoveSpeed().timeCost,
+                     Math.min(self.getAttackSpeed().timeCost,
+                              self.getInteractSpeed().timeCost)));
    }
    
    private void doAttack()
    {
       lastActorTargeted = GameEngine.getActorAt(pendingTarget);
       Combat.resolveAttack(self, pendingTarget, self.getWeapon());
-      self.discharge(self.getAttackSpeed());
+      self.discharge(self.getAttackSpeed().timeCost);
    }
    
    private void doUnarmedAttack()
    {
       lastActorTargeted = GameEngine.getActorAt(pendingTarget);
       Combat.resolveAttack(self, pendingTarget, self.getUnarmedAttack());
-      self.discharge(self.getAttackSpeed());
+      self.discharge(self.getAttackSpeed().timeCost);
    }
    
    private void doWeaponSwitch()
@@ -356,7 +356,7 @@ public class BasicAI implements AIConstants
       {
          Player pSelf = (Player)self;
          pSelf.switchWeapons();
-         self.discharge(self.getInteractSpeed());
+         self.discharge(self.getInteractSpeed().timeCost);
       }
    }
    

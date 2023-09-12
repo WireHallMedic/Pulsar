@@ -26,9 +26,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    protected Weapon unarmed;
    protected boolean startOfTurnPerformed;
    protected boolean flying;
-   protected int attackSpeed;
-   protected int moveSpeed;
-   protected int interactSpeed;
+   protected ActionSpeed attackSpeed;
+   protected ActionSpeed moveSpeed;
+   protected ActionSpeed interactSpeed;
    protected Alertness alertness;
    protected AlertnessManager alertnessManager;
 
@@ -47,7 +47,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public Color getBloodColor(){return bloodColor;}
    public Weapon getUnarmedAttack(){return unarmed;}
    public boolean isFlying(){return flying;}
-   public int getAttackSpeed(){return attackSpeed;}
+   public ActionSpeed getAttackSpeed(){return attackSpeed;}
+   
+   public ActionSpeed getInteractSpeed(){return interactSpeed;}
    public Alertness getAlertness(){return alertness;}
    public AlertnessManager getAlertnessManager(){return alertnessManager;}
 
@@ -68,9 +70,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public void setBloodColor(Color c){bloodColor = c;}
    public void setUnarmedAttack(Weapon w){unarmed = w;}
    public void setFlying(boolean f){flying = f;}
-   public void setAttackSpeed(int as){attackSpeed = as;}
-   public void setMoveSpeed(int ms){moveSpeed = ms;}
-   public void setInteractSpeed(int is){interactSpeed = is;}
+   public void setAttackSpeed(ActionSpeed as){attackSpeed = as;}
+   public void setMoveSpeed(ActionSpeed ms){moveSpeed = ms;}
+   public void setInteractSpeed(ActionSpeed is){interactSpeed = is;}
    public void setAlertness(Alertness a){alertness = a;}
    public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
 
@@ -93,9 +95,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       unarmed = WeaponFactory.getBasicWeapon(GearConstants.WeaponType.MELEE);
       startOfTurnPerformed = false;
       flying = false;
-      attackSpeed = NORMAL_ACTION_COST;
-      moveSpeed = NORMAL_ACTION_COST;
-      interactSpeed = NORMAL_ACTION_COST;
+      attackSpeed = ActionSpeed.STANDARD;
+      moveSpeed = ActionSpeed.STANDARD;
+      interactSpeed = ActionSpeed.STANDARD;
       alertness = Alertness.RELAXED;
       alertnessManager = new AlertnessManager(this);
    }
@@ -240,18 +242,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    }
    
    
-   public int getMoveSpeed()
+   public ActionSpeed getMoveSpeed()
    {
-      if(hasArmor() && armor.getSpeedCap() > moveSpeed)
+      if(hasArmor() && armor.getSpeedCap().timeCost > moveSpeed.timeCost)
          return armor.getSpeedCap();
       return moveSpeed;
-   }
-   
-   public int getInteractSpeed()
-   {
-      if(hasArmor() && armor.getSpeedCap() > interactSpeed)
-         return armor.getSpeedCap();
-      return interactSpeed;
    }
    
    // health methods
