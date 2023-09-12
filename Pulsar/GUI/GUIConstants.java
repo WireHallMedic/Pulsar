@@ -53,6 +53,7 @@ public interface GUIConstants
    public static final Color HUMAN_BLOOD = RED;
    public static final Color ROBOT_BLOOD = LIGHT_GREY;
    public static final Color ALIEN_BLOOD = ALIEN_COLOR;
+   public static final Color WARNING_COLOR = ORANGE;
    
    public static final double SLOW_MOVE_SPEED = .05;
    public static final double NORMAL_MOVE_SPEED = .2;

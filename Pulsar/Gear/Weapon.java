@@ -110,6 +110,8 @@ public class Weapon extends GearObj implements GearConstants, Chargable
    
    public int getRemainingShots()
    {
+      if(getChargeCost() == 0)
+         return 1;
       return getCurCharge() / getChargeCost();
    }
    

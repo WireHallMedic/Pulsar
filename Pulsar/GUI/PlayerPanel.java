@@ -16,7 +16,8 @@ public class PlayerPanel extends MessagePanel
    private static final int HEIGHT_TILES = MAP_HEIGHT_TILES;
    private static final int X_ORIGIN = 1;
    private static final int Y_ORIGIN = 1;
-   private static boolean redrawF = false;
+   public static final Color[] SHIELD_WARNING_GRADIENT = WSTools.getGradient(SHIELD_COLOR, WARNING_COLOR, 21);
+   public static final Color[] AMMO_WARNING_GRADIENT = WSTools.getGradient(TERMINAL_FG_COLOR, WARNING_COLOR, 21);
    
    public PlayerPanel(int w, int h, TilePalette tp)
    {
@@ -27,12 +28,6 @@ public class PlayerPanel extends MessagePanel
          setTile(x + X_ORIGIN, y + Y_ORIGIN, '.', TERMINAL_FG_COLOR, BG_COLOR);
       }
       write(X_ORIGIN + 4, Y_ORIGIN, "Player Panel", 12, 1);
-      redrawF = true;
-   }
-   
-   public static void updatePlayerPanel()
-   {
-      redrawF = true;
    }
    
    public void clearPlayerPanel()
@@ -46,20 +41,28 @@ public class PlayerPanel extends MessagePanel
    
    public void update()
    {
-      redrawF = false;
       clearPlayerPanel();
       Player player = GameEngine.getPlayer();
+      Color shieldColor = SHIELD_COLOR;
+      Color mainWeaponColor = TERMINAL_FG_COLOR;
+      Color altWeaponColor = TERMINAL_FG_COLOR;
+      if(player.hasShield() && player.getShield().getCurCharge() == 0)
+         shieldColor = animationManager.fastBlink() ? SHIELD_COLOR : WARNING_COLOR;
+      if(player.getWeapon() != null && player.getWeapon().getRemainingShots() == 0)
+         mainWeaponColor = animationManager.fastBlink() ? TERMINAL_FG_COLOR : WARNING_COLOR;
+      if(player.getAltWeapon() != null && player.getAltWeapon().getRemainingShots() == 0)
+         altWeaponColor = animationManager.fastBlink() ? TERMINAL_FG_COLOR : WARNING_COLOR;
       write(X_ORIGIN, Y_ORIGIN, "Player Panel", WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 1, "Health[        ]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 2, "Shield[        ]", SHIELD_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 3, "Weapon[        ]", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 4, "AltWpn[        ]", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN, Y_ORIGIN + 2, "Shield[        ]", shieldColor.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN, Y_ORIGIN + 3, "Weapon[        ]", mainWeaponColor.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN, Y_ORIGIN + 4, "AltWpn[        ]", altWeaponColor.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       int[] ammoCountArr = player.getWeapon().getAmmoCountTiles();
       for(int i = 0; i < ammoCountArr.length; i++)
-         setTile(X_ORIGIN + 16 + i, Y_ORIGIN + 3, ammoCountArr[i], TERMINAL_FG_COLOR, BG_COLOR);
+         setTile(X_ORIGIN + 16 + i, Y_ORIGIN + 3, ammoCountArr[i], mainWeaponColor, BG_COLOR);
       ammoCountArr = player.getAltWeapon().getAmmoCountTiles();
       for(int i = 0; i < ammoCountArr.length; i++)
-         setTile(X_ORIGIN + 16 + i, Y_ORIGIN + 4, ammoCountArr[i], TERMINAL_FG_COLOR, BG_COLOR);
+         setTile(X_ORIGIN + 16 + i, Y_ORIGIN + 4, ammoCountArr[i], altWeaponColor, BG_COLOR);
       
       int[] shieldBar = player.getShieldBar(8);
       int[] healthBar = player.getHealthBar(8);
@@ -68,9 +71,9 @@ public class PlayerPanel extends MessagePanel
       for(int i = 0; i < 8; i++)
       {
          setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 1, healthBar[i], HEALTH_COLOR, BG_COLOR);
-         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 2, shieldBar[i], SHIELD_COLOR, BG_COLOR);
-         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 3, weaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
-         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 4, altWeaponBar[i], TERMINAL_FG_COLOR, BG_COLOR);
+         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 2, shieldBar[i], shieldColor, BG_COLOR);
+         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 3, weaponBar[i], mainWeaponColor, BG_COLOR);
+         setTile(X_ORIGIN + 7 + i, Y_ORIGIN + 4, altWeaponBar[i], altWeaponColor, BG_COLOR);
       }
       
       write(X_ORIGIN, Y_ORIGIN + 5, player.getWeapon().getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
@@ -80,8 +83,7 @@ public class PlayerPanel extends MessagePanel
    @Override
    public void actionPerformed(ActionEvent ae)
    {
-      if(redrawF)
-         update();
+      update();
       super.actionPerformed(ae);
    }
 }

@@ -72,7 +72,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    public static Actor getAlienWorker()
    {
       Actor a = new Actor('w');
-      a.setName("Formicaedes Worker");
+      a.setName("Alien Worker");
       a.setAI(new StandardEnemyAI(a));
       a.setUnarmedAttack(WeaponFactory.getAlienClaws());
       a.setBloodColor(GUIConstants.ALIEN_COLOR);
@@ -85,7 +85,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    {
       Actor a = getAlienWorker();
       a.getSprite().setIconIndex('h');
-      a.setName("Formicaedes Hunter");
+      a.setName("Alien Hunter");
       a.setWeapon(WeaponFactory.getAlienSpit());
       return a;
    }

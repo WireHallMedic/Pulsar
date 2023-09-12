@@ -281,23 +281,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       {
          applyDamageToHealth(damage);
       }
-      else
-      { // handled in the else because otherwise applyDamageToHealth will do it.
-         if(GameEngine.getPlayer() == this)
-         {
-            PlayerPanel.updatePlayerPanel();
-         }
-      }
    }
    
    public void applyDamageToHealth(int damage)
    {
       curHealth -= damage;
-      
-      if(GameEngine.getPlayer() == this)
-      {
-         PlayerPanel.updatePlayerPanel();
-      }
    }
    
    public boolean isDead()

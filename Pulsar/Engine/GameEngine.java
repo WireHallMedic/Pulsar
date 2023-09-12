@@ -390,7 +390,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                { 
                   curActor.act();
                   InfoPanel.updateInfoPanel();
-                  PlayerPanel.updatePlayerPanel();
                }
             }
          }
