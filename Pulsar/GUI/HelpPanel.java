@@ -127,7 +127,7 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
          "Arrows   Movement; hold shift to allow diagonal input",
          "  A      Attack; press again to confirm target",
          "  U      Use; you will be prompted for a target",
-         "  Z      Switch weapons",
+         "  S      Switch weapons",
          "  L      Look mode.",
          "  C      Open character panel",
          "  H      Open help panel (the one you're looking at)",

@@ -142,7 +142,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
                                  GameEngine.setGameMode(GameMode.LOOK); 
                                  break;
             case KeyEvent.VK_A : attemptToShoot(); break;
-            case KeyEvent.VK_Z : setPlayerTarget(new Coord());
+            case KeyEvent.VK_S : setPlayerTarget(new Coord());
                                  setPlayerAction(ActorAction.SWITCH_WEAPONS);
                                  break;
             case KeyEvent.VK_U : setPlayerAction(ActorAction.USE);
