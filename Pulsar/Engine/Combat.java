@@ -46,6 +46,10 @@ public class Combat implements GUIConstants
                   VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c, delay);
                }
             }
+            if(tileDestructionCheck(target, weapon))
+            {
+               GameEngine.getZoneMap().breakTile(target);
+            }
          }
       }
       // blasts generate explosions
@@ -141,6 +145,12 @@ public class Combat implements GUIConstants
          damage[i] += (int)(GameEngine.random() * (weapon.getVariableDamage() + 1));
       }
       return damage;
+   }
+   
+   public static boolean tileDestructionCheck(Coord target, Weapon weapon)
+   {
+      double breakChance = GameEngine.getZoneMap().getTile(target).getDurability().getBreakChance(weapon.isHeavy());
+      return GameEngine.random() <= breakChance;
    }
    
    public static Vector<Coord> getShotgunTargets(Coord origin, Coord target)

@@ -97,6 +97,13 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       return new MapTile(oobTile);
    }
    
+   public void breakTile(Coord c){breakTile(c.x, c.y);}
+   public void breakTile(int x, int y)
+   {
+      MapTile mt = getTile(x, y);
+      setTile(x, y, MapTileFactory.getBroken(mt));
+   }
+   
    // return a passability map accounting for movement type, door usage, and pathfinding radius
    public boolean[][] getPassMap(Actor a)
    {
