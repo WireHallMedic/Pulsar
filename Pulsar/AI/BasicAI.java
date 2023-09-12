@@ -120,6 +120,7 @@ public class BasicAI implements AIConstants
       }
       shiftPendingToPrevious();
       clearPlan();
+      GameEngine.getPlayer().updateFoV();
    }
    
    protected void shiftPendingToPrevious()
@@ -324,7 +325,6 @@ public class BasicAI implements AIConstants
          ToggleTile tTile = (ToggleTile)tile;
          tTile.toggle();
          GameEngine.getZoneMap().update(pendingTarget);
-         GameEngine.getPlayer().updateFoV();
       }
       self.discharge(self.getInteractSpeed().timeCost);
    }
