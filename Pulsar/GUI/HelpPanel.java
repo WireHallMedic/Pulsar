@@ -62,6 +62,8 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
    {
       switch(ke.getKeyCode())
       {
+         case KeyEvent.VK_ENTER  :
+         case KeyEvent.VK_SPACE  :
          case KeyEvent.VK_ESCAPE :
          case KeyEvent.VK_H :       InnerPanel.setActivePanel(MainGameBGPanel.class); 
                                     GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
