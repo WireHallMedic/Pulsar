@@ -17,13 +17,16 @@ public class WeaponFactory implements GearConstants
       {
          case SLUG_RIFLE        :
             w.setBaseDamage(DEFAULT_BASE_DAMAGE * 2);
+            w.setHitDescriptor("shoots");
             break;
          case BATTLE_RIFLE :
             w.setAttacks(3);
+            w.setHitDescriptor("shoots");
             break;
          case AUTORIFLE    : 
             w.setBaseDamage(DEFAULT_BASE_DAMAGE / 2);
             w.setAttacks(5);
+            w.setHitDescriptor("shoots");
             break;
          case SHOTGUN      :
             w.setChargeCost(BASE_WEAPON_CHARGE_COST * 5 / 4);
@@ -31,6 +34,7 @@ public class WeaponFactory implements GearConstants
             w.setVariableDamage(DEFAULT_VARIABLE_DAMAGE / 2);
             w.setAttacks(5);
             w.addWeaponTag(WeaponTag.SPREAD);
+            w.setHitDescriptor("blasts");
             break;
          case MELEE        : 
             w.setName("Unarmed");
@@ -44,6 +48,7 @@ public class WeaponFactory implements GearConstants
             w.setMaxCharge(w.getChargeCost() * 3);
             w.addWeaponTag(WeaponTag.BLAST);
             w.addWeaponTag(WeaponTag.HEAVY);
+            w.setHitDescriptor("blasts");
             break;
       }
       
@@ -56,6 +61,7 @@ public class WeaponFactory implements GearConstants
       Weapon w = getBasicWeapon(WeaponType.MELEE);
       w.setName("Claws");
       w.setBaseDamage(DEFAULT_BASE_DAMAGE);
+      w.setHitDescriptor("claws");
       return w;
    }
    
@@ -66,6 +72,7 @@ public class WeaponFactory implements GearConstants
       w.setBaseDamage(DEFAULT_BASE_DAMAGE);
       w.setChargeCost(0);
       w.setDamageType(DamageType.THERMAL);
+      w.setHitDescriptor("spits on");
       return w;
    }
 }

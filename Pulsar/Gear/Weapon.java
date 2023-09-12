@@ -13,6 +13,7 @@ public class Weapon extends GearObj implements GearConstants, Chargable
 	private int maxCharge;
 	private int chargeCost;
 	private int chargeRate;
+   private String hitDescriptor;
 
 
 	public int getBaseDamage(){return baseDamage;}
@@ -24,6 +25,7 @@ public class Weapon extends GearObj implements GearConstants, Chargable
 	public int getMaxCharge(){return maxCharge;}
 	public int getChargeCost(){return chargeCost;}
 	public int getChargeRate(){return chargeRate;}
+   public String getHitDescriptor(){return hitDescriptor;}
 
 
 	public void setBaseDamage(int b){baseDamage = b;}
@@ -35,6 +37,7 @@ public class Weapon extends GearObj implements GearConstants, Chargable
 	public void setMaxCharge(int m){maxCharge = m;}
 	public void setChargeCost(int c){chargeCost = c;}
 	public void setChargeRate(int r){chargeRate = r;}
+   public void setHitDescriptor(String hd){hitDescriptor = hd;}
 
 
    public Weapon(){this("Unknown Weapon");}
@@ -50,6 +53,7 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       maxCharge = 20;
       chargeCost = 4;
       chargeRate = 1;
+      hitDescriptor = "strikes";
    }
    
    public void fullyCharge()
