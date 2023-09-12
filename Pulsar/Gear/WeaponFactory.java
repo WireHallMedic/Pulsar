@@ -43,7 +43,7 @@ public class WeaponFactory implements GearConstants
             w.addWeaponTag(WeaponTag.MELEE);
             break;
          case PLASMA       :
-            w.setBaseDamage(DEFAULT_BASE_DAMAGE * 3);
+            w.setBaseDamage(DEFAULT_BASE_DAMAGE * 4);
             w.setChargeCost(BASE_WEAPON_CHARGE_COST * 2);
             w.setMaxCharge(w.getChargeCost() * 3);
             w.addWeaponTag(WeaponTag.BLAST);

@@ -159,6 +159,8 @@ public class Combat implements GUIConstants, GearConstants
       return GameEngine.random() <= breakChance;
    }
    
+   // shotguns target and are stopped by: high impassable
+   // shotguns target and are not stopped by: actors, low impassable
    public static Vector<Coord> getShotgunTargets(Coord origin, Coord target)
    {
       Vector<Coord> finalTargetList = new Vector<Coord>();
@@ -171,12 +173,11 @@ public class Combat implements GUIConstants, GearConstants
       for(Coord prospect : targetList)
       {
          Vector<Coord> line = StraightLine.findLine(origin, prospect, StraightLine.REMOVE_ORIGIN);
-         // target all actors plus first blocking tile or last tile if no blocking
          for(int i = 0; i < line.size(); i++)
          {
-            if(i == line.size() - 1 || // last tile in line
-               GameEngine.blocksShooting(line.elementAt(i)) || // tile blocks line of effect
-               EngineTools.getDistanceTo(origin, line.elementAt(i)) >= SHOTGUN_MAX_RANGE) // tile is max range
+            if(EngineTools.getDistanceTo(origin, line.elementAt(i)) <= SHOTGUN_MAX_RANGE && // in range
+               (GameEngine.blocksShooting(line.elementAt(i)) || // tile blocks line of effect
+               !GameEngine.getZoneMap().getTile(line.elementAt(i)).isLowPassable())) // is not low passable
             {
                // ignore if duplicate
                boolean addF = true;
@@ -192,7 +193,7 @@ public class Combat implements GUIConstants, GearConstants
                if(addF)
                   finalTargetList.add(line.elementAt(i));
                // don't search farther if hits a wall or max range
-               if(!GameEngine.getZoneMap().getTile(line.elementAt(i)).isHighPassable() || EngineTools.getDistanceTo(origin, line.elementAt(i)) >= SHOTGUN_MAX_RANGE)
+               if(!GameEngine.getZoneMap().getTile(line.elementAt(i)).isHighPassable())
                   break;
             }
          }

@@ -36,6 +36,7 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    public static MapTile getCrate()
    {
       MapTile tile = getTile(TileType.HIGH_WALL);
+      tile.setName("Crate");
       tile.setFGColor(BROWN.getRGB());
       tile.setDurability(Durability.FRAGILE);
       return tile;
