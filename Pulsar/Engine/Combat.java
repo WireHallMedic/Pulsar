@@ -14,6 +14,7 @@ public class Combat implements GUIConstants, GearConstants
    public static void resolveAttack(Actor attacker, Coord initialTarget, Weapon weapon)
    {
       Vector<Coord> targetList = getActualTargets(attacker.getMapLoc(), initialTarget, weapon);
+      Vector<Actor> targetActorList = new Vector<Actor>();
       // attacker animation
       if(GameEngine.playerCanSee(attacker))
       {
@@ -26,6 +27,7 @@ public class Combat implements GUIConstants, GearConstants
          if(defender != null)
          {
             resolveAttackAgainstActor(attacker, defender, weapon);
+            targetActorList.add(defender);
          }
          else
          {
@@ -56,6 +58,10 @@ public class Combat implements GUIConstants, GearConstants
       if(weapon.hasWeaponTag(GearConstants.WeaponTag.BLAST))
       {
          VisualEffectFactory.createExplosion(targetList.elementAt(4));
+      }
+      if(targetActorList.size() > 0 && involvesPlayer(attacker, targetActorList))
+      {
+         addCombatMessage(attacker, targetActorList, weapon);
       }
       weapon.discharge();
    }
@@ -204,5 +210,23 @@ public class Combat implements GUIConstants, GearConstants
          blastList.add(new Coord(detonationLoc.x +x, detonationLoc.y + y));
       }
       return blastList;
+   }
+   
+   public static boolean involvesPlayer(Actor attacker, Vector<Actor> targetActorList)
+   {
+      if(attacker == GameEngine.getPlayer())
+         return true;
+      for(Actor a : targetActorList)
+         if(a == GameEngine.getPlayer())
+            return true;
+      return false;
+   }
+   
+   public static void addCombatMessage(Actor attacker, Vector<Actor> targetActorList, Weapon weapon)
+   {
+      String targetString = "multiple targets";
+      if(targetActorList.size() == 1)
+         targetString = targetActorList.elementAt(0).getName();
+      MessagePanel.addMessage(attacker.getName() + " " + weapon.getHitDescriptor() + " " + targetString + "!");
    }
 }
