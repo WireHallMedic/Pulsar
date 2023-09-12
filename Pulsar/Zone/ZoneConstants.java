@@ -10,6 +10,7 @@ public interface ZoneConstants extends CP437
       HIGH_WALL   ('#', "Wall", false, false, false),
       LOW_WALL    ('=', "Low Wall", false, true, true),
       WINDOW      (':', "Window", false, false, true),
+      RUBBLE      (',', "Rubble", true, true, true),
       NULL        (' ', "", false, false, false);
       
       public int iconIndex;
@@ -26,5 +27,10 @@ public interface ZoneConstants extends CP437
          highPassable = hp;
          transparent = t;
       }
+   }
+   
+   public enum Durability
+   {
+      STANDARD, FRAGILE, UNBREAKABLE;
    }
 }
