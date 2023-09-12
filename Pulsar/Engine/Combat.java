@@ -224,9 +224,26 @@ public class Combat implements GUIConstants, GearConstants
    
    public static void addCombatMessage(Actor attacker, Vector<Actor> targetActorList, Weapon weapon)
    {
+      int deathsCaused = 0;
+      for(Actor a : targetActorList)
+      {
+         if(a.isDead())
+         {
+            deathsCaused++;
+         }
+      }
       String targetString = "multiple targets";
       if(targetActorList.size() == 1)
+      {
          targetString = targetActorList.elementAt(0).getName();
+      }
+      if(deathsCaused > 0)
+      {
+         if(targetActorList.size() == 1)
+            targetString += ", killing them";
+         else
+            targetString += ", killing " + deathsCaused;
+      }
       MessagePanel.addMessage(attacker.getName() + " " + weapon.getHitDescriptor() + " " + targetString + "!");
    }
 }
