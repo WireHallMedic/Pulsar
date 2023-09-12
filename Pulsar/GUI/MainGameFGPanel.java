@@ -16,9 +16,9 @@ import java.util.*;
 
 public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, EngineConstants
 {
-   public static final Color[] TARGETING_GRADIENT = WSTools.getGradient(Color.BLACK, RETICULE_COLOR, 21);
-   public static final Color[] BAD_TARGETING_GRADIENT = WSTools.getGradient(Color.BLACK, INVALID_RETICULE_COLOR, 21);
-   public static final Color[] TERMINAL_GRADIENT = WSTools.getGradient(Color.BLACK, TERMINAL_FG_COLOR, 21);
+   public static final Color[] TARGETING_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, RETICULE_COLOR, 21);
+   public static final Color[] BAD_TARGETING_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, INVALID_RETICULE_COLOR, 21);
+   public static final Color[] TERMINAL_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, TERMINAL_FG_COLOR, 21);
    
 	public MainGameFGPanel()
    {

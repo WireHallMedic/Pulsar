@@ -5,23 +5,6 @@ import WidlerSuite.*;
 
 public interface GUIConstants
 {
-   // basic color palette
-   public static final Color BLACK = new Color(0, 0, 0);
-   public static final Color DARK_GREY = new Color(127, 127, 127);
-   public static final Color LIGHT_GREY = new Color(195, 195, 195);
-   public static final Color WHITE = new Color(255, 255, 255);
-   public static final Color DARK_BLUE = new Color(63, 72, 204);
-   public static final Color DARK_GREEN = new Color(34, 177, 76);
-   public static final Color BROWN = new Color(185, 122, 87);
-   public static final Color PURPLE = new Color(163, 73, 164);
-   public static final Color BLUE = new Color(0, 162, 232);
-   public static final Color LIGHT_GREEN = new Color(128, 255, 128);
-   public static final Color BEIGE = new Color(239, 228, 176);
-   public static final Color RED = new Color(237, 28, 36);
-   public static final Color LIGHT_BLUE = new Color(153, 217, 234);
-   public static final Color AMBER = new Color(255, 201, 14);
-   public static final Color ORANGE = new Color(255, 92, 35);
-   public static final Color PINK = new Color(255, 174, 201);
 
    public static final int FRAMES_PER_SECOND = 60;
    
@@ -35,23 +18,40 @@ public interface GUIConstants
    public static final int MAP_HEIGHT_TILES = 17;
    public static final int MAP_X_INSET_TILES = ((TERMINAL_WIDTH_TILES - (2 * MAP_WIDTH_TILES)) / 2);
    
+   // basic color palette
+   public static final Color BLACK = new Color(0, 0, 0);
+   public static final Color DARK_GREY = new Color(63, 72, 79);
+   public static final Color LIGHT_GREY = new Color(212, 224, 238);
+   public static final Color WHITE = new Color(255, 255, 255);
+   public static final Color DARK_BLUE = new Color(19, 47, 209);
+   public static final Color DARK_GREEN = new Color(18, 127, 44);
+   public static final Color BROWN = new Color(114, 73, 30);
+   public static final Color PURPLE = new Color(104, 49, 192);
+   public static final Color LIGHT_BLUE = new Color(0, 162, 232);
+   public static final Color LIGHT_GREEN = new Color(80, 240, 58);
+   public static final Color BEIGE = new Color(239, 228, 176);
+   public static final Color RED = new Color(188, 10, 2);
+   public static final Color CYAN = new Color(56, 254, 219);
+   public static final Color YELLOW = new Color(245, 245, 89);
+   public static final Color ORANGE = new Color(239, 125, 13);
+   public static final Color PINK = new Color(238, 83, 185);
+   public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
+   
    public static final Color ALIEN_COLOR = PURPLE;
- //  public static final Color DULL_WHITE = new Color(220, 220, 220);
    public static final Color BG_COLOR = BLACK;
-   public static final Color TERMINAL_FG_COLOR = LIGHT_BLUE;
+   public static final Color TERMINAL_FG_COLOR = CYAN;
    public static final Color DEFAULT_TILE_FG_COLOR = WHITE;
    public static final Color DEFAULT_TILE_BG_COLOR = DARK_GREY;
-   public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
-   public static final Color DEFAULT_MESSAGE_COLOR = LIGHT_BLUE;
+   public static final Color DEFAULT_MESSAGE_COLOR = CYAN;
    public static final Color PLAYER_COLOR = ORANGE;
    public static final Color SHIELD_COLOR = WHITE;
    public static final Color HEALTH_COLOR = RED;
    public static final Color DEFAULT_ACTOR_FG_COLOR = WHITE;
-   public static final Color DEFAULT_ACTOR_BG_COLOR = DARK_GREY;
-   public static final Color RETICULE_COLOR = AMBER;
+   public static final Color DEFAULT_ACTOR_BG_COLOR = BLACK;
+   public static final Color RETICULE_COLOR = YELLOW;
    public static final Color INVALID_RETICULE_COLOR = RED;
-   public static final Color HUMAN_BLOOD = Color.RED;
-   public static final Color ROBOT_BLOOD = Color.GRAY;
+   public static final Color HUMAN_BLOOD = RED;
+   public static final Color ROBOT_BLOOD = LIGHT_GREY;
    public static final Color ALIEN_BLOOD = ALIEN_COLOR;
    
    public static final double SLOW_MOVE_SPEED = .05;

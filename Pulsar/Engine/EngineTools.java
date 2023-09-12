@@ -3,8 +3,9 @@ package Pulsar.Engine;
 import WidlerSuite.*;
 import java.util.*;
 import Pulsar.Actor.*;
+import Pulsar.Gear.*;
 
-public class EngineTools implements ActorConstants
+public class EngineTools implements ActorConstants, GearConstants
 {
    public static final double SHOTGUN_SPRAY_ARC = 0.523599; // 30 degrees
    public static final double SHOTGUN_SPRAY_ARC_INCREMENT = SHOTGUN_SPRAY_ARC / 2.0;
@@ -14,8 +15,8 @@ public class EngineTools implements ActorConstants
       Vect straight = new Vect(origin, target);
       double maxAngle = straight.angle + SHOTGUN_SPRAY_ARC_INCREMENT;
       double minAngle = straight.angle - SHOTGUN_SPRAY_ARC_INCREMENT;
-      Coord maxCoord = new Coord(new Vect(maxAngle, 10));
-      Coord minCoord = new Coord(new Vect(minAngle, 10));
+      Coord maxCoord = new Coord(new Vect(maxAngle, SHOTGUN_MAX_RANGE));
+      Coord minCoord = new Coord(new Vect(minAngle, SHOTGUN_MAX_RANGE));
       Vector<Coord> parallelLine = StraightLine.findLine(minCoord, maxCoord);
       for(Coord c : parallelLine)
       {
