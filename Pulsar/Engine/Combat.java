@@ -140,6 +140,9 @@ public class Combat implements GUIConstants, GearConstants
          defender.applyDamage(damageArray[i], weapon.getDamageType(), false);
       }
       
+      if(weapon.hasWeaponTag(WeaponTag.KNOCKBACK))
+         doKnockback(defender, origin, 1);
+      
       if(GameEngine.playerCanSee(defender))
       {
          // target impact

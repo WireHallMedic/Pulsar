@@ -19,6 +19,7 @@ public class WeaponFactory implements GearConstants
       {
          case SLUG_RIFLE        :
             w.setBaseDamage(DEFAULT_BASE_DAMAGE * 2);
+            w.addWeaponTag(WeaponTag.KNOCKBACK);
             w.setHitDescriptor("shoots");
             break;
          case BATTLE_RIFLE :
@@ -50,6 +51,7 @@ public class WeaponFactory implements GearConstants
             w.setMaxCharge(w.getChargeCost() * 3);
             w.addWeaponTag(WeaponTag.BLAST);
             w.addWeaponTag(WeaponTag.HEAVY);
+            w.addWeaponTag(WeaponTag.KNOCKBACK);
             w.setHitDescriptor("blasts");
             break;
       }

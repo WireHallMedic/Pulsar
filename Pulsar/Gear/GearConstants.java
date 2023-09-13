@@ -46,7 +46,7 @@ public interface GearConstants extends WSFontConstants
       SPREAD       ("Spread"),      // fires in a spread like a shotgun
       MELEE        ("Melee"),       // attacks against adjacent actors only
       BLAST        ("Blast"),       // 1-tile radius explosion
-      LARGE_BLAST  ("Large Blast"), // 2-tile radius explosion
+      KNOCKBACK    ("Knockback"),   // pushes targets hit
       HEAVY        ("Heavy");       // damages terrain
       
       public String name;
