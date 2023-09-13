@@ -283,16 +283,18 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       }
       if(arg == 'd')
       {
-         GameEngine.getPlayer().applyDamage(4, GearConstants.DamageType.KINETIC, true);
+         System.out.println(GameEngine.getPlayer().getStatusEffectList());
          return;
       }
-      // combat timing
       if(arg == 'x')
       {
          Actor player = GameEngine.getPlayer();
          player.add(new StatusEffect("Test effect", 10));
          StatusEffect se = new StatusEffect("Test Stackable Effect", 10);
          se.setStacks(true);
+         player.add(se);
+         se = new StatusEffect("You shouldn't see this", 10);
+         se.setExpires(false);
          player.add(se);
          return;
       }

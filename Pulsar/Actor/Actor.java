@@ -443,4 +443,15 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          statusEffectList.add(se);
    }
    
+   public Vector<StatusEffect> getTemporaryStatusEffects()
+   {
+      Vector<StatusEffect> tempList = new Vector<StatusEffect>();
+      for(StatusEffect se : statusEffectList)
+      {
+         if(se.getExpires())
+            tempList.add(se);
+      }
+      return tempList;
+   }
+   
 }

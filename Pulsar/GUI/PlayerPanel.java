@@ -9,6 +9,7 @@ import java.awt.event.*;
 import Pulsar.Engine.*;
 import Pulsar.Actor.*;
 import java.awt.*;
+import java.util.*;
 
 public class PlayerPanel extends MessagePanel
 {
@@ -84,9 +85,10 @@ public class PlayerPanel extends MessagePanel
          if(getIcon(X_ORIGIN, Y_ORIGIN + 7 + i) != ' ')
             additionalYSpacing++;
       
-      for(int i = 0; i < player.getStatusEffectList().size(); i++)
+      Vector<StatusEffect> statusEffectList = player.getTemporaryStatusEffects();
+      for(int i = 0; i < statusEffectList.size(); i++)
       {
-         StatusEffect se = player.getStatusEffectList().elementAt(i);
+         StatusEffect se = statusEffectList.elementAt(i);
          write(X_ORIGIN, Y_ORIGIN + 7 + i + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       }
    }
