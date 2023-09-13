@@ -36,6 +36,24 @@ public class StatusEffectFactory implements ActorConstants, GearConstants
                            se.setDescriptor("blinded");
                            se.setVisionRange(-10);
                            break;
+         case EAGLE_EYE  : se.setName("Eagle Eye");
+                           se.setRemainingDuration(STATUS_EFFECT_LONG_DURATION);
+	                        se.setExpires(true);
+	                        se.setStacks(false);
+                           se.setNegative(false);
+                           se.setDescriptor("clear of vision");
+                           se.setVisionRange(10);
+                           break;
+         case HASTE :      se.setName("Hasted");
+                           se.setRemainingDuration(STATUS_EFFECT_LONG_DURATION);
+	                        se.setExpires(true);
+	                        se.setStacks(false);
+                           se.setNegative(false);
+                           se.setDescriptor("hasted");
+                           se.setMoveSpeed(1);
+                        	se.setAttackSpeed(1);
+                        	se.setInteractSpeed(1);
+                           break;
       }
       return se;
    }

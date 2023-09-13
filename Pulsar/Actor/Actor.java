@@ -467,6 +467,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       int curVisionRange = getBaseVisionRange();
       for(StatusEffect se : statusEffectList)
          curVisionRange += se.getVisionRange();
+      curVisionRange = Math.min(MAP_WIDTH_TILES / 2, curVisionRange);
       return Math.max(1, curVisionRange);
    }
    

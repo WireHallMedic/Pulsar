@@ -15,6 +15,8 @@ public interface ActorConstants
    {
       BURNING,
       FROZEN,
-      BLIND;
+      BLIND,
+      EAGLE_EYE,
+      HASTE;
    }
 }
