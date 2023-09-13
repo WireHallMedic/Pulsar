@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.Toolkit.*;
 import java.util.*;
 
-public class InputManager implements KeyListener, AIConstants, EngineConstants
+public class InputManager implements KeyListener, AIConstants, EngineConstants, ActorConstants
 {
    private Toolkit toolkit;
    private PulsarMain parent;
@@ -289,13 +289,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       if(arg == 'x')
       {
          Actor player = GameEngine.getPlayer();
-         player.add(new StatusEffect("Test effect", 10));
-         StatusEffect se = new StatusEffect("Test Stackable Effect", 10);
-         se.setStacks(true);
-         player.add(se);
-         se = new StatusEffect("You shouldn't see this", 10);
-         se.setExpires(false);
-         player.add(se);
+         player.add(StatusEffectFactory.getEffect(StatusEffectType.BURNING));
          return;
       }
       Actor player = GameEngine.getPlayer();

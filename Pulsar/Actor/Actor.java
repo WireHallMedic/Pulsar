@@ -42,7 +42,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public int getTurnEnergy(){return turnEnergy;}
    public BasicAI getAI(){return ai;}
    public ActorMemory getMemory(){return memory;}
-   public int getVisionRange(){return visionRange;}
+   public int getBaseVisionRange(){return visionRange;}
    public Shield getShield(){return shield;}
    public Armor getArmor(){return armor;}
    public int getCurHealth(){return curHealth;}
@@ -50,8 +50,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public Color getBloodColor(){return bloodColor;}
    public Weapon getUnarmedAttack(){return unarmed;}
    public boolean isFlying(){return flying;}
-   public ActionSpeed getAttackSpeed(){return attackSpeed;}
-   public ActionSpeed getInteractSpeed(){return interactSpeed;}
+   public ActionSpeed getBaseMoveSpeed(){return moveSpeed;}
+   public ActionSpeed getBaseAttackSpeed(){return attackSpeed;}
+   public ActionSpeed getBaseInteractSpeed(){return interactSpeed;}
    public Alertness getAlertness(){return alertness;}
    public AlertnessManager getAlertnessManager(){return alertnessManager;}
    public Vector<StatusEffect> getStatusEffectList(){return statusEffectList;}
@@ -260,13 +261,6 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    }
    
    
-   public ActionSpeed getMoveSpeed()
-   {
-      if(hasArmor() && armor.getSpeedCap().timeCost > moveSpeed.timeCost)
-         return armor.getSpeedCap();
-      return moveSpeed;
-   }
-   
    // health methods
    ////////////////////////////////////////////////////////////////////
    public void fullyHeal()
@@ -372,6 +366,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    private void endOfTurn()
    {
       updateMemory();
+      applyOngoingDamage();
       startOfTurnPerformed = false;
    }
    
@@ -429,6 +424,10 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    
    public void add(StatusEffect se)
    {
+      Color color = TERMINAL_FG_COLOR;
+      if(se.isNegative())
+         color = WARNING_COLOR;
+      MessagePanel.addMessage("You are " + se.getDescriptor() + "!", color);
       boolean needToAdd = true;
       for(int i = 0; i < statusEffectList.size(); i++)
       {
@@ -452,6 +451,71 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
             tempList.add(se);
       }
       return tempList;
+   }
+   
+   public void applyOngoingDamage()
+   {
+      for(StatusEffect se : statusEffectList)
+      {
+         if(se.getOngoingDamage() > 0)
+            applyDamage(se.getOngoingDamage(), se.getDamageType(), true);
+      }
+   }
+   
+   public int getVisionRange()
+   {
+      int curVisionRange = getBaseVisionRange();
+      for(StatusEffect se : statusEffectList)
+         curVisionRange += se.getVisionRange();
+      return Math.max(1, curVisionRange);
+   }
+   
+   // modified by both status effects and armor
+   public ActionSpeed getMoveSpeed()
+   {
+      ActionSpeed speed = getBaseMoveSpeed();
+      int speedMod = 0;
+      for(StatusEffect se : statusEffectList)
+         speedMod += se.getMoveSpeed();
+      if(speedMod < 0)
+         for(int i = 0; i < Math.abs(speedMod); i++)
+            speed = speed.slower();
+      if(speedMod > 0)
+         for(int i = 0; i < speedMod; i++)
+            speed = speed.faster();
+      if(hasArmor() && armor.getSpeedCap().timeCost > speed.timeCost)
+         return armor.getSpeedCap();
+      return speed;
+   }
+   
+   public ActionSpeed getAttackSpeed()
+   {
+      ActionSpeed speed = getBaseAttackSpeed();
+      int speedMod = 0;
+      for(StatusEffect se : statusEffectList)
+         speedMod += se.getAttackSpeed();
+      if(speedMod < 0)
+         for(int i = 0; i < Math.abs(speedMod); i++)
+            speed = speed.slower();
+      if(speedMod > 0)
+         for(int i = 0; i < speedMod; i++)
+            speed = speed.faster();
+      return speed;
+   }
+   
+   public ActionSpeed getInteractSpeed()
+   {
+      ActionSpeed speed = getBaseInteractSpeed();
+      int speedMod = 0;
+      for(StatusEffect se : statusEffectList)
+         speedMod += se.getInteractSpeed();
+      if(speedMod < 0)
+         for(int i = 0; i < Math.abs(speedMod); i++)
+            speed = speed.slower();
+      if(speedMod > 0)
+         for(int i = 0; i < speedMod; i++)
+            speed = speed.faster();
+      return speed;
    }
    
 }
