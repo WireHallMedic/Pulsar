@@ -3,6 +3,7 @@ package Pulsar.Actor;
 import WidlerSuite.*;
 import Pulsar.Engine.*;
 import Pulsar.Gear.*;
+import Pulsar.Zone.*;
 import Pulsar.GUI.*;
 import Pulsar.AI.*;
 import java.awt.*;
@@ -167,7 +168,14 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public boolean canStep(Coord c){return canStep(c.x, c.y);}
    public boolean canStep(int x, int y)
    {
-      return GameEngine.getZoneMap().getTile(x, y).isLowPassable() && !GameEngine.isActorAt(x, y);
+      if(GameEngine.isActorAt(x, y))
+         return false;
+      MapTile tile = GameEngine.getZoneMap().getTile(x, y);
+      if(isFlying() && tile.isHighPassable())
+         return true;
+      if(tile.isLowPassable())
+         return true;
+      return false;
    }
    
    public boolean canSee(int x, int y){return canSee(new Coord(x, y));}

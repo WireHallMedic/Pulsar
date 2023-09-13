@@ -270,12 +270,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
    
    public void debug(char arg)
    {
-      if(arg == ' ')
-      {
-         MovementScript msa = MovementScriptFactory.getAttackAnimation(GameEngine.getPlayer(), GameEngine.getActorList().elementAt(1).getMapLoc());
-         GameEngine.getMapPanel().addLocking(msa);
-         return;
-      }
       if(arg == 'e')
       {
          System.out.println(GameEngine.isActorAt(GameEngine.getPlayer().getMapLoc()));
@@ -296,13 +290,10 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       if(arg == 'x')
       {
          Actor player = GameEngine.getPlayer();
-         MainGameFGPanel mapPanel = GameEngine.getMapPanel();
-         Actor enemy = GameEngine.getActorList().elementAt(1);
-         MovementScript msa = MovementScriptFactory.getShootScript(player, enemy.getMapLoc());
-         MovementScript msd = MovementScriptFactory.getImpactScript(enemy, player.getMapLoc(), 0);
-         mapPanel.addLocking(msa);
-         mapPanel.addLocking(msd);
-         VisualEffectFactory.createSpray(enemy.getMapLoc(), player.getMapLoc(), Color.RED);
+         Coord origin = player.getMapLoc();
+         origin.x -= 1;
+         Combat.doKnockback(player, origin, 1);
+         player.discharge(1);
          return;
       }
       Actor player = GameEngine.getPlayer();

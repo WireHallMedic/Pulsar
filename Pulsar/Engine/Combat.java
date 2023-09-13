@@ -270,4 +270,28 @@ public class Combat implements GUIConstants, GearConstants
       }
       MessagePanel.addMessage(attacker.getName() + " " + weapon.getHitDescriptor() + " " + targetString + "!");
    }
+   
+   public static void doKnockback(Actor actor, Coord source, int knockback)
+   {
+      if(knockback <= 0)
+         return;
+      Vect kbVect = new Vect(source, actor.getMapLoc());
+      kbVect.magnitude = (double)knockback;
+      Coord targetTile = new Coord(kbVect);
+      targetTile.x += actor.getMapLoc().x;
+      targetTile.y += actor.getMapLoc().y;
+      Vector<Coord> knockbackPath = StraightLine.findLine(actor.getMapLoc(), targetTile, StraightLine.REMOVE_ORIGIN);
+      targetTile = null;
+      for(Coord tile : knockbackPath)
+      {
+         if(!actor.canStep(tile))
+            break;
+         targetTile = tile;
+      }
+      if(targetTile == null)
+         return;
+      MovementScript ms = MovementScriptFactory.getKnockbackScript(actor, targetTile);
+      GameEngine.getMapPanel().addLocking(ms);
+      actor.setMapLoc(targetTile);
+   }
 }

@@ -368,7 +368,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       {
          if(actorList.size() == 0)
             continue;
-         
          curActor = actorList.elementAt(initiativeIndex);
          // charge current actor
          curActor.charge();
@@ -395,10 +394,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          }
          // increment if acted
          if(!(curActor.isReadyToAct()))
-            incrementInitiative();
+            incrementInitiative(); 
          // do cleanup
-         cleanUpDead();
-         cleanUpSprites();
+         cleanUpCheck();
          if(getPlayer().isDead())
          {
             MessagePanel.addMessage("You have died.", Color.RED);
@@ -407,18 +405,26 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       }
    }
    
-   public void cleanUpSprites()
+   public void cleanUpCheck()
+   {
+      if(!isAnimationLocked())
+      {
+         cleanUpDead();
+         cleanUpSprites();
+      }
+   }
+   
+   private void cleanUpSprites()
    {
       Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)
       {
          Actor curActor = actorList.elementAt(i);
-         if(!mapPanel.isOnLockList(curActor))
-            curActor.reconcileSprite();
+         curActor.reconcileSprite();
       }
    }
    
-   public void cleanUpDead()
+   private void cleanUpDead()
    {
       Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)

@@ -14,7 +14,7 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    {
       MapTile tile = new MapTile(baseType.iconIndex, fgColor.getRGB(), bgColor.getRGB(), baseType.name, 
                                  baseType.lowPassable, baseType.highPassable, baseType.transparent);
-      if(baseType == TileType.NULL)
+      if(baseType == TileType.NULL || baseType == TileType.CLEAR)
          tile.setDurability(Durability.UNBREAKABLE);
       return tile;
    }

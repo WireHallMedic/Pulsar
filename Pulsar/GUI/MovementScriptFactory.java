@@ -24,6 +24,21 @@ public class MovementScriptFactory implements GUIConstants
       return ms;
    }
    
+   public static MovementScript getKnockbackScript(Actor actor, Coord target)
+   {
+      UnboundTile ut = actor.getSprite();
+      int xStep = GUITools.getXStep(ut.getXLoc(), target.x);
+      int yStep = GUITools.getYStep(ut.getYLoc(), target.y);
+      MovementScript ms = new MovementScript(ut);
+      int steps = (int)(1.0 / FAST_MOVE_SPEED);
+      for(int i = 0; i < steps; i++)
+      {
+         ms.setOffset(i, FAST_MOVE_SPEED * xStep, FAST_MOVE_SPEED * yStep);
+      }
+      ms.setNonlocksTargetOnEnd(true);
+      return ms;
+   }
+   
    public static MovementScript getImpactScript(Actor actor, Coord origin, int delay)
    {
       UnboundTile ut = actor.getSprite();
