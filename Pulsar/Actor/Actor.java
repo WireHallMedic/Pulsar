@@ -7,6 +7,7 @@ import Pulsar.Zone.*;
 import Pulsar.GUI.*;
 import Pulsar.AI.*;
 import java.awt.*;
+import java.util.*;
 
 
 public class Actor implements ActorConstants, GUIConstants, AIConstants
@@ -32,6 +33,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    protected ActionSpeed interactSpeed;
    protected Alertness alertness;
    protected AlertnessManager alertnessManager;
+   protected Vector<StatusEffect> statusEffectList;
 
 
    public String getName(){return name;}
@@ -49,10 +51,10 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public Weapon getUnarmedAttack(){return unarmed;}
    public boolean isFlying(){return flying;}
    public ActionSpeed getAttackSpeed(){return attackSpeed;}
-   
    public ActionSpeed getInteractSpeed(){return interactSpeed;}
    public Alertness getAlertness(){return alertness;}
    public AlertnessManager getAlertnessManager(){return alertnessManager;}
+   public Vector<StatusEffect> getStatusEffectList(){return statusEffectList;}
 
 
    public void setName(String n){name = n;}
@@ -76,6 +78,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public void setInteractSpeed(ActionSpeed is){interactSpeed = is;}
    public void setAlertness(Alertness a){alertness = a;}
    public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
+   public void setStatusEffectList(Vector<StatusEffect> sel){statusEffectList = sel;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -101,6 +104,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       interactSpeed = ActionSpeed.STANDARD;
       alertness = Alertness.RELAXED;
       alertnessManager = new AlertnessManager(this);
+      statusEffectList = new Vector<StatusEffect>();
    }
    
    public void setColor(Color c)
@@ -128,6 +132,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          icon, fgColor, bgColor, OuterPanel.getSizeMultiplier(), UnboundTile.CIRCLE_BACKGROUND);
       sprite.setAffectedByAge(false);
    }
+   
+   // location stuff
+   ///////////////////////////////////////////////////////////////////////////////
    
    public void setAllLocs(Coord l){setAllLocs(l.x, l.y);}
    public void setAllLocs(int x, int y)
@@ -185,6 +192,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       return WSTools.getAngbandMetric(getMapLoc(), target) <= getVisionRange() &&
          GameEngine.getZoneMap().canSee(getMapLoc(), target, getVisionRange());
    }
+   
+   // team stuff
+   ///////////////////////////////////////////////////////////////////////////////
    
    public boolean isHostile(Actor that)
    {
@@ -323,6 +333,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          if(weapon != null)
             weapon.charge();
          memory.increment();
+         incrementStatusEffects();
       }
    }
    
@@ -398,6 +409,38 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          }
       }
       alertnessManager.update(enemySighted);
+   }
+   
+   // status effect stuff
+   ///////////////////////////////////////////////////////////////////////////////
+   public void incrementStatusEffects()
+   {
+      for(int i = 0; i < statusEffectList.size(); i++)
+      {
+         StatusEffect se = statusEffectList.elementAt(i);
+         se.increment();
+         if(se.isExpired())
+         {
+            statusEffectList.removeElementAt(i);
+            i--;
+         }
+      }
+   }
+   
+   public void add(StatusEffect se)
+   {
+      boolean needToAdd = true;
+      for(int i = 0; i < statusEffectList.size(); i++)
+      {
+         if(statusEffectList.elementAt(i).shouldCombine(se))
+         {
+            needToAdd = false;
+            statusEffectList.elementAt(i).combine(se);
+            break;
+         }
+      }
+      if(needToAdd)
+         statusEffectList.add(se);
    }
    
 }

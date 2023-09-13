@@ -290,10 +290,10 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants
       if(arg == 'x')
       {
          Actor player = GameEngine.getPlayer();
-         Coord origin = player.getMapLoc();
-         origin.x -= 1;
-         Combat.doKnockback(player, origin, 1);
-         player.discharge(1);
+         player.add(new StatusEffect("Test effect", 10));
+         StatusEffect se = new StatusEffect("Test Stackable Effect", 10);
+         se.setStacks(true);
+         player.add(se);
          return;
       }
       Actor player = GameEngine.getPlayer();

@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3575;g
+!3658;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -46,6 +46,7 @@ s#l0
 %\011%uWidlerSuite%sFontLoader.java
 %\011Pulsar%sGUI%sPlayerPanel.java
 %\011Pulsar%sGear%sShield.java
+%\011Pulsar%sActor%sStatusEffectFactory.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011Pulsar%sGear%sArmorFactory.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -60,6 +61,7 @@ s#l0
 %\011%uWidlerSuite%sAStarNode.java
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011Pulsar%sZone%sZone.java
+%\011Pulsar%sActor%sStatusEffect.java
 %\011%uWidlerSuite%sFloodFill.java
 %\011Pulsar%sGear%sArmor.java
 %\011Pulsar%sAI%sAIConstants.java
@@ -112,7 +114,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3575;f
+!3658;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -146,6 +148,7 @@ s#l0
 %\011%uWidlerSuite%sFontLoader.java
 %\011Pulsar%sGUI%sPlayerPanel.java
 %\011Pulsar%sGear%sShield.java
+%\011Pulsar%sActor%sStatusEffectFactory.java
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011Pulsar%sGear%sArmorFactory.java
 %\011%uWidlerSuite%sLuhnChecksum.java
@@ -160,6 +163,7 @@ s#l0
 %\011%uWidlerSuite%sAStarNode.java
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011Pulsar%sZone%sZone.java
+%\011Pulsar%sActor%sStatusEffect.java
 %\011%uWidlerSuite%sFloodFill.java
 %\011Pulsar%sGear%sArmor.java
 %\011Pulsar%sAI%sAIConstants.java

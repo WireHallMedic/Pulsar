@@ -78,6 +78,17 @@ public class PlayerPanel extends MessagePanel
       
       write(X_ORIGIN, Y_ORIGIN + 5, player.getWeapon().getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 6, player.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 3);
+      
+      int additionalYSpacing = 0;
+      for(int i = 0; i < 3; i++)
+         if(getIcon(X_ORIGIN, Y_ORIGIN + 7 + i) != ' ')
+            additionalYSpacing++;
+      
+      for(int i = 0; i < player.getStatusEffectList().size(); i++)
+      {
+         StatusEffect se = player.getStatusEffectList().elementAt(i);
+         write(X_ORIGIN, Y_ORIGIN + 7 + i + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      }
    }
    
    @Override
