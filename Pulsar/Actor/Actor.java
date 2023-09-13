@@ -191,7 +191,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public boolean canSee(Coord target)
    {
       return WSTools.getAngbandMetric(getMapLoc(), target) <= getVisionRange() &&
-         GameEngine.getZoneMap().canSee(getMapLoc(), target, getVisionRange());
+         GameEngine.getZoneMap().canSee(getMapLoc(), target, getVisionRange() + 1);
    }
    
    // team stuff

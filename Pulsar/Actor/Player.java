@@ -105,7 +105,7 @@ public class Player extends Actor implements GUIConstants
       ShadowFoVRect fov = map.getFoV();
       if(fov == null)
          return;
-      fov.calcFoV(getMapLoc().x, getMapLoc().y, getVisionRange());
+      fov.calcFoV(getMapLoc().x, getMapLoc().y, getVisionRange() + 1);
       visibilityMapCorner = new Coord(getMapLoc().x - (VISIBILITY_MAP_WIDTH / 2), 
                                        getMapLoc().y - (VISIBILITY_MAP_HEIGHT / 2));
       visibilityMap = fov.getArray(visibilityMapCorner.x, visibilityMapCorner.y, VISIBILITY_MAP_WIDTH, VISIBILITY_MAP_HEIGHT);
