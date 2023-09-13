@@ -307,8 +307,8 @@ public class BasicAI implements AIConstants
       if(GameEngine.playerCanSee(pendingTarget) || GameEngine.playerCanSee(self))
       {
          MovementScript ms = MovementScriptFactory.getWalkingScript(self, pendingTarget);
-         self.setMapLoc(pendingTarget);
          GameEngine.addLocking(ms);
+         self.setMapLoc(pendingTarget);
       }
       else
       {
