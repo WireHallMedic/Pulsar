@@ -85,6 +85,7 @@ public class WeaponFactory implements GearConstants
    {
       Weapon w = getBasicWeapon(WeaponType.PLASMA);
       w.setName("Exploding Barrel");
+      w.addWeaponTag(WeaponTag.KNOCKBACK);
       w.setChargeCost(0);
       return w;
    }
