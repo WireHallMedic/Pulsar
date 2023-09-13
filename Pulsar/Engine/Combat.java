@@ -14,6 +14,7 @@ public class Combat implements GUIConstants, GearConstants
    public static void resolveAttack(Actor attacker, Coord initialTarget, Weapon weapon)
    {
       Vector<Coord> targetList = getActualTargets(attacker.getMapLoc(), initialTarget, weapon);
+      Vector<Coord> damageOriginList = getDamageOriginList(targetList, weapon, attacker.getMapLoc());
       Vector<Actor> targetActorList = new Vector<Actor>();
       // attacker animation
       if(GameEngine.playerCanSee(attacker))
@@ -21,12 +22,13 @@ public class Combat implements GUIConstants, GearConstants
          MovementScript msa = MovementScriptFactory.getAttackAnimation(attacker, initialTarget);
          getMapPanel().addLocking(msa);
       }
-      for(Coord target : targetList)
+      for(int i = 0; i < targetList.size(); i++)
       {
+         Coord target = targetList.elementAt(i);
          Actor defender = GameEngine.getActorAt(target);
          if(defender != null)
          {
-            resolveAttackAgainstActor(attacker, defender, weapon);
+            resolveAttackAgainstActor(damageOriginList.elementAt(i), defender, weapon);
             targetActorList.add(defender);
          }
          else
@@ -125,6 +127,25 @@ public class Combat implements GUIConstants, GearConstants
       // all clear single target
       targetList.add(initialTarget);
       return targetList;
+   }
+   
+   public static Vector<Coord> getDamageOriginList(Vector<Coord> targetList, Weapon weapon, Coord attackOrigin)
+   {
+      Vector<Coord> originList =  new Vector<Coord>();
+      for(int i = 0; i < targetList.size(); i++)
+      {
+         if(weapon.hasWeaponTag(WeaponTag.BLAST))
+         {
+            originList.add(new Coord(targetList.elementAt(4)));
+            if(i == 4)
+               originList.setElementAt(new Coord(attackOrigin), 4);
+         }
+         else
+         {
+            originList.add(new Coord(attackOrigin));
+         }
+      }
+      return originList;
    }
    
    public static void resolveAttackAgainstActor(Actor attacker, Actor defender, Weapon weapon){resolveAttackAgainstActor(attacker.getMapLoc(), defender, weapon);}
@@ -227,12 +248,13 @@ public class Combat implements GUIConstants, GearConstants
       return finalTargetList;
    }
    
+   // order in which these are generated is important
    public static Vector<Coord> getBlastTargets(Coord origin, Coord target)
    {
       Coord detonationLoc = GameEngine.getDetonationLoc(origin, target);
       Vector<Coord> blastList = new Vector<Coord>();
-      for(int x = -1; x < 2; x++)
       for(int y = -1; y < 2; y++)
+      for(int x = -1; x < 2; x++)
       {
          blastList.add(new Coord(detonationLoc.x +x, detonationLoc.y + y));
       }

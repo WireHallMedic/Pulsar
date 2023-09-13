@@ -71,7 +71,7 @@ public class WeaponFactory implements GearConstants
    
    public static Weapon getAlienSpit()
    {
-      Weapon w = getBasicWeapon(WeaponType.SLUG_RIFLE);
+      Weapon w = getBasicWeapon(WeaponType.DEFAULT);
       w.setName("Acid Spit");
       w.setBaseDamage(DEFAULT_BASE_DAMAGE);
       w.setChargeCost(0);

@@ -59,6 +59,7 @@ public interface GearConstants extends WSFontConstants
    
    public enum WeaponType
    {
+      DEFAULT        ("Unknown Weapon"),
       SLUG_RIFLE     ("Slug Rifle"),
       BATTLE_RIFLE   ("Battle Rifle"),
       AUTORIFLE      ("Autorifle"),
