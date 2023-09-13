@@ -1,6 +1,8 @@
 package Pulsar.Gear;
 
-public class WeaponFactory implements GearConstants
+import Pulsar.Actor.*;
+
+public class WeaponFactory implements GearConstants, ActorConstants
 {
    public static Weapon EXPLODING_BARREL = getExplodingBarrel();
    
@@ -72,11 +74,13 @@ public class WeaponFactory implements GearConstants
    public static Weapon getAlienSpit()
    {
       Weapon w = getBasicWeapon(WeaponType.DEFAULT);
-      w.setName("Acid Spit");
+      w.setName("Flame Spit");
       w.setBaseDamage(DEFAULT_BASE_DAMAGE);
       w.setChargeCost(0);
       w.setDamageType(DamageType.THERMAL);
-      w.setHitDescriptor("spits on");
+      w.setStatusEffectChance(.25);
+      w.setStatusEffectType(StatusEffectType.BLIND);
+      w.setHitDescriptor("spits acidic goo on");
       return w;
    }
    

@@ -427,7 +427,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       Color color = TERMINAL_FG_COLOR;
       if(se.isNegative())
          color = WARNING_COLOR;
-      MessagePanel.addMessage("You are " + se.getDescriptor() + "!", color);
+      if(GameEngine.playerCanSee(this))
+         MessagePanel.addMessage("You are " + se.getDescriptor() + "!", color);
       boolean needToAdd = true;
       for(int i = 0; i < statusEffectList.size(); i++)
       {

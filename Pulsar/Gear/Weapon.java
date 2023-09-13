@@ -1,8 +1,9 @@
 package Pulsar.Gear;
 
 import java.util.*;
+import Pulsar.Actor.*;
 
-public class Weapon extends GearObj implements GearConstants, Chargable
+public class Weapon extends GearObj implements GearConstants, Chargable, ActorConstants
 {	
    private int baseDamage;
 	private int variableDamage;
@@ -14,6 +15,8 @@ public class Weapon extends GearObj implements GearConstants, Chargable
 	private int chargeCost;
 	private int chargeRate;
    private String hitDescriptor;
+   private double statusEffectChance;
+   private StatusEffectType statusEffectType;
 
 
 	public int getBaseDamage(){return baseDamage;}
@@ -26,6 +29,8 @@ public class Weapon extends GearObj implements GearConstants, Chargable
 	public int getChargeCost(){return chargeCost;}
 	public int getChargeRate(){return chargeRate;}
    public String getHitDescriptor(){return hitDescriptor;}
+   public double getStatusEffectChance(){return statusEffectChance;}
+   public StatusEffectType getStatusEffectType(){return statusEffectType;}
 
 
 	public void setBaseDamage(int b){baseDamage = b;}
@@ -38,6 +43,10 @@ public class Weapon extends GearObj implements GearConstants, Chargable
 	public void setChargeCost(int c){chargeCost = c;}
 	public void setChargeRate(int r){chargeRate = r;}
    public void setHitDescriptor(String hd){hitDescriptor = hd;}
+   public void setStatusEffectChance(double sec){statusEffectChance = sec;}
+   public void setStatusEffectType(StatusEffectType set){statusEffectType = set;}
+   
+   public boolean inflictsStatusEffect(){return statusEffectChance > 0.0 && statusEffectType != null;}
 
 
    public Weapon(){this("Unknown Weapon");}
@@ -54,6 +63,8 @@ public class Weapon extends GearObj implements GearConstants, Chargable
       chargeCost = 4;
       chargeRate = 1;
       hitDescriptor = "strikes";
+      statusEffectChance = 0.0;
+      statusEffectType = null;
    }
    
    public void fullyCharge()

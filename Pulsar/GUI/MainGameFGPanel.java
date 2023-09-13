@@ -156,6 +156,9 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                         clearPath = false;
                   }
                }
+               // when targeting player, show cursor
+               if(GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
+                  setBGColor(cursorLoc.x, cursorLoc.y, TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB());
             }
          }
          if(GameEngine.getGameMode() == GameMode.STANDARD)

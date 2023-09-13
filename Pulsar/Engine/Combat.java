@@ -155,11 +155,16 @@ public class Combat implements GUIConstants, GearConstants
       int startingHealth = defender.getCurHealth();
       int[] damageArray = rollDamage(weapon);
       int delay = weapon.isMelee() ? MELEE_ATTACK_HIT_DELAY : 0;
+      boolean inflictStatusEffect = false;
       
       for(int i = 0; i < damageArray.length; i++)
       {
          defender.applyDamage(damageArray[i], weapon.getDamageType(), false);
+         inflictStatusEffect = inflictStatusEffect || shouldInflictStatusEffect(weapon);
       }
+      // inflict status effect
+      if(inflictStatusEffect)
+         defender.add(StatusEffectFactory.getEffect(weapon.getStatusEffectType()));
       
       if(weapon.hasWeaponTag(WeaponTag.KNOCKBACK))
          doKnockback(defender, origin, 1);
@@ -187,6 +192,13 @@ public class Combat implements GUIConstants, GearConstants
             GameEngine.getZoneMap().getTile(defender.getMapLoc()).setFGColor(defender.getBloodColor().getRGB());
          }
       }
+   }
+   
+   public static boolean shouldInflictStatusEffect(Weapon weapon)
+   {
+      if(weapon.inflictsStatusEffect() && GameEngine.random() <= weapon.getStatusEffectChance())
+         return true;
+      return false;
    }
    
    public static int[] rollDamage(Weapon weapon)
