@@ -14,7 +14,28 @@ public interface AIConstants
       ATTACK,
       UNARMED_ATTACK,
       USE,
-      SWITCH_WEAPONS;
+      SWITCH_WEAPONS,
+      GADGET_0,
+      GADGET_1,
+      GADGET_2,
+      GADGET_3,
+      GADGET_4;
+      
+      public boolean isGadgetAction()
+      {
+         return this == GADGET_0 ||
+                this == GADGET_1 ||
+                this == GADGET_2 ||
+                this == GADGET_3 ||
+                this == GADGET_4;
+      }
+      
+      public int getGadgetIndex()
+      {
+         if(isGadgetAction())
+            return this.ordinal() - GADGET_0.ordinal();
+         return -1;
+      }
    }
    
    public enum Team

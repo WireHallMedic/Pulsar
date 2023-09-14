@@ -118,6 +118,8 @@ public class BasicAI implements AIConstants
          case SWITCH_WEAPONS :   doWeaponSwitch(); break;
          case UNARMED_ATTACK :   doUnarmedAttack(); break;
       }
+      if(pendingAction.isGadgetAction())
+         doGadgetAction(pendingAction.getGadgetIndex());
       shiftPendingToPrevious();
       clearPlan();
       GameEngine.getPlayer().updateFoV();
@@ -357,6 +359,33 @@ public class BasicAI implements AIConstants
          Player pSelf = (Player)self;
          pSelf.switchWeapons();
          self.discharge(self.getInteractSpeed().timeCost);
+      }
+   }
+   
+   private void doGadgetAction(int index)
+   {
+      if(self instanceof Player)
+      {
+         Player pSelf = (Player)self;
+         Gadget gadget = pSelf.getGadget(index);
+         // no gadget found, should never happen
+         if(gadget == null)
+         {
+            MessagePanel.addMessage("No gadget to use");
+            clearPlan();
+         }
+         // out of charges
+         else if(!gadget.canUse())
+         {
+            MessagePanel.addMessage(gadget.getName() + " is out of charges");
+            clearPlan();
+         }
+         else
+         {
+            System.out.println("Use gadget " + (1 + index));
+            self.discharge(self.getInteractSpeed().timeCost);
+            gadget.discharge();
+         }
       }
    }
    

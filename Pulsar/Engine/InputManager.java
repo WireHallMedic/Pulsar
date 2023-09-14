@@ -104,7 +104,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
    
    public void standardModeKeyPressed(KeyEvent ke)
    {
-      Actor player = GameEngine.getPlayer();
+      Player player = GameEngine.getPlayer();
       Coord playerLoc = player.getMapLoc();
       Coord target = null;
       if(player.isDead())
@@ -154,20 +154,47 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             case KeyEvent.VK_H : InnerPanel.setActivePanel(HelpPanel.class); 
                                  GameEngine.setGameMode(GameMode.OTHER_PANEL);
                                  break;
+            case KeyEvent.VK_1 : setPlayerAction(ActorAction.GADGET_0);
+                                 break;
+            case KeyEvent.VK_2 : setPlayerAction(ActorAction.GADGET_1);
+                                 break;
+            case KeyEvent.VK_3 : setPlayerAction(ActorAction.GADGET_2);
+                                 break;
+            case KeyEvent.VK_4 : setPlayerAction(ActorAction.GADGET_3);
+                                 break;
+            case KeyEvent.VK_5 : setPlayerAction(ActorAction.GADGET_4);
+                                 break;
             case KeyEvent.VK_X : debug('x'); break;
             case KeyEvent.VK_D : debug('d'); break;
             case KeyEvent.VK_SPACE : debug(' '); break;
          }
       }
       
+      ActorAction pendingAction = player.getAI().getPendingAction();
+      
+      // using a gadget
+      if(pendingAction != null && pendingAction.isGadgetAction())
+      {
+         Gadget gadget = player.getGadget(pendingAction);
+         if(gadget == null)
+         {
+            MessagePanel.addMessage("You do not have a gadget in that slot");
+            player.getAI().clearPlan();
+         }
+         else
+         {
+            setPlayerTarget(player.getMapLoc());
+         }
+      }
+      
       // have a target, don't have an action, allowed to act
-      if(target != null && player.getAI().getPendingAction() == null)// && GameEngine.isAnimationLocked() == false)
+      if(target != null && pendingAction == null)
       {
          setPlayerTarget(target);
          setPlayerAction(ActorAction.CONTEXT_SENSITIVE);
       }
       // attempting to use something
-      if(target != null && player.getAI().getPendingAction() == ActorAction.USE)// && GameEngine.isAnimationLocked() == false)
+      if(target != null && pendingAction == ActorAction.USE)
       {
          setPlayerTarget(target);
       }

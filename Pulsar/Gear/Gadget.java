@@ -29,4 +29,14 @@ public class Gadget extends GearObj implements GearConstants
    {
       remainingUses = maxUses;
    }
+   
+   public void discharge()
+   {
+      remainingUses--;
+   }
+   
+   public boolean canUse()
+   {
+      return getRemainingUses() > 0;
+   }
 }

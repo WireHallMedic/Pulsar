@@ -164,6 +164,14 @@ public class Player extends Actor implements GUIConstants
       return null;
    }
    
+   public Gadget getGadget(ActorAction action)
+   {
+      int index = action.getGadgetIndex();
+      if(index == -1)
+         return null;
+      return getGadget(index);
+   }
+   
    public void removeGadget(int index)
    {
       if(index < gadgetList.size())
