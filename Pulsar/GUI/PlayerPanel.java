@@ -91,7 +91,7 @@ public class PlayerPanel extends MessagePanel
       int totalGadgets = player.getGadgetList().size();
       for(int i = 0; i < totalGadgets; i++)
       {
-         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, (1 + i) + ": " + player.getGadget(i).getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, (1 + i) + ": " + player.getGadget(i).getShortSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
          additionalYSpacing++;
       }
       
@@ -100,7 +100,10 @@ public class PlayerPanel extends MessagePanel
       for(int i = 0; i < statusEffectList.size(); i++)
       {
          StatusEffect se = statusEffectList.elementAt(i);
-         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         Color c = TERMINAL_FG_COLOR;
+         if(se.isNegative())
+            c = WARNING_COLOR;
+         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), c.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
          additionalYSpacing++;
       }
    }

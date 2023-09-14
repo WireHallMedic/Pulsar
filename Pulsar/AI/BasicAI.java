@@ -382,7 +382,7 @@ public class BasicAI implements AIConstants
          }
          else
          {
-            System.out.println("Use gadget " + (1 + index));
+            gadget.use(pendingTarget);
             self.discharge(self.getInteractSpeed().timeCost);
             gadget.discharge();
          }

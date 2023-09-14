@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3658;g
+!3696;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -50,6 +50,7 @@ s#l0
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011Pulsar%sGear%sArmorFactory.java
 %\011%uWidlerSuite%sLuhnChecksum.java
+%\011Pulsar%sGear%sGadgetFactory.java
 %\011Pulsar%sEngine%sInputManager.java
 %\011Pulsar%sGUI%sGUITools.java
 %\011%uWidlerSuite%sBinarySpacePartitioning.java
@@ -114,7 +115,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3658;f
+!3696;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -152,6 +153,7 @@ s#l0
 %\011%uWidlerSuite%sMovementScriptStep.java
 %\011Pulsar%sGear%sArmorFactory.java
 %\011%uWidlerSuite%sLuhnChecksum.java
+%\011Pulsar%sGear%sGadgetFactory.java
 %\011Pulsar%sEngine%sInputManager.java
 %\011Pulsar%sGUI%sGUITools.java
 %\011%uWidlerSuite%sBinarySpacePartitioning.java

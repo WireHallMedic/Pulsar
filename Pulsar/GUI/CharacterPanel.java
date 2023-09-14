@@ -9,6 +9,7 @@ import WidlerSuite.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import java.util.*;
 import Pulsar.Actor.*;
 import Pulsar.Gear.*;
 import Pulsar.Engine.*;
@@ -137,6 +138,18 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
                         "Movement Speed: " + GUITools.initToSec(player.getMoveSpeed().timeCost) + "     " +
                         "Interact Speed: " + GUITools.initToSec(player.getInteractSpeed().timeCost);
       write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, speedStr, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      
+      // temporary status effects
+      Vector<StatusEffect> statusEffectList = player.getTemporaryStatusEffects();
+      for(int i = 0; i < statusEffectList.size(); i++)
+      {
+         StatusEffect se = statusEffectList.elementAt(i);
+         Color c = TERMINAL_FG_COLOR;
+         if(se.isNegative())
+            c = WARNING_COLOR;
+         write(X_ORIGIN, Y_ORIGIN + 8 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), c.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         additionalYSpacing++;
+      }
    }
    
    public void clear()
