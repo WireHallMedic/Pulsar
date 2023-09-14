@@ -139,6 +139,14 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
                         "Interact Speed: " + GUITools.initToSec(player.getInteractSpeed().timeCost);
       write(X_ORIGIN, Y_ORIGIN + 6 + additionalYSpacing, speedStr, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       
+      // Gadgets
+      for(int i = 0; i < player.getGadgetList().size(); i++)
+      {
+         Gadget g = player.getGadget(i);
+         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, g.getSummary() + ": " + g.getDescription(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         additionalYSpacing++;
+      }
+      
       // temporary status effects
       Vector<StatusEffect> statusEffectList = player.getTemporaryStatusEffects();
       for(int i = 0; i < statusEffectList.size(); i++)
@@ -147,7 +155,7 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
          Color c = TERMINAL_FG_COLOR;
          if(se.isNegative())
             c = WARNING_COLOR;
-         write(X_ORIGIN, Y_ORIGIN + 8 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), c.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         write(X_ORIGIN, Y_ORIGIN + 9 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), c.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
          additionalYSpacing++;
       }
    }

@@ -9,6 +9,7 @@ public class CloneAI extends BasicAI
    {
       super(s);
       team = Team.PLAYER;
+      self.setAlertness(Alertness.ALERT);
    }
    
    public void plan()

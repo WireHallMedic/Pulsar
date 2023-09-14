@@ -11,6 +11,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Adrenal Inj");
       g.setStatusEffectType(StatusEffectType.HASTE);
       g.setTargetsSelf(true);
+      g.setDescription("Increases your speed.");
       return g;
    }
    
@@ -21,6 +22,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Grenades");
       g.setWeaponEffect(WeaponFactory.getExplodingBarrel());
       g.setTargetsSelf(false);
+      g.setDescription("Explodes where you throw it.");
       return g;
    }
    
@@ -31,6 +33,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Holoclone");
       g.setTargetsSelf(false);
       g.setSpecialEffect(GadgetSpecialEffect.HOLOCLONE);
+      g.setDescription("Create an exploding clone where you throw it.");
       return g;
    }
 }

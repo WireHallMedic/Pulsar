@@ -91,7 +91,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       name = n;
       mapLoc = new Coord(-1, -1);
       createSprite(icon, DEFAULT_ACTOR_FG_COLOR.getRGB(), DEFAULT_ACTOR_BG_COLOR.getRGB());
-      turnEnergy = 0;
+      turnEnergy = FULLY_CHARGED - ActionSpeed.SLOW.timeCost;
       ai = new BasicAI(this);
       memory = new ActorMemory(this);
       visionRange = DEFAULT_VISION_RANGE;

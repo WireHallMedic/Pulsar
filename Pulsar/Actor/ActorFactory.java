@@ -36,6 +36,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setMaxHealth(20);
       a.fullyHeal();
       a.setDeathEffect(DeathEffect.EXPLODE);
+      a.setTurnEnergy(FULLY_CHARGED);
       return a;
    }
    
