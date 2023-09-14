@@ -434,6 +434,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    
    public void add(StatusEffect se)
    {
+      if(isDead())
+         return;
       Color color = TERMINAL_FG_COLOR;
       if(se.isNegative())
          color = WARNING_COLOR;

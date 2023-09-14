@@ -196,7 +196,11 @@ public class BasicAI implements AIConstants
    protected Coord getStepTowards(Coord target)
    {
       if(EngineTools.isAdjacent(target, self.getMapLoc()))
+      {
+         if(GameEngine.isActorAt(target))
+            return null;
          return target;
+      }
       AStar pathing = new AStar();
       // get passability map
       boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);

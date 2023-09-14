@@ -168,18 +168,24 @@ public class Player extends Actor implements GUIConstants, GearConstants
    
    public boolean pendingAttackIsBlast()
    {
+      if(ai.getPendingAction() == null)
+         return false;
       Weapon pendingWeapon = getPendingWeapon();
       return pendingWeapon != null && pendingWeapon.hasWeaponTag(WeaponTag.BLAST);
    }
    
    public boolean pendingAttackIsSpread()
    {
+      if(ai.getPendingAction() == null)
+         return false;
       Weapon pendingWeapon = getPendingWeapon();
       return pendingWeapon != null && pendingWeapon.hasWeaponTag(WeaponTag.SPREAD);
    }
    
    public boolean pendingAttackIsMelee()
    {
+      if(ai.getPendingAction() == null)
+         return false;
       Weapon pendingWeapon = getPendingWeapon();
       return pendingWeapon != null && pendingWeapon.hasWeaponTag(WeaponTag.MELEE);
    }
