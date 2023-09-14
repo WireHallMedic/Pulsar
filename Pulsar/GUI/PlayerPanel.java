@@ -80,7 +80,7 @@ public class PlayerPanel extends MessagePanel
       }
       
       write(X_ORIGIN, Y_ORIGIN + 5, player.getWeapon().getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 6, player.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 3);
+   //   write(X_ORIGIN, Y_ORIGIN + 6, player.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 3);
       
       int additionalYSpacing = 0;
       for(int i = 0; i < 3; i++)
@@ -91,7 +91,7 @@ public class PlayerPanel extends MessagePanel
       int totalGadgets = player.getGadgetList().size();
       for(int i = 0; i < totalGadgets; i++)
       {
-         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, (1 + i) + ": " + player.getGadget(i).getShortSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         write(X_ORIGIN, Y_ORIGIN + 6 + additionalYSpacing, (1 + i) + ": " + player.getGadget(i).getShortSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
          additionalYSpacing++;
       }
       
@@ -103,7 +103,7 @@ public class PlayerPanel extends MessagePanel
          Color c = TERMINAL_FG_COLOR;
          if(se.isNegative())
             c = WARNING_COLOR;
-         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), c.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         write(X_ORIGIN, Y_ORIGIN + 6 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), c.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
          additionalYSpacing++;
       }
    }

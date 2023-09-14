@@ -137,7 +137,7 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
       String speedStr = "Attack Speed: " + GUITools.initToSec(player.getAttackSpeed().timeCost) + "     " +
                         "Movement Speed: " + GUITools.initToSec(player.getMoveSpeed().timeCost) + "     " +
                         "Interact Speed: " + GUITools.initToSec(player.getInteractSpeed().timeCost);
-      write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, speedStr, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+      write(X_ORIGIN, Y_ORIGIN + 6 + additionalYSpacing, speedStr, TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       
       // temporary status effects
       Vector<StatusEffect> statusEffectList = player.getTemporaryStatusEffects();
