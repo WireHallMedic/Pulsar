@@ -8,7 +8,7 @@ import Pulsar.Zone.*;
 import Pulsar.Gear.*;
 import java.util.*;
 
-public class Player extends Actor implements GUIConstants
+public class Player extends Actor implements GUIConstants, GearConstants
 {
    private static final int VISIBILITY_MAP_WIDTH = MAP_WIDTH_TILES + 2;
    private static final int VISIBILITY_MAP_HEIGHT = MAP_HEIGHT_TILES + 2;
@@ -153,6 +153,40 @@ public class Player extends Actor implements GUIConstants
       int shiftedX = target.x - visibilityMapCorner.x;
       int shiftedY = target.y - visibilityMapCorner.y;
       return visibilityMap[shiftedX][shiftedY];
+   }
+   
+   private Weapon getPendingWeapon()
+   {
+      if(ai.getPendingAction() == ActorAction.ATTACK)
+         return getWeapon();
+      if(ai.getPendingAction() == ActorAction.UNARMED_ATTACK)
+         return getUnarmedAttack();
+      if(ai.getPendingAction().isGadgetAction())
+         return getGadget(ai.getPendingAction()).getWeaponEffect();
+      return null;
+   }
+   
+   public boolean pendingAttackIsBlast()
+   {
+      Weapon pendingWeapon = getPendingWeapon();
+      return pendingWeapon != null && pendingWeapon.hasWeaponTag(WeaponTag.BLAST);
+   }
+   
+   public boolean pendingAttackIsSpread()
+   {
+      Weapon pendingWeapon = getPendingWeapon();
+      return pendingWeapon != null && pendingWeapon.hasWeaponTag(WeaponTag.SPREAD);
+   }
+   
+   public boolean pendingAttackIsMelee()
+   {
+      Weapon pendingWeapon = getPendingWeapon();
+      return pendingWeapon != null && pendingWeapon.hasWeaponTag(WeaponTag.MELEE);
+   }
+   
+   public boolean pendingAttackIsStandard()
+   {
+      return !(pendingAttackIsSpread() || pendingAttackIsBlast() || pendingAttackIsMelee());
    }
    
    

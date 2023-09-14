@@ -33,7 +33,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    public void actionPerformed(ActionEvent ae)
    {
       ZoneMap zoneMap = GameEngine.getZoneMap();
-      Actor player = GameEngine.getPlayer();
+      Player player = GameEngine.getPlayer();
       
       if(zoneMap != null && player != null)
       {
@@ -82,7 +82,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                playerLoc.x -= xCorner;
                playerLoc.y -= yCorner;
                // shotgun targeting
-               if(player.getWeapon().hasWeaponTag(GearConstants.WeaponTag.SPREAD))
+               if(player.pendingAttackIsSpread())
                {
                   Vector<Coord> sprayTargets = EngineTools.getShotgunSprayLine(playerLoc, cursorLoc);
                   for(Coord sprayTarget : sprayTargets)
@@ -109,7 +109,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                      setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
                }
                // blast targeting
-               else if(player.getWeapon().hasWeaponTag(GearConstants.WeaponTag.BLAST))
+               else if(player.pendingAttackIsBlast())
                {
                   Coord blastLocation = GameEngine.getDetonationLoc(GameEngine.getPlayer().getMapLoc(), GameEngine.getCursorLoc());
                   for(int x = -1; x < 2; x++)
@@ -123,7 +123,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                   setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
                }
                // melee targeting
-               else if(player.getWeapon().hasWeaponTag(GearConstants.WeaponTag.MELEE))
+               else if(player.pendingAttackIsMelee())
                {
                   Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, cursorLoc, StraightLine.REMOVE_ORIGIN);
                   if(targetingLine.size() == 0)

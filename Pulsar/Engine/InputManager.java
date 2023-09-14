@@ -188,7 +188,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             if(!gadget.canUse())
             {
                MessagePanel.addMessage(gadget.getName() + " is out of charges");
-               clearPlan();
+               player.getAI().clearPlan();
             }
             else
             {
