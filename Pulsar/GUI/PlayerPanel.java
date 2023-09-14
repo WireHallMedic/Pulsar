@@ -43,6 +43,8 @@ public class PlayerPanel extends MessagePanel
    public void update()
    {
       clearPlayerPanel();
+      
+      // basic status
       Player player = GameEngine.getPlayer();
       Color shieldColor = SHIELD_COLOR;
       Color mainWeaponColor = TERMINAL_FG_COLOR;
@@ -84,12 +86,22 @@ public class PlayerPanel extends MessagePanel
       for(int i = 0; i < 3; i++)
          if(getIcon(X_ORIGIN, Y_ORIGIN + 7 + i) != ' ')
             additionalYSpacing++;
+            
+      // gadgets
+      int totalGadgets = player.getGadgetList().size();
+      for(int i = 0; i < totalGadgets; i++)
+      {
+         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, (1 + i) + ": " + player.getGadget(i).getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         additionalYSpacing++;
+      }
       
+      // temporary status effects
       Vector<StatusEffect> statusEffectList = player.getTemporaryStatusEffects();
       for(int i = 0; i < statusEffectList.size(); i++)
       {
          StatusEffect se = statusEffectList.elementAt(i);
-         write(X_ORIGIN, Y_ORIGIN + 7 + i + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         write(X_ORIGIN, Y_ORIGIN + 7 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         additionalYSpacing++;
       }
    }
    

@@ -10,6 +10,9 @@ public interface ActorConstants
    public static final int STATUS_EFFECT_MEDIUM_DURATION = 20;
    public static final int STATUS_EFFECT_LONG_DURATION = 40;
    
+   // player-specific constants
+   public static final int DEFAULT_MAX_GADGETS = 3;
+   
    
    public enum StatusEffectType
    {

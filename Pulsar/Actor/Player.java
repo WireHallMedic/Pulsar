@@ -6,16 +6,26 @@ import WidlerSuite.*;
 import Pulsar.Engine.*;
 import Pulsar.Zone.*;
 import Pulsar.Gear.*;
+import java.util.*;
 
 public class Player extends Actor implements GUIConstants
 {
+   private static final int VISIBILITY_MAP_WIDTH = MAP_WIDTH_TILES + 2;
+   private static final int VISIBILITY_MAP_HEIGHT = MAP_HEIGHT_TILES + 2;
+   
    private boolean[][] visibilityMap;
    private Coord visibilityMapCorner;
    private Weapon secondaryWeapon;
    private boolean usingPrimaryWeapon;
+   private Vector<Gadget> gadgetList;
+   private int maxGadgets;
    
-   private static final int VISIBILITY_MAP_WIDTH = MAP_WIDTH_TILES + 2;
-   private static final int VISIBILITY_MAP_HEIGHT = MAP_HEIGHT_TILES + 2;
+   public Vector<Gadget> getGadgetList(){return gadgetList;}
+   public int getMaxGadgets(){return maxGadgets;}
+   
+   public void setGadgetList(Vector<Gadget> gl){gadgetList = gl;}
+   public void setMaxGadgets(int mg){maxGadgets = mg;}
+   
    
    public Player()
    {
@@ -26,6 +36,8 @@ public class Player extends Actor implements GUIConstants
       visibilityMapCorner = null;
       secondaryWeapon = null;
       usingPrimaryWeapon = true;
+      gadgetList = new Vector<Gadget>();
+      maxGadgets = DEFAULT_MAX_GADGETS;
    }
    
    @Override
@@ -141,5 +153,31 @@ public class Player extends Actor implements GUIConstants
       int shiftedX = target.x - visibilityMapCorner.x;
       int shiftedY = target.y - visibilityMapCorner.y;
       return visibilityMap[shiftedX][shiftedY];
+   }
+   
+   
+   // gadget stuff
+   public Gadget getGadget(int index)
+   {
+      if(index < gadgetList.size())
+         return gadgetList.elementAt(index);
+      return null;
+   }
+   
+   public void removeGadget(int index)
+   {
+      if(index < gadgetList.size())
+         gadgetList.removeElementAt(index);
+   }
+   
+   public void addGadget(Gadget g)
+   {
+      if(hasRoomForGadget())
+         gadgetList.add(g);
+   }
+   
+   public boolean hasRoomForGadget()
+   {
+      return gadgetList.size() < getMaxGadgets();
    }
 }
