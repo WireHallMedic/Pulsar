@@ -10,20 +10,27 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
 	private int remainingUses;
 	private StatusEffectType statusEffectType;
    private String shortName;
+   private boolean targetsSelf;
+   private Weapon weaponEffect;
 
 
 	public int getMaxUses(){return maxUses;}
 	public int getRemainingUses(){return remainingUses;}
 	public StatusEffectType getStatusEffectType(){return statusEffectType;}
    public String getShortName(){return shortName;}
+   public boolean getTargetsSelf(){return targetsSelf;}
+   public Weapon getWeaponEffect(){return weaponEffect;}
 
 
 	public void setMaxUses(int m){maxUses = m;}
 	public void setRemainingUses(int r){remainingUses = r;}
 	public void setStatusEffectType(StatusEffectType s){statusEffectType = s;}
    public void setShortName(String sn){shortName = sn;}
+   public void setTargetsSelf(boolean ts){targetsSelf = ts;}
+   public void setWeaponEffect(Weapon we){weaponEffect = we;}
    
    public boolean hasStatusEffect(){return statusEffectType != null;}
+   public boolean hasWeaponEffect(){return weaponEffect != null;}
 
 
    public Gadget()
@@ -32,6 +39,8 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
       shortName = "Unknown G.";
       maxUses = DEFAULT_GADGET_USES;
       statusEffectType = null;
+      targetsSelf = false;
+      weaponEffect = null;
       fullyCharge();
    }
    
@@ -60,7 +69,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
       return getRemainingUses() > 0;
    }
    
-   public void use(Coord target)
+   public void use(Actor user, Coord target)
    {
       if(hasStatusEffect())
       {
@@ -68,9 +77,9 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
          if(a != null)
             a.add(StatusEffectFactory.getEffect(statusEffectType));
       }
-      else
+      if(hasWeaponEffect())
       {
-      
+         Combat.resolveAttack(user, target, getWeaponEffect());
       }
    }
 }

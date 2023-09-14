@@ -176,6 +176,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       if(pendingAction != null && pendingAction.isGadgetAction())
       {
          Gadget gadget = player.getGadget(pendingAction);
+         // no gadget in slot
          if(gadget == null)
          {
             MessagePanel.addMessage("You do not have a gadget in that slot");
@@ -183,7 +184,24 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
          }
          else
          {
-            setPlayerTarget(player.getMapLoc());
+            // out of charges
+            if(!gadget.canUse())
+            {
+               MessagePanel.addMessage(gadget.getName() + " is out of charges");
+               clearPlan();
+            }
+            else
+            {
+               // targets self
+               if(gadget.getTargetsSelf())
+                  setPlayerTarget(player.getMapLoc());
+               // requires target
+               else
+               {
+                  GameEngine.setCursorLoc(getDefaultTargetingLocation());
+                  GameEngine.setGameMode(GameMode.TARGETING);
+               }
+            }
          }
       }
       

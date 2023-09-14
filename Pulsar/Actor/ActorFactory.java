@@ -23,6 +23,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setAlertness(Alertness.CAUTIOUS);
  //     a.getArmor().setDamageReduction(100);
       a.addGadget(GadgetFactory.getAdrenalInjector());
+      a.addGadget(GadgetFactory.getGrenades());
       return a;
    }
    
