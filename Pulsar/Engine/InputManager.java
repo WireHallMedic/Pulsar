@@ -250,6 +250,12 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             case KeyEvent.VK_NUMPAD8 : cursorLoc = new Coord(cursorLoc.x, cursorLoc.y - 1); break;
             case KeyEvent.VK_NUMPAD9 : cursorLoc = new Coord(cursorLoc.x + 1, cursorLoc.y - 1); break;
             case KeyEvent.VK_ESCAPE  : cancelAction(); return;
+            // any key that gets you here works to confirm
+            case KeyEvent.VK_1       : 
+            case KeyEvent.VK_2       : 
+            case KeyEvent.VK_3       : 
+            case KeyEvent.VK_4       : 
+            case KeyEvent.VK_5       : 
             case KeyEvent.VK_A       :
             case KeyEvent.VK_SPACE   :
             case KeyEvent.VK_ENTER   : setPlayerTarget(cursorLoc);

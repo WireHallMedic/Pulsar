@@ -159,4 +159,17 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          newMap[x][y] = lowPassMap[x][y];
       return newMap;
    }
+   
+   // get a portion of the low pass map for performance
+   public boolean[][] getLowPassMapPortion(Coord origin, int radius)
+   {
+      boolean[][] passMap = new boolean[radius + radius + 1][radius + radius + 1];
+      for(int x = 0; x < (radius * 2) + 1; x++)
+      for(int y = 0; y < (radius * 2) + 1; y++)
+      {
+         Coord realLoc = new Coord(x + origin.x - radius, y + origin.y - radius);
+         passMap[x][y] = getTile(realLoc).isLowPassable();
+      }
+      return passMap;
+   }
 }

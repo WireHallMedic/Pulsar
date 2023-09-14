@@ -95,7 +95,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
          if(getSpecialEffect() == GadgetSpecialEffect.HOLOCLONE)
          {
             Actor clone = ActorFactory.getHoloclone();
-            clone.setAllLocs(target);
+            clone.setAllLocs(GameEngine.getClosestEmptyTile(target));
             GameEngine.add(clone);
          }
       }

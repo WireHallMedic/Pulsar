@@ -47,6 +47,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return lower + (int)(random() * (upper - lower));
    }
    
+   
+   // actor stuff
+   //////////////////////////////////////////////////////////////
 	public static void setPlayer(Player p)
    {
       if(player != null)
@@ -123,6 +126,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return getActorAt(c) != null;
    }
    
+   // actor interactions
+   /////////////////////////////////////////////////////////////////////
+   
    public static boolean playerCanSee(Actor a){return playerCanSee(a.getMapLoc());}
    public static boolean playerCanSee(int x, int y){return playerCanSee(new Coord(x, y));}
    public static boolean playerCanSee(Coord target)
@@ -178,6 +184,25 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             visibleEnemyList.add(a);
       }
       return visibleEnemyList;
+   }
+   
+   public static Coord getClosestEmptyTile(int x, int y){return getClosestEmptyTile(new Coord(x, y));}
+   public static Coord getClosestEmptyTile(Coord c)
+   {
+      int radius = 7;
+      boolean[][] passMap = getZoneMap().getLowPassMapPortion(c, radius);
+      SpiralSearch search = new SpiralSearch(passMap, new Coord(radius, radius));
+      Coord searchLoc = search.getNext();
+      while(searchLoc != null)
+      {
+         Coord trueLoc = new Coord(searchLoc.x + c.x - radius, searchLoc.y + c.y - radius);
+         if(!isActorAt(trueLoc) && getZoneMap().getTile(trueLoc).isLowPassable())
+         {
+            return trueLoc;
+         }
+         searchLoc = search.getNext();
+      }
+      return null;
    }
    
    public static boolean blocksShooting(int x, int y){return blocksShooting(new Coord(x, y));}
