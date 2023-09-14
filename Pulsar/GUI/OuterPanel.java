@@ -39,8 +39,8 @@ public class OuterPanel extends JPanel implements GUIConstants, ComponentListene
       if(getWidth() == 0 || getHeight() == 0)
          return;
       
-      double sizeMult = Math.min(getHeight() / (TERMINAL_TILE_HEIGHT_PIXELS * (double)TERMINAL_HEIGHT_TILES), 
-                                 getWidth()  / (TERMINAL_TILE_WIDTH_PIXELS * (double)TERMINAL_WIDTH_TILES));
+      sizeMult = Math.min(getHeight() / (TERMINAL_TILE_HEIGHT_PIXELS * (double)TERMINAL_HEIGHT_TILES), 
+                          getWidth()  / (TERMINAL_TILE_WIDTH_PIXELS * (double)TERMINAL_WIDTH_TILES));
       int innerWidth = (int)(sizeMult * TERMINAL_TILE_WIDTH_PIXELS) * TERMINAL_WIDTH_TILES;
       int innerHeight = (int)(sizeMult * TERMINAL_TILE_HEIGHT_PIXELS) * TERMINAL_HEIGHT_TILES;
       

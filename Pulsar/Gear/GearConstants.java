@@ -92,4 +92,9 @@ public interface GearConstants extends WSFontConstants
          name = n;
       }
    }
+   
+   public enum GadgetSpecialEffect
+   {
+      HOLOCLONE;
+   }
 }

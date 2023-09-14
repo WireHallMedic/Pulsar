@@ -12,6 +12,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
    private String shortName;
    private boolean targetsSelf;
    private Weapon weaponEffect;
+   private GadgetSpecialEffect specialEffect;
 
 
 	public int getMaxUses(){return maxUses;}
@@ -20,6 +21,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
    public String getShortName(){return shortName;}
    public boolean getTargetsSelf(){return targetsSelf;}
    public Weapon getWeaponEffect(){return weaponEffect;}
+   public GadgetSpecialEffect getSpecialEffect(){return specialEffect;}
 
 
 	public void setMaxUses(int m){maxUses = m;}
@@ -28,9 +30,11 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
    public void setShortName(String sn){shortName = sn;}
    public void setTargetsSelf(boolean ts){targetsSelf = ts;}
    public void setWeaponEffect(Weapon we){weaponEffect = we;}
+   public void setSpecialEffect(GadgetSpecialEffect se){specialEffect = se;}
    
    public boolean hasStatusEffect(){return statusEffectType != null;}
    public boolean hasWeaponEffect(){return weaponEffect != null;}
+   public boolean hasSpecialEffect(){return specialEffect != null;}
 
 
    public Gadget()
@@ -41,6 +45,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
       statusEffectType = null;
       targetsSelf = false;
       weaponEffect = null;
+      specialEffect = null;
       fullyCharge();
    }
    
@@ -80,6 +85,15 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
       if(hasWeaponEffect())
       {
          Combat.resolveAttack(user, target, getWeaponEffect());
+      }
+      if(hasSpecialEffect())
+      {
+         if(getSpecialEffect() == GadgetSpecialEffect.HOLOCLONE)
+         {
+            Actor clone = ActorFactory.getHoloclone();
+            clone.setAllLocs(target);
+            GameEngine.add(clone);
+         }
       }
    }
 }

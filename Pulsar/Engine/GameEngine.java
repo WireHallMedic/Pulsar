@@ -433,6 +433,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          Actor a = actorList.elementAt(i);
          if(a.isDead())
          {
+            a.doDeathEffect();
             remove(a);
             i--;
          }

@@ -34,6 +34,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    protected Alertness alertness;
    protected AlertnessManager alertnessManager;
    protected Vector<StatusEffect> statusEffectList;
+   protected DeathEffect deathEffect;
 
 
    public String getName(){return name;}
@@ -56,6 +57,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public Alertness getAlertness(){return alertness;}
    public AlertnessManager getAlertnessManager(){return alertnessManager;}
    public Vector<StatusEffect> getStatusEffectList(){return statusEffectList;}
+   public DeathEffect getDeathEffect(){return deathEffect;}
 
 
    public void setName(String n){name = n;}
@@ -80,6 +82,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public void setAlertness(Alertness a){alertness = a;}
    public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
    public void setStatusEffectList(Vector<StatusEffect> sel){statusEffectList = sel;}
+   public void setDeathEffect(DeathEffect de){deathEffect = de;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -106,6 +109,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       alertness = Alertness.RELAXED;
       alertnessManager = new AlertnessManager(this);
       statusEffectList = new Vector<StatusEffect>();
+      deathEffect = null;
    }
    
    public void setColor(Color c)
@@ -303,6 +307,12 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public boolean isDead()
    {
       return curHealth <= 0;
+   }
+   
+   public void doDeathEffect()
+   {
+      if(getDeathEffect() == DeathEffect.EXPLODE)
+         Combat.nonWeaponExplosion(getMapLoc());
    }
    
    public int[] getHealthBar(int length)

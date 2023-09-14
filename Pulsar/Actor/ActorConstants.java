@@ -13,6 +13,11 @@ public interface ActorConstants
    // player-specific constants
    public static final int DEFAULT_MAX_GADGETS = 3;
    
+   public enum DeathEffect
+   {
+      EXPLODE;
+   }
+   
    
    public enum StatusEffectType
    {

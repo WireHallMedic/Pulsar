@@ -24,6 +24,18 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
  //     a.getArmor().setDamageReduction(100);
       a.addGadget(GadgetFactory.getAdrenalInjector());
       a.addGadget(GadgetFactory.getGrenades());
+      a.addGadget(GadgetFactory.getHoloclone());
+      return a;
+   }
+   
+   public static Actor getHoloclone()
+   {
+      Actor a = new Actor('@');
+      a.setName("Holoclone");
+      a.setAI(new CloneAI(a));
+      a.setMaxHealth(20);
+      a.fullyHeal();
+      a.setDeathEffect(DeathEffect.EXPLODE);
       return a;
    }
    
