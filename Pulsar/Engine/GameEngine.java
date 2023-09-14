@@ -399,6 +399,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          cleanUpCheck();
          if(getPlayer().isDead())
          {
+            cleanUpDead();
             MessagePanel.addMessage("You have died.", Color.RED);
             break;
          }

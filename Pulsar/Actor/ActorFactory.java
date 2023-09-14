@@ -21,7 +21,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setMaxHealth(50);
       a.fullyHeal();
       a.setAlertness(Alertness.CAUTIOUS);
-      a.getArmor().setDamageReduction(100);
+ //     a.getArmor().setDamageReduction(100);
       return a;
    }
    
