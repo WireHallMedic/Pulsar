@@ -269,7 +269,7 @@ public class BasicAI implements AIConstants
                break;
             }
          }
-         if(safeF)
+         if(safeF && !GameEngine.isActorAt(searchLoc))
             return searchLoc;
          searchLoc = search.getNext();
       }
