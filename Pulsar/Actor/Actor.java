@@ -438,7 +438,12 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       if(se.isNegative())
          color = WARNING_COLOR;
       if(GameEngine.playerCanSee(this))
-         MessagePanel.addMessage("You are " + se.getDescriptor() + "!", color);
+      {
+         String beginning = "The " + getName() + " is ";
+         if(GameEngine.getPlayer() == this)
+            beginning = "You are ";
+         MessagePanel.addMessage(beginning + se.getDescriptor() + "!", color);
+      }
       boolean needToAdd = true;
       for(int i = 0; i < statusEffectList.size(); i++)
       {
@@ -466,10 +471,19 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    
    public void applyOngoingDamage()
    {
+      boolean alreadyDead = false;
       for(StatusEffect se : statusEffectList)
       {
          if(se.getOngoingDamage() > 0)
+         {
             applyDamage(se.getOngoingDamage(), se.getDamageType(), true);
+            if(isDead() && !alreadyDead)
+            {
+               alreadyDead = true;
+               if(GameEngine.playerCanSee(getMapLoc()))
+                  MessagePanel.addMessage(getName() + " has died from " + se.getName() + "!");
+            }
+         }
       }
    }
    
