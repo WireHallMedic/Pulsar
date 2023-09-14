@@ -105,7 +105,8 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                      }
                   }
                   // don't obscure targets with the blue cursor, it makes it hard to tell if you can hit them or not
-                  if(GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner) && !GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
+                  if((GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner) && !GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner)) ||
+                     !GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
                      setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
                }
                // blast targeting
@@ -151,14 +152,19 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                      int bgColor = BAD_TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
                      if(clearPath)
                         bgColor = TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB();
-                     setTile(c.x, c.y, iconIndex, fgColor, bgColor);
+                     if(GameEngine.playerCanSee(c.x + xCorner, c.y + yCorner))
+                        setTile(c.x, c.y, iconIndex, fgColor, bgColor);
                      if(GameEngine.blocksShooting(c.x + xCorner, c.y + yCorner))
                         clearPath = false;
                   }
                }
                // when targeting player, show cursor
-               if(GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
-                  setBGColor(cursorLoc.x, cursorLoc.y, TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB());
+            //   if(GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
+           //       setBGColor(cursorLoc.x, cursorLoc.y, TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB());
+               // don't obscure targets with the blue cursor, it makes it hard to tell if you can hit them or not
+               if((GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner) && !GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner)) ||
+                  !GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
+                  setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
             }
          }
          if(GameEngine.getGameMode() == GameMode.STANDARD)
