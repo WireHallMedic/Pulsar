@@ -90,6 +90,7 @@ public class ZoneMapFactory implements ZoneConstants
             m.setTile(x, y, mapTile);
          }
       }
+      m.setTile(1, h / 2, MapTileFactory.getButton(-1));
       
       return m;
    }

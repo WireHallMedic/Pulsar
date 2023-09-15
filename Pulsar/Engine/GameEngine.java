@@ -275,6 +275,26 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    ////////////////////////////////////////////////////////////////////////////////
    
+   public static void end()
+   {
+      runFlag = false;
+   }
+   
+   public static boolean isAnimationLocked()
+   {
+      return mapPanel.isAnimationLocked();
+   }
+   
+   
+   public static void buttonPressed(int triggerIndex)
+   {
+      System.out.println("Button " + triggerIndex + " pressed.");
+   }
+   
+   
+   
+   ////////////////////////////////////////////////////////////////////////////////
+   
    public static void newGame()
    {
       ZoneMap map = ZoneMapFactory.getTestMap2();
@@ -358,16 +378,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          add(e);
       }
    
-   }
-   
-   public static void end()
-   {
-      runFlag = false;
-   }
-   
-   public static boolean isAnimationLocked()
-   {
-      return mapPanel.isAnimationLocked();
    }
    
    // non-static section

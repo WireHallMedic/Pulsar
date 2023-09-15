@@ -7,6 +7,7 @@ import Pulsar.Actor.*;
 import Pulsar.AI.*;
 import Pulsar.GUI.*;
 import Pulsar.Gear.*;
+import Pulsar.Zone.*;
 import Pulsar.*;
 import java.awt.*;
 import java.awt.Toolkit.*;
@@ -171,6 +172,24 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       }
       
       ActorAction pendingAction = player.getAI().getPendingAction();
+      
+      // check if trying to press already pressed button
+      if(target != null && (player.getAI().getPendingAction() == ActorAction.USE || 
+                            player.getAI().getPendingAction() == ActorAction.CONTEXT_SENSITIVE ||
+                            player.getAI().getPendingAction() == null))
+      {
+         MapTile tile = GameEngine.getZoneMap().getTile(target);
+         if(tile instanceof Pulsar.Zone.Button)
+         {
+            Pulsar.Zone.Button button = (Pulsar.Zone.Button)tile;
+            if(button.isPressed())
+            {
+               MessagePanel.addMessage("That button has already been pressed.");
+               player.getAI().clearPlan();
+               pendingAction = null;
+            }
+         }
+      }
       
       // using a gadget
       if(pendingAction != null && pendingAction.isGadgetAction())
