@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.*;
 
 
-public class Actor implements ActorConstants, GUIConstants, AIConstants
+public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineConstants
 {
    protected String name;
 	protected Coord mapLoc;
@@ -37,6 +37,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    protected DeathEffect deathEffect;
    protected boolean biological;
    protected boolean mechanical;
+   protected boolean needsAir;
 
 
    public String getName(){return name;}
@@ -89,6 +90,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public void setDeathEffect(DeathEffect de){deathEffect = de;}
    public void setBiological(boolean b){biological = b;}
    public void setMechanical(boolean m){mechanical = m;}
+   public void setNeedsAir(boolean na){needsAir = na;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -118,6 +120,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       deathEffect = null;
       biological = true;
       mechanical = false;
+      needsAir = true;
    }
    
    public void setColor(Color c)
@@ -385,6 +388,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    {
       updateMemory();
       applyOngoingDamage();
+      if(GameEngine.getZoneMap().getTile(getMapLoc()).getAirPressure() == 0)
+         suffocate();
       startOfTurnPerformed = false;
    }
    
@@ -422,6 +427,13 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          }
       }
       alertnessManager.update(enemySighted);
+   }
+   
+   public void suffocate()
+   {
+      if(this == GameEngine.getPlayer())
+         MessagePanel.addMessage("You are suffocating!");
+      applyDamageToHealth(SUFFOCATION_DAMAGE);
    }
    
    // status effect stuff
@@ -504,6 +516,14 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
          curVisionRange += se.getVisionRange();
       curVisionRange = Math.min(MAP_WIDTH_TILES / 2, curVisionRange);
       return Math.max(1, curVisionRange);
+   }
+   
+   public boolean getNeedsAir()
+   {
+      boolean breathes = needsAir;
+      for(StatusEffect se : statusEffectList)
+         breathes = breathes && se.getNeedsAir();
+      return breathes;
    }
    
    // modified by both status effects and armor
