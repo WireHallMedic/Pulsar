@@ -17,18 +17,12 @@ public class TurretAI extends BasicAI
       // no visible enemy
       if(target != null)
       {
-         System.out.println("Has target.");
          // weapon is charged
          if(canAttack() && GameEngine.hasClearShot(self, target))
          {
             setPendingTarget(target.getMapLoc());
             setPendingAction(ActorAction.ATTACK);
             return;
-         }
-         else
-         {
-         
-         System.out.println("No clear shot.");
          }
       }
       // default

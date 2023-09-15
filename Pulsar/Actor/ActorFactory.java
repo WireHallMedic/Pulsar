@@ -41,13 +41,17 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.fullyHeal();
       a.setDeathEffect(DeathEffect.EXPLODE);
       a.setTurnEnergy(FULLY_CHARGED);
+      a.setMechanical(true);
+      a.setBiological(false);
+      a.setBloodColor(ROBOT_BLOOD);
+      a.setColor(ROBOT_FLESH);
       return a;
    }
    
    public static Actor getTurret()
    {
       Actor a = new Actor('t');
-      a.setName("Holoclone");
+      a.setName("Turret");
       a.setAI(new TurretAI(a));
       a.setMaxHealth(20);
       a.fullyHeal();
@@ -55,6 +59,10 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setShield(ShieldFactory.getBasicShield());
       a.setDeathEffect(DeathEffect.EXPLODE);
       a.setTurnEnergy(FULLY_CHARGED);
+      a.setMechanical(true);
+      a.setBiological(false);
+      a.setBloodColor(ROBOT_BLOOD);
+      a.setColor(ROBOT_FLESH);
       return a;
    }
    
@@ -108,8 +116,8 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setName("Alien Worker");
       a.setAI(new StandardEnemyAI(a));
       a.setUnarmedAttack(WeaponFactory.getAlienClaws());
-      a.setBloodColor(GUIConstants.ALIEN_COLOR);
-      a.setColor(GUIConstants.ALIEN_COLOR);
+      a.setBloodColor(ALIEN_COLOR);
+      a.setColor(ALIEN_FLESH);
       a.setAI(new StandardEnemyAI(a));
       return a;
    }

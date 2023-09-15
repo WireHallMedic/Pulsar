@@ -35,6 +35,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    protected AlertnessManager alertnessManager;
    protected Vector<StatusEffect> statusEffectList;
    protected DeathEffect deathEffect;
+   protected boolean biological;
+   protected boolean mechanical;
 
 
    public String getName(){return name;}
@@ -58,6 +60,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public AlertnessManager getAlertnessManager(){return alertnessManager;}
    public Vector<StatusEffect> getStatusEffectList(){return statusEffectList;}
    public DeathEffect getDeathEffect(){return deathEffect;}
+   public boolean isBiological(){return biological;}
+   public boolean isMechanical(){return mechanical;}
 
 
    public void setName(String n){name = n;}
@@ -83,6 +87,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
    public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
    public void setStatusEffectList(Vector<StatusEffect> sel){statusEffectList = sel;}
    public void setDeathEffect(DeathEffect de){deathEffect = de;}
+   public void setBiological(boolean b){biological = b;}
+   public void setMechanical(boolean m){mechanical = m;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -110,11 +116,13 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants
       alertnessManager = new AlertnessManager(this);
       statusEffectList = new Vector<StatusEffect>();
       deathEffect = null;
+      biological = true;
+      mechanical = false;
    }
    
    public void setColor(Color c)
    {
-      getSprite().setFGColor(c.getRGB());
+      createSprite(getSprite().getIconIndex(), c.getRGB(), DEFAULT_ACTOR_BG_COLOR.getRGB());
    }
    
    public void reconcileSprite()
