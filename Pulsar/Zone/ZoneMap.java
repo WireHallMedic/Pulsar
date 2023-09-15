@@ -56,6 +56,11 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       breachList = new Vector<Coord>();
    }
    
+   public void takeTurn()
+   {
+      applyBreaches();
+   }
+   
    public void postProcessing()
    {
       for(int x = 0; x < width; x++)
@@ -236,5 +241,24 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          passMap[x][y] = getTile(realLoc).isLowPassable();
       }
       return passMap;
+   }
+   
+   public void applyBreaches()
+   {
+      boolean[][] depressurizationMap = new boolean[width][height];
+      
+      for(Coord c : breachList)
+      {
+         boolean[][] curMap = FloodFill.fill(getHighPassMap(), c.x, c.y);
+         for(int x = 0; x < width; x++)
+         for(int y = 0; y < height; y++)
+            depressurizationMap[x][y] = depressurizationMap[x][y] || curMap[x][y];
+      }
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         if(depressurizationMap[x][y])
+            tileArray[x][y].depressurize();
+      }
    }
 }

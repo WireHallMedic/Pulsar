@@ -69,5 +69,11 @@ public class MapTile implements ZoneConstants
    {
       return destructionEffect != null;
    }
+   
+   public void depressurize()
+   {
+      if(getAirPressure() > 0)
+         airPressure--;
+   }
 
 }

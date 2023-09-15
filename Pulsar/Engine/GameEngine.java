@@ -269,7 +269,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       initiativeIndex++;
       if(initiativeIndex >= curZone.getActorList().size())
+      {
          initiativeIndex = 0;
+         if(getZoneMap() != null)
+            getZoneMap().takeTurn();
+      }
    }
    
    
@@ -456,9 +460,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                }
             }
          }
-         // increment if acted
-         if(!(curActor.isReadyToAct()))
-            incrementInitiative(); 
          // do cleanup
          cleanUpCheck();
          if(getPlayer().isDead())
@@ -467,6 +468,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             MessagePanel.addMessage("You have died.", Color.RED);
             break;
          }
+         // increment if acted
+         if(!(curActor.isReadyToAct()))
+            incrementInitiative(); 
       }
    }
    
