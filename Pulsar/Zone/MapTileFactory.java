@@ -31,6 +31,11 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       return button;
    }
    
+   public static MapTile getVacuum()
+   {
+      return new Vacuum();
+   }
+   
    public static MapTile getBroken(MapTile originalTile)
    {
       MapTile brokenTile = getTile(TileType.RUBBLE);

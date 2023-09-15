@@ -110,11 +110,11 @@ public class ZoneMapFactory implements ZoneConstants
       return m;
    }
    
-   public static ZoneMap getTestMap2()
+   public static ZoneMap getVacuumTest()
    {
       String[] rowArr = {
          "vvvvvvvvvvvvvvvvvvvvv",
-         "v###################v",
+         "v###/###############v",
          "v#.......#.........#v",
          "v#.......#.........#v",
          "v#......./.........#v",
@@ -138,11 +138,11 @@ public class ZoneMapFactory implements ZoneConstants
                case '.' : mapTile = MapTileFactory.getTile(TileType.CLEAR); break;
                case '#' : mapTile = MapTileFactory.getTile(TileType.HIGH_WALL); break;
                case '/' : mapTile = MapTileFactory.getDoor(); break;
+               case 'v' : mapTile = MapTileFactory.getVacuum(); break;
             }
             m.setTile(x, y, mapTile);
          }
       }
-      m.setTile(1, h / 2, MapTileFactory.getButton(-1));
       
       return m;
    }

@@ -4,6 +4,7 @@ import Pulsar.GUI.*;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import WidlerSuite.*;
+import java.util.*;
 
 public class ZoneMap implements ZoneConstants, GUIConstants
 {
@@ -15,6 +16,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private ShadowFoVRect fov;
    private boolean[][] lowPassMap;
    private boolean[][] highPassMap;
+   private Vector<Coord> vacuumList;
+   private Vector<Coord> breachList;
 
 
 	public int getWidth(){return width;}
@@ -23,6 +26,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	public MapTile getOobTile(){return oobTile;}
    public boolean[][] getTransparencyMap(){return transparencyMap;}
    public ShadowFoVRect getFoV(){return fov;}
+   public Vector<Coord> getVacuumList(){return vacuumList;}
+   public Vector<Coord> getBreachList(){return breachList;}
 
 
 	public void setWidth(int w){width = w;}
@@ -30,6 +35,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	public void setTileArray(MapTile[][] t){tileArray = t;}
 	public void setOobTile(MapTile o){oobTile = o;}
    public void setFoV(ShadowFoVRect newFoV){fov = newFoV;}
+   public void setVacuumList(Vector<Coord> vl){vacuumList = vl;}
+   public void setBreachList(Vector<Coord> bl){breachList = bl;}
 
 
    public ZoneMap(int w, int h, MapTile defaultTile)
@@ -45,6 +52,62 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          setTile(x, y, new MapTile(defaultTile));
       oobTile = MapTileFactory.getTile(TileType.NULL);
       fov = new ShadowFoVRect(transparencyMap);
+      vacuumList = new Vector<Coord>();
+      breachList = new Vector<Coord>();
+   }
+   
+   public void postProcessing()
+   {
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         if(tileArray[x][y] instanceof Vacuum)
+            vacuumList.add(new Coord(x, y));
+      }
+   }
+   
+   private void breachCheck(Coord c){breachCheck(c.x, c.y);}
+   private void breachCheck(int x, int y)
+   {
+      if(!getTile(x, y).isLowPassable() && !getTile(x, y).isHighPassable())
+      {
+         removeBreach(x, y);
+      }
+      else
+      {
+      if(getTile(x + 1, y) instanceof Vacuum ||
+         getTile(x - 1, y) instanceof Vacuum ||
+         getTile(x, y + 1) instanceof Vacuum ||
+         getTile(x, y - 1) instanceof Vacuum)
+         addBreach(x, y);
+      }
+   }
+   
+   private void addBreach(int x, int y){addBreach(new Coord(x, y));}
+   private void addBreach(Coord c)
+   {
+      for(Coord existing : breachList)
+      {
+         if(existing.equals(c))
+            return;
+      }
+      breachList.add(c);
+      System.out.println("Breach at " + c);
+   }
+   
+   private void removeBreach(int x, int y){removeBreach(new Coord(x, y));}
+   private void removeBreach(Coord c)
+   {
+      for(int i = 0; i < breachList.size(); i++)
+      {
+         if(breachList.elementAt(i).equals(c))
+         {
+            breachList.removeElementAt(i);
+            System.out.println("Remvoed reach at " + c);
+            return;
+         }
+      }
+      
    }
    
    public void updateFoV()
@@ -62,6 +125,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       lowPassMap[c.x][c.y] = getTile(c).isLowPassable();
       highPassMap[c.x][c.y] = getTile(c).isHighPassable();
       fov.reset(transparencyMap);
+      breachCheck(c);
    }
    
    // quickly calculate if origin can see target
@@ -105,6 +169,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       setTile(x, y, MapTileFactory.getBroken(mt));
       if(mt.hasOnDestructionEffect())
          GameEngine.doDestructionEffect(x, y, mt);
+      breachCheck(x, y);
    }
    
    // return a passability map accounting for movement type, door usage, and pathfinding radius
