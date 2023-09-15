@@ -119,6 +119,8 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setBloodColor(ALIEN_COLOR);
       a.setColor(ALIEN_FLESH);
       a.setAI(new StandardEnemyAI(a));
+      a.setMaxHealth(20);
+      a.fullyHeal();
       return a;
    }
    
@@ -128,6 +130,26 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.getSprite().setIconIndex('h');
       a.setName("Alien Hunter");
       a.setWeapon(WeaponFactory.getAlienSpit());
+      return a;
+   }
+   
+   public static Actor getAlienSoldier()
+   {
+      Actor a = getAlienWorker();
+      a.getSprite().setIconIndex('s');
+      a.setName("Alien Soldier");
+      a.setMaxHealth(a.getMaxHealth() * 2);
+      a.fullyHeal();
+      return a;
+   }
+   
+   public static Actor getAlienLarva()
+   {
+      Actor a = getAlienWorker();
+      a.getSprite().setIconIndex('l');
+      a.setName("Alien Larva");
+      a.setMaxHealth(a.getMaxHealth() / 2);
+      a.fullyHeal();
       return a;
    }
 }

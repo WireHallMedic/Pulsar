@@ -11,6 +11,7 @@ public class MapTile implements ZoneConstants
 	private boolean transparent;
    private Durability durability;
    private OnDestructionEffect destructionEffect;
+   private int airPressure;
 
 
 	public int getIconIndex(){return iconIndex;}
@@ -22,6 +23,7 @@ public class MapTile implements ZoneConstants
 	public boolean isTransparent(){return transparent;}
    public Durability getDurability(){return durability;}
    public OnDestructionEffect getOnDestructionEffect(){return destructionEffect;}
+   public int getAirPressure(){return airPressure;}
 
 
 	public void setIconIndex(int i){iconIndex = i;}
@@ -33,6 +35,7 @@ public class MapTile implements ZoneConstants
 	public void setTransparent(boolean t){transparent = t;}
    public void setDurability(Durability d){durability = d;}
    public void setOnDestructionEffect(OnDestructionEffect de){destructionEffect = de;}
+   public void setAirPressure(int ap){airPressure = ap;}
    
    public MapTile(int i, int fg, int bg, String n, boolean lp, boolean hp, boolean t)
    {
@@ -45,6 +48,7 @@ public class MapTile implements ZoneConstants
       transparent = t;
       durability = Durability.STANDARD;
       destructionEffect = null;
+      airPressure = FULL_AIR_PRESSURE;
    }
    
    public MapTile(MapTile that)
@@ -58,6 +62,7 @@ public class MapTile implements ZoneConstants
       this.transparent = that.transparent;
       this.durability = that.durability;
       this.destructionEffect = that.destructionEffect;
+      this.airPressure = that.airPressure;
    }
    
    public boolean hasOnDestructionEffect()

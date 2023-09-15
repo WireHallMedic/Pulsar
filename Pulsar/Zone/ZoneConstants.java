@@ -4,6 +4,8 @@ import WidlerSuite.*;
 
 public interface ZoneConstants extends CP437
 {
+   public static final int FULL_AIR_PRESSURE = 5;
+   
    public enum TileType
    {
       CLEAR       (250, "Clear", true, true, true),

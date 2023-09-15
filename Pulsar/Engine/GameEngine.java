@@ -377,6 +377,26 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          e.setAllLocs(c);
          add(e);
       }
+      
+      for(int i = 0; i < 5; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         {
+            c.x = randomInt(10, map.getWidth());
+            c.y = randomInt(0, map.getHeight());
+         }
+         for(int j = 0; j < 5; j++)
+         {
+            Actor e = ActorFactory.getAlienLarva();
+            Coord loc = getClosestEmptyTile(c);
+            if(loc != null)
+            {
+               e.setAllLocs(loc);
+               add(e);
+            }
+         }
+      }
    
    }
    

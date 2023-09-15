@@ -4,6 +4,21 @@ import Pulsar.Engine.*;
 
 public class ZoneMapFactory implements ZoneConstants
 {
+   
+   public static void addBorder(ZoneMap map, MapTile borderTile)
+   {
+      for(int x = 0; x < map.getWidth(); x++)
+      {
+         map.setTile(x, 0, new MapTile(borderTile));
+         map.setTile(x, map.getHeight() - 1, new MapTile(borderTile));
+      }
+      for(int y = 0; y < map.getHeight(); y++)
+      {
+         map.setTile(0, y, new MapTile(borderTile));
+         map.setTile(map.getWidth() - 1, y, new MapTile(borderTile));
+      }
+   }
+   
    public static ZoneMap getTestMap()
    {
       int w = 15;
@@ -95,17 +110,41 @@ public class ZoneMapFactory implements ZoneConstants
       return m;
    }
    
-   public static void addBorder(ZoneMap map, MapTile borderTile)
+   public static ZoneMap getTestMap2()
    {
-      for(int x = 0; x < map.getWidth(); x++)
+      String[] rowArr = {
+         "vvvvvvvvvvvvvvvvvvvvv",
+         "v###################v",
+         "v#.......#.........#v",
+         "v#.......#.........#v",
+         "v#......./.........#v",
+         "v#.......#.........#v",
+         "v#.......#.........#v",
+         "v#.......#.........#v",
+         "v###################v",
+         "vvvvvvvvvvvvvvvvvvvvv"
+      };
+      int w = rowArr[0].length();
+      int h = rowArr.length;
+      ZoneMap m = new ZoneMap(w, h, MapTileFactory.getTile(TileType.CLEAR));
+      for(int y = 0; y < h; y++)
       {
-         map.setTile(x, 0, new MapTile(borderTile));
-         map.setTile(x, map.getHeight() - 1, new MapTile(borderTile));
+         for(int x = 0; x < w; x++)
+         {
+            char tileChar = rowArr[y].charAt(x);
+            MapTile mapTile = MapTileFactory.getTile(TileType.HIGH_WALL);
+            switch(tileChar)
+            {
+               case '.' : mapTile = MapTileFactory.getTile(TileType.CLEAR); break;
+               case '#' : mapTile = MapTileFactory.getTile(TileType.HIGH_WALL); break;
+               case '/' : mapTile = MapTileFactory.getDoor(); break;
+            }
+            m.setTile(x, y, mapTile);
+         }
       }
-      for(int y = 0; y < map.getHeight(); y++)
-      {
-         map.setTile(0, y, new MapTile(borderTile));
-         map.setTile(map.getWidth() - 1, y, new MapTile(borderTile));
-      }
+      m.setTile(1, h / 2, MapTileFactory.getButton(-1));
+      
+      return m;
    }
+   
 }
