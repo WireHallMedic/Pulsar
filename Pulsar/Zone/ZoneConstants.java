@@ -33,15 +33,15 @@ public interface ZoneConstants extends CP437
    {
       STANDARD, FRAGILE, UNBREAKABLE;
       
-      public double getBreakChance(boolean heavyDamage)
+      public boolean getBreaks(boolean heavyDamage)
       {
          if(heavyDamage)
          {
             switch(this)
             {
-               case STANDARD:    return .75;
-               case FRAGILE:     return 1.0;
-               case UNBREAKABLE: return 0.0;
+               case FRAGILE:     return true;
+               case STANDARD:    return true;
+               case UNBREAKABLE: return false;
             }
          }
          else
@@ -49,12 +49,12 @@ public interface ZoneConstants extends CP437
          {
             switch(this)
             {
-               case STANDARD:    return 0.0;
-               case FRAGILE:     return .75;
-               case UNBREAKABLE: return 0.0;
+               case FRAGILE:     return true;
+               case STANDARD:    return false;
+               case UNBREAKABLE: return false;
             }
          }
-         return 0.0;
+         return false;
       }
    }
    

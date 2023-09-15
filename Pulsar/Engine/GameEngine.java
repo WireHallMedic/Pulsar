@@ -288,7 +288,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public static void buttonPressed(int triggerIndex)
    {
-      System.out.println("Button " + triggerIndex + " pressed.");
+      MessagePanel.addMessage("You press the button.");
    }
    
    

@@ -214,8 +214,7 @@ public class Combat implements GUIConstants, GearConstants
    
    public static boolean tileDestructionCheck(Coord target, Weapon weapon)
    {
-      double breakChance = GameEngine.getZoneMap().getTile(target).getDurability().getBreakChance(weapon.isHeavy());
-      return GameEngine.random() <= breakChance;
+      return GameEngine.getZoneMap().getTile(target).getDurability().getBreaks(weapon.isHeavy());
    }
    
    // shotguns target and are stopped by: high impassable
