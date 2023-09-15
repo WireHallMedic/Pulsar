@@ -2,9 +2,10 @@ package Pulsar.Gear;
 
 import Pulsar.Engine.*;
 import Pulsar.Actor.*;
+import Pulsar.AI.*;
 import WidlerSuite.*;
 
-public class Gadget extends GearObj implements GearConstants, ActorConstants
+public class Gadget extends GearObj implements GearConstants, ActorConstants, AIConstants
 {
 	private int maxUses;
 	private int remainingUses;
@@ -97,6 +98,13 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants
             Actor clone = ActorFactory.getHoloclone();
             clone.setAllLocs(GameEngine.getClosestEmptyTile(target));
             GameEngine.add(clone);
+         }
+         if(getSpecialEffect() == GadgetSpecialEffect.TURRET)
+         {
+            Actor turret = ActorFactory.getTurret();
+            turret.setAllLocs(GameEngine.getClosestEmptyTile(target));
+            turret.getAI().setTeam(Team.PLAYER);
+            GameEngine.add(turret);
          }
       }
    }

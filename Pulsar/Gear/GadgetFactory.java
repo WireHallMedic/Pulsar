@@ -36,4 +36,15 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setDescription("Create an exploding clone where you throw it.");
       return g;
    }
+   
+   public static Gadget getTurret()
+   {
+      Gadget g = new Gadget();
+      g.setName("Portable Turret");
+      g.setShortName("Turret");
+      g.setTargetsSelf(false);
+      g.setSpecialEffect(GadgetSpecialEffect.TURRET);
+      g.setDescription("Depolys a stationary turret.");
+      return g;
+   }
 }

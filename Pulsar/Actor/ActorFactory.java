@@ -25,7 +25,8 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.fullyHeal();
       a.setAlertness(Alertness.CAUTIOUS);
       a.getArmor().setDamageReduction(100);
-      a.addGadget(GadgetFactory.getAdrenalInjector());
+    //  a.addGadget(GadgetFactory.getAdrenalInjector());
+      a.addGadget(GadgetFactory.getTurret());
       a.addGadget(GadgetFactory.getGrenades());
       a.addGadget(GadgetFactory.getHoloclone());
       return a;
@@ -38,6 +39,20 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setAI(new CloneAI(a));
       a.setMaxHealth(20);
       a.fullyHeal();
+      a.setDeathEffect(DeathEffect.EXPLODE);
+      a.setTurnEnergy(FULLY_CHARGED);
+      return a;
+   }
+   
+   public static Actor getTurret()
+   {
+      Actor a = new Actor('t');
+      a.setName("Holoclone");
+      a.setAI(new TurretAI(a));
+      a.setMaxHealth(20);
+      a.fullyHeal();
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
+      a.setShield(ShieldFactory.getBasicShield());
       a.setDeathEffect(DeathEffect.EXPLODE);
       a.setTurnEnergy(FULLY_CHARGED);
       return a;

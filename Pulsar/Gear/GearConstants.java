@@ -95,6 +95,7 @@ public interface GearConstants extends WSFontConstants
    
    public enum GadgetSpecialEffect
    {
-      HOLOCLONE;
+      HOLOCLONE,
+      TURRET;
    }
 }
