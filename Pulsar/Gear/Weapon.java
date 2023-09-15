@@ -2,6 +2,7 @@ package Pulsar.Gear;
 
 import java.util.*;
 import Pulsar.Actor.*;
+import Pulsar.GUI.*;
 
 public class Weapon extends GearObj implements GearConstants, Chargable, ActorConstants
 {	
@@ -134,9 +135,12 @@ public class Weapon extends GearObj implements GearConstants, Chargable, ActorCo
    
    public String getSummary()
    {
+      String str = "";
       if(attacks == 1)
-         return getSingleShotSummary();
-      return getMultipleShotSummary();
+         str = getSingleShotSummary();
+      else
+         str = getMultipleShotSummary();
+      return str + " " + getStatusEffectString();
    }
    
    public String getAmmoCount()
@@ -207,5 +211,13 @@ public class Weapon extends GearObj implements GearConstants, Chargable, ActorCo
       }
       tagString += "]";
       return tagString;
+   }
+   
+   private String getStatusEffectString()
+   {
+      if(getStatusEffectType() == null)
+         return "";
+      return GUITools.doubleToPercent(getStatusEffectChance()) + " chance to inflict " + 
+             getStatusEffectType().name + ".";
    }
 }

@@ -21,10 +21,17 @@ public interface ActorConstants
    
    public enum StatusEffectType
    {
-      BURNING,
-      FROZEN,
-      BLIND,
-      EAGLE_EYE,
-      HASTE;
+      BURNING     ("Burning"),
+      FROZEN      ("Frozen"),
+      BLIND       ("Blind"),
+      EAGLE_EYE   ("Eagle Eye"),
+      HASTE       ("Haste");
+      
+      public String name;
+      
+      private StatusEffectType(String n)
+      {
+         name = n;
+      }
    }
 }

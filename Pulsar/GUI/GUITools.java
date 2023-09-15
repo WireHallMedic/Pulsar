@@ -110,6 +110,12 @@ public class GUITools implements GUIConstants, WSFontConstants
       return sec + "s";
    }
    
+   public static String doubleToPercent(double d)
+   {
+      int percent = (int)(100 * d);
+      return percent + "%";
+   }
+   
    public static String centerString(String input, int width)
    {
       int spacerWidth = (width - input.length()) / 2;
