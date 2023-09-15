@@ -45,6 +45,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setBiological(false);
       a.setBloodColor(ROBOT_BLOOD);
       a.setColor(ROBOT_FLESH);
+      a.setNeedsAir(false);
       return a;
    }
    
@@ -63,6 +64,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setBiological(false);
       a.setBloodColor(ROBOT_BLOOD);
       a.setColor(ROBOT_FLESH);
+      a.setNeedsAir(false);
       return a;
    }
    

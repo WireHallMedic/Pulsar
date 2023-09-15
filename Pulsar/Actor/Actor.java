@@ -431,6 +431,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    
    public void suffocate()
    {
+      if(!getNeedsAir())
+         return;
       if(this == GameEngine.getPlayer())
          MessagePanel.addMessage("You are suffocating!");
       applyDamageToHealth(SUFFOCATION_DAMAGE);
