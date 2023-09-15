@@ -75,5 +75,11 @@ public class MapTile implements ZoneConstants
       if(getAirPressure() > 0)
          airPressure--;
    }
+   
+   public void pressurize()
+   {
+      if(airPressure < FULL_AIR_PRESSURE)
+         airPressure++;
+   }
 
 }

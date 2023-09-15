@@ -18,6 +18,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private boolean[][] highPassMap;
    private Vector<Coord> vacuumList;
    private Vector<Coord> breachList;
+   private boolean alternatingTurns;
 
 
 	public int getWidth(){return width;}
@@ -58,7 +59,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    
    public void takeTurn()
    {
-      applyBreaches();
+      alternatingTurns = !alternatingTurns;
+      adjustAir();
    }
    
    public void postProcessing()
@@ -241,7 +243,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       return passMap;
    }
    
-   public void applyBreaches()
+   public void adjustAir()
    {
       boolean[][] depressurizationMap = new boolean[width][height];
       
@@ -257,6 +259,11 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       {
          if(depressurizationMap[x][y])
             tileArray[x][y].depressurize();
+         else if(alternatingTurns)
+         {
+            if(tileArray[x][y].isHighPassable() && tileArray[x][y].getAirPressure() < FULL_AIR_PRESSURE && tileArray[x][y] instanceof Vacuum == false)
+               tileArray[x][y].pressurize();
+         }
       }
    }
 }
