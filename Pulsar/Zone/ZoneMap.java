@@ -97,7 +97,6 @@ public class ZoneMap implements ZoneConstants, GUIConstants
             return;
       }
       breachList.add(c);
-      System.out.println("Breach at " + c);
    }
    
    private void removeBreach(int x, int y){removeBreach(new Coord(x, y));}
@@ -108,7 +107,6 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          if(breachList.elementAt(i).equals(c))
          {
             breachList.removeElementAt(i);
-            System.out.println("Remvoed reach at " + c);
             return;
          }
       }

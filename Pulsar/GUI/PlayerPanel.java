@@ -56,7 +56,8 @@ public class PlayerPanel extends MessagePanel
       if(player.getAltWeapon() != null && player.getAltWeapon().getRemainingShots() == 0)
          altWeaponColor = animationManager.fastBlink() ? TERMINAL_FG_COLOR : WARNING_COLOR;
       
-      write(X_ORIGIN, Y_ORIGIN, "Air: " + GameEngine.getZoneMap().getTile(player.getMapLoc()).getAirPressure(), WIDTH_TILES, 1);
+      String airPressureString = GUITools.getAirPressureString(GameEngine.getZoneMap().getTile(player.getMapLoc()).getAirPressure());
+      write(X_ORIGIN, Y_ORIGIN, "Air: " + airPressureString, WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 1, "Health[        ]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 2, "Shield[        ]", shieldColor.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 3, "Weapon[        ]", mainWeaponColor.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);

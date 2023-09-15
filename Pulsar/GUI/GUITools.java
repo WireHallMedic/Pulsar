@@ -124,4 +124,19 @@ public class GUITools implements GUIConstants, WSFontConstants
          spacer += " ";
       return spacer + input + spacer;
    }
+   
+   public static String getAirPressureString(int airPressure)
+   {
+      String str = "Error";
+      switch(airPressure)
+      {
+         case 5 : str = "Good"; break;
+         case 4 : str = "Fair"; break;
+         case 3 : str = "Poor"; break;
+         case 2 : str = "Low"; break;
+         case 1 : str = "Very Low"; break;
+         case 0 : str = "None"; break;
+      }
+      return str;
+   }
 }
