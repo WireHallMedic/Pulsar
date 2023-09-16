@@ -5,7 +5,12 @@ import Pulsar.Engine.*;
 
 public class GUITools implements GUIConstants, WSFontConstants
 {
-
+   private static TileAnimationManager animationManager = null;
+   
+   public static TileAnimationManager getAnimationManager(){return animationManager;}
+   
+   public static void setAnimationManager(TileAnimationManager am){animationManager = am;}
+   
    public static int getXStep(int originX, int targetX)
    {
       return (int)(targetX - originX);

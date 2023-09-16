@@ -60,6 +60,9 @@ public interface GUIConstants
    public static final Color FIRE_COLOR = Color.ORANGE;  // the regular one, not the custom orange
    public static final Color ASH_COLOR = LIGHT_GREY;
    
+   // gradients
+   public static final Color[] FIRE_COLOR_GRADIENT = WSTools.getGradient(YELLOW, RED, 21);
+   
    public static final double SLOW_MOVE_SPEED = .05;
    public static final double NORMAL_MOVE_SPEED = .2;
    public static final double FAST_MOVE_SPEED = .3;

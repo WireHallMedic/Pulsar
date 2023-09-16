@@ -2,7 +2,7 @@ package Pulsar.Zone;
 
 import Pulsar.GUI.*;
 
-public class Fire extends MapTile implements GUIConstants
+public class Fire extends GradientTile implements GUIConstants
 {
    private MapTile originalTile;
    
@@ -11,9 +11,10 @@ public class Fire extends MapTile implements GUIConstants
    
    public Fire(MapTile original)
    {
-      super('^', FIRE_COLOR.getRGB(), original.getBGColor(), "Fire", true, true, true);
+      super('^', original.getBGColor(), "Fire", true, true, true);
       setAndBurnOriginalTile(original);
       setAirPressure(original.getAirPressure());
+      setGradient(FIRE_COLOR_GRADIENT);
    }
    
    public void setAndBurnOriginalTile(MapTile tile)

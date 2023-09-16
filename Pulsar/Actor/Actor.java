@@ -123,6 +123,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       needsAir = true;
    }
    
+   
    public void setColor(Color c)
    {
       createSprite(getSprite().getIconIndex(), c.getRGB(), DEFAULT_ACTOR_BG_COLOR.getRGB());
@@ -144,9 +145,13 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    
    public void createSprite(int icon, int fgColor, int bgColor)
    {
-      sprite = GUIConstants.SQUARE_TILE_PALETTE.getUnboundTile(
-         icon, fgColor, bgColor, OuterPanel.getSizeMultiplier(), UnboundTile.CIRCLE_BACKGROUND);
+      sprite = generateUnboundTile(icon, fgColor, bgColor);
       sprite.setAffectedByAge(false);
+   }
+   
+   public UnboundTile generateUnboundTile(int icon, int fgColor, int bgColor)
+   {
+      return GUIConstants.SQUARE_TILE_PALETTE.getUnboundTile(icon, fgColor, bgColor, OuterPanel.getSizeMultiplier(), UnboundTile.CIRCLE_BACKGROUND);
    }
    
    // location stuff
@@ -519,6 +524,19 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
             }
          }
       }
+   }
+   
+   // any ongoing thermal damage is considered fire
+   public boolean isOnFire()
+   {
+      boolean onFire = false;
+      for(StatusEffect se : tempStatusEffectList)
+      {
+         if(se.getOngoingDamage() > 0 &&
+            se.getDamageType() == GearConstants.DamageType.THERMAL)
+            onFire = true;
+      }
+      return onFire;
    }
    
    public int getVisionRange()
