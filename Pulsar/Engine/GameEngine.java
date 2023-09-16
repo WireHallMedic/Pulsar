@@ -309,43 +309,16 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             }
             else
             {
-               Coord pullLoc = getLowestAdjacent(a.getMapLoc(), airflowMap);
-               if(a.canStep(pullLoc))
+               Vector<Coord> pullLoc = airflowMap.getLowestAdjacent(a.getMapLoc());
+               if(pullLoc != null && a.canStep(pullLoc.elementAt(0)))
                {
-                  MovementScript ms = MovementScriptFactory.getKnockbackScript(a, pullLoc);
+                  MovementScript ms = MovementScriptFactory.getKnockbackScript(a, pullLoc.elementAt(0));
                   GameEngine.getMapPanel().addLocking(ms);
-                  a.setMapLoc(pullLoc);
+                  a.setMapLoc(pullLoc.elementAt(0));
                }
             }
          }
       }
-   }
-   
-   private static Coord getLowestAdjacent(Coord c, DijkstraMap dMap)
-   {
-      Vector<Coord> locList = new Vector<Coord>();
-      Vector<Integer> distList = new Vector<Integer>();
-      for(int x = -1; x < 2; x++)
-      for(int y = -1; y < 2; y++)
-      {
-         if(x == 0 && y == 0)
-            continue;
-         locList.add(new Coord(c.x + x, c.y + y));
-         distList.add(dMap.getValue(c.x + x, c.y + y));
-      }
-      int curDist = 10000000;
-      Coord curLoc = null;
-      for(int i = 0; i < locList.size(); i++)
-      {
-         if(distList.elementAt(i) < curDist)
-         {
-            curDist = distList.elementAt(i);
-            curLoc = locList.elementAt(i);
-         }
-      }
-      
-      return curLoc;
-      
    }
    
    
