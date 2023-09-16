@@ -2,7 +2,7 @@ package Pulsar.Gear;
 
 import Pulsar.Actor.*;
 
-public class ArmorFactory implements GearConstants
+public class ArmorFactory implements GearConstants, ActorConstants
 {
    public static Armor getScoutArmor()
    {
@@ -28,6 +28,7 @@ public class ArmorFactory implements GearConstants
       a.setName("Assault Armor");
       a.setDamageReduction(4);
 	   a.setSpeedCap(ActionSpeed.SLOW);
+      a.setStatusEffect(StatusEffectFactory.getEffect(StatusEffectType.AIR_SUPPLY));
       return a;
    }
 }

@@ -54,6 +54,9 @@ public class StatusEffectFactory implements ActorConstants, GearConstants
                         	se.setAttackSpeed(1);
                         	se.setInteractSpeed(1);
                            break;
+         case AIR_SUPPLY : se.setName("Air Supply");
+                           se.setNeedsAir(false);
+                           break;
       }
       return se;
    }

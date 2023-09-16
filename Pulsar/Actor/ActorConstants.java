@@ -25,7 +25,8 @@ public interface ActorConstants
       FROZEN      ("Frozen"),
       BLIND       ("Blind"),
       EAGLE_EYE   ("Eagle Eye"),
-      HASTE       ("Haste");
+      HASTE       ("Haste"),
+      AIR_SUPPLY  ("Air Supply");
       
       public String name;
       

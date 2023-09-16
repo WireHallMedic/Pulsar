@@ -441,6 +441,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       if(this == GameEngine.getPlayer())
          MessagePanel.addMessage("You are suffocating!");
       applyDamageToHealth(SUFFOCATION_DAMAGE);
+      if(GameEngine.playerCanSee(getMapLoc()) && isDead())
+         MessagePanel.addMessage(getName() + " suffocates!");
    }
    
    // status effect stuff
@@ -521,6 +523,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       int curVisionRange = getBaseVisionRange();
       for(StatusEffect se : statusEffectList)
          curVisionRange += se.getVisionRange();
+      if(getArmor() != null)
+         curVisionRange += getArmor().getStatusEffect().getVisionRange();
       curVisionRange = Math.min(MAP_WIDTH_TILES / 2, curVisionRange);
       return Math.max(1, curVisionRange);
    }
@@ -530,6 +534,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       boolean breathes = needsAir;
       for(StatusEffect se : statusEffectList)
          breathes = breathes && se.getNeedsAir();
+      if(getArmor() != null)
+         breathes = breathes && getArmor().getStatusEffect().getNeedsAir();
       return breathes;
    }
    

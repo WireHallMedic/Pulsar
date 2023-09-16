@@ -21,10 +21,11 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
       a.setShield(ShieldFactory.getBasicShield());
       a.setArmor(ArmorFactory.getStandardArmor());
+      a.setArmor(ArmorFactory.getAssaultArmor());
       a.setMaxHealth(50);
       a.fullyHeal();
       a.setAlertness(Alertness.CAUTIOUS);
-      a.getArmor().setDamageReduction(100);
+ //     a.getArmor().setDamageReduction(100);
     //  a.addGadget(GadgetFactory.getAdrenalInjector());
       a.addGadget(GadgetFactory.getTurret());
       a.addGadget(GadgetFactory.getGrenades());

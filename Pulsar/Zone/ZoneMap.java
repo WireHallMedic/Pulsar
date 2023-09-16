@@ -126,11 +126,25 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void update(int x, int y){update(new Coord(x, y));}
    public void update(Coord c)
    {
+      boolean wasHighPassable = highPassMap[c.x][c.y];
       transparencyMap[c.x][c.y] = getTile(c).isTransparent();
       lowPassMap[c.x][c.y] = getTile(c).isLowPassable();
       highPassMap[c.x][c.y] = getTile(c).isHighPassable();
       fov.reset(transparencyMap);
       breachCheck(c);
+      if(wasHighPassable && highPassMap[c.x][c.y])
+      {
+         int pressure = tileArray[c.x][c.y].getAirPressure();
+         if(tileArray[c.x + 1][c.y].getAirPressure() < pressure)
+            pressure = tileArray[c.x + 1][c.y].getAirPressure();
+         if(tileArray[c.x - 1][c.y].getAirPressure() < pressure)
+            pressure = tileArray[c.x - 1][c.y].getAirPressure();
+         if(tileArray[c.x][c.y + 1].getAirPressure() < pressure)
+            pressure = tileArray[c.x][c.y + 1].getAirPressure();
+         if(tileArray[c.x][c.y - 1].getAirPressure() < pressure)
+            pressure = tileArray[c.x][c.y - 1].getAirPressure();
+         tileArray[c.x][c.y].setAirPressure(pressure);
+      }
    }
    
    // quickly calculate if origin can see target
