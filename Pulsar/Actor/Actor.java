@@ -396,7 +396,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       if(GameEngine.getZoneMap().getTile(getMapLoc()).getAirPressure() == 0)
          suffocate();
       if(GameEngine.getZoneMap().getTile(getMapLoc()) instanceof Fire)
-         add(StatusEffectFactory.getEffect(StatusEffectType.BURNING));
+         catchFireCheck();
       startOfTurnPerformed = false;
    }
    
@@ -584,6 +584,15 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
          for(int i = 0; i < speedMod; i++)
             speed = speed.faster();
       return speed;
+   }
+   
+   public void catchFireCheck()
+   {
+      double fireChance = BIOLOGICAL_FIRE_CHANCE;
+      if(isMechanical())
+         fireChance = MECHANICAL_FIRE_CHANCE;
+      if(GameEngine.random() <= fireChance)
+         add(StatusEffectFactory.getEffect(StatusEffectType.BURNING));
    }
    
 }
