@@ -57,6 +57,8 @@ public interface GUIConstants
    public static final Color ROBOT_FLESH = LIGHT_GREY;
    public static final Color ALIEN_FLESH = ALIEN_COLOR;
    public static final Color WARNING_COLOR = ORANGE;
+   public static final Color FIRE_COLOR = Color.ORANGE;  // the regular one, not the custom orange
+   public static final Color ASH_COLOR = LIGHT_GREY;
    
    public static final double SLOW_MOVE_SPEED = .05;
    public static final double NORMAL_MOVE_SPEED = .2;

@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3819;g
+!3848;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -37,6 +37,7 @@ s#l0
 %\011Pulsar%sEngine%sEngineTools.java
 %\011%uWidlerSuite%sSquirrelRNG.java
 %\011%uWidlerSuite%sVect.java
+%\011Pulsar%sZone%sFire.java
 %\011%uWidlerSuite%sRectLine.java
 %\011Pulsar%sZone%sMapTileFactory.java
 %\011Pulsar%sAI%sActorMemory.java
@@ -119,7 +120,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3819;f
+!3848;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -144,6 +145,7 @@ s#l0
 %\011Pulsar%sEngine%sEngineTools.java
 %\011%uWidlerSuite%sSquirrelRNG.java
 %\011%uWidlerSuite%sVect.java
+%\011Pulsar%sZone%sFire.java
 %\011%uWidlerSuite%sRectLine.java
 %\011Pulsar%sZone%sMapTileFactory.java
 %\011Pulsar%sAI%sActorMemory.java
@@ -231,4 +233,4 @@ s#l0
 %\011Pulsar%sEngine%sEngineTest.java
 %\011Pulsar%sGear%sGearTest.java
 !247;t
-jgrJUnit0xr	%\011Pulsar%sActor%sActorTest.java	1694786996446:P%\011Actor.java	%\011Pulsar%sActor%sActor.java	1694786996446:P%\011ActorTest.java	%\011Pulsar%sEngine%sEngineTest.java	1694786996446:P	%\011Pulsar%sGear%sGearTest.java	1694786996446:P	
+jgrJUnit0xr	%\011Pulsar%sActor%sActorTest.java	1694876363562:P%\011Actor.java	%\011Pulsar%sActor%sActor.java	1694876363562:P%\011ActorTest.java	%\011Pulsar%sEngine%sEngineTest.java	1694876363562:P	%\011Pulsar%sGear%sGearTest.java	1694876363562:P	

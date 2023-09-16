@@ -167,6 +167,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
                                  break;
             case KeyEvent.VK_X : debug('x'); break;
             case KeyEvent.VK_D : debug('d'); break;
+            case KeyEvent.VK_F : debug('f'); break;
             case KeyEvent.VK_SPACE : debug(' '); break;
          }
       }
@@ -340,6 +341,20 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
    
    public void debug(char arg)
    {
+      if(arg == 'f')
+      {
+         Coord target = GameEngine.getPlayer().getMapLoc();
+         target.x++;
+         if(GameEngine.getZoneMap().getTile(target) instanceof Fire)
+         {
+            GameEngine.getZoneMap().extinguish(target);
+         }
+         else
+         {
+            GameEngine.getZoneMap().setOnFire(target);
+         }
+         return;
+      }
       if(arg == 'e')
       {
          System.out.println(GameEngine.isActorAt(GameEngine.getPlayer().getMapLoc()));

@@ -123,6 +123,24 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       fov.reset(transparencyMap);
    }
    
+   public void setOnFire(int x, int y){setOnFire(new Coord(x, y));}
+   public void setOnFire(Coord c)
+   {
+      MapTile fire = new Fire(getTile(c));
+      setTile(c, fire);
+   }
+   
+   public void extinguish(int x, int y){extinguish(new Coord(x, y));}
+   public void extinguish(Coord c)
+   {
+      MapTile tile = getTile(c);
+      if(tile instanceof Fire)
+      {
+         Fire fireTile = (Fire)tile;
+         setTile(c, fireTile.getOriginalTile());
+      }
+   }
+   
    public void update(int x, int y){update(new Coord(x, y));}
    public void update(Coord c)
    {
@@ -163,6 +181,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
              y < height;
    }
    
+   public void setTile(Coord c, MapTile t){setTile(c.x, c.y, t);}
    public void setTile(int x, int y, MapTile t)
    {
       if(isInBounds(x, y))
