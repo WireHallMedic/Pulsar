@@ -19,6 +19,29 @@ public class ZoneMapFactory implements ZoneConstants
       }
    }
    
+   public static void labelBulkheads(ZoneMap map)
+   {
+      for(int x = 0; x < map.getWidth(); x++)
+      for(int y = 0; y < map.getHeight(); y++)
+      {
+         if(!(map.getTile(x, y) instanceof Vacuum) && isAdjacentToVacuum(map, x, y))
+         {
+            if(map.getTile(x, y) instanceof Door)
+               map.getTile(x, y).setName("Bulkhead Door");
+            else if(!map.getTile(x, y).isHighPassable())
+               map.getTile(x, y).setName("Bulkhead");
+         }
+      }
+   }
+   
+   public static boolean isAdjacentToVacuum(ZoneMap map, int x, int y)
+   {
+      return map.getTile(x + 1, y) instanceof Vacuum ||
+             map.getTile(x - 1, y) instanceof Vacuum ||
+             map.getTile(x, y + 1) instanceof Vacuum ||
+             map.getTile(x, y - 1) instanceof Vacuum;
+   }
+   
    public static ZoneMap getTestMap()
    {
       int w = 15;
@@ -34,6 +57,7 @@ public class ZoneMapFactory implements ZoneConstants
          m.setTile(3, y, MapTileFactory.getTile(TileType.LOW_WALL));
       m.setTile(3, 6, MapTileFactory.getDoor());
       
+      labelBulkheads(m);
       return m;
    }
    
@@ -109,7 +133,7 @@ public class ZoneMapFactory implements ZoneConstants
          }
       }
       m.setTile(2, h / 2, MapTileFactory.getButton(-1));
-      
+      labelBulkheads(m);
       return m;
    }
    
@@ -146,7 +170,7 @@ public class ZoneMapFactory implements ZoneConstants
             m.setTile(x, y, mapTile);
          }
       }
-      
+      labelBulkheads(m);
       return m;
    }
    

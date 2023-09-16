@@ -7,7 +7,7 @@ public class Vacuum extends MapTile implements ZoneConstants, GUIConstants
    @Override
    public Durability getDurability(){return Durability.UNBREAKABLE;}
    @Override
-   public int getAirPressure(){return -1;}
+   public int getAirPressure(){return 0;}
    
    public Vacuum()
    {

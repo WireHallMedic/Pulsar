@@ -346,7 +346,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public static void newGame()
    {
-      
+      /*
       ZoneMap map = ZoneMapFactory.getTestMap2();
       GameEngine.setCurZone(new Zone("Test Zone", -1, map));
       
@@ -448,14 +448,14 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          }
       }
    
-   /*
+   */
       // vacuum test
       ZoneMap map = ZoneMapFactory.getVacuumTest();
       GameEngine.setCurZone(new Zone("Test Zone", -1, map));
       
       Player p = ActorFactory.getPlayer();
       p.setAllLocs(2, 2);
-      setPlayer(p);*/
+      setPlayer(p);
    }
    
    // non-static section
