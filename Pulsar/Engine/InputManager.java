@@ -351,7 +351,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
          }
          else
          {
-            GameEngine.getZoneMap().setOnFire(target);
+            GameEngine.getZoneMap().ignite(target);
          }
          return;
       }

@@ -26,6 +26,18 @@ public class GadgetFactory implements ActorConstants, GearConstants
       return g;
    }
    
+   public static Gadget getNapalmGrenades()
+   {
+      Gadget g = new Gadget();
+      g.setName("Napalm Grenades");
+      g.setShortName("Napalm Grenades");
+      g.setWeaponEffect(WeaponFactory.getNapalm());
+      g.setTargetsSelf(false);
+      g.setDescription("Explodes and ignites where you throw it.");
+      g.setSpecialEffect(GadgetSpecialEffect.NAPALM);
+      return g;
+   }
+   
    public static Gadget getHoloclone()
    {
       Gadget g = new Gadget();

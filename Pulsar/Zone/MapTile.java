@@ -81,5 +81,15 @@ public class MapTile implements ZoneConstants
       if(airPressure < FULL_AIR_PRESSURE)
          airPressure++;
    }
+   
+   public boolean isIgnitable()
+   {
+      if(this instanceof Vacuum ||
+         this instanceof Fire ||
+         !isHighPassable() ||
+         !isLowPassable())
+         return false;
+      return true;
+   }
 
 }

@@ -93,4 +93,17 @@ public class WeaponFactory implements GearConstants, ActorConstants
       w.setChargeCost(0);
       return w;
    }
+   
+   public static Weapon getNapalm()
+   {
+      Weapon w = getExplodingBarrel();
+      w.setName("Exploding Barrel");
+      w.removeWeaponTag(WeaponTag.KNOCKBACK);
+      w.removeWeaponTag(WeaponTag.HEAVY);
+      w.setDamageType(DamageType.THERMAL);
+      w.setStatusEffectType(StatusEffectType.BURNING);
+      w.setStatusEffectChance(1.0);
+      w.setChargeCost(0);
+      return w;
+   }
 }

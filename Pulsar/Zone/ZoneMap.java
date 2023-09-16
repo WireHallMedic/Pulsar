@@ -128,8 +128,15 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       fov.reset(transparencyMap);
    }
    
-   public void setOnFire(int x, int y){setOnFire(new Coord(x, y));}
-   public void setOnFire(Coord c)
+   public void tryToIgnite(int x, int y){tryToIgnite(new Coord(x, y));}
+   public void tryToIgnite(Coord c)
+   {
+      if(getTile(c).isIgnitable())
+         ignite(c);
+   }
+   
+   public void ignite(int x, int y){ignite(new Coord(x, y));}
+   public void ignite(Coord c)
    {
       MapTile fire = new Fire(getTile(c));
       setTile(c, fire);

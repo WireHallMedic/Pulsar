@@ -13,12 +13,9 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setAI(new PlayerAI(a));
       //Weapon weapon = WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE);
       //a.setWeapon(weapon);
-      a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.AUTORIFLE));
-      a.getPrimaryWeapon().setDamageType(DamageType.THERMAL);
-      a.getPrimaryWeapon().setStatusEffectChance(.25);
-      a.getPrimaryWeapon().setStatusEffectType(StatusEffectType.BURNING);
-   //   a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
-      a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
+      a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
+      a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
+  //    a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
       a.setShield(ShieldFactory.getBasicShield());
       a.setArmor(ArmorFactory.getStandardArmor());
 //      a.setArmor(ArmorFactory.getAssaultArmor());
@@ -28,7 +25,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
  //     a.getArmor().setDamageReduction(100);
     //  a.addGadget(GadgetFactory.getAdrenalInjector());
       a.addGadget(GadgetFactory.getTurret());
-      a.addGadget(GadgetFactory.getGrenades());
+      a.addGadget(GadgetFactory.getNapalmGrenades());
       a.addGadget(GadgetFactory.getHoloclone());
       return a;
    }
