@@ -5,7 +5,7 @@ import Pulsar.Engine.*;
 
 public class GUITools implements GUIConstants, WSFontConstants
 {
-   private static TileAnimationManager animationManager = null;
+   private static TileAnimationManager animationManager = null;  // set in MainGameFGPanel
    
    public static TileAnimationManager getAnimationManager(){return animationManager;}
    

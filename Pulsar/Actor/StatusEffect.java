@@ -95,5 +95,9 @@ public class StatusEffect implements GearConstants
       remainingDuration = Math.max(this.remainingDuration, that.remainingDuration);
    }
    
-   
+   // anything that does ongoing thermal damage is a burning effect
+   public boolean isBurningEffect()
+   {
+      return getOngoingDamage() > 0 && getDamageType() == GearConstants.DamageType.THERMAL;
+   }
 }

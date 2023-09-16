@@ -38,6 +38,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    protected boolean biological;
    protected boolean mechanical;
    protected boolean needsAir;
+   protected boolean onFire;
 
 
    public String getName(){return name;}
@@ -63,6 +64,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public DeathEffect getDeathEffect(){return deathEffect;}
    public boolean isBiological(){return biological;}
    public boolean isMechanical(){return mechanical;}
+   public boolean isOnFire(){return onFire;}
 
 
    public void setName(String n){name = n;}
@@ -86,11 +88,12 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void setInteractSpeed(ActionSpeed is){interactSpeed = is;}
    public void setAlertness(Alertness a){alertness = a;}
    public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
-   public void setTempStatusEffectList(Vector<StatusEffect> sel){tempStatusEffectList = sel;}
+   public void setTempStatusEffectList(Vector<StatusEffect> list){tempStatusEffectList = list; burningCheck();}
    public void setDeathEffect(DeathEffect de){deathEffect = de;}
    public void setBiological(boolean b){biological = b;}
    public void setMechanical(boolean m){mechanical = m;}
    public void setNeedsAir(boolean na){needsAir = na;}
+   public void setOnFire(boolean of){onFire = of;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -121,6 +124,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       biological = true;
       mechanical = false;
       needsAir = true;
+      onFire = false;
    }
    
    
@@ -463,6 +467,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
          if(se.isExpired())
          {
             tempStatusEffectList.removeElementAt(i);
+            burningCheck();
             i--;
          }
       }
@@ -493,7 +498,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
          }
       }
       if(needToAdd)
+      {
          tempStatusEffectList.add(se);
+         if(se.isBurningEffect())
+            onFire = true;
+      }
    }
    
    public Vector<StatusEffect> getAllStatusEffects()
@@ -526,17 +535,15 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       }
    }
    
-   // any ongoing thermal damage is considered fire
-   public boolean isOnFire()
+   public void burningCheck()
    {
-      boolean onFire = false;
+      boolean burning = false;
       for(StatusEffect se : tempStatusEffectList)
       {
-         if(se.getOngoingDamage() > 0 &&
-            se.getDamageType() == GearConstants.DamageType.THERMAL)
-            onFire = true;
+         if(se.isBurningEffect())
+            burning = true;
       }
-      return onFire;
+      onFire = burning;
    }
    
    public int getVisionRange()
