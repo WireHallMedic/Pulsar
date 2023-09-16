@@ -5,6 +5,12 @@ import java.awt.*;
 
 public class MapTileFactory implements ZoneConstants, GUIConstants
 {
+   public static MapTile getTile(MapTile original)
+   {
+      if(original instanceof Vacuum)
+         return new Vacuum();
+      return new MapTile(original);
+   }
    public static MapTile getTile(TileType baseType)
    {
       return getTile(baseType, DEFAULT_TILE_FG_COLOR, DEFAULT_TILE_BG_COLOR);

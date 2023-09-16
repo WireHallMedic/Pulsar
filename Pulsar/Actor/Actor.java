@@ -320,6 +320,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       return curHealth <= 0;
    }
    
+   public void kill()
+   {
+      curHealth = -1;
+   }
+   
    public void doDeathEffect()
    {
       if(getDeathEffect() == DeathEffect.EXPLODE)

@@ -272,8 +272,80 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       {
          initiativeIndex = 0;
          if(getZoneMap() != null)
+         {
+            while(isAnimationLocked())
+               ;
             getZoneMap().takeTurn();
+         }
       }
+   }
+   
+   
+   public static void pullTowardsVacuum(boolean[][] depressurizationMap, Vector<Coord> breachList, boolean[][] airPassMap)
+   {
+      for(Coord breach : breachList)
+         airPassMap[breach.x][breach.y] = true;
+      DijkstraMap airflowMap = new DijkstraMap(airPassMap);
+      for(Coord breach : breachList)
+         airflowMap.addGoal(breach);
+      airflowMap.setSearchDiagonal(true);
+      airflowMap.process();
+      for(int i = 0; i < getActorList().size(); i++)
+      {
+         Actor a = getActorList().elementAt(i);
+         if(depressurizationMap[a.getMapLoc().x][a.getMapLoc().y])
+         {
+            boolean nextToVacuum = false;
+            for(Coord breach : breachList)
+               if(a.getMapLoc().equals(breach))
+                  nextToVacuum = true;
+            if(nextToVacuum)
+            {
+               if(playerCanSee(a))
+               {
+                  MessagePanel.addMessage(a.getName() + " is violently sucked out into space!");
+               }
+               a.kill();
+            }
+            else
+            {
+               Coord pullLoc = getLowestAdjacent(a.getMapLoc(), airflowMap);
+               if(a.canStep(pullLoc))
+               {
+                  MovementScript ms = MovementScriptFactory.getKnockbackScript(a, pullLoc);
+                  GameEngine.getMapPanel().addLocking(ms);
+                  a.setMapLoc(pullLoc);
+               }
+            }
+         }
+      }
+   }
+   
+   private static Coord getLowestAdjacent(Coord c, DijkstraMap dMap)
+   {
+      Vector<Coord> locList = new Vector<Coord>();
+      Vector<Integer> distList = new Vector<Integer>();
+      for(int x = -1; x < 2; x++)
+      for(int y = -1; y < 2; y++)
+      {
+         if(x == 0 && y == 0)
+            continue;
+         locList.add(new Coord(c.x + x, c.y + y));
+         distList.add(dMap.getValue(c.x + x, c.y + y));
+      }
+      int curDist = 10000000;
+      Coord curLoc = null;
+      for(int i = 0; i < locList.size(); i++)
+      {
+         if(distList.elementAt(i) < curDist)
+         {
+            curDist = distList.elementAt(i);
+            curLoc = locList.elementAt(i);
+         }
+      }
+      
+      return curLoc;
+      
    }
    
    
@@ -301,7 +373,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public static void newGame()
    {
-      /*
+      
       ZoneMap map = ZoneMapFactory.getTestMap2();
       GameEngine.setCurZone(new Zone("Test Zone", -1, map));
       
@@ -402,15 +474,15 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             }
          }
       }
-   */
    
+   /*
       // vacuum test
       ZoneMap map = ZoneMapFactory.getVacuumTest();
       GameEngine.setCurZone(new Zone("Test Zone", -1, map));
       
       Player p = ActorFactory.getPlayer();
       p.setAllLocs(2, 2);
-      setPlayer(p);
+      setPlayer(p);*/
    }
    
    // non-static section
@@ -468,9 +540,18 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             MessagePanel.addMessage("You have died.", Color.RED);
             break;
          }
+         /////// this is hacky, fix it
          // increment if acted
          if(!(curActor.isReadyToAct()))
             incrementInitiative(); 
+         // do cleanup
+         cleanUpCheck();
+         if(getPlayer().isDead())
+         {
+            cleanUpDead();
+            MessagePanel.addMessage("You have died.", Color.RED);
+            break;
+         }
       }
    }
    

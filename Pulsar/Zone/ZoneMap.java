@@ -246,6 +246,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void adjustAir()
    {
       boolean[][] depressurizationMap = new boolean[width][height];
+      boolean doPullTowardsVacuum = false;
       
       for(Coord c : breachList)
       {
@@ -258,12 +259,20 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       for(int y = 0; y < height; y++)
       {
          if(depressurizationMap[x][y])
+         {
+            if(tileArray[x][y].getAirPressure() > 0)
+               doPullTowardsVacuum = true;
             tileArray[x][y].depressurize();
+         }
          else if(alternatingTurns)
          {
             if(tileArray[x][y].isHighPassable() && tileArray[x][y].getAirPressure() < FULL_AIR_PRESSURE && tileArray[x][y] instanceof Vacuum == false)
                tileArray[x][y].pressurize();
          }
+      }
+      if(doPullTowardsVacuum)
+      {
+         GameEngine.pullTowardsVacuum(depressurizationMap, breachList, getHighPassMap());
       }
    }
 }
