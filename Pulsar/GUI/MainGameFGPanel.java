@@ -19,6 +19,14 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    public static final Color[] TARGETING_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, RETICULE_COLOR, 21);
    public static final Color[] BAD_TARGETING_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, INVALID_RETICULE_COLOR, 21);
    public static final Color[] TERMINAL_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, TERMINAL_FG_COLOR, 21);
+   public static final int SLOW_TICK_COUNT = 20;
+   public static final int MEDIUM_TICK_COUNT = 10;
+   public static final int FAST_TICK_COUNT = 5;
+   private static final int tickCounterReset = SLOW_TICK_COUNT;
+   private int tickCounter;
+   private boolean slowFlag;
+   private boolean mediumFlag;
+   private boolean fastFlag;
    
 	public MainGameFGPanel()
    {
@@ -26,13 +34,33 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
       setSize(50, 50);
       drawLockListFirst();
       GUITools.setAnimationManager(getAnimationManager());
+      tickCounter = 1;
       
       GameEngine.setMapPanel(this);
    }
    
+   
+   
    @Override
    public void actionPerformed(ActionEvent ae)
    {
+      tickCounter++;
+      if(tickCounter > tickCounterReset)
+         tickCounter = 1;
+      slowFlag = (tickCounter % SLOW_TICK_COUNT == 0);
+      mediumFlag = (tickCounter % MEDIUM_TICK_COUNT == 0);
+      fastFlag = (tickCounter % FAST_TICK_COUNT == 0);
+      
+      // add burning effects
+      if(mediumFlag)
+      {
+         for(Actor a : GameEngine.getActorList())
+         {
+            if(a.isOnFire() && GameEngine.playerCanSee(a))
+               VisualEffectFactory.addFireParticle(a);
+         }
+      }
+      
       ZoneMap zoneMap = GameEngine.getZoneMap();
       Player player = GameEngine.getPlayer();
       
@@ -50,7 +78,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
          for(int y = 0; y < rows(); y++)
          {
             if(GameEngine.playerCanSee(x + xCorner, y + yCorner))
-               {
+            {
                tile = zoneMap.getTile(x + xCorner, y + yCorner);
                setTile(x, y, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
             }
@@ -159,9 +187,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                         clearPath = false;
                   }
                }
-               // when targeting player, show cursor
-            //   if(GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
-           //       setBGColor(cursorLoc.x, cursorLoc.y, TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB());
                // don't obscure targets with the blue cursor, it makes it hard to tell if you can hit them or not
                if((GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner) && !GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner)) ||
                   !GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner))

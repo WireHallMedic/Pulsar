@@ -39,6 +39,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    protected boolean mechanical;
    protected boolean needsAir;
    protected boolean onFire;
+   protected Color normalFGColor;
 
 
    public String getName(){return name;}
