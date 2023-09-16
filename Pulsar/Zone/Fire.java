@@ -15,6 +15,7 @@ public class Fire extends GradientTile implements GUIConstants
       setAndBurnOriginalTile(original);
       setAirPressure(original.getAirPressure());
       setGradient(FIRE_COLOR_GRADIENT);
+      setDurability(Durability.UNBREAKABLE);
    }
    
    public void setAndBurnOriginalTile(MapTile tile)

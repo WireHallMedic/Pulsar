@@ -461,6 +461,9 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    ///////////////////////////////////////////////////////////////////////////////
    private void incrementStatusEffects()
    {
+   
+      if(isOnFire() && GameEngine.getZoneMap().getTile(getMapLoc()).getAirPressure() == 0)
+         extinguish();
       for(int i = 0; i < tempStatusEffectList.size(); i++)
       {
          StatusEffect se = tempStatusEffectList.elementAt(i);
@@ -545,6 +548,19 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
             burning = true;
       }
       onFire = burning;
+   }
+   
+   public void extinguish()
+   {
+      for(int i = 0; i < tempStatusEffectList.size(); i++)
+      {
+         if(tempStatusEffectList.elementAt(i).isBurningEffect())
+         {
+            tempStatusEffectList.removeElementAt(i);
+            i--;
+         }
+      }
+      onFire = false;
    }
    
    public int getVisionRange()

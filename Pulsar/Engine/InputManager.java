@@ -374,8 +374,9 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       if(arg == 'x')
       {
          Actor player = GameEngine.getPlayer();
-         player.add(StatusEffectFactory.getEffect(StatusEffectType.HASTE));
-         player.add(StatusEffectFactory.getEffect(StatusEffectType.EAGLE_EYE));
+         StatusEffect burning = StatusEffectFactory.getEffect(StatusEffectType.BURNING);
+         burning.setRemainingDuration(20);
+         player.add(burning);
          return;
       }
       Actor player = GameEngine.getPlayer();
