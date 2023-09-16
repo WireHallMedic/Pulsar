@@ -18,6 +18,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private boolean[][] highPassMap;
    private Vector<Coord> vacuumList;
    private Vector<Coord> breachList;
+   private Vector<Coord> fireList;
    private boolean alternatingTurns;
 
 
@@ -29,6 +30,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public ShadowFoVRect getFoV(){return fov;}
    public Vector<Coord> getVacuumList(){return vacuumList;}
    public Vector<Coord> getBreachList(){return breachList;}
+   public Vector<Coord> getFireList(){return fireList;}
 
 
 	public void setWidth(int w){width = w;}
@@ -38,6 +40,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void setFoV(ShadowFoVRect newFoV){fov = newFoV;}
    public void setVacuumList(Vector<Coord> vl){vacuumList = vl;}
    public void setBreachList(Vector<Coord> bl){breachList = bl;}
+   public void setFireList(Vector<Coord> fl){fireList = fl;}
 
 
    public ZoneMap(int w, int h, MapTile defaultTile)
@@ -55,12 +58,14 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       fov = new ShadowFoVRect(transparencyMap);
       vacuumList = new Vector<Coord>();
       breachList = new Vector<Coord>();
+      fireList = new Vector<Coord>();
    }
    
    public void takeTurn()
    {
       alternatingTurns = !alternatingTurns;
       adjustAir();
+      extinguishCheck();
    }
    
    public void postProcessing()
@@ -128,6 +133,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    {
       MapTile fire = new Fire(getTile(c));
       setTile(c, fire);
+      if(getTile(c) instanceof Fire)
+         fireList.add(c);
    }
    
    public void extinguish(int x, int y){extinguish(new Coord(x, y));}
@@ -138,6 +145,30 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       {
          Fire fireTile = (Fire)tile;
          setTile(c, fireTile.getOriginalTile());
+         if(!(getTile(c) instanceof Fire))
+         {
+            for(int i = 0; i < fireList.size(); i++)
+            {
+               if(fireList.elementAt(i).equals(c))
+               {
+                  fireList.removeElementAt(i);
+               }
+            }
+         }
+      }
+   }
+   
+   private void extinguishCheck()
+   {
+      double extinguishRoll;
+      for(int i = 0; i < fireList.size(); i++)
+      {
+         extinguishRoll = GameEngine.random();
+         Coord loc = fireList.elementAt(i);
+         if(extinguishRoll <= EXTINGUISH_CHANCE[getTile(loc).getAirPressure()])
+         {
+            extinguish(loc);
+         }
       }
    }
    

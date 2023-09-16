@@ -64,4 +64,7 @@ public interface ZoneConstants extends CP437
    {
       EXPLOSION, VACCUUM, FIRE;
    }
+   
+   // an array keyed to air pressure
+   public double[] EXTINGUISH_CHANCE = {1.0, .50, .25, .20, .10, .05};
 }
