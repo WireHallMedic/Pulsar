@@ -13,6 +13,9 @@ public interface ActorConstants
    // player-specific constants
    public static final int DEFAULT_MAX_GADGETS = 3;
    
+   public static final double BIOLOGICAL_FIRE_CHANCE = .5;
+   public static final double MECHANICAL_FIRE_CHANCE = .25;
+   
    public enum DeathEffect
    {
       EXPLODE;

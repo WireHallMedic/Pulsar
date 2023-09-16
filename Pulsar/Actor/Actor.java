@@ -395,6 +395,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       applyOngoingDamage();
       if(GameEngine.getZoneMap().getTile(getMapLoc()).getAirPressure() == 0)
          suffocate();
+      if(GameEngine.getZoneMap().getTile(getMapLoc()) instanceof Fire)
+         add(StatusEffectFactory.getEffect(StatusEffectType.BURNING));
       startOfTurnPerformed = false;
    }
    
