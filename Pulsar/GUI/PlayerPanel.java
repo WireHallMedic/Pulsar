@@ -56,8 +56,12 @@ public class PlayerPanel extends MessagePanel
       if(player.getAltWeapon() != null && player.getAltWeapon().getRemainingShots() == 0)
          altWeaponColor = animationManager.fastBlink() ? TERMINAL_FG_COLOR : WARNING_COLOR;
       
-      String airPressureString = GUITools.getAirPressureString(GameEngine.getZoneMap().getTile(player.getMapLoc()).getAirPressure());
-      write(X_ORIGIN, Y_ORIGIN, "Air: " + airPressureString, WIDTH_TILES, 1);
+      int airPressure = GameEngine.getZoneMap().getTile(player.getMapLoc()).getAirPressure();
+      Color airPressureColor = TERMINAL_FG_COLOR;
+      if(airPressure == 0 && player.getNeedsAir())
+         airPressureColor = animationManager.fastBlink() ? TERMINAL_FG_COLOR : WARNING_COLOR;
+      String airPressureString = GUITools.getAirPressureString(airPressure);
+      write(X_ORIGIN, Y_ORIGIN, "Air: " + airPressureString, airPressureColor.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 1, "Health[        ]", HEALTH_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 2, "Shield[        ]", shieldColor.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
       write(X_ORIGIN, Y_ORIGIN + 3, "Weapon[        ]", mainWeaponColor.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
@@ -98,7 +102,7 @@ public class PlayerPanel extends MessagePanel
       }
       
       // temporary status effects
-      Vector<StatusEffect> statusEffectList = player.getTemporaryStatusEffects();
+      Vector<StatusEffect> statusEffectList = player.getTempStatusEffectList();
       for(int i = 0; i < statusEffectList.size(); i++)
       {
          StatusEffect se = statusEffectList.elementAt(i);

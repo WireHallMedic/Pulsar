@@ -15,6 +15,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    private Weapon weaponEffect;
    private GadgetSpecialEffect specialEffect;
    private String description;
+   private StatusEffect passiveStatusEffect;
 
 
 	public int getMaxUses(){return maxUses;}
@@ -25,9 +26,11 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    public Weapon getWeaponEffect(){return weaponEffect;}
    public GadgetSpecialEffect getSpecialEffect(){return specialEffect;}
    public String getDescription(){return description;}
+   public StatusEffect getPassiveStatusEffect(){return passiveStatusEffect;}
    public boolean hasStatusEffect(){return statusEffectType != null;}
    public boolean hasWeaponEffect(){return weaponEffect != null;}
    public boolean hasSpecialEffect(){return specialEffect != null;}
+   public boolean hasPassiveStatusEffect(){return passiveStatusEffect != null;}
 
 
 	public void setMaxUses(int m){maxUses = m;}
@@ -38,6 +41,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    public void setWeaponEffect(Weapon we){weaponEffect = we;}
    public void setSpecialEffect(GadgetSpecialEffect se){specialEffect = se;}
    public void setDescription(String d){description = d;}
+   public void setPassiveStatusEffect(StatusEffect se){passiveStatusEffect = se;}
    
 
 
@@ -51,6 +55,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
       weaponEffect = null;
       specialEffect = null;
       description = "No description.";
+      passiveStatusEffect = null;
       fullyCharge();
    }
    

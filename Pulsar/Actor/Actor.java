@@ -33,7 +33,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    protected ActionSpeed interactSpeed;
    protected Alertness alertness;
    protected AlertnessManager alertnessManager;
-   protected Vector<StatusEffect> statusEffectList;
+   protected Vector<StatusEffect> tempStatusEffectList;
    protected DeathEffect deathEffect;
    protected boolean biological;
    protected boolean mechanical;
@@ -59,7 +59,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public ActionSpeed getBaseInteractSpeed(){return interactSpeed;}
    public Alertness getAlertness(){return alertness;}
    public AlertnessManager getAlertnessManager(){return alertnessManager;}
-   public Vector<StatusEffect> getStatusEffectList(){return statusEffectList;}
+   public Vector<StatusEffect> getTempStatusEffectList(){return tempStatusEffectList;}
    public DeathEffect getDeathEffect(){return deathEffect;}
    public boolean isBiological(){return biological;}
    public boolean isMechanical(){return mechanical;}
@@ -86,7 +86,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void setInteractSpeed(ActionSpeed is){interactSpeed = is;}
    public void setAlertness(Alertness a){alertness = a;}
    public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
-   public void setStatusEffectList(Vector<StatusEffect> sel){statusEffectList = sel;}
+   public void setTempStatusEffectList(Vector<StatusEffect> sel){tempStatusEffectList = sel;}
    public void setDeathEffect(DeathEffect de){deathEffect = de;}
    public void setBiological(boolean b){biological = b;}
    public void setMechanical(boolean m){mechanical = m;}
@@ -116,7 +116,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       interactSpeed = ActionSpeed.STANDARD;
       alertness = Alertness.RELAXED;
       alertnessManager = new AlertnessManager(this);
-      statusEffectList = new Vector<StatusEffect>();
+      tempStatusEffectList = new Vector<StatusEffect>();
       deathEffect = null;
       biological = true;
       mechanical = false;
@@ -447,15 +447,15 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    
    // status effect stuff
    ///////////////////////////////////////////////////////////////////////////////
-   public void incrementStatusEffects()
+   private void incrementStatusEffects()
    {
-      for(int i = 0; i < statusEffectList.size(); i++)
+      for(int i = 0; i < tempStatusEffectList.size(); i++)
       {
-         StatusEffect se = statusEffectList.elementAt(i);
+         StatusEffect se = tempStatusEffectList.elementAt(i);
          se.increment();
          if(se.isExpired())
          {
-            statusEffectList.removeElementAt(i);
+            tempStatusEffectList.removeElementAt(i);
             i--;
          }
       }
@@ -465,45 +465,46 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       if(isDead())
          return;
-      Color color = TERMINAL_FG_COLOR;
-      if(se.isNegative())
-         color = WARNING_COLOR;
       if(GameEngine.playerCanSee(this))
       {
+         Color color = TERMINAL_FG_COLOR;
+         if(se.isNegative())
+            color = WARNING_COLOR;
          String beginning = "The " + getName() + " is ";
          if(GameEngine.getPlayer() == this)
             beginning = "You are ";
          MessagePanel.addMessage(beginning + se.getDescriptor() + "!", color);
       }
       boolean needToAdd = true;
-      for(int i = 0; i < statusEffectList.size(); i++)
+      for(int i = 0; i < tempStatusEffectList.size(); i++)
       {
-         if(statusEffectList.elementAt(i).shouldCombine(se))
+         if(tempStatusEffectList.elementAt(i).shouldCombine(se))
          {
             needToAdd = false;
-            statusEffectList.elementAt(i).combine(se);
+            tempStatusEffectList.elementAt(i).combine(se);
             break;
          }
       }
       if(needToAdd)
-         statusEffectList.add(se);
+         tempStatusEffectList.add(se);
    }
    
-   public Vector<StatusEffect> getTemporaryStatusEffects()
+   public Vector<StatusEffect> getAllStatusEffects()
    {
-      Vector<StatusEffect> tempList = new Vector<StatusEffect>();
-      for(StatusEffect se : statusEffectList)
-      {
-         if(se.getExpires())
-            tempList.add(se);
-      }
-      return tempList;
+      Vector<StatusEffect> seList = new Vector<StatusEffect>();
+      for(StatusEffect se : tempStatusEffectList)
+         seList.add(se);
+      if(getArmor() != null && getArmor().getStatusEffect() != null)
+         seList.add(getArmor().getStatusEffect());
+      if(getShield() != null && getShield().getStatusEffect() != null)
+         seList.add(getShield().getStatusEffect());
+      return seList;
    }
    
    public void applyOngoingDamage()
    {
       boolean alreadyDead = false;
-      for(StatusEffect se : statusEffectList)
+      for(StatusEffect se : tempStatusEffectList)
       {
          if(se.getOngoingDamage() > 0)
          {
@@ -521,10 +522,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public int getVisionRange()
    {
       int curVisionRange = getBaseVisionRange();
-      for(StatusEffect se : statusEffectList)
+      for(StatusEffect se : getAllStatusEffects())
          curVisionRange += se.getVisionRange();
-      if(getArmor() != null)
-         curVisionRange += getArmor().getStatusEffect().getVisionRange();
       curVisionRange = Math.min(MAP_WIDTH_TILES / 2, curVisionRange);
       return Math.max(1, curVisionRange);
    }
@@ -532,10 +531,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public boolean getNeedsAir()
    {
       boolean breathes = needsAir;
-      for(StatusEffect se : statusEffectList)
+      for(StatusEffect se : getAllStatusEffects())
          breathes = breathes && se.getNeedsAir();
-      if(getArmor() != null)
-         breathes = breathes && getArmor().getStatusEffect().getNeedsAir();
       return breathes;
    }
    
@@ -544,7 +541,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       ActionSpeed speed = getBaseMoveSpeed();
       int speedMod = 0;
-      for(StatusEffect se : statusEffectList)
+      for(StatusEffect se : getAllStatusEffects())
          speedMod += se.getMoveSpeed();
       if(speedMod < 0)
          for(int i = 0; i < Math.abs(speedMod); i++)
@@ -561,7 +558,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       ActionSpeed speed = getBaseAttackSpeed();
       int speedMod = 0;
-      for(StatusEffect se : statusEffectList)
+      for(StatusEffect se : getAllStatusEffects())
          speedMod += se.getAttackSpeed();
       if(speedMod < 0)
          for(int i = 0; i < Math.abs(speedMod); i++)
@@ -576,7 +573,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       ActionSpeed speed = getBaseInteractSpeed();
       int speedMod = 0;
-      for(StatusEffect se : statusEffectList)
+      for(StatusEffect se : getAllStatusEffects())
          speedMod += se.getInteractSpeed();
       if(speedMod < 0)
          for(int i = 0; i < Math.abs(speedMod); i++)

@@ -312,7 +312,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                Vector<Coord> pullLoc = airflowMap.getLowestAdjacent(a.getMapLoc());
                if(pullLoc != null && a.canStep(pullLoc.elementAt(0)))
                {
-                  MovementScript ms = MovementScriptFactory.getKnockbackScript(a, pullLoc.elementAt(0));
+                  MovementScript ms = MovementScriptFactory.getWalkingScript(a, pullLoc.elementAt(0));
                   GameEngine.getMapPanel().addLocking(ms);
                   a.setMapLoc(pullLoc.elementAt(0));
                }

@@ -1,6 +1,7 @@
 package Pulsar.Gear;
 
 import Pulsar.GUI.*;
+import Pulsar.Actor.*;
 
 public class Shield extends GearObj implements GearConstants, Chargable
 {
@@ -9,6 +10,7 @@ public class Shield extends GearObj implements GearConstants, Chargable
 	private int chargeDelay;
 	private int chargeRate;
 	private int timeSinceHit;
+   private StatusEffect statusEffect;
 
 
 	public int getCurCharge(){return curCharge;}
@@ -23,6 +25,7 @@ public class Shield extends GearObj implements GearConstants, Chargable
 	public void setChargeDelay(int c){chargeDelay = c;}
 	public void setChargeRate(int c){chargeRate = c;}
 	public void setTimeSinceHit(int t){timeSinceHit = t;}
+   public void setStatusEffect(StatusEffect se){statusEffect = se;}
 
    public Shield()
    {
@@ -32,6 +35,15 @@ public class Shield extends GearObj implements GearConstants, Chargable
       chargeRate = DEFAULT_SHIELD_CHARGE_RATE;
       timeSinceHit = 0;
       fullyCharge();
+      statusEffect = null;
+   }
+   
+   // shield status effects only work when the shield has charge
+   public StatusEffect getStatusEffect()
+   {
+      if(curCharge > 0)
+         return statusEffect;
+      return null;
    }
    
    public void fullyCharge()
@@ -51,8 +63,11 @@ public class Shield extends GearObj implements GearConstants, Chargable
    
    public String getShortSummary()
    {
-      return "Charge Delay: " + GUITools.initToSec(getChargeDelay()) + 
-             ", Charge Rate: " + getChargeRate();
+      String str = "Charge Delay: " + GUITools.initToSec(getChargeDelay()) + 
+                   ", Charge Rate: " + getChargeRate();
+      if(statusEffect != null)
+         str += ", " + statusEffect.getName() + " when charged.";
+      return str;
    }
    
    public void charge()

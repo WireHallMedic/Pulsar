@@ -353,7 +353,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       }
       if(arg == 'd')
       {
-         System.out.println(GameEngine.getPlayer().getStatusEffectList());
+         System.out.println(GameEngine.getPlayer().getAllStatusEffects());
          return;
       }
       if(arg == 'x')

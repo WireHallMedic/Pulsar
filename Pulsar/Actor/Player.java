@@ -228,4 +228,18 @@ public class Player extends Actor implements GUIConstants, GearConstants
    {
       return gadgetList.size() < getMaxGadgets();
    }
+   
+   @Override
+   
+   
+   public Vector<StatusEffect> getAllStatusEffects()
+   {
+      Vector<StatusEffect> seList = super.getAllStatusEffects();
+      for(Gadget gadget : gadgetList)
+      {
+         if(gadget.hasPassiveStatusEffect())
+            seList.add(gadget.getPassiveStatusEffect());
+      }
+      return seList;
+   }
 }

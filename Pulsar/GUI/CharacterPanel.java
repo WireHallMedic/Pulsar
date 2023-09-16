@@ -148,7 +148,7 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
       }
       
       // temporary status effects
-      Vector<StatusEffect> statusEffectList = player.getTemporaryStatusEffects();
+      Vector<StatusEffect> statusEffectList = player.getTempStatusEffectList();
       for(int i = 0; i < statusEffectList.size(); i++)
       {
          StatusEffect se = statusEffectList.elementAt(i);

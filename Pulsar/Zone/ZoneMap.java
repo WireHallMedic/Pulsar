@@ -132,7 +132,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       highPassMap[c.x][c.y] = getTile(c).isHighPassable();
       fov.reset(transparencyMap);
       breachCheck(c);
-      if(wasHighPassable && highPassMap[c.x][c.y])
+      // opening a door between two zero-air tiles sets door to zero air
+      if(!wasHighPassable && highPassMap[c.x][c.y])
       {
          int pressure = tileArray[c.x][c.y].getAirPressure();
          if(tileArray[c.x + 1][c.y].getAirPressure() < pressure)
