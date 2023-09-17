@@ -42,28 +42,43 @@ public interface AIConstants
    {
       PLAYER,
       VILLAIN,
+      ALIEN,
       NEUTRAL;
       
       public boolean isHostile(Team that)
       {
          if(this == that)
             return false;
-         if(this == PLAYER && that == VILLAIN)
-            return true;
+         if(this == PLAYER)
+         {
+            if(that == VILLAIN) return true;
+            if(that == ALIEN) return true;
+            if(that == NEUTRAL) return false;
+         }
          if(this == VILLAIN)
-            return true;
-         if(this == NEUTRAL && that == VILLAIN)
-            return true;
+         {
+            if(that == PLAYER) return true;
+            if(that == ALIEN) return true;
+            if(that == NEUTRAL) return false;
+         }
+         if(this == ALIEN)
+         {
+            if(that == VILLAIN) return true;
+            if(that == PLAYER) return true;
+            if(that == NEUTRAL) return true;
+         }
+         if(this == NEUTRAL)
+         {
+            if(that == VILLAIN) return true;
+            if(that == ALIEN) return true;
+            if(that == PLAYER) return false;
+         }
          return false;
       }
       
       public boolean isFriendly(Team that)
       {
          if(this == that)
-            return true;
-         if(this == PLAYER && that == NEUTRAL)
-            return true;
-         if(this == NEUTRAL && that == PLAYER)
             return true;
          return false;
       }
