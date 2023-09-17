@@ -43,9 +43,11 @@ public class PlayerPanel extends MessagePanel
    public void update()
    {
       clearPlayerPanel();
+      Player player = GameEngine.getPlayer();
+      if(player == null)
+         return;
       
       // basic status
-      Player player = GameEngine.getPlayer();
       Color shieldColor = SHIELD_COLOR;
       Color mainWeaponColor = TERMINAL_FG_COLOR;
       Color altWeaponColor = TERMINAL_FG_COLOR;
