@@ -48,7 +48,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
       for(int i = 0; i < actorList.size(); i++)
       {
          Actor a = actorList.elementAt(i);
-         if(a != GameEngine.getPlayer() && GameEngine.playerCanSee(a))
+         if(GameEngine.playerCanSee(a) && a != GameEngine.getPlayer() && !a.isDead())
          {
             actorsToShow.add(a);
          }

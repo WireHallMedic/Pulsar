@@ -243,7 +243,12 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void breakTile(int x, int y)
    {
       MapTile mt = getTile(x, y);
-      setTile(x, y, MapTileFactory.getBroken(mt));
+      MapTile newTile = MapTileFactory.getBroken(mt);
+      if(mt.isHighPassable())
+         newTile.setAirPressure(mt.getAirPressure());
+      else
+         newTile.setAirPressure(0);
+      setTile(x, y, newTile);
       if(mt.hasOnDestructionEffect())
          GameEngine.doDestructionEffect(x, y, mt);
       breachCheck(x, y);
