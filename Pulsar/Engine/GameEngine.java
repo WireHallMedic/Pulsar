@@ -223,6 +223,19 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return true;
    }
    
+   public static Coord getActualTarget(Coord origin, Coord target)
+   {
+      Vector<Coord> lineOfFire = StraightLine.findLine(origin, target, StraightLine.REMOVE_ORIGIN);
+      for(Coord c : lineOfFire)
+      {
+         if(blocksShooting(c))
+         {
+           return(c);
+         }
+      }
+      return target;
+   }
+   
    // used for planning, so an actor doesn't think they can hide behind themselves
    public static boolean hasClearShotIgnoring(Actor o, Actor t, Actor i){return hasClearShotIgnoring(o.getMapLoc(), t.getMapLoc(), i.getMapLoc());}
    public static boolean hasClearShotIgnoring(Coord origin, Coord target, Coord ignoring)

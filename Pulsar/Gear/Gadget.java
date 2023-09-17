@@ -4,6 +4,7 @@ import Pulsar.Engine.*;
 import Pulsar.Actor.*;
 import Pulsar.AI.*;
 import WidlerSuite.*;
+import java.util.*;
 
 public class Gadget extends GearObj implements GearConstants, ActorConstants, AIConstants
 {
@@ -102,6 +103,10 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
       }
       if(hasWeaponEffect())
       {
+         if(getWeaponEffect().hasWeaponTag(WeaponTag.BLAST))
+            target = GameEngine.getDetonationLoc(user.getMapLoc(), target);
+         else 
+            target = GameEngine.getActualTarget(user.getMapLoc(), target);
          Combat.resolveAttack(user, target, getWeaponEffect());
       }
       if(hasSpecialEffect())
@@ -109,12 +114,14 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
          if(getSpecialEffect() == GadgetSpecialEffect.HOLOCLONE)
          {
             Actor clone = ActorFactory.getHoloclone();
+            target = GameEngine.getActualTarget(user.getMapLoc(), target);
             clone.setAllLocs(GameEngine.getClosestEmptyTile(target));
             GameEngine.add(clone);
          }
          if(getSpecialEffect() == GadgetSpecialEffect.TURRET)
          {
             Actor turret = ActorFactory.getTurret();
+            target = GameEngine.getActualTarget(user.getMapLoc(), target);
             turret.setAllLocs(GameEngine.getClosestEmptyTile(target));
             turret.getAI().setTeam(Team.PLAYER);
             GameEngine.add(turret);
@@ -124,6 +131,10 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
             for(int x = -1; x < 2; x++)
             for(int y = -1; y < 2; y++)
             {
+               if(getWeaponEffect().hasWeaponTag(WeaponTag.BLAST))
+                  target = GameEngine.getDetonationLoc(user.getMapLoc(), target);
+               else 
+                  target = GameEngine.getActualTarget(user.getMapLoc(), target);
                GameEngine.getZoneMap().tryToIgnite(target.x + x, target.y + y);
             }
          }
