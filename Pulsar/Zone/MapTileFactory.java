@@ -13,6 +13,8 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    }
    public static MapTile getTile(TileType baseType)
    {
+      if(baseType == TileType.WATER)
+         return getWater();
       return getTile(baseType, DEFAULT_TILE_FG_COLOR, DEFAULT_TILE_BG_COLOR);
    }
    
@@ -75,6 +77,16 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       tile.setName("Exploding Barrel");
       tile.setFGColor(RED.getRGB());
       tile.setOnDestructionEffect(OnDestructionEffect.EXPLOSION);
+      return tile;
+   }
+   
+   public static MapTile getWater()
+   {
+      GradientTile tile = new GradientTile('~', DEFAULT_TILE_FG_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB(), "Water", false, true, true);
+      tile.setGradient(WATER_COLOR_GRADIENT);
+      tile.setDurability(Durability.UNBREAKABLE);
+      tile.setPulseType(GradientTile.BACKGROUND);
+      tile.setPulseSpeed(GradientTile.SLOW);
       return tile;
    }
 }

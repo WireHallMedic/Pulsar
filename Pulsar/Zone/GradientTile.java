@@ -24,9 +24,9 @@ public class GradientTile extends MapTile implements ZoneConstants, GUIConstants
    public void setPulseSpeed(int ps){pulseSpeed = ps;}
    public void setPulseType(boolean pt){pulseType = pt;}
    
-   public GradientTile(int i, int bg, String n, boolean lp, boolean hp, boolean t)
+   public GradientTile(int i, int fg, int bg, String n, boolean lp, boolean hp, boolean t)
    {   
-      super(i, DEFAULT_TILE_FG_COLOR.getRGB(), bg, n, lp, hp, t);
+      super(i, fg, bg, n, lp, hp, t);
       gradient = null;
       pulseSpeed = MEDIUM;
       pulseType = FOREGROUND;

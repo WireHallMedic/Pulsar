@@ -2,17 +2,18 @@ package Pulsar.Zone;
 
 import WidlerSuite.*;
 
-public interface ZoneConstants extends CP437
+public interface ZoneConstants extends WSFontConstants
 {
    public static final int FULL_AIR_PRESSURE = 5;
    
    public enum TileType
    {
-      CLEAR       (250, "Clear", true, true, true),
+      CLEAR       (SMALL_BULLET_TILE, "Clear", true, true, true),
       HIGH_WALL   ('#', "Wall", false, false, false),
       LOW_WALL    ('=', "Low Wall", false, true, true),
       WINDOW      (':', "Window", false, false, true),
       RUBBLE      (',', "Rubble", true, true, true),
+      WATER       ('~', "Water", false, true, true),
       NULL        (' ', "", false, false, false);
       
       public int iconIndex;

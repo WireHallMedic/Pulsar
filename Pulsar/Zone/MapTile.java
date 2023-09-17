@@ -12,6 +12,7 @@ public class MapTile implements ZoneConstants
    private Durability durability;
    private OnDestructionEffect destructionEffect;
    private int airPressure;
+   private boolean liquid;
 
 
 	public int getIconIndex(){return iconIndex;}
@@ -24,6 +25,7 @@ public class MapTile implements ZoneConstants
    public Durability getDurability(){return durability;}
    public OnDestructionEffect getOnDestructionEffect(){return destructionEffect;}
    public int getAirPressure(){return airPressure;}
+   public boolean isLiquid(){return liquid;}
 
 
 	public void setIconIndex(int i){iconIndex = i;}
@@ -36,6 +38,7 @@ public class MapTile implements ZoneConstants
    public void setDurability(Durability d){durability = d;}
    public void setOnDestructionEffect(OnDestructionEffect de){destructionEffect = de;}
    public void setAirPressure(int ap){airPressure = ap;}
+   public void setLiquid(boolean l){liquid = l;}
    
    public MapTile(int i, int fg, int bg, String n, boolean lp, boolean hp, boolean t)
    {
@@ -49,6 +52,7 @@ public class MapTile implements ZoneConstants
       durability = Durability.STANDARD;
       destructionEffect = null;
       airPressure = FULL_AIR_PRESSURE;
+      liquid = false;
    }
    
    public MapTile(MapTile that)
@@ -63,6 +67,7 @@ public class MapTile implements ZoneConstants
       this.durability = that.durability;
       this.destructionEffect = that.destructionEffect;
       this.airPressure = that.airPressure;
+      this.liquid = that.liquid;
    }
    
    public boolean hasOnDestructionEffect()
@@ -87,7 +92,8 @@ public class MapTile implements ZoneConstants
       if(this instanceof Vacuum ||
          this instanceof Fire ||
          !isHighPassable() ||
-         !isLowPassable())
+         !isLowPassable() ||
+         isLiquid())
          return false;
       return true;
    }
