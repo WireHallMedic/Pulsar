@@ -11,7 +11,7 @@ import Pulsar.Engine.*;
 import Pulsar.Zone.*;
 import java.util.*;
 
-public class InfoPanel extends RogueTilePanel implements GUIConstants
+public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineConstants
 {
    private static final int WIDTH_TILES = (TERMINAL_WIDTH_TILES - (MAP_HEIGHT_TILES * 2) - 4) / 2;
    private static final int HEIGHT_TILES = MAP_HEIGHT_TILES;
@@ -158,7 +158,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants
    @Override
    public void actionPerformed(ActionEvent ae)
    {
-      if(redrawF)
+      if(redrawF || GameEngine.getGameMode() == GameMode.TARGETING || GameEngine.getGameMode() == GameMode.LOOK)
       {
          redrawF = false;
          redraw();

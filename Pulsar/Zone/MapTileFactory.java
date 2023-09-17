@@ -87,6 +87,7 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       tile.setDurability(Durability.UNBREAKABLE);
       tile.setPulseType(GradientTile.BACKGROUND);
       tile.setPulseSpeed(GradientTile.SLOW);
+      tile.setLiquid(true);
       return tile;
    }
 }
