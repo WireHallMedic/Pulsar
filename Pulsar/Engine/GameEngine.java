@@ -316,6 +316,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                   Coord closestBreach = EngineTools.getClosest(a.getMapLoc(), breachList);
                   if(EngineTools.getDistanceTo(closestBreach, a.getMapLoc()) > EngineTools.getDistanceTo(closestBreach, pullLoc.elementAt(0)))
                   {
+                     a.reconcileSprite();
                      MovementScript ms = MovementScriptFactory.getWalkingScript(a, pullLoc.elementAt(0));
                      GameEngine.getMapPanel().addLocking(ms);
                      a.setMapLoc(pullLoc.elementAt(0));
