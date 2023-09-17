@@ -140,6 +140,8 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       ButtonTrigger trigger = new ButtonTrigger(-1, ButtonAction.TOGGLE);
       trigger.addTarget(new Coord(1, 14));
       m.add(trigger);
+      Door bulkheadDoor = (Door)m.getTile(1, 14);
+      bulkheadDoor.setLocked(true);
       labelBulkheads(m);
       return m;
    }

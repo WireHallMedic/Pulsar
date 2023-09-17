@@ -115,8 +115,20 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       MapTile tile = getTile(c);
       if(tile instanceof ToggleTile)
       {
-         ToggleTile tTile = (ToggleTile)tile;
-         tTile.toggle();
+         // using a button to open a door ignores locked status
+         if(tile instanceof Door)
+         {
+            Door door = (Door)tile;
+            boolean originallyLocked = door.isLocked();
+            door.setLocked(false);
+            door.toggle();
+            door.setLocked(originallyLocked);
+         }
+         else
+         {
+            ToggleTile tTile = (ToggleTile)tile;
+            tTile.toggle();
+         }
          update(c);
       }
    }

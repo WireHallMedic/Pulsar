@@ -152,7 +152,13 @@ public class BasicAI implements AIConstants
       }
       else if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof ToggleTile)
       {
-         setPendingAction(ActorAction.TOGGLE);
+         if(unlockedCheck(pendingTarget))
+            setPendingAction(ActorAction.TOGGLE);
+         else
+         {
+            MessagePanel.addMessage("It's locked.");
+            clearPlan();
+         }
       }
       // actor
       else if(GameEngine.isActorAt(pendingTarget))
@@ -182,7 +188,13 @@ public class BasicAI implements AIConstants
       // toggle tile
       if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof ToggleTile)
       {
-         setPendingAction(ActorAction.TOGGLE);
+         if(unlockedCheck(pendingTarget))
+            setPendingAction(ActorAction.TOGGLE);
+         else
+         {
+            MessagePanel.addMessage("It's locked.");
+            clearPlan();
+         }
       } 
       else
       // no possible action
@@ -191,6 +203,16 @@ public class BasicAI implements AIConstants
          clearPlan();
       }
       
+   }
+   
+   protected boolean unlockedCheck(Coord target)
+   {
+      if(GameEngine.getZoneMap().getTile(target) instanceof Door)
+      {
+         Door door = (Door)GameEngine.getZoneMap().getTile(target);
+         return !door.isLocked();
+      }
+      return true;
    }
    
    protected Coord getStepTowards(Coord target)

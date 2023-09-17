@@ -5,12 +5,19 @@ public class Door extends MapTile implements ToggleTile
    public static final boolean OPEN = true;
    public static final boolean CLOSED = false;
    
-   private boolean open = false;
+   private boolean open;
+   private boolean locked;
+   
+   public boolean isLocked(){return locked;}
+   
+   public void setLocked(boolean l){locked = l;}
    
    
    public Door(int fg, int bg, String n)
    {
       super('x', fg, bg, n, false, false, false);
+      open = false;
+      locked = false;
    }
 
 	public int getIconIndex()
@@ -25,6 +32,8 @@ public class Door extends MapTile implements ToggleTile
       String suffix = " (Closed)";
       if(open)
          suffix = " (Open)";
+      else if(locked)
+         suffix = " (Locked)";
       return super.getName() + suffix;
    }
    
@@ -37,6 +46,8 @@ public class Door extends MapTile implements ToggleTile
    
    public void toggle()
    {
-      open = !open;
+      if(!locked)
+         open = !open;
    }
+   
 }
