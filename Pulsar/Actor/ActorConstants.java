@@ -24,12 +24,12 @@ public interface ActorConstants
    
    public enum StatusEffectType
    {
-      BURNING     ("Burning"),
-      FROZEN      ("Frozen"),
-      BLIND       ("Blind"),
-      EAGLE_EYE   ("Eagle Eye"),
-      HASTE       ("Haste"),
-      AIR_SUPPLY  ("Air Supply");
+      BURNING       ("Burning"),
+      FROZEN        ("Frozen"),
+      BLIND         ("Blind"),
+      EAGLE_EYE     ("Eagle Eye"),
+      HASTE         ("Haste"),
+      AIR_SUPPLY    ("Air Supply");
       
       public String name;
       

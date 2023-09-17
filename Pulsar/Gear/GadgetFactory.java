@@ -64,11 +64,22 @@ public class GadgetFactory implements ActorConstants, GearConstants
    {
       Gadget g = new Gadget();
       g.setName("Motion Sensor");
-      g.setShortName("M. Sensor");
+      g.setShortName("Motion Sensor");
       g.setTargetsSelf(false);
       g.setPassiveOnly(true);
       g.setSpecialEffect(GadgetSpecialEffect.MOTION_SENSOR);
       g.setDescription("Detects nearby movement.");
+      return g;
+   }
+   
+   public static Gadget getAirSupply()
+   {
+      Gadget g = new Gadget();
+      g.setName("Portable Air Supply");
+      g.setShortName("Air Supply");
+      g.setPassiveOnly(true);
+      g.setPassiveStatusEffect(StatusEffectFactory.getEffect(StatusEffectType.AIR_SUPPLY));
+      g.setDescription("Provides a continuous supply of air.");
       return g;
    }
 }
