@@ -134,7 +134,9 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
             m.setTile(x, y, mapTile);
          }
       }
-      m.setTile(6, 14, MapTileFactory.getButton(-1));
+      Button button = (Button)MapTileFactory.getButton(-1);
+      button.setOneUse(false);
+      m.setTile(6, 14, button);
       ButtonTrigger trigger = new ButtonTrigger(-1, ButtonAction.TOGGLE);
       trigger.addTarget(new Coord(1, 14));
       m.add(trigger);
