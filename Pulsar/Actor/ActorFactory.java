@@ -117,6 +117,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       Actor a = new Actor('w');
       a.setName("Alien Worker");
       a.setAI(new StandardEnemyAI(a));
+      a.getAI().setTeam(AIConstants.Team.ALIEN);
       a.setUnarmedAttack(WeaponFactory.getAlienClaws());
       a.setBloodColor(ALIEN_COLOR);
       a.setColor(ALIEN_FLESH);
