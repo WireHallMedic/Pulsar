@@ -276,6 +276,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             while(isAnimationLocked())
                ;
             getZoneMap().takeTurn();
+            cleanUpCheck();
          }
       }
    }
@@ -320,6 +321,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                      MovementScript ms = MovementScriptFactory.getPushScript(a, pullLoc.elementAt(0));
                      GameEngine.getMapPanel().addLocking(ms);
                      a.setMapLoc(pullLoc.elementAt(0));
+                     a.setDidForcedMovement(true);
                   }
                }
             }
@@ -514,37 +516,29 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          }
          // do cleanup
          cleanUpCheck();
-         if(getPlayer().isDead())
-         {
-            cleanUpDead();
-            MessagePanel.addMessage("You have died.", Color.RED);
-            break;
-         }
-         /////// this is hacky, fix it
          // increment if acted
          if(!(curActor.isReadyToAct()))
             incrementInitiative(); 
-         // do cleanup
-         cleanUpCheck();
          if(getPlayer().isDead())
-         {
-            cleanUpDead();
-            MessagePanel.addMessage("You have died.", Color.RED);
-            break;
-         }
+         break;
       }
    }
    
-   public void cleanUpCheck()
+   public static void cleanUpCheck()
    {
       if(!isAnimationLocked())
       {
          cleanUpDead();
          cleanUpSprites();
       }
+      if(getPlayer().isDead())
+      {
+         cleanUpDead();
+         MessagePanel.addMessage("You have died.", Color.RED);
+      }
    }
    
-   private void cleanUpSprites()
+   private static void cleanUpSprites()
    {
       Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)
@@ -554,7 +548,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       }
    }
    
-   private void cleanUpDead()
+   private static void cleanUpDead()
    {
       Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)

@@ -39,7 +39,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    protected boolean mechanical;
    protected boolean needsAir;
    protected boolean onFire;
-   protected Color normalFGColor;
+   protected boolean forcedMovementSinceLastTurn;
 
 
    public String getName(){return name;}
@@ -66,6 +66,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public boolean isBiological(){return biological;}
    public boolean isMechanical(){return mechanical;}
    public boolean isOnFire(){return onFire;}
+   public boolean didForcedMovement(){return forcedMovementSinceLastTurn;}
 
 
    public void setName(String n){name = n;}
@@ -95,6 +96,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void setMechanical(boolean m){mechanical = m;}
    public void setNeedsAir(boolean na){needsAir = na;}
    public void setOnFire(boolean of){onFire = of;}
+   public void setDidForcedMovement(boolean dfm){forcedMovementSinceLastTurn = dfm;}
 
 
    public Actor(int icon){this(icon, "Unknown Actor");}
@@ -126,6 +128,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       mechanical = false;
       needsAir = true;
       onFire = false;
+      forcedMovementSinceLastTurn = false;
    }
    
    
@@ -318,6 +321,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       {
          applyDamageToHealth(damage);
       }
+      setDidForcedMovement(true);
    }
    
    public void applyDamageToHealth(int damage)
@@ -397,6 +401,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       updateMemory();
       startOfTurnPerformed = true;
+      setDidForcedMovement(false);
    }
    
    private void endOfTurn()

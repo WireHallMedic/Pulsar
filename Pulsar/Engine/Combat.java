@@ -329,5 +329,6 @@ public class Combat implements GUIConstants, GearConstants
       MovementScript ms = MovementScriptFactory.getKnockbackScript(actor, targetTile);
       GameEngine.getMapPanel().addLocking(ms);
       actor.setMapLoc(targetTile);
+      actor.setDidForcedMovement(true);
    }
 }
