@@ -59,4 +59,16 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setDescription("Depolys a stationary turret.");
       return g;
    }
+   
+   public static Gadget getMotionSensor()
+   {
+      Gadget g = new Gadget();
+      g.setName("Motion Sensor");
+      g.setShortName("M. Sensor");
+      g.setTargetsSelf(false);
+      g.setPassiveOnly(true);
+      g.setSpecialEffect(GadgetSpecialEffect.MOTION_SENSOR);
+      g.setDescription("Detects nearby movement.");
+      return g;
+   }
 }

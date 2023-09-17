@@ -229,9 +229,22 @@ public class Player extends Actor implements GUIConstants, GearConstants
       return gadgetList.size() < getMaxGadgets();
    }
    
+   public boolean hasGadgetEffect(GadgetSpecialEffect se)
+   {
+      for(Gadget gadget : gadgetList)
+      {
+         if(gadget.getSpecialEffect() == se)
+            return true;
+      }
+      return false;
+   }
+   
+   public boolean hasMotionSensor()
+   {
+      return hasGadgetEffect(GadgetSpecialEffect.MOTION_SENSOR);
+   }
+   
    @Override
-   
-   
    public Vector<StatusEffect> getAllStatusEffects()
    {
       Vector<StatusEffect> seList = super.getAllStatusEffects();

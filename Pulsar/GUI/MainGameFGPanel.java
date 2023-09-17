@@ -8,13 +8,14 @@ import Pulsar.Engine.*;
 import Pulsar.Zone.*;
 import Pulsar.Actor.*;
 import Pulsar.Gear.*;
+import Pulsar.AI.*;
 import WidlerSuite.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import java.util.*;
 
-public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, EngineConstants, GearConstants
+public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, EngineConstants, GearConstants, AIConstants
 {
    public static final Color[] TARGETING_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, RETICULE_COLOR, 21);
    public static final Color[] BAD_TARGETING_GRADIENT = WSTools.getGradient(DEFAULT_TILE_BG_COLOR, INVALID_RETICULE_COLOR, 21);
@@ -85,6 +86,12 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             else
             {
                setTile(x, y, ' ', Color.WHITE, BG_COLOR);
+               if(player.hasMotionSensor())
+               {
+                  Actor a = GameEngine.getActorAt(x + xCorner, y + yCorner);
+                  if(a != null && a.getAI().getPreviousAction() != ActorAction.DELAY)
+                     setTile(x, y, '?', SENSOR_COLOR, BG_COLOR);
+               }
             }
          }
          
