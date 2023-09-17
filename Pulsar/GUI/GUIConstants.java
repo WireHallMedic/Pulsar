@@ -65,12 +65,12 @@ public interface GUIConstants
    public static final Color[] FIRE_COLOR_GRADIENT = WSTools.getGradient(YELLOW, RED, 21);
    public static final Color[] WATER_COLOR_GRADIENT = WSTools.getGradient(LIGHT_BLUE, DARK_BLUE, 21);
    
-   public static final double SLOW_MOVE_SPEED = .05;
-   public static final double NORMAL_MOVE_SPEED = .2;
-   public static final double FAST_MOVE_SPEED = .3;
+   public static final double SLOW_MOVE_SPEED = .05 * 2.0;
+   public static final double NORMAL_MOVE_SPEED = .2 * 2.0;
+   public static final double FAST_MOVE_SPEED = .3 * 2.0;
    public static final int MELEE_ATTACK_HIT_DELAY = 9;
-   public static final double SPRAY_BASE_SPEED = .3;
-   public static final double SPRAY_VARIABLE_SPEED = .05;
+   public static final double SPRAY_BASE_SPEED = .3 * 2.0;
+   public static final double SPRAY_VARIABLE_SPEED = .05 * 2.0;
    public static final int SPRAY_DURATION = 10;
    public static final double FLOAT_EFFECT_SPEED = SLOW_MOVE_SPEED;
    

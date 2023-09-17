@@ -45,6 +45,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    @Override
    public void actionPerformed(ActionEvent ae)
    {
+      super.actionPerformed(ae);
       tickCounter++;
       if(tickCounter > tickCounterReset)
          tickCounter = 1;
@@ -55,8 +56,9 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
       // add burning effects
       if(mediumFlag)
       {
-         for(Actor a : GameEngine.getActorList())
+         for(int i = 0; i < GameEngine.getActorList().size(); i++)
          {
+            Actor a = GameEngine.getActorList().elementAt(i);
             if(a.isOnFire() && GameEngine.playerCanSee(a))
                VisualEffectFactory.addFireParticle(a);
          }
@@ -206,7 +208,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
          }
       }
       setActorVisibility();
-      super.actionPerformed(ae);
    }
    
    public void addNonlocking(MovementScript ms)
@@ -253,6 +254,8 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    {
       Actor player = GameEngine.getPlayer();
       Vector<Actor> actorList = GameEngine.getActorList();
+      if(actorList == null)
+         return;
       for(int i = 0; i < actorList.size(); i++)
       {
          Actor actor = actorList.elementAt(i);
