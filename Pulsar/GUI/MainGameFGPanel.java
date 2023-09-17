@@ -91,7 +91,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                if(player.hasMotionSensor())
                {
                   Actor a = GameEngine.getActorAt(x + xCorner, y + yCorner);
-                  if(a != null && a.getAI().getPreviousAction() != ActorAction.DELAY)
+                  if(a != null && (a.getAI().getPreviousAction() != ActorAction.DELAY || a.didForcedMovement()))
                      setTile(x, y, '?', SENSOR_COLOR, BG_COLOR);
                }
             }
