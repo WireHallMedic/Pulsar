@@ -6,7 +6,7 @@ import WidlerSuite.*;
 public interface GUIConstants
 {
 
-   public static final int FRAMES_PER_SECOND = 60;
+   public static final int FRAMES_PER_SECOND = 30;
    
    public static final int DEFAULT_WINDOW_WIDTH = 1150;
    public static final int DEFAULT_WINDOW_HEIGHT = 720;
