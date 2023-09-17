@@ -312,9 +312,14 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                Vector<Coord> pullLoc = airflowMap.getLowestAdjacent(a.getMapLoc());
                if(pullLoc != null && a.canStep(pullLoc.elementAt(0)))
                {
-                  MovementScript ms = MovementScriptFactory.getWalkingScript(a, pullLoc.elementAt(0));
-                  GameEngine.getMapPanel().addLocking(ms);
-                  a.setMapLoc(pullLoc.elementAt(0));
+                  // only pull if loc is not farther from breach
+                  Coord closestBreach = EngineTools.getClosest(a.getMapLoc(), breachList);
+                  if(EngineTools.getDistanceTo(closestBreach, a.getMapLoc()) > EngineTools.getDistanceTo(closestBreach, pullLoc.elementAt(0)))
+                  {
+                     MovementScript ms = MovementScriptFactory.getWalkingScript(a, pullLoc.elementAt(0));
+                     GameEngine.getMapPanel().addLocking(ms);
+                     a.setMapLoc(pullLoc.elementAt(0));
+                  }
                }
             }
          }

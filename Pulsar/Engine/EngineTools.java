@@ -45,4 +45,19 @@ public class EngineTools implements ActorConstants, GearConstants
    {
       return getDistanceTo(origin, target) < 2;
    }
+   
+   public static Coord getClosest(Coord origin, Vector<Coord> prospectList)
+   {
+      Coord curLoc = null;
+      int curDist = 10000;
+      for(Coord prospect : prospectList)
+      {
+         if(getDistanceTo(origin, prospect) < curDist)
+         {
+            curDist = getDistanceTo(origin, prospect);
+            curLoc = new Coord(prospect);
+         }
+      }
+      return curLoc;
+   }
 }
