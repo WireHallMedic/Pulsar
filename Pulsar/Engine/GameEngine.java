@@ -338,6 +338,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void buttonPressed(int triggerIndex)
    {
       MessagePanel.addMessage("You press the button.");
+      getZoneMap().buttonPressed(triggerIndex);
    }
    
    

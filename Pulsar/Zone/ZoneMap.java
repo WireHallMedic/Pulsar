@@ -20,6 +20,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private Vector<Coord> breachList;
    private Vector<Coord> fireList;
    private boolean alternatingTurns;
+   private Vector<ButtonTrigger> buttonTriggerList;
 
 
 	public int getWidth(){return width;}
@@ -31,6 +32,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public Vector<Coord> getVacuumList(){return vacuumList;}
    public Vector<Coord> getBreachList(){return breachList;}
    public Vector<Coord> getFireList(){return fireList;}
+   public Vector<ButtonTrigger> getButtonTriggerList(){return buttonTriggerList;}
 
 
 	public void setWidth(int w){width = w;}
@@ -41,6 +43,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void setVacuumList(Vector<Coord> vl){vacuumList = vl;}
    public void setBreachList(Vector<Coord> bl){breachList = bl;}
    public void setFireList(Vector<Coord> fl){fireList = fl;}
+   public void setButtonTriggerList(Vector<ButtonTrigger> btl){buttonTriggerList = btl;}
 
 
    public ZoneMap(int w, int h, MapTile defaultTile)
@@ -59,6 +62,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       vacuumList = new Vector<Coord>();
       breachList = new Vector<Coord>();
       fireList = new Vector<Coord>();
+      buttonTriggerList = new Vector<ButtonTrigger>();
    }
    
    public void takeTurn()
@@ -75,6 +79,45 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       {
          if(tileArray[x][y] instanceof Vacuum)
             vacuumList.add(new Coord(x, y));
+      }
+   }
+   
+   public void add(ButtonTrigger buttonTrigger)
+   {
+      buttonTriggerList.add(buttonTrigger);
+   }
+   
+   public void buttonPressed(int triggerIndex)
+   {
+      boolean foundF = false;
+      for(ButtonTrigger trigger : buttonTriggerList)
+      {
+         if(trigger.getTriggerIndex() == triggerIndex)
+         {
+            // do the thing
+            for(Coord c : trigger.getTargetList())
+            {
+               switch(trigger.getButtonAction())
+               {
+                  case TOGGLE : tryToToggle(c); break;
+                  default :     System.out.println("Error: ButtonTrigger with no action.");
+               }
+            }
+            foundF = true;
+         }
+      }
+      if(!foundF)
+         System.out.println("Error: did not find triggerIndex " + triggerIndex);
+   }
+   
+   public void tryToToggle(Coord c)
+   {
+      MapTile tile = getTile(c);
+      if(tile instanceof ToggleTile)
+      {
+         ToggleTile tTile = (ToggleTile)tile;
+         tTile.toggle();
+         update(c);
       }
    }
    

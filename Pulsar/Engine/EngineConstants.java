@@ -9,4 +9,9 @@ public interface EngineConstants
       STANDARD, TARGETING, LOOK, OTHER_PANEL;
    }
    
+   public enum ButtonAction
+   {
+      TOGGLE;
+   }
+   
 }
