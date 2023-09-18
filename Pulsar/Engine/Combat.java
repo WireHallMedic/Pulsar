@@ -3,6 +3,7 @@ package Pulsar.Engine;
 import Pulsar.GUI.*;
 import Pulsar.Actor.*;
 import Pulsar.Gear.*;
+import Pulsar.Zone.*;
 import WidlerSuite.*;
 import java.util.*;
 import java.awt.*;
@@ -149,6 +150,8 @@ public class Combat implements GUIConstants, GearConstants
       {
          GameEngine.getZoneMap().breakTile(target);
       }
+      if(weapon.getDamageType() == DamageType.CRYO && GameEngine.getZoneMap().getTile(target) instanceof Fire)
+         GameEngine.getZoneMap().extinguish(target);
       GameEngine.getZoneMap().setCorpseAt(target, null);
    }
    
