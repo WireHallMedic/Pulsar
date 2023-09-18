@@ -20,6 +20,8 @@ public class BasicAI implements AIConstants
    protected Team team;
    protected int pathfindingRadius;
    protected boolean usesDoors;
+   protected Actor leader;
+   protected int followDistance;
 
 
 	public Actor getSelf(){return self;}
@@ -31,6 +33,9 @@ public class BasicAI implements AIConstants
    public Team getTeam(){return team;}
    public int getPathfindingRadius(){return pathfindingRadius;}
    public boolean getUsesDoors(){return usesDoors;}
+   public Actor getLeader(){return leader;}
+   public int getFollowDistance(){return followDistance;}
+   public boolean hasLeader(){return leader != null;}
 
 
 	public void setSelf(Actor s){self = s;}
@@ -41,6 +46,8 @@ public class BasicAI implements AIConstants
    public void setTeam(Team t){team = t;}
    public void setPathfindingRadius(int pr){pathfindingRadius = pr;}
    public void setUsesDoors(boolean ud){usesDoors = ud;}
+   public void setLeader(Actor a){leader = a;}
+   public void setFollowDistance(int fd){followDistance = fd;}
 
 
    public BasicAI(Actor s)
@@ -52,6 +59,8 @@ public class BasicAI implements AIConstants
       team = Team.VILLAIN;
       pathfindingRadius = PATHFINDING_MAP_RADIUS;
       usesDoors = true;
+      leader = null;
+      followDistance = 5;
       clearPlan();
    }
    

@@ -400,6 +400,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    private void startOfTurn()
    {
       updateMemory();
+      if(ai.hasLeader() && ai.getLeader().isDead())
+         ai.setLeader(null);
       startOfTurnPerformed = true;
       setDidForcedMovement(false);
    }
