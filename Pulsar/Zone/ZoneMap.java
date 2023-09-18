@@ -19,6 +19,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private Vector<Coord> vacuumList;
    private Vector<Coord> breachList;
    private Vector<Coord> fireList;
+   private Vector<Coord> iceList;
    private boolean alternatingTurns;
    private Vector<ButtonTrigger> buttonTriggerList;
    private Corpse[][] corpseMap;
@@ -33,6 +34,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public Vector<Coord> getVacuumList(){return vacuumList;}
    public Vector<Coord> getBreachList(){return breachList;}
    public Vector<Coord> getFireList(){return fireList;}
+   public Vector<Coord> getIceList(){return iceList;}
    public Vector<ButtonTrigger> getButtonTriggerList(){return buttonTriggerList;}
 
 
@@ -44,6 +46,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void setVacuumList(Vector<Coord> vl){vacuumList = vl;}
    public void setBreachList(Vector<Coord> bl){breachList = bl;}
    public void setFireList(Vector<Coord> fl){fireList = fl;}
+   public void setIceList(Vector<Coord> il){iceList = il;}
    public void setButtonTriggerList(Vector<ButtonTrigger> btl){buttonTriggerList = btl;}
 
 
@@ -63,6 +66,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       vacuumList = new Vector<Coord>();
       breachList = new Vector<Coord>();
       fireList = new Vector<Coord>();
+      iceList = new Vector<Coord>();
       buttonTriggerList = new Vector<ButtonTrigger>();
       refreshCorpseMap();
    }
@@ -72,6 +76,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       alternatingTurns = !alternatingTurns;
       adjustAir();
       extinguishCheck();
+      thawCheck();
    }
    
    public void postProcessing()
@@ -488,4 +493,63 @@ public class ZoneMap implements ZoneConstants, GUIConstants
             extinguish(loc);
       }
    }
+   
+   // ice stuff
+   ////////////////////////////////////////////////////////////////////////////
+   public void tryToFreeze(int x, int y){tryToFreeze(new Coord(x, y));}
+   public void tryToFreeze(Coord c)
+   {
+      if(getTile(c).isLiquid())
+         freeze(c);
+   }
+   
+   public void freeze(int x, int y){ignite(new Coord(x, y));}
+   public void freeze(Coord c)
+   {
+      MapTile ice = new Ice(getTile(c));
+      setTile(c, ice);
+      if(getTile(c) instanceof Ice)
+      {
+         iceList.add(c);
+         if(isCorpseAt(c))
+            getCorpseAt(c).setColor(getTile(c).getFGColor());
+      }
+   }
+   
+   public void thaw(int x, int y){thaw(new Coord(x, y));}
+   public void thaw(Coord c)
+   {
+      MapTile tile = getTile(c);
+      if(tile instanceof Ice)
+      {
+         Ice iceTile = (Ice)tile;
+         setTile(c, iceTile.getOriginalTile());
+         if(isCorpseAt(c))
+            getCorpseAt(c).setColor(getTile(c).getFGColor());
+         
+         if(!(getTile(c) instanceof Ice))
+         {
+            for(int i = 0; i < iceList.size(); i++)
+            {
+               if(iceList.elementAt(i).equals(c))
+               {
+                  iceList.removeElementAt(i);
+               }
+            }
+         }
+      }
+   }
+   
+   private void thawCheck()
+   {
+      for(int i = 0; i < iceList.size(); i++)
+      {
+         Coord loc = iceList.elementAt(i);
+         Ice tile = (Ice)getTile(loc);
+         tile.increment();
+         if(tile.isExpired())
+            thaw(loc);
+      }
+   }
+
 }

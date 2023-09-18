@@ -150,8 +150,13 @@ public class Combat implements GUIConstants, GearConstants
       {
          GameEngine.getZoneMap().breakTile(target);
       }
-      if(weapon.getDamageType() == DamageType.CRYO && GameEngine.getZoneMap().getTile(target) instanceof Fire)
-         GameEngine.getZoneMap().extinguish(target);
+      if(weapon.getDamageType() == DamageType.CRYO)
+      {
+         if(GameEngine.getZoneMap().getTile(target) instanceof Fire)
+            GameEngine.getZoneMap().extinguish(target);
+         else
+            GameEngine.getZoneMap().tryToFreeze(target);
+      }
       GameEngine.getZoneMap().setCorpseAt(target, null);
    }
    

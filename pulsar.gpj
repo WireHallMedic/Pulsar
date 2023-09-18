@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3952;g
+!3980;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -62,6 +62,7 @@ s#l0
 %\011Pulsar%sAI%sTurretAI.java
 %\011%uWidlerSuite%sNoiseChoir.java
 %\011%uWidlerSuite%sShadowFoV.java
+%\011Pulsar%sZone%sIce.java
 %\011%uWidlerSuite%sNoiseObj.java
 %\011Pulsar%sGUI%sGUIConstants.java
 %\011Pulsar%sGUI%sDelayedVisualEffect.java
@@ -123,7 +124,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3952;f
+!3980;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -173,6 +174,7 @@ s#l0
 %\011Pulsar%sAI%sTurretAI.java
 %\011%uWidlerSuite%sNoiseChoir.java
 %\011%uWidlerSuite%sShadowFoV.java
+%\011Pulsar%sZone%sIce.java
 %\011%uWidlerSuite%sNoiseObj.java
 %\011Pulsar%sGUI%sGUIConstants.java
 %\011Pulsar%sGUI%sDelayedVisualEffect.java

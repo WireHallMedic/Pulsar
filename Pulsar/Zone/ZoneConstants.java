@@ -7,6 +7,8 @@ public interface ZoneConstants extends WSFontConstants
    public static final int FULL_AIR_PRESSURE = 5;
    public static final int BASE_FIRE_DURATION = 20;
    public static final int RANDOM_FIRE_DURATION = 10;
+   public static final int BASE_ICE_DURATION = 30;
+   public static final int RANDOM_ICE_DURATION = 10;
    
    public enum TileType
    {
@@ -16,6 +18,7 @@ public interface ZoneConstants extends WSFontConstants
       WINDOW      (':', "Window", false, false, true),
       RUBBLE      (',', "Rubble", true, true, true),
       WATER       ('~', "Water", true, true, true),
+      ICE         ('-', "Ice", true, true, true),
       NULL        (' ', "", false, false, false);
       
       public int iconIndex;

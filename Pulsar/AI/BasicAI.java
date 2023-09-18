@@ -366,6 +366,14 @@ public class BasicAI implements AIConstants
    //////////////////////////////////////////////////////////////////
    private void doStep()
    {
+      // slide on ice
+      if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof Ice)
+      {
+         Coord newTarget = new Coord(pendingTarget.x - self.getMapLoc().x, pendingTarget.y - self.getMapLoc().y);
+         newTarget.add(pendingTarget);
+         if(self.canStep(newTarget))
+            pendingTarget = newTarget;
+      }
       if(GameEngine.playerCanSee(pendingTarget) || GameEngine.playerCanSee(self))
       {
          MovementScript ms = MovementScriptFactory.getWalkingScript(self, pendingTarget);
@@ -376,6 +384,7 @@ public class BasicAI implements AIConstants
       {
          self.setAllLocs(pendingTarget);
       }
+      // movement is slowed on some tiles
       if(!self.isFlying() && GameEngine.getZoneMap().getTile(pendingTarget).slowsMovement())
          self.discharge(self.getMoveSpeed().slower().timeCost);
       else
