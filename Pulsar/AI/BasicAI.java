@@ -276,6 +276,31 @@ public class BasicAI implements AIConstants
       return stepLoc;
    }
    
+   protected Coord getStepAwayFrom(Actor a){return getStepAwayFrom(a.getMapLoc());}
+   protected Coord getStepAwayFrom(Coord target)
+   {
+      Coord bestLoc = null;
+      int highestDist = 0;
+      for(int x = -1; x < 2; x++)
+      for(int y = -1; y < 2; y++)
+      {
+         if(x == 0 && y == 0)
+            continue;
+         Coord prospect = new Coord(x, y);
+         prospect.add(self.getMapLoc());
+         if(self.canStep(prospect))
+         {
+            int dist = EngineTools.getDistanceTo(prospect, target);
+            if(dist > highestDist)
+            {
+               bestLoc = prospect;
+               highestDist = dist;
+            }
+         }
+      }
+      return bestLoc;
+   }
+   
    // find nearest tile with no line of effect to any visible enemies
    protected Coord getNearestSafeTile()
    {
