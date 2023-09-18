@@ -75,7 +75,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setAI(new StandardAI(a));
       a.setMaxHealth(20);
       a.fullyHeal();
-      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
+      a.setWeapon(WeaponFactory.getCarbine());
       a.setShield(ShieldFactory.getBasicShield());
       a.setDeathEffect(DeathEffect.EXPLODE);
       a.setTurnEnergy(FULLY_CHARGED);

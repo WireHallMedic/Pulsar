@@ -450,7 +450,10 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       MapTile fire = new Fire(getTile(c));
       setTile(c, fire);
       if(getTile(c) instanceof Fire)
+      {
          fireList.add(c);
+         setCorpseAt(c, null);
+      }
    }
    
    public void extinguish(int x, int y){extinguish(new Coord(x, y));}
