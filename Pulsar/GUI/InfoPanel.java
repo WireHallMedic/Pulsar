@@ -79,42 +79,7 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
       clearInfoPanel();
       write(X_ORIGIN, Y_ORIGIN, "Look mode", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
       write(X_ORIGIN, Y_ORIGIN + 1, " (escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
-      
-      MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
-      if(GameEngine.playerCanSee(GameEngine.getCursorLoc()))
-      {
-         int dynamicY = 3;
-         setTile(X_ORIGIN, Y_ORIGIN + dynamicY, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
-         write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
-         dynamicY++;
-         
-         Corpse corpse = GameEngine.getZoneMap().getCorpseAt(GameEngine.getCursorLoc());
-         if(corpse != null)
-         {
-            setTile(X_ORIGIN, Y_ORIGIN + dynamicY, corpse.getIconIndex(), corpse.getColor(), tile.getBGColor());
-            write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, corpse.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
-            dynamicY++;
-         }
-         
-         dynamicY++;
-         Actor actor = GameEngine.getActorAt(GameEngine.getCursorLoc());
-         if(actor != null)
-         {
-            UnboundTile ut = actor.getSprite();
-            setTile(X_ORIGIN, Y_ORIGIN + dynamicY, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
-            write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
-            dynamicY++;
-            drawActorBars(actor, 1, dynamicY);
-            dynamicY++;
-            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getMood(GameEngine.getPlayer()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-            dynamicY++;
-            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getInspectionString(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, HEIGHT_TILES - dynamicY);
-         }
-      }
-      else
-      {
-         write(X_ORIGIN, Y_ORIGIN + 3, "  Out of view.", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
-      }
+      describeTarget();
    }
    
    // targeting mode
@@ -123,7 +88,12 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
       clearInfoPanel();
       write(X_ORIGIN, Y_ORIGIN, "Targeting mode", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
       write(X_ORIGIN, Y_ORIGIN + 1, " (escape to exit)", TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
-      
+      describeTarget();
+   }
+   
+   private void describeTarget()
+   {
+   
       MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
       if(GameEngine.playerCanSee(GameEngine.getCursorLoc()))
       {
@@ -152,6 +122,15 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
             dynamicY++;
             write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getMood(GameEngine.getPlayer()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
             dynamicY++;
+            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getWeapon().getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+            dynamicY++;
+            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 3);
+            dynamicY++;
+            for(int i = 0; i < 2; i++)
+            {
+               if(getIcon(X_ORIGIN, Y_ORIGIN + dynamicY) != ' ')
+                  dynamicY++;
+            }
             write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getInspectionString(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, HEIGHT_TILES - dynamicY);
          }
       }
