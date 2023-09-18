@@ -240,7 +240,9 @@ public class Player extends Actor implements GUIConstants, GearConstants
          if(gadget.getSpecialEffect() == se)
             return true;
       }
-      if(hasArmor() && getArmor().hasGadgetEffect() && getArmor().getGadgetEffect() == se)
+      if(hasArmor() && getArmor().getGadgetEffect() == se)
+         return true;
+      if(hasShield() && getShield().getGadgetEffect() == se)
          return true;
       return false;
    }

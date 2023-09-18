@@ -11,6 +11,7 @@ public class Shield extends GearObj implements GearConstants, Chargable
 	private int chargeRate;
 	private int timeSinceHit;
    private StatusEffect statusEffect;
+   private GadgetSpecialEffect gadgetEffect;
 
 
 	public int getCurCharge(){return curCharge;}
@@ -26,6 +27,7 @@ public class Shield extends GearObj implements GearConstants, Chargable
 	public void setChargeRate(int c){chargeRate = c;}
 	public void setTimeSinceHit(int t){timeSinceHit = t;}
    public void setStatusEffect(StatusEffect se){statusEffect = se;}
+   public void setGadgetEffect(GadgetSpecialEffect ge){gadgetEffect = ge;}
 
    public Shield()
    {
@@ -36,6 +38,7 @@ public class Shield extends GearObj implements GearConstants, Chargable
       timeSinceHit = 0;
       fullyCharge();
       statusEffect = null;
+      gadgetEffect = null;
    }
    
    // shield status effects only work when the shield has charge
@@ -43,6 +46,14 @@ public class Shield extends GearObj implements GearConstants, Chargable
    {
       if(curCharge > 0)
          return statusEffect;
+      return null;
+   }
+   
+   // same for gadget effects
+   public GadgetSpecialEffect getGadgetEffect()
+   {
+      if(curCharge > 0)
+         return gadgetEffect;
       return null;
    }
    
@@ -65,8 +76,19 @@ public class Shield extends GearObj implements GearConstants, Chargable
    {
       String str = "Charge Delay: " + GUITools.initToSec(getChargeDelay()) + 
                    ", Charge Rate: " + getChargeRate();
+      boolean suffix = false;
       if(statusEffect != null)
-         str += ", " + statusEffect.getName() + " when charged.";
+      {
+         str += ", " + statusEffect.getName();
+         suffix = true;
+      }
+      if(gadgetEffect != null)
+      {
+         str += ", " + gadgetEffect.name;
+         suffix = true;
+      }
+      if(suffix)
+         str += " when charged.";
       return str;
    }
    
