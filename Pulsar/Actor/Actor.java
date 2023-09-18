@@ -150,6 +150,19 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       return outStr;
    }
    
+   public String getMood(Actor that)
+   {
+      String str = "";
+      if(getAI().isHostile(that))
+         str = "Hostile, ";
+      else if(getAI().isFriendly(that))
+         str = "Friendly, ";
+      else
+         str = "Indifferent, ";
+      str += alertness.name;
+      return str;
+   }
+   
    
    public void setColor(Color c)
    {

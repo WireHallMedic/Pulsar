@@ -106,6 +106,8 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
             dynamicY++;
             drawActorBars(actor, 1, dynamicY);
             dynamicY++;
+            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getMood(GameEngine.getPlayer()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+            dynamicY++;
             write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getInspectionString(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, HEIGHT_TILES - dynamicY);
          }
       }
@@ -147,6 +149,8 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
             write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
             dynamicY++;
             drawActorBars(actor, 1, dynamicY);
+            dynamicY++;
+            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getMood(GameEngine.getPlayer()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
             dynamicY++;
             write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getInspectionString(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, HEIGHT_TILES - dynamicY);
          }

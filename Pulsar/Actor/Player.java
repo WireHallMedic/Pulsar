@@ -51,6 +51,12 @@ public class Player extends Actor implements GUIConstants, GearConstants
       super.charge();
    }
    
+   @Override
+   public String getMood(Actor that)
+   {
+      return "This is you";
+   }
+   
    // weapon stuff
    public void setPrimaryWeapon(Weapon w){weapon = w;}
    public void setSecondaryWeapon(Weapon w){secondaryWeapon = w;}
