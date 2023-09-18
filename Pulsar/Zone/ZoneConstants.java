@@ -15,7 +15,7 @@ public interface ZoneConstants extends WSFontConstants
       LOW_WALL    ('=', "Low Wall", false, true, true),
       WINDOW      (':', "Window", false, false, true),
       RUBBLE      (',', "Rubble", true, true, true),
-      WATER       ('~', "Water", false, true, true),
+      WATER       ('~', "Water", true, true, true),
       NULL        (' ', "", false, false, false);
       
       public int iconIndex;

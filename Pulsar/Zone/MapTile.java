@@ -13,6 +13,7 @@ public class MapTile implements ZoneConstants
    private OnDestructionEffect destructionEffect;
    private int airPressure;
    private boolean liquid;
+   private boolean slowsMovement;
 
 
 	public int getIconIndex(){return iconIndex;}
@@ -26,6 +27,7 @@ public class MapTile implements ZoneConstants
    public OnDestructionEffect getOnDestructionEffect(){return destructionEffect;}
    public int getAirPressure(){return airPressure;}
    public boolean isLiquid(){return liquid;}
+   public boolean slowsMovement(){return slowsMovement;}
 
 
 	public void setIconIndex(int i){iconIndex = i;}
@@ -39,6 +41,7 @@ public class MapTile implements ZoneConstants
    public void setOnDestructionEffect(OnDestructionEffect de){destructionEffect = de;}
    public void setAirPressure(int ap){airPressure = ap;}
    public void setLiquid(boolean l){liquid = l;}
+   public void setSlowsMovement(boolean sm){slowsMovement = sm;}
    
    public MapTile(int i, int fg, int bg, String n, boolean lp, boolean hp, boolean t)
    {
@@ -53,6 +56,7 @@ public class MapTile implements ZoneConstants
       destructionEffect = null;
       airPressure = FULL_AIR_PRESSURE;
       liquid = false;
+      slowsMovement = false;
    }
    
    public MapTile(MapTile that)
@@ -68,6 +72,7 @@ public class MapTile implements ZoneConstants
       this.destructionEffect = that.destructionEffect;
       this.airPressure = that.airPressure;
       this.liquid = that.liquid;
+      this.slowsMovement = that.slowsMovement;
    }
    
    public boolean hasOnDestructionEffect()

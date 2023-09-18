@@ -24,6 +24,8 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
                                  baseType.lowPassable, baseType.highPassable, baseType.transparent);
       if(baseType == TileType.NULL || baseType == TileType.CLEAR)
          tile.setDurability(Durability.UNBREAKABLE);
+      if(baseType == TileType.RUBBLE)
+         tile.setSlowsMovement(true);
       return tile;
    }
    
@@ -82,12 +84,15 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    
    public static MapTile getWater()
    {
-      GradientTile tile = new GradientTile('~', DEFAULT_TILE_FG_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB(), "Water", false, true, true);
+      TileType waterType = TileType.WATER;
+      GradientTile tile = new GradientTile(waterType.iconIndex, DEFAULT_TILE_FG_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB(), 
+                                           "Water", waterType.lowPassable, waterType.highPassable, waterType.transparent);
       tile.setGradient(WATER_COLOR_GRADIENT);
       tile.setDurability(Durability.UNBREAKABLE);
       tile.setPulseType(GradientTile.BACKGROUND);
       tile.setPulseSpeed(GradientTile.SLOW);
       tile.setLiquid(true);
+      tile.setSlowsMovement(true);
       return tile;
    }
 }

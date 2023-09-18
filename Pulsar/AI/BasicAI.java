@@ -376,7 +376,10 @@ public class BasicAI implements AIConstants
       {
          self.setAllLocs(pendingTarget);
       }
-      self.discharge(self.getMoveSpeed().timeCost);
+      if(!self.isFlying() && GameEngine.getZoneMap().getTile(pendingTarget).slowsMovement())
+         self.discharge(self.getMoveSpeed().slower().timeCost);
+      else
+         self.discharge(self.getMoveSpeed().timeCost);
    }
    
    private void doToggle()
