@@ -26,5 +26,10 @@ public class Corpse implements GUIConstants
       color = a.getSprite().getFGColor();
       iconIndex = CORPSE_CHAR;
    }
+   
+   public String getName()
+   {
+      return actor.getName() + " Corpse";
+   }
 
 }

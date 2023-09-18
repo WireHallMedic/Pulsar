@@ -83,16 +83,30 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
       MapTile tile = GameEngine.getZoneMap().getTile(GameEngine.getCursorLoc());
       if(GameEngine.playerCanSee(GameEngine.getCursorLoc()))
       {
-         setTile(X_ORIGIN, Y_ORIGIN + 3, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
-         write(X_ORIGIN + 2, Y_ORIGIN + 3, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         int dynamicY = 3;
+         setTile(X_ORIGIN, Y_ORIGIN + dynamicY, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
+         write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, tile.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         dynamicY++;
          
+         Corpse corpse = GameEngine.getZoneMap().getCorpseAt(GameEngine.getCursorLoc());
+         if(corpse != null)
+         {
+            setTile(X_ORIGIN, Y_ORIGIN + dynamicY, corpse.getIconIndex(), corpse.getColor(), tile.getBGColor());
+            write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, corpse.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+            dynamicY++;
+         }
+         
+         dynamicY++;
          Actor actor = GameEngine.getActorAt(GameEngine.getCursorLoc());
          if(actor != null)
          {
             UnboundTile ut = actor.getSprite();
-            setTile(X_ORIGIN, Y_ORIGIN + 5, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
-            write(X_ORIGIN + 2, Y_ORIGIN + 5, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
-            drawActorBars(actor, 1, 6);
+            setTile(X_ORIGIN, Y_ORIGIN + dynamicY, ut.getIconIndex(), ut.getFGColor(), ut.getBGColor());
+            write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, actor.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+            dynamicY++;
+            drawActorBars(actor, 1, dynamicY);
+            dynamicY++;
+            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getInspectionString(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, HEIGHT_TILES - dynamicY);
          }
       }
       else

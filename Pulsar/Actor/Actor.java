@@ -131,6 +131,25 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       forcedMovementSinceLastTurn = false;
    }
    
+   public String getInspectionString()
+   {
+      String outStr = "";
+      Vector<String> strVector = new Vector<String>();
+      if(isFlying())
+         strVector.add("Flying");
+      if(getNeedsAir() && GameEngine.getZoneMap().getTile(getMapLoc()).getAirPressure() == 0)
+         strVector.add("Suffocating");
+      for(StatusEffect se : getAllStatusEffects())
+         strVector.add(se.getName());
+      for(String str : strVector)
+      {
+         outStr += ", " + str;
+      }
+      if(outStr.length() > 2)
+         outStr = outStr.substring(2);
+      return outStr;
+   }
+   
    
    public void setColor(Color c)
    {
