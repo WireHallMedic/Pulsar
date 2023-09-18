@@ -21,6 +21,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private Vector<Coord> fireList;
    private boolean alternatingTurns;
    private Vector<ButtonTrigger> buttonTriggerList;
+   private Corpse[][] corpseMap;
 
 
 	public int getWidth(){return width;}

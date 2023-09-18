@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!3920;g
+!3952;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -46,6 +46,7 @@ s#l0
 %\011Pulsar%sGUI%sInfoPanel.java
 %\011Pulsar%sGUI%sWSFont_8x16.png
 %\011%uWidlerSuite%sFontLoader.java
+%\011Pulsar%sActor%sCorpse.java
 %\011Pulsar%sGUI%sPlayerPanel.java
 %\011Pulsar%sGear%sShield.java
 %\011Pulsar%sActor%sStatusEffectFactory.java
@@ -122,7 +123,7 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!3920;f
+!3952;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
@@ -156,6 +157,7 @@ s#l0
 %\011Pulsar%sGUI%sInfoPanel.java
 %\011Pulsar%sGUI%sWSFont_8x16.png
 %\011%uWidlerSuite%sFontLoader.java
+%\011Pulsar%sActor%sCorpse.java
 %\011Pulsar%sGUI%sPlayerPanel.java
 %\011Pulsar%sGear%sShield.java
 %\011Pulsar%sActor%sStatusEffectFactory.java
