@@ -122,11 +122,9 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
             dynamicY++;
             write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getMood(GameEngine.getPlayer()), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
             dynamicY++;
-            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getWeapon().getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getWeapon().getName() + ": " + actor.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 4);
             dynamicY++;
-            write(X_ORIGIN, Y_ORIGIN + dynamicY, actor.getWeapon().getSummary(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 3);
-            dynamicY++;
-            for(int i = 0; i < 2; i++)
+            for(int i = 0; i < 4; i++)
             {
                if(getIcon(X_ORIGIN, Y_ORIGIN + dynamicY) != ' ')
                   dynamicY++;
