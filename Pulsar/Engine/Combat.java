@@ -50,10 +50,7 @@ public class Combat implements GUIConstants, GearConstants
                   VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c, delay);
                }
             }
-            if(tileDestructionCheck(target, weapon))
-            {
-               GameEngine.getZoneMap().breakTile(target);
-            }
+            resolveAttackAgainstTile(target, weapon);
          }
       }
       // blasts generate explosions
@@ -80,10 +77,7 @@ public class Combat implements GUIConstants, GearConstants
          {
             resolveAttackAgainstActor(c, defender, WeaponFactory.EXPLODING_BARREL);
          }
-         if(tileDestructionCheck(target, WeaponFactory.EXPLODING_BARREL))
-         {
-            GameEngine.getZoneMap().breakTile(target);
-         }
+         resolveAttackAgainstTile(target, WeaponFactory.EXPLODING_BARREL);
       }
       VisualEffectFactory.createExplosion(c);
    }
@@ -146,6 +140,16 @@ public class Combat implements GUIConstants, GearConstants
          }
       }
       return originList;
+   }
+   
+   public static void resolveAttackAgainstTile(int x, int y, Weapon weapon){resolveAttackAgainstTile(new Coord(x, y), weapon);}
+   public static void resolveAttackAgainstTile(Coord target, Weapon weapon)
+   {
+      if(tileDestructionCheck(target, weapon))
+      {
+         GameEngine.getZoneMap().breakTile(target);
+      }
+      GameEngine.getZoneMap().setCorpseAt(target, null);
    }
    
    public static void resolveAttackAgainstActor(Actor attacker, Actor defender, Weapon weapon){resolveAttackAgainstActor(attacker.getMapLoc(), defender, weapon);}
