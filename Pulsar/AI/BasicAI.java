@@ -60,7 +60,7 @@ public class BasicAI implements AIConstants
       pathfindingRadius = PATHFINDING_MAP_RADIUS;
       usesDoors = true;
       leader = null;
-      followDistance = 5;
+      followDistance = 4;
       clearPlan();
    }
    
