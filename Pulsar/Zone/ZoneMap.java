@@ -396,16 +396,27 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       return false;
    }
    
-   public Coord getNearestCorpseLocation(Coord c){return getNearestCorpseLocation(c.x, c.y);}
-   public Coord getNearestCorpseLocation(int x, int y)
+   public Coord getNearestCorpseLocation(int x, int y){return getNearestCorpseLocation(new Coord(x, y));}
+   public Coord getNearestCorpseLocation(Coord c)
    {
+      if(canDropCorpseAt(c))
+         return c;
+      SpiralSearch search = new SpiralSearch(lowPassMap, c);
+      Coord target = search.getNext();
+      while(target != null)
+      {
+         if(canDropCorpseAt(target))
+            return target;
+         target = search.getNext();
+      }
       return null;
    }
    
    public void dropCorpse(Actor a)
    {
-      if(canDropCorpseAt(a.getMapLoc()))
-         setCorpseAt(a.getMapLoc(), new Corpse(a));
+      Coord loc = getNearestCorpseLocation(a.getMapLoc());
+      if(loc != null)
+         setCorpseAt(loc, new Corpse(a));
    }
    
    public void setCorpseAt(Coord loc, Corpse corpse){setCorpseAt(loc.x, loc.y, corpse);}
