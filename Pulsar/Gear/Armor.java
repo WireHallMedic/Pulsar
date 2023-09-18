@@ -39,6 +39,8 @@ public class Armor extends GearObj implements GearConstants, ActorConstants
       String str =  "Damage Reduction: " + damageReduction + ", Max Move Speed: " + speedCap.name;
       if(hasStatusEffect())
          str += ", " + getStatusEffectString();
+      if(hasGadgetEffect())
+         str += ", " + getGadgetEffect().name;
       return str;
    }
    

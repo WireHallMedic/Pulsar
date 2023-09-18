@@ -95,9 +95,16 @@ public interface GearConstants extends WSFontConstants
    
    public enum GadgetSpecialEffect
    {
-      HOLOCLONE,
-      TURRET,
-      NAPALM,
-      MOTION_SENSOR;
+      HOLOCLONE         ("Holoclone"),
+      TURRET            ("Turret"),
+      NAPALM            ("Napalm"),
+      MOTION_SENSOR     ("Motion Sensor");
+      
+      public String name;
+      
+      private GadgetSpecialEffect(String n)
+      {
+         name = n;
+      }
    }
 }
