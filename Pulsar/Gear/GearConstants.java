@@ -97,6 +97,7 @@ public interface GearConstants extends WSFontConstants
    {
       HOLOCLONE         ("Holoclone"),
       TURRET            ("Turret"),
+      COMBAT_DRONE      ("Combat Drone"),
       NAPALM            ("Napalm"),
       MOTION_SENSOR     ("Motion Sensor");
       

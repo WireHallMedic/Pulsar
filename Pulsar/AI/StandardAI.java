@@ -25,6 +25,18 @@ public class StandardAI extends WanderAI implements AIConstants
    @Override
    public void plan()
    {
+      // too far from leader
+      if(hasLeader() && EngineTools.getDistanceTo(getLeader().getMapLoc(), self.getMapLoc()) > getFollowDistance())
+      {
+         Coord stepTowards = getStepTowards(getLeader().getMapLoc());
+         // can path to last seen
+         if(stepTowards != null)
+         {
+            setStepTowards(stepTowards);
+            return;
+         }
+      }
+      
       Actor nearestEnemy = getNearestVisibleEnemy();
       // no visible enemy
       if(nearestEnemy == null)

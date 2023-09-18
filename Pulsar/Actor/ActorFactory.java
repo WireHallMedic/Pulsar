@@ -26,7 +26,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
  //     a.getArmor().setDamageReduction(100);
       a.addGadget(GadgetFactory.getGrenades());
     //  a.addGadget(GadgetFactory.getMotionSensor());
-      a.addGadget(GadgetFactory.getTurret());
+      a.addGadget(GadgetFactory.getCombatDrone());
       a.addGadget(GadgetFactory.getHoloclone());
       return a;
    }
@@ -64,6 +64,26 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setBloodColor(ROBOT_BLOOD);
       a.setColor(ROBOT_FLESH);
       a.setNeedsAir(false);
+      return a;
+   }
+   
+   public static Actor getDrone()
+   {
+      Actor a = new Actor('d');
+      a.setName("Combat Drone");
+      a.setAI(new StandardAI(a));
+      a.setMaxHealth(20);
+      a.fullyHeal();
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
+      a.setShield(ShieldFactory.getBasicShield());
+      a.setDeathEffect(DeathEffect.EXPLODE);
+      a.setTurnEnergy(FULLY_CHARGED);
+      a.setMechanical(true);
+      a.setBiological(false);
+      a.setBloodColor(ROBOT_BLOOD);
+      a.setColor(ROBOT_FLESH);
+      a.setNeedsAir(false);
+      a.setFlying(true);
       return a;
    }
    

@@ -134,6 +134,15 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
             turret.getAI().setTeam(Team.PLAYER);
             GameEngine.add(turret);
          }
+         if(getSpecialEffect() == GadgetSpecialEffect.COMBAT_DRONE)
+         {
+            Actor drone = ActorFactory.getDrone();
+            target = GameEngine.getActualTarget(user.getMapLoc(), target);
+            drone.setAllLocs(GameEngine.getClosestEmptyTile(target));
+            drone.getAI().setTeam(Team.PLAYER);
+            drone.getAI().setLeader(user);
+            GameEngine.add(drone);
+         }
          if(getSpecialEffect() == GadgetSpecialEffect.NAPALM)
          {
             for(int x = -1; x < 2; x++)

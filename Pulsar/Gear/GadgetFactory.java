@@ -62,6 +62,18 @@ public class GadgetFactory implements ActorConstants, GearConstants
       return g;
    }
    
+   public static Gadget getCombatDrone()
+   {
+      Gadget g = new Gadget();
+      g.setName("Combat Drone");
+      g.setShortName("C. Drone");
+      g.setTargetsSelf(false);
+      g.setSpecialEffect(GadgetSpecialEffect.COMBAT_DRONE);
+      g.setDescription("Depolys a combat drone.");
+      g.setPlaceAdjacent(true);
+      return g;
+   }
+   
    public static Gadget getMotionSensor()
    {
       Gadget g = new Gadget();
