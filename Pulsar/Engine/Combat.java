@@ -328,6 +328,14 @@ public class Combat implements GUIConstants, GearConstants
       Coord targetTile = new Coord(kbVect);
       targetTile.x += actor.getMapLoc().x;
       targetTile.y += actor.getMapLoc().y;
+      if(GameEngine.getZoneMap().getTile(targetTile) instanceof Ice)
+      {
+         kbVect = new Vect(source, actor.getMapLoc());
+         kbVect.magnitude = (double)(knockback + 1);
+         targetTile = new Coord(kbVect);
+         targetTile.x += actor.getMapLoc().x;
+         targetTile.y += actor.getMapLoc().y;
+      }
       Vector<Coord> knockbackPath = StraightLine.findLine(actor.getMapLoc(), targetTile, StraightLine.REMOVE_ORIGIN);
       targetTile = null;
       for(Coord tile : knockbackPath)
