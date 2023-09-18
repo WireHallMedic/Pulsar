@@ -28,7 +28,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.addGadget(GadgetFactory.getGrenades());
     //  a.addGadget(GadgetFactory.getMotionSensor());
       a.addGadget(GadgetFactory.getCombatDrone());
-      a.addGadget(GadgetFactory.getHoloclone());
+      a.addGadget(GadgetFactory.getNapalmGrenades());
       return a;
    }
    

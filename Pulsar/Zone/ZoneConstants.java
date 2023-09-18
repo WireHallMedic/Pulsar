@@ -5,6 +5,8 @@ import WidlerSuite.*;
 public interface ZoneConstants extends WSFontConstants
 {
    public static final int FULL_AIR_PRESSURE = 5;
+   public static final int BASE_FIRE_DURATION = 20;
+   public static final int RANDOM_FIRE_DURATION = 10;
    
    public enum TileType
    {
@@ -67,5 +69,5 @@ public interface ZoneConstants extends WSFontConstants
    }
    
    // an array keyed to air pressure
-   public double[] EXTINGUISH_CHANCE = {1.0, .50, .25, .20, .10, .05};
+   public int[] EXTINGUISH_ARRAY = {1000, 10, 5, 0, 0, 0};
 }

@@ -479,15 +479,13 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    
    private void extinguishCheck()
    {
-      double extinguishRoll;
       for(int i = 0; i < fireList.size(); i++)
       {
-         extinguishRoll = GameEngine.random();
          Coord loc = fireList.elementAt(i);
-         if(extinguishRoll <= EXTINGUISH_CHANCE[getTile(loc).getAirPressure()])
-         {
+         Fire tile = (Fire)getTile(loc);
+         tile.increment();
+         if(tile.isExpired())
             extinguish(loc);
-         }
       }
    }
 }
