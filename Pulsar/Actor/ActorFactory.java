@@ -19,6 +19,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setShield(ShieldFactory.getBasicShield());
       a.setArmor(ArmorFactory.getStandardArmor());
       a.getArmor().setGadgetEffect(GadgetSpecialEffect.MOTION_SENSOR);
+      a.getArmor().setStatusEffect(StatusEffectFactory.getEffect(StatusEffectType.AIR_SUPPLY));
 //      a.setArmor(ArmorFactory.getAssaultArmor());
       a.setMaxHealth(50);
       a.fullyHeal();

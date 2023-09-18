@@ -533,7 +533,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(!(curActor.isReadyToAct()))
             incrementInitiative(); 
          if(getPlayer().isDead())
-         break;
+            break;
       }
    }
    
@@ -570,6 +570,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(a.isDead())
          {
             a.doDeathEffect();
+            getZoneMap().dropCorpse(a);
             remove(a);
             i--;
          }

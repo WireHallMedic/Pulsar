@@ -75,6 +75,7 @@ public interface GUIConstants
    public static final double FLOAT_EFFECT_SPEED = SLOW_MOVE_SPEED;
    
    public static final char EXPLOSION_CHAR = 15;
+   public static final char CORPSE_CHAR = 'x';
    
    public static final String WINDOW_TITLE = "Pulsar: A Sci-Fi Roguelike";
    

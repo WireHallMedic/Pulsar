@@ -64,6 +64,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       breachList = new Vector<Coord>();
       fireList = new Vector<Coord>();
       buttonTriggerList = new Vector<ButtonTrigger>();
+      refreshCorpseMap();
    }
    
    public void takeTurn()
@@ -134,105 +135,12 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       }
    }
    
-   private void breachCheck(Coord c){breachCheck(c.x, c.y);}
-   private void breachCheck(int x, int y)
-   {
-      if(!getTile(x, y).isLowPassable() && !getTile(x, y).isHighPassable())
-      {
-         removeBreach(x, y);
-      }
-      else
-      {
-      if(getTile(x + 1, y) instanceof Vacuum ||
-         getTile(x - 1, y) instanceof Vacuum ||
-         getTile(x, y + 1) instanceof Vacuum ||
-         getTile(x, y - 1) instanceof Vacuum)
-         addBreach(x, y);
-      }
-   }
-   
-   private void addBreach(int x, int y){addBreach(new Coord(x, y));}
-   private void addBreach(Coord c)
-   {
-      for(Coord existing : breachList)
-      {
-         if(existing.equals(c))
-            return;
-      }
-      breachList.add(c);
-   }
-   
-   private void removeBreach(int x, int y){removeBreach(new Coord(x, y));}
-   private void removeBreach(Coord c)
-   {
-      for(int i = 0; i < breachList.size(); i++)
-      {
-         if(breachList.elementAt(i).equals(c))
-         {
-            breachList.removeElementAt(i);
-            return;
-         }
-      }
-      
-   }
-   
    public void updateFoV()
    {
       for(int x = 0; x < tileArray.length; x++)
       for(int y = 0; y < tileArray[0].length; y++)
          transparencyMap[x][y] = tileArray[x][y].isTransparent();
       fov.reset(transparencyMap);
-   }
-   
-   public void tryToIgnite(int x, int y){tryToIgnite(new Coord(x, y));}
-   public void tryToIgnite(Coord c)
-   {
-      if(getTile(c).isIgnitable())
-         ignite(c);
-   }
-   
-   public void ignite(int x, int y){ignite(new Coord(x, y));}
-   public void ignite(Coord c)
-   {
-      MapTile fire = new Fire(getTile(c));
-      setTile(c, fire);
-      if(getTile(c) instanceof Fire)
-         fireList.add(c);
-   }
-   
-   public void extinguish(int x, int y){extinguish(new Coord(x, y));}
-   public void extinguish(Coord c)
-   {
-      MapTile tile = getTile(c);
-      if(tile instanceof Fire)
-      {
-         Fire fireTile = (Fire)tile;
-         setTile(c, fireTile.getOriginalTile());
-         if(!(getTile(c) instanceof Fire))
-         {
-            for(int i = 0; i < fireList.size(); i++)
-            {
-               if(fireList.elementAt(i).equals(c))
-               {
-                  fireList.removeElementAt(i);
-               }
-            }
-         }
-      }
-   }
-   
-   private void extinguishCheck()
-   {
-      double extinguishRoll;
-      for(int i = 0; i < fireList.size(); i++)
-      {
-         extinguishRoll = GameEngine.random();
-         Coord loc = fireList.elementAt(i);
-         if(extinguishRoll <= EXTINGUISH_CHANCE[getTile(loc).getAirPressure()])
-         {
-            extinguish(loc);
-         }
-      }
    }
    
    public void update(int x, int y){update(new Coord(x, y));}
@@ -406,6 +314,166 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       if(doPullTowardsVacuum)
       {
          GameEngine.pullTowardsVacuum(depressurizationMap, breachList, getHighPassMap());
+      }
+   }
+   
+   
+   // breach stuff
+   //////////////////////////////////////////////////////////////////
+   private void breachCheck(Coord c){breachCheck(c.x, c.y);}
+   private void breachCheck(int x, int y)
+   {
+      if(!getTile(x, y).isLowPassable() && !getTile(x, y).isHighPassable())
+      {
+         removeBreach(x, y);
+      }
+      else
+      {
+      if(getTile(x + 1, y) instanceof Vacuum ||
+         getTile(x - 1, y) instanceof Vacuum ||
+         getTile(x, y + 1) instanceof Vacuum ||
+         getTile(x, y - 1) instanceof Vacuum)
+         addBreach(x, y);
+      }
+   }
+   
+   private void addBreach(int x, int y){addBreach(new Coord(x, y));}
+   private void addBreach(Coord c)
+   {
+      for(Coord existing : breachList)
+      {
+         if(existing.equals(c))
+            return;
+      }
+      breachList.add(c);
+   }
+   
+   private void removeBreach(int x, int y){removeBreach(new Coord(x, y));}
+   private void removeBreach(Coord c)
+   {
+      for(int i = 0; i < breachList.size(); i++)
+      {
+         if(breachList.elementAt(i).equals(c))
+         {
+            breachList.removeElementAt(i);
+            return;
+         }
+      }
+      
+   }
+   
+   // corpse stuff
+   ////////////////////////////////////////////////////////////////////////////
+   
+   private void refreshCorpseMap()
+   {
+      corpseMap = new Corpse[width][height];
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+         corpseMap[x][y] = null;
+   }
+   
+   public boolean isCorpseAt(Coord c){return isCorpseAt(c.x, c.y);}
+   public boolean isCorpseAt(int x, int y)
+   {
+      if(isInBounds(x, y))
+         return corpseMap[x][y] != null;
+      return false;
+   }
+   
+   public boolean canDropCorpseAt(Coord c){return canDropCorpseAt(c.x, c.y);}
+   public boolean canDropCorpseAt(int x, int y)
+   {
+      if(isInBounds(x, y))
+      {
+         MapTile tile = getTile(x, y);
+         if(tile.isLowPassable() && 
+            tile instanceof Fire == false &&
+            tile instanceof Door == false &&
+            !isCorpseAt(x, y))
+            return true;
+      }
+      return false;
+   }
+   
+   public Coord getNearestCorpseLocation(Coord c){return getNearestCorpseLocation(c.x, c.y);}
+   public Coord getNearestCorpseLocation(int x, int y)
+   {
+      return null;
+   }
+   
+   public void dropCorpse(Actor a)
+   {
+      if(canDropCorpseAt(a.getMapLoc()))
+         setCorpseAt(a.getMapLoc(), new Corpse(a));
+   }
+   
+   public void setCorpseAt(Coord loc, Corpse corpse){setCorpseAt(loc.x, loc.y, corpse);}
+   public void setCorpseAt(int x, int y, Corpse corpse)
+   {
+      if(isInBounds(x, y))
+         corpseMap[x][y] = corpse;
+   }
+   
+   public Corpse getCorpseAt(Coord loc){return getCorpseAt(loc.x, loc.y);}
+   public Corpse getCorpseAt(int x, int y)
+   {
+      if(isInBounds(x, y))
+         return corpseMap[x][y];
+      return null;
+   }
+   
+   
+   // fire stuff
+   ////////////////////////////////////////////////////////////////////////////
+   public void tryToIgnite(int x, int y){tryToIgnite(new Coord(x, y));}
+   public void tryToIgnite(Coord c)
+   {
+      if(getTile(c).isIgnitable())
+         ignite(c);
+   }
+   
+   public void ignite(int x, int y){ignite(new Coord(x, y));}
+   public void ignite(Coord c)
+   {
+      MapTile fire = new Fire(getTile(c));
+      setTile(c, fire);
+      if(getTile(c) instanceof Fire)
+         fireList.add(c);
+   }
+   
+   public void extinguish(int x, int y){extinguish(new Coord(x, y));}
+   public void extinguish(Coord c)
+   {
+      MapTile tile = getTile(c);
+      if(tile instanceof Fire)
+      {
+         Fire fireTile = (Fire)tile;
+         setTile(c, fireTile.getOriginalTile());
+         if(!(getTile(c) instanceof Fire))
+         {
+            for(int i = 0; i < fireList.size(); i++)
+            {
+               if(fireList.elementAt(i).equals(c))
+               {
+                  fireList.removeElementAt(i);
+               }
+            }
+         }
+      }
+   }
+   
+   private void extinguishCheck()
+   {
+      double extinguishRoll;
+      for(int i = 0; i < fireList.size(); i++)
+      {
+         extinguishRoll = GameEngine.random();
+         Coord loc = fireList.elementAt(i);
+         if(extinguishRoll <= EXTINGUISH_CHANCE[getTile(loc).getAirPressure()])
+         {
+            extinguish(loc);
+         }
       }
    }
 }
