@@ -71,7 +71,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    {
       Actor a = new Actor('e');
       a.setName("Standard Enemy");
-      a.setAI(new StandardEnemyAI(a));
+      a.setAI(new StandardAI(a));
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
       a.setShield(ShieldFactory.getBasicShield());
       a.setMaxHealth(20);
@@ -115,12 +115,12 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    {
       Actor a = new Actor('w');
       a.setName("Alien Worker");
-      a.setAI(new StandardEnemyAI(a));
+      a.setAI(new StandardAI(a));
       a.getAI().setTeam(AIConstants.Team.ALIEN);
       a.setUnarmedAttack(WeaponFactory.getAlienClaws());
       a.setBloodColor(ALIEN_COLOR);
       a.setColor(ALIEN_FLESH);
-      a.setAI(new StandardEnemyAI(a));
+      a.setAI(new StandardAI(a));
       a.setMaxHealth(20);
       a.fullyHeal();
       return a;

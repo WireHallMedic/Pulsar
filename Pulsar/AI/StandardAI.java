@@ -15,9 +15,9 @@ import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import WidlerSuite.*;
 
-public class StandardEnemyAI extends WanderAI implements AIConstants
+public class StandardAI extends WanderAI implements AIConstants
 {
-   public StandardEnemyAI(Actor s)
+   public StandardAI(Actor s)
    {
       super(s);
    }
