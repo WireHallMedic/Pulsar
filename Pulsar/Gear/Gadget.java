@@ -18,6 +18,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    private String description;
    private StatusEffect passiveStatusEffect;
    private boolean passiveOnly;
+   private boolean placeAdjacent;
 
 
 	public int getMaxUses(){return maxUses;}
@@ -34,6 +35,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    public boolean hasSpecialEffect(){return specialEffect != null;}
    public boolean hasPassiveStatusEffect(){return passiveStatusEffect != null;}
    public boolean isPassiveOnly(){return passiveOnly;}
+   public boolean getPlaceAdjacent(){return placeAdjacent;}
 
 
 	public void setMaxUses(int m){maxUses = m;}
@@ -46,6 +48,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    public void setDescription(String d){description = d;}
    public void setPassiveStatusEffect(StatusEffect se){passiveStatusEffect = se;}
    public void setPassiveOnly(boolean po){passiveOnly = po;}
+   public void setPlaceAdjacent(boolean pa){placeAdjacent = pa;}
    
 
 
@@ -62,6 +65,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
       passiveStatusEffect = null;
       fullyCharge();
       passiveOnly = false;
+      placeAdjacent = false;
    }
    
    public String getSummary()
@@ -111,6 +115,10 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
       }
       if(hasSpecialEffect())
       {
+         if(getPlaceAdjacent())
+         {
+            target = EngineTools.getTileTowards(user.getMapLoc(), target);
+         }
          if(getSpecialEffect() == GadgetSpecialEffect.HOLOCLONE)
          {
             Actor clone = ActorFactory.getHoloclone();

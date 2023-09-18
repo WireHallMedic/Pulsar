@@ -162,7 +162,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                   setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
                }
                // melee targeting
-               else if(player.pendingAttackIsMelee())
+               else if(player.pendingAttackIsMelee() || (player.getPendingGadget() != null && player.getPendingGadget().getPlaceAdjacent()))
                {
                   Vector<Coord> targetingLine = StraightLine.findLine(playerLoc, cursorLoc, StraightLine.REMOVE_ORIGIN);
                   if(targetingLine.size() == 0)

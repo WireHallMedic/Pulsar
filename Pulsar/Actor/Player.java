@@ -170,6 +170,10 @@ public class Player extends Actor implements GUIConstants, GearConstants
    {
       if(ai.getPendingAction() == null)
          return false;
+      if(ai.getPendingAction().isGadgetAction())
+      {
+         // do stuff here
+      }
       Weapon pendingWeapon = getPendingWeapon();
       return pendingWeapon != null && pendingWeapon.hasWeaponTag(WeaponTag.BLAST);
    }
@@ -239,6 +243,13 @@ public class Player extends Actor implements GUIConstants, GearConstants
       if(hasArmor() && getArmor().hasGadgetEffect() && getArmor().getGadgetEffect() == se)
          return true;
       return false;
+   }
+   
+   public Gadget getPendingGadget()
+   {
+      if(ai.getPendingAction().isGadgetAction())
+         return getGadget(ai.getPendingAction().getGadgetIndex());
+      return null;
    }
    
    public boolean hasMotionSensor()

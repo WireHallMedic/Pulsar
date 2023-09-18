@@ -45,7 +45,8 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Holoclone");
       g.setTargetsSelf(false);
       g.setSpecialEffect(GadgetSpecialEffect.HOLOCLONE);
-      g.setDescription("Create an exploding clone where you throw it.");
+      g.setDescription("Deploys an exploding clone.");
+      g.setPlaceAdjacent(true);
       return g;
    }
    
@@ -57,6 +58,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setTargetsSelf(false);
       g.setSpecialEffect(GadgetSpecialEffect.TURRET);
       g.setDescription("Depolys a stationary turret.");
+      g.setPlaceAdjacent(true);
       return g;
    }
    
