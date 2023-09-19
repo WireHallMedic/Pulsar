@@ -10,6 +10,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
       a.setName("Scout Armor");
       a.setDamageReduction(0);
 	   a.setSpeedCap(ActionSpeed.FAST);
+      a.setGadgetEffect(GadgetSpecialEffect.MOTION_SENSOR);
       return a;
    }
    
@@ -18,7 +19,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
       Armor a = new Armor();
       a.setName("Standard Armor");
       a.setDamageReduction(2);
-	   a.setSpeedCap(ActionSpeed.STANDARD);
+	   a.setSpeedCap(ActionSpeed.FAST);
       return a;
    }
    
@@ -27,7 +28,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
       Armor a = new Armor();
       a.setName("Assault Armor");
       a.setDamageReduction(4);
-	   a.setSpeedCap(ActionSpeed.SLOW);
+	   a.setSpeedCap(ActionSpeed.STANDARD);
       a.setStatusEffect(StatusEffectFactory.getEffect(StatusEffectType.AIR_SUPPLY));
       return a;
    }
