@@ -381,7 +381,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       setPlayer(p);
       
       
-      for(int i = 0; i < 10; i++)
+      for(int i = 0; i < 15; i++)
       {
          Coord c = new Coord(-1, -1);
          while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
@@ -390,6 +390,18 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             c.y = randomInt(1, 9);
          }
          Actor e = ActorFactory.getAlienWorker();
+         e.setAllLocs(c);
+         add(e);
+      }
+      for(int i = 0; i < 10; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         {
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(1, 9);
+         }
+         Actor e = ActorFactory.getAlienHunter();
          e.setAllLocs(c);
          add(e);
       }
@@ -399,25 +411,13 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
          {
             c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, 9);
-         }
-         Actor e = ActorFactory.getAlienHunter();
-         e.setAllLocs(c);
-         add(e);
-      }
-      for(int i = 0; i < 10; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(19, 28);
          }
          Actor e = ActorFactory.getAlienWorker();
          e.setAllLocs(c);
          add(e);
       }
-      for(int i = 0; i < 5; i++)
+      for(int i = 0; i < 3; i++)
       {
          Coord c = new Coord(-1, -1);
          while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
@@ -429,7 +429,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          e.setAllLocs(c);
          add(e);
       }
-      for(int i = 0; i < 5; i++)
+      for(int i = 0; i < 3; i++)
       {
          Coord c = new Coord(-1, -1);
          while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))

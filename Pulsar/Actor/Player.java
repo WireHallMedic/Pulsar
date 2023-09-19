@@ -144,6 +144,14 @@ public class Player extends Actor implements GUIConstants, GearConstants
    }
    
    @Override
+   public void add(StatusEffect se)
+   {
+      super.add(se);
+      if(se.getVisionRange() != 0)
+         updateFoV();
+   }
+   
+   @Override
 	public void setMapLoc(Coord m){setMapLoc(m.x, m.y);}
    @Override
 	public void setMapLoc(int x, int y)
