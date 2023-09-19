@@ -109,17 +109,24 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
    {
       clear();
       String str = "No data.";
+      String footer = "";
       if(pageList != null)
+      {
          str = pageList.elementAt(curPageIndex);
-      write(X_ORIGIN, Y_ORIGIN, str, WIDTH_TILES, HEIGHT_TILES);
+         if(pageList.size() > 1)
+            footer = GUITools.centerString("[" + (curPageIndex + 1) + "/" + pageList.size() + "]", WIDTH_TILES);
+      }
+      write(X_ORIGIN, Y_ORIGIN, str, WIDTH_TILES, HEIGHT_TILES - 1);
+      write(X_ORIGIN, Y_ORIGIN + HEIGHT_TILES - 1, footer, WIDTH_TILES, 1);
+      
    }
    
    public void clear()
    {
-      for(int x = X_ORIGIN; x < WIDTH_TILES; x++)
-      for(int y = Y_ORIGIN; y < HEIGHT_TILES; y++)
+      for(int x = 0; x < WIDTH_TILES; x++)
+      for(int y = 0; y < HEIGHT_TILES; y++)
       {
-         setTile(x, y, ' ', TERMINAL_FG_COLOR, BG_COLOR);
+         setTile(X_ORIGIN + x, Y_ORIGIN + y, ' ', TERMINAL_FG_COLOR, BG_COLOR);
       }
    }
 }

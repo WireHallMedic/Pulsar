@@ -114,10 +114,10 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
    
    public void clear()
    {
-      for(int x = X_ORIGIN; x < WIDTH_TILES; x++)
-      for(int y = Y_ORIGIN; y < HEIGHT_TILES; y++)
+      for(int x = 0; x < WIDTH_TILES; x++)
+      for(int y = 0; y < HEIGHT_TILES; y++)
       {
-         setTile(x, y, ' ', TERMINAL_FG_COLOR, BG_COLOR);
+         setTile(X_ORIGIN + x, Y_ORIGIN + y, ' ', TERMINAL_FG_COLOR, BG_COLOR);
       }
    }
    
