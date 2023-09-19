@@ -14,7 +14,7 @@ import Pulsar.Gear.*;
 import Pulsar.Engine.*;
 
 
-public class HelpPanel extends RogueTilePanel implements GUIConstants
+public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontConstants
 {
    public static final int X_ORIGIN = 1;
    public static final int Y_ORIGIN = 1;
@@ -148,18 +148,18 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants
          GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
       String[] pageTwo = {
-         GUITools.centerString("Page Two [^/$]", WIDTH_TILES),
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
+         GUITools.centerString("Terrain [^/$]", WIDTH_TILES),
+         " " + (char)SMALL_BULLET_TILE + "  Clear. A normal, open tile.",
+         " =  Low wall or similar. Blocks non-flying movement.",
+         " #  Wall. Blocks movement and vision.",
+         " :  Window or bars. Blocks movement, but not vision.",
+         " ,  Rough terrain. Slows non-flying movement.",
+         "| / Door, closed and open respectively.",
+         " ~  Liquid. Slows non-flying movment, extinguishes fires.",
+         " -  Ice. Walking on ice causes sliding.",
+         " " + (char)CAPITAL_OMEGA_TILE + "  Terminal. Interact to read.",
+         " ^  Fire.",
+         (char)DOT_TILE + " " + (char)RING_TILE + " Button. Some buttons can be pressed repeatedly, some just once.",
          "",
          "",
          "",
