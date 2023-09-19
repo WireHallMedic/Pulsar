@@ -20,6 +20,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static SquirrelRNG rng = new SquirrelRNG();
    private static GameMode gameMode = GameMode.OTHER_PANEL;
    private static Coord cursorLoc = null;
+   private static Vector<Actor> deadActorList = new Vector<Actor>();
    
    // non-static variables
    Thread thread;
@@ -40,6 +41,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void setCurZone(Zone z){curZone = z;}
    public static void setGameMode(GameMode gm){gameMode = gm;}
    public static void setCursorLoc(Coord c){cursorLoc = new Coord(c);}
+   
+   public static void registerDeadActor(Actor a)
+   {
+      deadActorList.add(a);
+   }
    
    
    public static int randomInt(int lower, int upper)
@@ -567,6 +573,16 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    private static void cleanUpDead()
    {
+      Actor a;
+      while(deadActorList.size() > 0)
+      {
+         a = deadActorList.elementAt(deadActorList.size() - 1);
+         deadActorList.removeElementAt(deadActorList.size() - 1);
+         a.doDeathEffect();
+         getZoneMap().dropCorpse(a);
+         remove(a);
+      }
+      /*
       Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)
       {
@@ -578,7 +594,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             remove(a);
             i--;
          }
-      }
+      }*/
    }
    
    public boolean allLockingAreWalking()
