@@ -480,8 +480,10 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void updateMemory()
    {
       boolean enemySighted = false;
-      for(Actor a : GameEngine.getActorList())
+      Actor a;
+      for(int i = 0; i < GameEngine.getActorList().size(); i++)
       {
+         a = GameEngine.getActorList().elementAt(i);
          if(canSee(a) && a != this)
          {
             memory.noteActor(a);

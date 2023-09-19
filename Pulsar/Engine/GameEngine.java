@@ -556,6 +556,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                }
             }
          }
+         cleanUpCheck();
          // increment if acted
          if(!(curActor.isReadyToAct()))
             incrementInitiative();
@@ -564,7 +565,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       }
    }
    
-   // called from mainGameFGPanel, because it's tied into animation
    public static void cleanUpCheck()
    {
       cleanUpDead();
@@ -611,17 +611,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public boolean allLockingAreWalking()
    {
-      return allLockingAreWalking;/*
-      boolean returnVal = true;
-      for(int i = 0; i < movingActorList.size(); i++)
-      {
-         if(movingActorList.elementAt(i).getAI().getPreviousAction() != ActorAction.STEP)
-         {
-            returnVal = false;
-            break;
-         }
-      }
-      return returnVal;*/
+      return allLockingAreWalking;
    }
    
    public boolean animationAllowsAction(Actor curActor)
