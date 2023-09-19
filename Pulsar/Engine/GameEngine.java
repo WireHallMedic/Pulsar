@@ -303,9 +303,8 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          initiativeIndex = 0;
          if(getZoneMap() != null)
          {
-       //     while(isAnimationLocked())
-               ;
             getZoneMap().takeTurn();
+            cleanUpCheck();
          }
       }
    }

@@ -24,6 +24,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    public static final int MEDIUM_TICK_COUNT = 10;
    public static final int FAST_TICK_COUNT = 5;
    private static final int tickCounterReset = SLOW_TICK_COUNT;
+   private static final int BUFFER_TILES = 4;
    private int tickCounter;
    private boolean slowFlag;
    private boolean mediumFlag;
@@ -31,7 +32,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    
 	public MainGameFGPanel()
    {
-      super(MAP_WIDTH_TILES + 2, MAP_HEIGHT_TILES + 2, SQUARE_TILE_PALETTE);
+      super(MAP_WIDTH_TILES + (BUFFER_TILES * 2), MAP_HEIGHT_TILES + (BUFFER_TILES * 2), SQUARE_TILE_PALETTE);
       setSize(50, 50);
       drawLockListFirst();
       GUITools.setAnimationManager(getAnimationManager());
@@ -78,8 +79,8 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
          setScroll(xScroll, yScroll);
          
          // draw the map
-         for(int x = 0; x < columns(); x++)
-         for(int y = 0; y < rows(); y++)
+         for(int x = BUFFER_TILES; x < columns() - BUFFER_TILES; x++)
+         for(int y = BUFFER_TILES; y < rows() - BUFFER_TILES; y++)
          {
             if(GameEngine.playerCanSee(x + xCorner, y + yCorner))
             {

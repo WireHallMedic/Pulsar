@@ -262,7 +262,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       boolean[][] newMap = new boolean[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
-         newMap[x][y] = lowPassMap[x][y];
+         newMap[x][y] = highPassMap[x][y];
       return newMap;
    }
    
