@@ -432,7 +432,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       }
    }
    
-   private void startOfTurn()
+   protected void startOfTurn()
    {
       updateMemory();
       if(ai.hasLeader() && ai.getLeader().isDead())
@@ -441,7 +441,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       setDidForcedMovement(false);
    }
    
-   private void endOfTurn()
+   protected void endOfTurn()
    {
       updateMemory();
       if(GameEngine.getZoneMap().getTile(getMapLoc()).isLiquid() && isOnFire())

@@ -1,6 +1,7 @@
 package Pulsar.AI;
 
 import Pulsar.Actor.*;
+import Pulsar.Engine.*;
 
 public class PlayerAI extends BasicAI
 {
@@ -14,4 +15,11 @@ public class PlayerAI extends BasicAI
    {
       ;
    }
+   
+//    @Override
+//    public void act()
+//    {
+//       super.act();
+//       GameEngine.getPlayer().updateFoV();
+//    }
 }

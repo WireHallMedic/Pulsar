@@ -131,7 +131,6 @@ public class BasicAI implements AIConstants
          doGadgetAction(pendingAction.getGadgetIndex());
       shiftPendingToPrevious();
       clearPlan();
-      GameEngine.getPlayer().updateFoV();
    }
    
    protected void shiftPendingToPrevious()

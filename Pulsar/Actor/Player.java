@@ -130,6 +130,20 @@ public class Player extends Actor implements GUIConstants, GearConstants
    }
    
    @Override
+   protected void startOfTurn()
+   {
+      super.startOfTurn();
+      updateFoV();
+   }
+   
+   @Override
+   protected void endOfTurn()
+   {
+     super.endOfTurn();
+     updateFoV();
+   }
+   
+   @Override
 	public void setMapLoc(Coord m){setMapLoc(m.x, m.y);}
    @Override
 	public void setMapLoc(int x, int y)
