@@ -143,6 +143,9 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       Door bulkheadDoor = (Door)m.getTile(1, 14);
       bulkheadDoor.setLocked(true);
       labelBulkheads(m);
+      Terminal terminal = (Terminal)MapTileFactory.getTerminal();
+      terminal.addPage("Bulkhead door controls.");
+      m.setTile(6, 13, terminal);
       return m;
    }
    

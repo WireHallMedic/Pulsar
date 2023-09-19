@@ -13,13 +13,15 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    }
    public static MapTile getTile(TileType baseType)
    {
-      if(baseType == TileType.WATER)
-         return getWater();
       return getTile(baseType, DEFAULT_TILE_FG_COLOR, DEFAULT_TILE_BG_COLOR);
    }
    
    public static MapTile getTile(TileType baseType, Color fgColor, Color bgColor)
    {
+      if(baseType == TileType.WATER)
+         return getWater();
+      if(baseType == TileType.TERMINAL)
+         return getTerminal();
       MapTile tile = new MapTile(baseType.iconIndex, fgColor.getRGB(), bgColor.getRGB(), baseType.name, 
                                  baseType.lowPassable, baseType.highPassable, baseType.transparent);
       if(baseType == TileType.NULL || baseType == TileType.CLEAR)
@@ -94,5 +96,11 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       tile.setLiquid(true);
       tile.setSlowsMovement(true);
       return tile;
+   }
+   
+   public static MapTile getTerminal()
+   {
+      Terminal terminal = new Terminal(TERMINAL_FG_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB());
+      return terminal;
    }
 }

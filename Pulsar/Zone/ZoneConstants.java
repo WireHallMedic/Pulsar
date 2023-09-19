@@ -19,6 +19,7 @@ public interface ZoneConstants extends WSFontConstants
       RUBBLE      (',', "Rubble", true, true, true),
       WATER       ('~', "Water", true, true, true),
       ICE         ('-', "Ice", true, true, true),
+      TERMINAL    (CAPITAL_OMEGA_TILE, "Terminal", false, true, true),
       NULL        (' ', "", false, false, false);
       
       public int iconIndex;
