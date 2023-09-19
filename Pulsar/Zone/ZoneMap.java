@@ -322,6 +322,38 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       }
    }
    
+   public void flood(Coord c, int reps){flood(c.x, c.y, reps);}
+   public void flood(int x, int y, int reps)
+   {
+      if(!isInBounds(x, y))
+         return;
+      SpiralSearch search = new SpiralSearch(lowPassMap, x, y);
+      Coord loc = new Coord(x, y);
+      for(int i = 0; i < reps; i++)
+      {
+         while(loc != null && !isFloodable(loc))
+            loc = search.getNext();
+         if(loc != null)
+         {
+            extinguish(loc);
+            setTile(loc, MapTileFactory.getWater());
+         }
+      }
+   }
+   
+   public boolean isFloodable(int x, int y){return isFloodable(new Coord(x, y));}
+   public boolean isFloodable(Coord c)
+   {
+      MapTile tile = getTile(c);
+      if(tile.isLiquid())
+         return false;
+      if(tile instanceof Door)
+         return false;
+      if(!tile.isLowPassable())
+         return false;
+      return true;
+   }
+   
    
    // breach stuff
    //////////////////////////////////////////////////////////////////

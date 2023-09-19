@@ -84,6 +84,15 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       return tile;
    }
    
+   public static MapTile getWaterBarrel()
+   {
+      MapTile tile = getBarrel();
+      tile.setName("Water Barrel");
+      tile.setFGColor(LIGHT_BLUE.getRGB());
+      tile.setOnDestructionEffect(OnDestructionEffect.FLOOD);
+      return tile;
+   }
+   
    public static MapTile getWater()
    {
       TileType waterType = TileType.WATER;

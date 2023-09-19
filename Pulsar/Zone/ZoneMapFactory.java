@@ -43,6 +43,16 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
              map.getTile(x, y - 1) instanceof Vacuum;
    }
    
+   public static MapTile getRandomBarrel()
+   {
+      switch(GameEngine.randomInt(0, 5))
+      {
+         case 0  : return MapTileFactory.getBarrel();
+         case 1  : return MapTileFactory.getWaterBarrel();
+         default : return MapTileFactory.getExplodingBarrel();
+      }
+   }
+   
    public static ZoneMap getTestMap()
    {
       int w = 15;
@@ -81,9 +91,9 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       "v#....=.....#..........#..........#..........#..........#..........#..........#..........#..........#..#v",
       "v/....=................................................................................................#v",
       "v#....=................................................................................................#v",
-      "v#~~~.......#..........#..........#..........#..........#..........#..........#..........#..........#..#v",
-      "v#~~~..................................................................................................#v",
-      "v#~~~..................................................................................................#v",
+      "v#..........#..........#..........#..........#..........#..........#..........#..........#..........#..#v",
+      "v#.....................................................................................................#v",
+      "v#.....................................................................................................#v",
       "v########/###############################################################################/##############v",
       "v#................#..............................#....:.......:.......:.........#......................#v",
       "v#................#..............................#....:...............:.........#......................#v",
@@ -105,8 +115,8 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
          int y = 0;
          while(rowArr[y].charAt(x) != '.')
          {
-            x = GameEngine.randomInt(3, w - 4);
-            y = GameEngine.randomInt(3, h - 4);
+            x = GameEngine.randomInt(0, w);
+            y = GameEngine.randomInt(0, h);
          }
          char[] charArr = rowArr[y].toCharArray();
          charArr[x] = '0';
@@ -127,7 +137,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
                case '=' : mapTile = MapTileFactory.getTile(TileType.LOW_WALL); break;
                case ':' : mapTile = MapTileFactory.getTile(TileType.WINDOW); break;
                case '/' : mapTile = MapTileFactory.getDoor(); break;
-               case '0' : mapTile = MapTileFactory.getExplodingBarrel(); break;
+               case '0' : mapTile = getRandomBarrel(); break;
                case '~' : mapTile = MapTileFactory.getWater(); break;
                case 'v' : mapTile = MapTileFactory.getVacuum();
             }

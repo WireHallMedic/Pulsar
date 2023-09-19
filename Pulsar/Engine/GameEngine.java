@@ -270,7 +270,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public static void doDestructionEffect(int x, int y, MapTile mt)
    {
-      Combat.nonWeaponExplosion(x, y);
+      switch(mt.getOnDestructionEffect())
+      {
+         case EXPLOSION : Combat.nonWeaponExplosion(x, y); break;
+         case FLOOD     : getZoneMap().flood(x, y, randomInt(5, 10)); break;
+      }
    }
    
    public static void add(MovementScript ms){mapPanel.add(ms);}

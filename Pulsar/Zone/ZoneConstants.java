@@ -69,7 +69,7 @@ public interface ZoneConstants extends WSFontConstants
    
    public enum OnDestructionEffect
    {
-      EXPLOSION, VACCUUM, FIRE;
+      EXPLOSION, FLOOD, FIRE;
    }
    
    // an array keyed to air pressure

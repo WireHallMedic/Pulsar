@@ -358,16 +358,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
    {
       if(arg == 'f')
       {
-         Coord target = GameEngine.getPlayer().getMapLoc();
-         target.x++;
-         if(GameEngine.getZoneMap().getTile(target) instanceof Fire)
-         {
-            GameEngine.getZoneMap().extinguish(target);
-         }
-         else
-         {
-            GameEngine.getZoneMap().ignite(target);
-         }
+         GameEngine.getZoneMap().flood(GameEngine.getPlayer().getMapLoc(), 5);
          return;
       }
       if(arg == 'e')
