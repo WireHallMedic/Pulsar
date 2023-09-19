@@ -441,6 +441,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    private void endOfTurn()
    {
       updateMemory();
+      if(GameEngine.getZoneMap().getTile(getMapLoc()).isLiquid() && isOnFire())
+         extinguish();
       applyOngoingDamage();
       if(GameEngine.getZoneMap().getTile(getMapLoc()).getAirPressure() == 0)
          suffocate();
