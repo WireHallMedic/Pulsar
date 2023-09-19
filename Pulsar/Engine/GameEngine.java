@@ -295,7 +295,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}
    
    
-   private static void incrementInitiative()
+   private void incrementInitiative()
    {
       initiativeIndex++;
       if(initiativeIndex >= curZone.getActorList().size())
@@ -304,7 +304,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(getZoneMap() != null)
          {
             getZoneMap().takeTurn();
-            cleanUpCheck();
          }
       }
    }
@@ -390,7 +389,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       Player p = ActorFactory.getPlayer();
       p.setAllLocs(2, 12);
       setPlayer(p);
-      
+      /*
       for(int i = 0; i < 25; i++)
       {
          Coord c = new Coord(-1, -1);
@@ -402,9 +401,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          Actor e = ActorFactory.getAlienWorker();
          e.setAllLocs(c);
          add(e);
-      }
+      }*/
       
-      /*
+      
       for(int i = 0; i < 15; i++)
       {
          Coord c = new Coord(-1, -1);
@@ -496,7 +495,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                add(e);
             }
          }
-      }*/
+      }
    
    /*
       // vacuum test
@@ -564,7 +563,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       }
    }
    
-   public static void cleanUpCheck()
+   public void cleanUpCheck()
    {
       cleanUpDead();
       cleanUpSprites();
@@ -574,7 +573,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       }
    }
    
-   private static void cleanUpSprites()
+   private void cleanUpSprites()
    {
       Actor curActor;
       boolean newLockingAreWalking = true;
@@ -595,7 +594,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       allLockingAreWalking = newLockingAreWalking;
    }
    
-   private static void cleanUpDead()
+   private void cleanUpDead()
    {
       Actor a;
       while(deadActorList.size() > 0)

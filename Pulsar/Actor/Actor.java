@@ -361,9 +361,12 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    
    public void applyDamageToHealth(int damage)
    {
-      curHealth -= damage;
-      if(isDead())
-         GameEngine.registerDeadActor(this);
+      if(!isDead())
+      {
+         curHealth -= damage;
+         if(isDead())
+            GameEngine.registerDeadActor(this);
+      }
    }
    
    public boolean isDead()

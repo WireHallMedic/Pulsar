@@ -357,13 +357,13 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
    public void debug(char arg)
    {
       if(arg == 'x')
-      {
+      {/*
          for(int x = 0; x < GameEngine.getZoneMap().getWidth(); x++)
          for(int y = 0; y < GameEngine.getZoneMap().getHeight(); y++)
          {
             if(GameEngine.getZoneMap().getTile(x, y).getIconIndex() == '#')
                GameEngine.getZoneMap().breakTile(x, y);
-         }
+         }*/
          System.out.println("Total actors: " + GameEngine.getActorList().size());
          return;
       }
