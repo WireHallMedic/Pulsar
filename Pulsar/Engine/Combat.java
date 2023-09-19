@@ -21,7 +21,7 @@ public class Combat implements GUIConstants, GearConstants
       if(GameEngine.playerCanSee(attacker))
       {
          MovementScript msa = MovementScriptFactory.getAttackAnimation(attacker, initialTarget);
-         getMapPanel().addLocking(msa);
+         getMapPanel().addLocking(msa, attacker);
       }
       for(int i = 0; i < targetList.size(); i++)
       {
@@ -185,7 +185,7 @@ public class Combat implements GUIConstants, GearConstants
       {
          // target impact
          MovementScript msd = MovementScriptFactory.getImpactScript(defender, origin, delay);
-         getMapPanel().addLocking(msd);
+         getMapPanel().addLocking(msd, defender);
          
          // shield flicker
          if(hasShieldBefore)
@@ -347,7 +347,7 @@ public class Combat implements GUIConstants, GearConstants
       if(targetTile == null)
          return;
       MovementScript ms = MovementScriptFactory.getKnockbackScript(actor, targetTile);
-      GameEngine.getMapPanel().addLocking(ms);
+      GameEngine.getMapPanel().addLocking(ms, actor);
       actor.setMapLoc(targetTile);
       actor.setDidForcedMovement(true);
    }

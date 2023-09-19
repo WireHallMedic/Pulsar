@@ -378,6 +378,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
          case 'm' : ms = MovementScriptFactory.getMeleeScript(player, origin); break;
          case 's' : ms = MovementScriptFactory.getShootScript(player, origin); break;
       }
-      mapPanel.addLocking(ms);
+      mapPanel.addLocking(ms, player);
    }
 }

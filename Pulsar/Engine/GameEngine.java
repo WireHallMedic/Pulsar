@@ -21,6 +21,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static GameMode gameMode = GameMode.OTHER_PANEL;
    private static Coord cursorLoc = null;
    private static Vector<Actor> deadActorList = new Vector<Actor>();
+   private static Vector<Actor> movingActorList = new Vector<Actor>();
    
    // non-static variables
    Thread thread;
@@ -45,6 +46,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void registerDeadActor(Actor a)
    {
       deadActorList.add(a);
+   }
+   
+   public static void registerMovingActor(Actor a)
+   {
+      movingActorList.add(a);
    }
    
    
@@ -284,7 +290,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    }
    
    public static void add(MovementScript ms){mapPanel.add(ms);}
-   public static void addLocking(MovementScript ms){mapPanel.addLocking(ms);}
+   public static void addLocking(MovementScript ms, Actor a){mapPanel.addLocking(ms, a);}
    public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}
    
    
@@ -342,7 +348,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                   {
                      a.reconcileSprite();
                      MovementScript ms = MovementScriptFactory.getPushScript(a, pullLoc.elementAt(0));
-                     GameEngine.getMapPanel().addLocking(ms);
+                     GameEngine.getMapPanel().addLocking(ms, a);
                      a.setMapLoc(pullLoc.elementAt(0));
                      a.setDidForcedMovement(true);
                   }
@@ -562,12 +568,23 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    }
    
    private static void cleanUpSprites()
-   {
+   {/*
       Vector<Actor> actorList = curZone.getActorList();
       for(int i = 0; i < actorList.size(); i++)
       {
          Actor curActor = actorList.elementAt(i);
          curActor.reconcileSprite();
+      }*/
+      Actor curActor;
+      for(int i = 0; i < movingActorList.size(); i++)
+      {
+         curActor = movingActorList.elementAt(i);
+         if(!mapPanel.isOnLockList(curActor))
+         {
+            curActor.reconcileSprite();
+            movingActorList.removeElementAt(i);
+            i--;
+         }
       }
    }
    
@@ -582,23 +599,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          getZoneMap().dropCorpse(a);
          remove(a);
       }
-      /*
-      Vector<Actor> actorList = curZone.getActorList();
-      for(int i = 0; i < actorList.size(); i++)
-      {
-         Actor a = actorList.elementAt(i);
-         if(a.isDead())
-         {
-            a.doDeathEffect();
-            getZoneMap().dropCorpse(a);
-            remove(a);
-            i--;
-         }
-      }*/
    }
    
    public boolean allLockingAreWalking()
-   {
+   {/*
       Vector<Actor> lockingActorList = new Vector<Actor>();
       Vector<Actor> actorList = curZone.getActorList();
       
@@ -614,6 +618,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          {
             return false;
          }
+      }*/
+      for(Actor a : movingActorList)
+      {
+         if(a.getAI().getPreviousAction() != ActorAction.STEP)
+            return false;
       }
       return true;
    }

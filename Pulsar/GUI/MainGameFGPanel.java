@@ -224,12 +224,15 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
       add(ms);
    }
    
-   public void addLocking(MovementScript ms)
+   // if you're adding an animation not tied to an actor, pass null
+   public void addLocking(MovementScript ms, Actor a)
    {
       UnboundTile ut = (UnboundTile)ms.getTarget();
       remove(ut);
       addLocking(ut);
       add(ms);
+      if(a != null)
+         GameEngine.registerMovingActor(a);
    }
    
    public boolean isOnLockList(Actor a){return isOnLockList(a.getSprite());}
