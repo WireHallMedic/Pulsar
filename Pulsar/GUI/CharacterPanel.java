@@ -32,6 +32,13 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
       write(1, 1, "Character Panel", TERMINAL_WIDTH_TILES - 2, 1);
    }
    
+   @Override
+   public void actionPerformed(ActionEvent ae)
+   {
+      if(isVisible())
+         super.actionPerformed(ae);
+   }
+   
    private void setBorder()
    {
       int[][] borderTemplate = new int[TERMINAL_WIDTH_TILES][TERMINAL_HEIGHT_TILES];

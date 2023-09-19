@@ -71,6 +71,8 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setSpecialEffect(GadgetSpecialEffect.COMBAT_DRONE);
       g.setDescription("Depolys a combat drone.");
       g.setPlaceAdjacent(true);
+      g.setMaxUses(1);
+      g.fullyCharge();
       return g;
    }
    

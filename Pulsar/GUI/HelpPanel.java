@@ -34,6 +34,13 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
       update();
    }
    
+   @Override
+   public void actionPerformed(ActionEvent ae)
+   {
+      if(isVisible())
+         super.actionPerformed(ae);
+   }
+   
    private void setBorder()
    {
       int[][] borderTemplate = new int[TERMINAL_WIDTH_TILES][TERMINAL_HEIGHT_TILES];

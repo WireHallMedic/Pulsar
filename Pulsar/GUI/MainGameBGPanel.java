@@ -47,4 +47,11 @@ public class MainGameBGPanel extends PlayerPanel implements GUIConstants
          }
       }
    }
+   
+   @Override
+   public void actionPerformed(ActionEvent ae)
+   {
+      if(isVisible())
+         super.actionPerformed(ae);
+   }
 }

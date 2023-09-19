@@ -535,7 +535,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          cleanUpCheck();
          // increment if acted
          if(!(curActor.isReadyToAct()))
-            incrementInitiative(); 
+            incrementInitiative();
          if(getPlayer().isDead())
             break;
       }

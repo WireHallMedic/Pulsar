@@ -356,33 +356,15 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
    
    public void debug(char arg)
    {
-      if(arg == 'f')
-      {
-         GameEngine.getZoneMap().flood(GameEngine.getPlayer().getMapLoc(), 5);
-         return;
-      }
-      if(arg == 'e')
-      {
-         System.out.println(GameEngine.isActorAt(GameEngine.getPlayer().getMapLoc()));
-         return;
-      }
-      if(arg == 'c')
-      {
-         Color c = new Color((float)Math.random(), (float)Math.random(), (float)Math.random());
-         MessagePanel.addMessage("Random color!", c);
-         return;
-      }
-      if(arg == 'd')
-      {
-         System.out.println(GameEngine.getPlayer().getAllStatusEffects());
-         return;
-      }
       if(arg == 'x')
       {
-         Actor player = GameEngine.getPlayer();
-         StatusEffect burning = StatusEffectFactory.getEffect(StatusEffectType.BURNING);
-         burning.setRemainingDuration(20);
-         player.add(burning);
+         for(int x = 0; x < GameEngine.getZoneMap().getWidth(); x++)
+         for(int y = 0; y < GameEngine.getZoneMap().getHeight(); y++)
+         {
+            if(GameEngine.getZoneMap().getTile(x, y).getIconIndex() == '#')
+               GameEngine.getZoneMap().breakTile(x, y);
+         }
+         System.out.println("Total actors: " + GameEngine.getActorList().size());
          return;
       }
       Actor player = GameEngine.getPlayer();
