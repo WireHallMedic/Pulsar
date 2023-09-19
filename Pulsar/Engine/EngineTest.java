@@ -45,7 +45,8 @@ public class EngineTest {
    }
 
    
-   @Test public void combatTest() {
+   @Test public void combatTest() 
+   {
       Actor attacker = getTestActor();
       Actor defender = getTestActor();
       
@@ -54,7 +55,8 @@ public class EngineTest {
    }
 
    
-   @Test public void combatTestArmor() {
+   @Test public void combatTestArmor() 
+   {
       Actor attacker = getTestActor();
       Actor defender = getTestActorWithArmor();
       

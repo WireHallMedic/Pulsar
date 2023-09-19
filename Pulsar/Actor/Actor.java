@@ -10,7 +10,7 @@ import java.awt.*;
 import java.util.*;
 
 
-public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineConstants
+public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineConstants, GearConstants
 {
    protected String name;
 	protected Coord mapLoc;
@@ -328,8 +328,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       setCurHealth(getMaxHealth());
    }
    
-   public void applyDamage(int damage, GearConstants.DamageType damageType, boolean doAnimation)
+   public void applyDamage(int damage, DamageType damageType, boolean doAnimation)
    {
+      // double damage being electrified when in water
+      if(damageType == DamageType.ELECTRO && GameEngine.getZoneMap().getTile(getMapLoc()).isLiquid())
+         damage *= 2;
       if(hasShield())
       {
          boolean shieldUpBefore = shield.hasCharge();

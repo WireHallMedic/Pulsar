@@ -115,4 +115,21 @@ public class WeaponFactory implements GearConstants, ActorConstants
       w.setChargeCost(0);
       return w;
    }
+   
+   public static void setElementAndStatusEffect(Weapon w, DamageType type)
+   {
+      w.setDamageType(type);
+      switch(type)
+      {
+         case KINETIC : w.addWeaponTag(WeaponTag.KNOCKBACK); 
+                        break;
+         case THERMAL : w.setStatusEffectType(StatusEffectType.BURNING); 
+                        w.setStatusEffectChance(.25);
+                        break;
+         case CRYO    : w.setStatusEffectType(StatusEffectType.FROZEN); 
+                        w.setStatusEffectChance(.25);
+                        break;
+         case ELECTRO : break;
+      }
+   }
 }
