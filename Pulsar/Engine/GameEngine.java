@@ -568,13 +568,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    }
    
    private static void cleanUpSprites()
-   {/*
-      Vector<Actor> actorList = curZone.getActorList();
-      for(int i = 0; i < actorList.size(); i++)
-      {
-         Actor curActor = actorList.elementAt(i);
-         curActor.reconcileSprite();
-      }*/
+   {
       Actor curActor;
       for(int i = 0; i < movingActorList.size(); i++)
       {
@@ -602,23 +596,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    }
    
    public boolean allLockingAreWalking()
-   {/*
-      Vector<Actor> lockingActorList = new Vector<Actor>();
-      Vector<Actor> actorList = curZone.getActorList();
-      
-      for(Actor a : actorList)
-      {
-         if(mapPanel.isOnLockList(a))
-            lockingActorList.add(a);
-      }
-      
-      for(Actor a : lockingActorList)
-      {
-         if(a.getAI().getPreviousAction() != ActorAction.STEP)
-         {
-            return false;
-         }
-      }*/
+   {
       for(Actor a : movingActorList)
       {
          if(a.getAI().getPreviousAction() != ActorAction.STEP)
