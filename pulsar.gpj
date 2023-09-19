@@ -12,8 +12,9 @@ s#i0
 s#k0
 s#j0
 s#l0
-!4013;g
+!4053;g
 %\011%uWidlerSuite%sUnboundTile.java
+%\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
 %\011Pulsar%sGUI%sWSFont_16x16.png
@@ -125,8 +126,9 @@ s#l0
 %\011%uWidlerSuite%sHexLine.java
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sGear%sGearConstants.java
-!4013;f
+!4053;f
 %\011%uWidlerSuite%sUnboundTile.java
+%\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
 %\011%uWidlerSuite%sWidlerSuiteDemo.java
 %\011Pulsar%sGUI%sWSFont_16x16.png

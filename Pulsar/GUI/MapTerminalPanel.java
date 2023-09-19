@@ -9,8 +9,7 @@ import WidlerSuite.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
-import Pulsar.Actor.*;
-import Pulsar.Gear.*;
+import java.util.*;
 import Pulsar.Engine.*;
 
 
@@ -20,8 +19,10 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
    public static final int Y_ORIGIN = 1;
    public static final int WIDTH_TILES = TERMINAL_WIDTH_TILES - 2;
    public static final int HEIGHT_TILES = TERMINAL_HEIGHT_TILES - 2;
-   private String[][] pageArray;
+   private static Vector<String> pageList = null;
    private int curPageIndex;
+   
+   public static void setPageList(Vector<String> pl){pageList = pl;}
    
    
    public MapTerminalPanel()
@@ -30,7 +31,6 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
       setSize(50, 50);
       setBorder();
       setBackground(BG_COLOR);
-      pageArray = getPages();
       update();
    }
    
@@ -64,8 +64,7 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
       {
          case KeyEvent.VK_ENTER  :
          case KeyEvent.VK_SPACE  :
-         case KeyEvent.VK_ESCAPE :
-         case KeyEvent.VK_H :       InnerPanel.setActivePanel(MainGameBGPanel.class); 
+         case KeyEvent.VK_ESCAPE :  InnerPanel.setActivePanel(MainGameBGPanel.class); 
                                     GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
                                     break;
          case KeyEvent.VK_NUMPAD4 :
@@ -79,17 +78,19 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
    
    public void nextPage()
    {
-      curPageIndex++;
-      if(curPageIndex >= pageArray.length)
-         curPageIndex = 0;
+      if(pageList == null)
+         return;
+      if(curPageIndex < pageList.size() - 1)
+         curPageIndex++;
       update();
    }
    
    public void previousPage()
    {
-      curPageIndex--;
-      if(curPageIndex < 0)
-         curPageIndex = pageArray.length - 1;
+      if(pageList == null)
+         return;
+      if(curPageIndex > 0)
+         curPageIndex--;
       update();
    }
    
@@ -107,9 +108,10 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
    public void update()
    {
       clear();
-      String[] pageText = pageArray[curPageIndex];
-      for(int i = 0; i < pageText.length; i++)
-         write(X_ORIGIN, Y_ORIGIN + i, pageText[i], WIDTH_TILES, 1);
+      String str = "No data.";
+      if(pageList != null)
+         str = pageList.elementAt(curPageIndex);
+      write(X_ORIGIN, Y_ORIGIN, str, WIDTH_TILES, HEIGHT_TILES);
    }
    
    public void clear()
@@ -119,90 +121,5 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
       {
          setTile(x, y, ' ', TERMINAL_FG_COLOR, BG_COLOR);
       }
-   }
-   
-   public String[][] getPages()
-   {
-      String[] pageOne = {
-         GUITools.centerString("Key Bindings [^/$]", WIDTH_TILES),
-         "Numpad   Movement",
-         "Arrows   Movement; hold shift to allow diagonal input",
-         "  A      Attack; press again to confirm target",
-         "  U      Use; you will be prompted for a target",
-         "  S      Switch weapons",
-         " 1-5     Use gadget",
-         "  L      Look mode",
-         "  C      Open character panel",
-         "  H      Open help panel (the one you're looking at)",
-         "Escape   Cancel",
-         "Enter    Confirm",
-         "Space    Confirm",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         GUITools.centerString("Press Escape to exit", WIDTH_TILES)
-      };
-      String[] pageTwo = {
-         GUITools.centerString("Page Two [^/$]", WIDTH_TILES),
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         GUITools.centerString("Press Escape to exit", WIDTH_TILES)
-      };
-      String[] pageThree = {
-         GUITools.centerString("Page Three [^/$]", WIDTH_TILES),
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         GUITools.centerString("Press Escape to exit", WIDTH_TILES)
-      };
-      String[][] pageArr = {pageOne, pageTwo, pageThree};
-      for(int i = 0; i < pageArr.length; i++)
-      {
-         String newStr = pageArr[i][0];
-         newStr = newStr.replace("^", "" + (i + 1));
-         newStr = newStr.replace("$", "" + pageArr.length);
-         pageArr[i][0] = newStr;
-      }
-      return pageArr;
    }
 }

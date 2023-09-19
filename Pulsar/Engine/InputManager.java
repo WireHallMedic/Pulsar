@@ -231,6 +231,14 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             }
          }
       }
+      if(target != null && GameEngine.getZoneMap().getTile(target) instanceof Terminal)
+      {
+         InnerPanel.setActivePanel(MapTerminalPanel.class); 
+         GameEngine.setGameMode(GameMode.OTHER_PANEL);
+         Terminal terminal = (Terminal)GameEngine.getZoneMap().getTile(target);
+         MapTerminalPanel.setPageList(terminal.getPageList());
+         target = null;
+      }
       
       // have a target, don't have an action, allowed to act
       if(target != null && pendingAction == null)
