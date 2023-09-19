@@ -22,6 +22,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static Coord cursorLoc = null;
    private static Vector<Actor> deadActorList = new Vector<Actor>();
    private static Vector<Actor> movingActorList = new Vector<Actor>();
+   private static boolean allLockingAreWalking = false;
    
    // non-static variables
    Thread thread;
@@ -302,10 +303,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          initiativeIndex = 0;
          if(getZoneMap() != null)
          {
-            while(isAnimationLocked())
+       //     while(isAnimationLocked())
                ;
             getZoneMap().takeTurn();
-            cleanUpCheck();
          }
       }
    }
@@ -392,7 +392,20 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       p.setAllLocs(2, 12);
       setPlayer(p);
       
+      for(int i = 0; i < 25; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         {
+            c.x = randomInt(15, map.getWidth() - 1);
+            c.y = randomInt(1, map.getHeight() - 1);
+         }
+         Actor e = ActorFactory.getAlienWorker();
+         e.setAllLocs(c);
+         add(e);
+      }
       
+      /*
       for(int i = 0; i < 15; i++)
       {
          Coord c = new Coord(-1, -1);
@@ -484,7 +497,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                add(e);
             }
          }
-      }
+      }*/
    
    /*
       // vacuum test
@@ -543,8 +556,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                }
             }
          }
-         // do cleanup
-         cleanUpCheck();
          // increment if acted
          if(!(curActor.isReadyToAct()))
             incrementInitiative();
@@ -553,16 +564,13 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       }
    }
    
+   // called from mainGameFGPanel, because it's tied into animation
    public static void cleanUpCheck()
    {
-      if(!isAnimationLocked())
-      {
-         cleanUpDead();
-         cleanUpSprites();
-      }
+      cleanUpDead();
+      cleanUpSprites();
       if(getPlayer().isDead())
       {
-         cleanUpDead();
          MessagePanel.addMessage("You have died.", Color.RED);
       }
    }
@@ -570,6 +578,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static void cleanUpSprites()
    {
       Actor curActor;
+      boolean newLockingAreWalking = true;
       for(int i = 0; i < movingActorList.size(); i++)
       {
          curActor = movingActorList.elementAt(i);
@@ -579,7 +588,12 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             movingActorList.removeElementAt(i);
             i--;
          }
+         else
+         {
+            newLockingAreWalking = newLockingAreWalking && curActor.getAI().getPreviousAction() == ActorAction.STEP;
+         }
       }
+      allLockingAreWalking = newLockingAreWalking;
    }
    
    private static void cleanUpDead()
@@ -597,12 +611,17 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public boolean allLockingAreWalking()
    {
-      for(Actor a : movingActorList)
+      return allLockingAreWalking;/*
+      boolean returnVal = true;
+      for(int i = 0; i < movingActorList.size(); i++)
       {
-         if(a.getAI().getPreviousAction() != ActorAction.STEP)
-            return false;
+         if(movingActorList.elementAt(i).getAI().getPreviousAction() != ActorAction.STEP)
+         {
+            returnVal = false;
+            break;
+         }
       }
-      return true;
+      return returnVal;*/
    }
    
    public boolean animationAllowsAction(Actor curActor)
