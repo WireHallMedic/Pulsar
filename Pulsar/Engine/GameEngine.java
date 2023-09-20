@@ -451,16 +451,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       {
          MessagePanel.addMessage("You have died.", Color.RED);
       }
-      for(int i = 0; i < getActorList().size(); i++)
-      {
-         Actor a = getActorList().elementAt(i);
-         if((a.getMapLoc().x != a.getSprite().getXLoc() ||
-            a.getMapLoc().y != a.getSprite().getYLoc()) &&
-            !movingActorList.contains(a))
-         {
-            System.out.println(a);
-         }
-      }
    }
    
    private void cleanUpSprites()
