@@ -45,9 +45,12 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    @Override
    public void actionPerformed(ActionEvent ae)
    {
-      super.actionPerformed(ae);
       if(!GameEngine.getRunFlag())
          return;
+      GameEngine.cleanUpSprites();
+      GameEngine.getPlayer().updateFoV();
+      setActorVisibility();
+      super.actionPerformed(ae);
       tickCounter++;
       if(tickCounter > tickCounterReset)
          tickCounter = 1;
@@ -99,12 +102,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             else
             {
                setTile(x, y, ' ', Color.WHITE, BG_COLOR);
-          //      if(player.hasMotionSensor())
-//                {
-//                   Actor a = GameEngine.getActorAt(x + xCorner, y + yCorner);
-//                   if(a != null && (a.getAI().getPreviousAction() != ActorAction.DELAY || a.didForcedMovement()))
-//                      setTile(x, y, '?', SENSOR_COLOR, BG_COLOR);
-           //    }
             }
          }
          
@@ -232,7 +229,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             
          }
       }
-      setActorVisibility();
    }
    
    public void addNonlocking(MovementScript ms)

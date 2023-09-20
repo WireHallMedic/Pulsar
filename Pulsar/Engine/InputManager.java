@@ -108,7 +108,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       Player player = GameEngine.getPlayer();
       Coord playerLoc = player.getMapLoc();
       Coord target = null;
-      if(player.isDead())
+      if(player.isDead() || GameEngine.isAnimationLocked())
          return;
       
       if(shiftHeld)
