@@ -21,6 +21,9 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
    public static final int WIDTH_TILES = TERMINAL_WIDTH_TILES - 2;
    public static final int HEIGHT_TILES = TERMINAL_HEIGHT_TILES - 2;
    
+   private int selectionIndex = 0;
+   private String[] options = {"Aliens", "Mercenaries", "Exit"};
+   
    
    public TitlePanel()
    {
@@ -28,13 +31,73 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       setSize(50, 50);
       GUITools.setStandardBorder(this);
       setBackground(BG_COLOR);
-      write(1, 1, "Title Panel", TERMINAL_WIDTH_TILES - 2, 1);
+      update();
+   }
+   
+   public void next()
+   {
+      selectionIndex++;
+      if(selectionIndex >= options.length)
+         selectionIndex = 0;
+   }
+   
+   public void previous()
+   {
+      selectionIndex--;
+      if(selectionIndex < 0)
+         selectionIndex = options.length - 1;
    }
    
    public void keyPressed(KeyEvent ke)
    {
-      InnerPanel.setActivePanel(MainGameBGPanel.class); 
-      GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
+      switch(ke.getKeyCode())
+      {
+         case KeyEvent.VK_UP :
+         case KeyEvent.VK_NUMPAD8 : previous(); 
+                                    update();
+                                    break;
+         case KeyEvent.VK_DOWN :
+         case KeyEvent.VK_NUMPAD2 : next(); 
+                                    update();
+                                    break;
+         case KeyEvent.VK_ENTER :
+         case KeyEvent.VK_SPACE :   doSelection(); 
+                                    break;
+      }
+   }
+   
+   private void doSelection()
+   {
+      if(options[selectionIndex].equals("Exit"))
+      {
+         System.exit(0);
+      }
+      if(options[selectionIndex].equals("Aliens"))
+      {
+         InnerPanel.setActivePanel(MainGameBGPanel.class); 
+         GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
+      }
+      if(options[selectionIndex].equals("Mercenaries"))
+      {
+         InnerPanel.setActivePanel(MainGameBGPanel.class); 
+         GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
+      }
+   }
+   
+   private void update()
+   {
+      int fgColor = TERMINAL_FG_COLOR.getRGB();
+      int bgColor = BG_COLOR.getRGB();
+      write(1, 1, "Title Panel", fgColor, bgColor, TERMINAL_WIDTH_TILES - 2, 1);
+      
+      for(int i = 0; i < options.length; i++)
+      {
+         if(selectionIndex == i)
+            bgColor = ORANGE.getRGB();
+         else
+            bgColor = BG_COLOR.getRGB();
+         write(1, 10 + i, options[i], fgColor, bgColor, options[i].length(), 1);
+      }
    }
    
    @Override

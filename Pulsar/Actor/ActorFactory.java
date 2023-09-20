@@ -37,6 +37,11 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       return a;
    }
    
+   public static void populateWithAliens(Zone z, Coord playerLoc)
+   {
+      
+   }
+   
    public static Actor getHoloclone()
    {
       Actor a = new Actor('@');
