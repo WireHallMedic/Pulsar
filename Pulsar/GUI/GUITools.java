@@ -144,4 +144,28 @@ public class GUITools implements GUIConstants, WSFontConstants
       }
       return str;
    }
+   
+   public static void setStandardBorder(RogueTilePanel panel)
+   {
+      int[][] borderTemplate = new int[TERMINAL_WIDTH_TILES][TERMINAL_HEIGHT_TILES];
+      for(int x = 0; x < TERMINAL_WIDTH_TILES; x++)
+      {
+         borderTemplate[x][0] = 1;
+         borderTemplate[x][TERMINAL_HEIGHT_TILES - 1] = 1;
+      }
+      for(int y = 0; y < TERMINAL_HEIGHT_TILES; y++)
+      {
+         borderTemplate[0][y] = 1;
+         borderTemplate[TERMINAL_WIDTH_TILES - 1][y] = 1;
+      }
+      int[][] borderArr = BorderBuilder.getBorderTiles(borderTemplate);
+      for(int x = 0; x < TERMINAL_WIDTH_TILES; x++)
+      for(int y = 0; y < TERMINAL_HEIGHT_TILES; y++)
+      {
+         if(borderTemplate[x][y] != 0)
+         {
+            panel.setTile(x, y, borderArr[x][y], TERMINAL_FG_COLOR, BG_COLOR);
+         }
+      }
+   }
 }
