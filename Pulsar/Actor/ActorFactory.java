@@ -272,7 +272,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    public static Actor getAlienHunter()
    {
       Actor a = getAlienWorker();
-      a.getSprite().setIconIndex('h');
+      a.setIconIndex('h');
       a.setName("Alien Hunter");
       a.setWeapon(WeaponFactory.getAlienSpit());
       return a;
@@ -281,7 +281,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    public static Actor getAlienSoldier()
    {
       Actor a = getAlienWorker();
-      a.getSprite().setIconIndex('s');
+      a.setIconIndex('s');
       a.setName("Alien Soldier");
       a.setMaxHealth(a.getMaxHealth() * 2);
       a.fullyHeal();
@@ -291,7 +291,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    public static Actor getAlienLarva()
    {
       Actor a = getAlienWorker();
-      a.getSprite().setIconIndex('l');
+      a.setIconIndex('l');
       a.setName("Alien Larva");
       a.setMaxHealth(a.getMaxHealth() / 2);
       a.fullyHeal();
