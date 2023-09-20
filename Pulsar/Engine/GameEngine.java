@@ -16,17 +16,13 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static Zone curZone = null;
    private static MainGameFGPanel mapPanel = null;
    private static int initiativeIndex;
-   private static boolean runFlag = true;
+   private static boolean runFlag = false;
    private static SquirrelRNG rng = new SquirrelRNG();
    private static GameMode gameMode = GameMode.OTHER_PANEL;
    private static Coord cursorLoc = null;
    private static Vector<Actor> deadActorList = new Vector<Actor>();
    private static Vector<Actor> movingActorList = new Vector<Actor>();
    private static boolean allLockingAreWalking = false;
-   
-   // non-static variables
-   private Thread thread;
-
 
 	public static Player getPlayer(){return player;}
 	public static Vector<Actor> getActorList(){if(curZone != null) return curZone.getActorList(); return null;}
@@ -36,6 +32,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static double random(){return rng.nextDouble();}
    public static GameMode getGameMode(){return gameMode;}
    public static Coord getCursorLoc(){return new Coord(cursorLoc);}
+   public static boolean getRunFlag(){return runFlag;}
 
 
 	public static void setActorList(Vector<Actor> a){if(curZone != null) curZone.setActorList(a);}
@@ -43,6 +40,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void setCurZone(Zone z){curZone = z;}
    public static void setGameMode(GameMode gm){gameMode = gm;}
    public static void setCursorLoc(Coord c){cursorLoc = new Coord(c);}
+   
+   // non-static variables
+   private Thread thread;
+
    
    public static void registerDeadActor(Actor a)
    {

@@ -47,6 +47,9 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    public void actionPerformed(ActionEvent ae)
    {
       super.actionPerformed(ae);
+      if(!GameEngine.getRunFlag())
+         return;
+         
       tickCounter++;
       if(tickCounter > tickCounterReset)
          tickCounter = 1;

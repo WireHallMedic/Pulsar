@@ -74,11 +74,17 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       }
       if(options[selectionIndex].equals("Aliens"))
       {
+         GameEngine engine = new GameEngine();
+         engine.newGame();
+         engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
       }
       if(options[selectionIndex].equals("Mercenaries"))
       {
+         GameEngine engine = new GameEngine();
+         engine.newGame();
+         engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
       }
