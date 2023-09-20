@@ -213,14 +213,16 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void breakTile(int x, int y)
    {
       MapTile mt = getTile(x, y);
+      if(getTile(x, y) instanceof Ice)
+      {
+         thaw(x, y);
+         mt = getTile(x, y);
+      }
       MapTile newTile = MapTileFactory.getBroken(mt);
       if(mt.isHighPassable())
          newTile.setAirPressure(mt.getAirPressure());
       else
          newTile.setAirPressure(0);
-      if(getTile(x, y) instanceof Ice)
-      {System.out.println("Thawing");
-         thaw(x, y);}
       setTile(x, y, newTile);
       if(mt.hasOnDestructionEffect())
          GameEngine.doDestructionEffect(x, y, mt);
