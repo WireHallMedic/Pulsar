@@ -434,7 +434,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                }
             }
          }
-         cleanUpCheck();
+         cleanUpDead();
          // increment if acted
          if(!(curActor.isReadyToAct()))
             incrementInitiative();
@@ -443,16 +443,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          thread.yield();
       }
    }
-   
-   public void cleanUpCheck()
-   {
-      cleanUpDead();
-   //   cleanUpSprites();
-      if(getPlayer().isDead())
-      {
-         MessagePanel.addMessage("You have died.", Color.RED);
-      }
-   }
+
    
    public static void cleanUpSprites()
    {
@@ -485,6 +476,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          a.doDeathEffect();
          getZoneMap().dropCorpse(a);
          remove(a);
+      }
+      if(getPlayer().isDead())
+      {
+         MessagePanel.addMessage("You have died.", Color.RED);
       }
    }
    
