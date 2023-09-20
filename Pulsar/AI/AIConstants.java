@@ -7,19 +7,26 @@ public interface AIConstants
    
    public enum ActorAction
    {
-      STEP,
-      DELAY,
-      CONTEXT_SENSITIVE,
-      TOGGLE,
-      ATTACK,
-      UNARMED_ATTACK,
-      USE,
-      SWITCH_WEAPONS,
-      GADGET_0,
-      GADGET_1,
-      GADGET_2,
-      GADGET_3,
-      GADGET_4;
+      STEP                 (true),
+      DELAY                (true),
+      CONTEXT_SENSITIVE    (false),
+      TOGGLE               (true),
+      ATTACK               (false),
+      UNARMED_ATTACK       (false),
+      USE                  (false),
+      SWITCH_WEAPONS       (true),
+      GADGET_0             (false),
+      GADGET_1             (false),
+      GADGET_2             (false),
+      GADGET_3             (false),
+      GADGET_4             (false);
+      
+      public boolean canUseDuringAnimationLock;
+      
+      private ActorAction(boolean cu)
+      {
+         canUseDuringAnimationLock = cu;
+      }
       
       public boolean isGadgetAction()
       {

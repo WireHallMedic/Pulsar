@@ -4,6 +4,7 @@ import Pulsar.GUI.*;
 import Pulsar.AI.*;
 import java.awt.*;
 import Pulsar.Gear.*;
+import Pulsar.Engine.*;
 
 public class ActorFactory implements ActorConstants, GearConstants, AIConstants, GUIConstants
 {
@@ -137,7 +138,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    public static Actor getAlienWorker()
    {
       Actor a = new Actor('w');
-      a.setName("Alien Worker");
+      a.setName("Alien Worker " + EngineTools.getUniqueNumber());
       a.setAI(new StandardAI(a));
       a.getAI().setTeam(AIConstants.Team.ALIEN);
       a.setUnarmedAttack(WeaponFactory.getAlienClaws());
@@ -153,7 +154,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    {
       Actor a = getAlienWorker();
       a.getSprite().setIconIndex('h');
-      a.setName("Alien Hunter");
+      a.setName("Alien Hunter " + EngineTools.getUniqueNumber());
       a.setWeapon(WeaponFactory.getAlienSpit());
       return a;
    }
@@ -162,7 +163,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    {
       Actor a = getAlienWorker();
       a.getSprite().setIconIndex('s');
-      a.setName("Alien Soldier");
+      a.setName("Alien Soldier " + EngineTools.getUniqueNumber());
       a.setMaxHealth(a.getMaxHealth() * 2);
       a.fullyHeal();
       return a;
@@ -172,7 +173,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    {
       Actor a = getAlienWorker();
       a.getSprite().setIconIndex('l');
-      a.setName("Alien Larva");
+      a.setName("Alien Larva " + EngineTools.getUniqueNumber());
       a.setMaxHealth(a.getMaxHealth() / 2);
       a.fullyHeal();
       return a;

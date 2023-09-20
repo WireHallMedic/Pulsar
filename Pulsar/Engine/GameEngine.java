@@ -23,9 +23,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static Vector<Actor> deadActorList = new Vector<Actor>();
    private static Vector<Actor> movingActorList = new Vector<Actor>();
    private static boolean allLockingAreWalking = false;
+   private static long lastTimeMark;
    
    // non-static variables
-   Thread thread;
+   private Thread thread;
 
 
 	public static Player getPlayer(){return player;}
@@ -43,6 +44,15 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void setCurZone(Zone z){curZone = z;}
    public static void setGameMode(GameMode gm){gameMode = gm;}
    public static void setCursorLoc(Coord c){cursorLoc = new Coord(c);}
+   
+   public static void markTime(String note)
+   {
+      long curTime = System.currentTimeMillis();
+      long difference = curTime - lastTimeMark;
+      lastTimeMark = curTime;
+      if(difference > 0)
+         System.out.println("[" + difference + "] " + note);
+   }
    
    public static void registerDeadActor(Actor a)
    {
@@ -389,6 +399,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       Player p = ActorFactory.getPlayer();
       p.setAllLocs(2, 12);
       setPlayer(p);
+      
       /*
       for(int i = 0; i < 25; i++)
       {
@@ -622,15 +633,8 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       
       // NPCs can step if all locking actors are only stepping
       if(allLockingAreWalking())
-      {
          if(curActor != player)
-         {
-            if(curActor.getAI().getPendingAction() == ActorAction.STEP)
-            {
-               return true;
-            }
-         }
-      }
+            return curActor.getAI().getPendingAction().canUseDuringAnimationLock;
       return false;
    }
 }

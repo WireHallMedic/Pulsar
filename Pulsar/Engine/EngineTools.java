@@ -10,6 +10,14 @@ public class EngineTools implements ActorConstants, GearConstants
    public static final double SHOTGUN_SPRAY_ARC = 0.523599; // 30 degrees
    public static final double SHOTGUN_SPRAY_ARC_INCREMENT = SHOTGUN_SPRAY_ARC / 2.0;
    
+   private static int uniqueNumber = 0;
+   
+   public static int getUniqueNumber()
+   {
+      uniqueNumber++;
+      return uniqueNumber;
+   }
+   
    public static Vector<Coord> getShotgunSprayLine(Coord origin, Coord target)
    {
       Vect straight = new Vect(origin, target);
