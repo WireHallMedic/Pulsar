@@ -79,8 +79,8 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
          setScroll(xScroll, yScroll);
          
          // draw the map
-         for(int x = BUFFER_TILES; x < columns() - BUFFER_TILES; x++)
-         for(int y = BUFFER_TILES; y < rows() - BUFFER_TILES; y++)
+         for(int x = 0; x < columns(); x++)
+         for(int y = 0; y < rows(); y++)
          {
             if(GameEngine.playerCanSee(x + xCorner, y + yCorner))
             {

@@ -11,11 +11,21 @@ public class EngineTools implements ActorConstants, GearConstants
    public static final double SHOTGUN_SPRAY_ARC_INCREMENT = SHOTGUN_SPRAY_ARC / 2.0;
    
    private static int uniqueNumber = 0;
+   private static long lastTimeMark;
    
    public static int getUniqueNumber()
    {
       uniqueNumber++;
       return uniqueNumber;
+   }
+   
+   public static void markTime(String note)
+   {
+      long curTime = System.currentTimeMillis();
+      long difference = curTime - lastTimeMark;
+      lastTimeMark = curTime;
+      if(difference > 0)
+         System.out.println("[" + difference + "] " + note);
    }
    
    public static Vector<Coord> getShotgunSprayLine(Coord origin, Coord target)

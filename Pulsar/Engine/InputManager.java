@@ -166,9 +166,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             case KeyEvent.VK_5 : setPlayerAction(ActorAction.GADGET_4);
                                  break;
             case KeyEvent.VK_X : debug('x'); break;
-            case KeyEvent.VK_D : debug('d'); break;
-            case KeyEvent.VK_F : debug('f'); break;
-            case KeyEvent.VK_SPACE : debug(' '); break;
          }
       }
       

@@ -23,7 +23,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static Vector<Actor> deadActorList = new Vector<Actor>();
    private static Vector<Actor> movingActorList = new Vector<Actor>();
    private static boolean allLockingAreWalking = false;
-   private static long lastTimeMark;
    
    // non-static variables
    private Thread thread;
@@ -44,15 +43,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void setCurZone(Zone z){curZone = z;}
    public static void setGameMode(GameMode gm){gameMode = gm;}
    public static void setCursorLoc(Coord c){cursorLoc = new Coord(c);}
-   
-   public static void markTime(String note)
-   {
-      long curTime = System.currentTimeMillis();
-      long difference = curTime - lastTimeMark;
-      lastTimeMark = curTime;
-      if(difference > 0)
-         System.out.println("[" + difference + "] " + note);
-   }
    
    public static void registerDeadActor(Actor a)
    {
