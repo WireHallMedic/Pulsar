@@ -390,94 +390,46 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       p.setAllLocs(2, 12);
       setPlayer(p);
       
-      /*
+      
       for(int i = 0; i < 25; i++)
       {
          Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) && EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
          {
-            c.x = randomInt(15, map.getWidth() - 1);
+            c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(1, map.getHeight() - 1);
          }
          Actor e = ActorFactory.getAlienWorker();
          e.setAllLocs(c);
          add(e);
-      }*/
-      
-      
-      for(int i = 0; i < 15; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, 9);
-         }
-         Actor e = ActorFactory.getAlienWorker();
-         e.setAllLocs(c);
-         add(e);
       }
+      
       for(int i = 0; i < 10; i++)
       {
          Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) && EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
          {
             c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, 9);
+            c.y = randomInt(1, map.getHeight() - 1);
          }
          Actor e = ActorFactory.getAlienHunter();
-         e.setAllLocs(c);
-         add(e);
-      }
-      for(int i = 0; i < 15; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(19, 28);
-         }
-         Actor e = ActorFactory.getAlienWorker();
-         e.setAllLocs(c);
-         add(e);
-      }
-      for(int i = 0; i < 3; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(19, 28);
-         }
-         Actor e = ActorFactory.getAlienHunter();
-         e.setAllLocs(c);
-         add(e);
-      }
-      for(int i = 0; i < 3; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
-         {
-            c.x = randomInt(12, map.getWidth() - 1);
-            c.y = randomInt(9, 19);
-         }
-         Actor e = ActorFactory.getAlienHunter();
-         e.setAllLocs(c);
-         add(e);
-      }
-      for(int i = 0; i < 5; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
-         {
-            c.x = randomInt(12, map.getWidth() - 1);
-            c.y = randomInt(9, 19);
-         }
-         Actor e = ActorFactory.getAlienWorker();
          e.setAllLocs(c);
          add(e);
       }
       
+      for(int i = 0; i < 10; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) && EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         {
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(1, map.getHeight() - 1);
+         }
+         Actor e = ActorFactory.getAlienSoldier();
+         e.setAllLocs(c);
+         add(e);
+      }
+   
       for(int i = 0; i < 5; i++)
       {
          Coord c = new Coord(-1, -1);
