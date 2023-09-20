@@ -218,6 +218,9 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          newTile.setAirPressure(mt.getAirPressure());
       else
          newTile.setAirPressure(0);
+      if(getTile(x, y) instanceof Ice)
+      {System.out.println("Thawing");
+         thaw(x, y);}
       setTile(x, y, newTile);
       if(mt.hasOnDestructionEffect())
          GameEngine.doDestructionEffect(x, y, mt);
