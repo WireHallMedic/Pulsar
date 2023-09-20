@@ -99,7 +99,6 @@ public interface GearConstants extends WSFontConstants
       TURRET            ("Turret"),
       COMBAT_DRONE      ("Combat Drone"),
       NAPALM            ("Napalm"),
-      FREEZE            ("Freeze"),
       MOTION_SENSOR     ("Motion Sensor");
       
       public String name;

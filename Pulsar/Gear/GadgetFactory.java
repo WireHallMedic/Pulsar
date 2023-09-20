@@ -46,7 +46,6 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setWeaponEffect(WeaponFactory.getCryoExplosion());
       g.setTargetsSelf(false);
       g.setDescription("Explodes and freezes where you throw it.");
-      g.setSpecialEffect(GadgetSpecialEffect.FREEZE);
       return g;
    }
    
