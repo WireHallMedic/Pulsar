@@ -84,13 +84,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    
    public static void add(Actor a)
    {
-      Vector<Actor> actorList = curZone.getActorList();
-      if(actorList.contains(a))
-      {
-         System.out.println("Attempt to add duplicate actor.");
-         return;
-      }
-      actorList.add(a);
+      curZone.add(a);
       addToMapPanel(a);
    }
    
@@ -122,21 +116,13 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static Actor getActorAt(int x, int y){return getActorAt(new Coord(x, y));}
    public static Actor getActorAt(Coord c)
    {
-      Vector<Actor> actorList = curZone.getActorList();
-      for(int i = 0; i < actorList.size(); i++)
-      {
-         if(actorList.elementAt(i).getMapLoc().equals(c))
-         {
-            return actorList.elementAt(i);
-         }
-      }
-      return null;
+      return getCurZone().getActorAt(c);
    }
    
    public static boolean isActorAt(int x, int y){return isActorAt(new Coord(x, y));}
    public static boolean isActorAt(Coord c)
    {
-      return getActorAt(c) != null;
+      return getCurZone().isActorAt(c);
    }
    
    // actor interactions
@@ -202,20 +188,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static Coord getClosestEmptyTile(int x, int y){return getClosestEmptyTile(new Coord(x, y));}
    public static Coord getClosestEmptyTile(Coord c)
    {
-      int radius = 7;
-      boolean[][] passMap = getZoneMap().getLowPassMapPortion(c, radius);
-      SpiralSearch search = new SpiralSearch(passMap, new Coord(radius, radius));
-      Coord searchLoc = search.getNext();
-      while(searchLoc != null)
-      {
-         Coord trueLoc = new Coord(searchLoc.x + c.x - radius, searchLoc.y + c.y - radius);
-         if(!isActorAt(trueLoc) && getZoneMap().getTile(trueLoc).isLowPassable())
-         {
-            return trueLoc;
-         }
-         searchLoc = search.getNext();
-      }
-      return null;
+      return getCurZone().getClosestEmptyTile(c);
    }
    
    public static boolean blocksShooting(int x, int y){return blocksShooting(new Coord(x, y));}
@@ -384,72 +357,17 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       
       ZoneMap map = ZoneMapFactory.getTestMap2();
-      GameEngine.setCurZone(new Zone("Test Zone", -1, map));
+      Zone zone = new Zone("Test Zone", -1, map);
+      GameEngine.setCurZone(zone);
       
       Player p = ActorFactory.getPlayer();
       p.setAllLocs(2, 12);
       setPlayer(p);
       
+      ActorFactory.populateWithAliens(zone, p.getMapLoc());
       
-      for(int i = 0; i < 25; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, map.getHeight() - 1);
-         }
-         Actor e = ActorFactory.getAlienWorker();
-         e.setAllLocs(c);
-         add(e);
-      }
       
-      for(int i = 0; i < 10; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, map.getHeight() - 1);
-         }
-         Actor e = ActorFactory.getAlienHunter();
-         e.setAllLocs(c);
-         add(e);
-      }
-      
-      for(int i = 0; i < 10; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, map.getHeight() - 1);
-         }
-         Actor e = ActorFactory.getAlienSoldier();
-         e.setAllLocs(c);
-         add(e);
-      }
-   
-      for(int i = 0; i < 5; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, map.getHeight() - 1);
-         }
-         for(int j = 0; j < 5; j++)
-         {
-            Actor e = ActorFactory.getAlienLarva();
-            Coord loc = getClosestEmptyTile(c);
-            if(loc != null)
-            {
-               e.setAllLocs(loc);
-               add(e);
-            }
-         }
-      }
-   
+         
    /*
       // vacuum test
       ZoneMap map = ZoneMapFactory.getVacuumTest();

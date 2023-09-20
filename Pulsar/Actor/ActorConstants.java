@@ -1,5 +1,7 @@
 package Pulsar.Actor;
 
+import Pulsar.Engine.*;
+
 public interface ActorConstants
 {
    public static final int FULLY_CHARGED = 10;
@@ -37,5 +39,23 @@ public interface ActorConstants
       {
          name = n;
       }
+   }
+   
+   public enum AlienType implements WeightedRandomizable
+   {
+      ALIEN_LARVA       (5),
+      ALIEN_WORKER      (20),
+      ALIEN_SOLDIER     (5),
+      ALIEN_HUNTER      (5),
+      ALIEN_QUEEN       (0);
+      
+      private AlienType(int w)
+      {
+         weight = w;
+      }
+      
+      private int weight;
+      
+      public int getWeight(){return weight;}
    }
 }

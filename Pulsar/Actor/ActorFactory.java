@@ -4,7 +4,9 @@ import Pulsar.GUI.*;
 import Pulsar.AI.*;
 import java.awt.*;
 import Pulsar.Gear.*;
+import Pulsar.Zone.*;
 import Pulsar.Engine.*;
+import WidlerSuite.*;
 
 public class ActorFactory implements ActorConstants, GearConstants, AIConstants, GUIConstants
 {
@@ -37,9 +39,97 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       return a;
    }
    
+   public static Actor getAlien(AlienType type)
+   {
+      switch(type)
+      {
+         case ALIEN_LARVA     : return getAlienLarva();
+         case ALIEN_WORKER    : return getAlienWorker();
+         case ALIEN_SOLDIER   : return getAlienSoldier();
+         case ALIEN_HUNTER    : return getAlienHunter();
+         case ALIEN_QUEEN     : return null;//getAlienQueen();
+      }
+      return null;
+   }
+   
    public static void populateWithAliens(Zone z, Coord playerLoc)
    {
+      double density = .05;
+      int totalCreatures = (int)(z.getMap().getWidth() * z.getMap().getHeight() * density);
+      WeightedRandomizer table = new WeightedRandomizer(AlienType.values());
+      for(int i = 0; i < totalCreatures; i++)
+      {
+         AlienType type = (AlienType)table.roll();
+         Coord c = new Coord(-1, -1);
+         while(!z.getMap().getTile(c).isLowPassable() || z.isActorAt(c) || EngineTools.getDistanceTo(playerLoc, c) <= 10)
+         {
+            c.x = GameEngine.randomInt(1, z.getMap().getWidth() - 1);
+            c.y = GameEngine.randomInt(1, z.getMap().getHeight() - 1);
+         }
+         Actor e = getAlien(type);
+         e.setAllLocs(c);
+         z.add(e);
+      }
+      /*
+      for(int i = 0; i < 25; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         {
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(1, map.getHeight() - 1);
+         }
+         Actor e = ActorFactory.getAlienWorker();
+         e.setAllLocs(c);
+         add(e);
+      }
       
+      for(int i = 0; i < 10; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         {
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(1, map.getHeight() - 1);
+         }
+         Actor e = ActorFactory.getAlienHunter();
+         e.setAllLocs(c);
+         add(e);
+      }
+      
+      for(int i = 0; i < 10; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         {
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(1, map.getHeight() - 1);
+         }
+         Actor e = ActorFactory.getAlienSoldier();
+         e.setAllLocs(c);
+         add(e);
+      }
+   
+      for(int i = 0; i < 5; i++)
+      {
+         Coord c = new Coord(-1, -1);
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         {
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(1, map.getHeight() - 1);
+         }
+         for(int j = 0; j < 5; j++)
+         {
+            Actor e = ActorFactory.getAlienLarva();
+            Coord loc = getClosestEmptyTile(c);
+            if(loc != null)
+            {
+               e.setAllLocs(loc);
+               add(e);
+            }
+         }
+      }*/
+
    }
    
    public static Actor getHoloclone()

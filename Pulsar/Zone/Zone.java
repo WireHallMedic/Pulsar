@@ -3,6 +3,7 @@ package Pulsar.Zone;
 import java.util.*;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
+import WidlerSuite.*;
 
 public class Zone
 {
@@ -35,6 +36,60 @@ public class Zone
       name = n;
       map = zoneMap;
       actorList = new Vector<Actor>();
+   }
+   
+   public void add(Actor a)
+   {
+      if(actorList.contains(a))
+      {
+         System.out.println("Attempt to add duplicate actor.");
+         return;
+      }
+      actorList.add(a);
+   }
+   
+   public void remove(Actor a)
+   {
+      actorList.remove(a);
+   }
+   
+   public Actor getActorAt(int x, int y){return getActorAt(new Coord(x, y));}
+   public Actor getActorAt(Coord c)
+   {
+      for(int i = 0; i < actorList.size(); i++)
+      {
+         if(actorList.elementAt(i).getMapLoc().equals(c))
+         {
+            return actorList.elementAt(i);
+         }
+      }
+      return null;
+   }
+   
+   public boolean isActorAt(int x, int y){return isActorAt(new Coord(x, y));}
+   public boolean isActorAt(Coord c)
+   {
+      return getActorAt(c) != null;
+   }
+   
+   
+   public Coord getClosestEmptyTile(int x, int y){return getClosestEmptyTile(new Coord(x, y));}
+   public Coord getClosestEmptyTile(Coord c)
+   {
+      int radius = 7;
+      boolean[][] passMap = getMap().getLowPassMapPortion(c, radius);
+      SpiralSearch search = new SpiralSearch(passMap, new Coord(radius, radius));
+      Coord searchLoc = search.getNext();
+      while(searchLoc != null)
+      {
+         Coord trueLoc = new Coord(searchLoc.x + c.x - radius, searchLoc.y + c.y - radius);
+         if(!isActorAt(trueLoc) && getMap().getTile(trueLoc).isLowPassable())
+         {
+            return trueLoc;
+         }
+         searchLoc = search.getNext();
+      }
+      return null;
    }
 
 }
