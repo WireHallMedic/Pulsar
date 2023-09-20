@@ -32,12 +32,11 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    
 	public MainGameFGPanel()
    {
-      super(MAP_WIDTH_TILES + (BUFFER_TILES * 2), MAP_HEIGHT_TILES + (BUFFER_TILES * 2), SQUARE_TILE_PALETTE);
+      super(MAP_WIDTH_TILES + BUFFER_TILES, MAP_HEIGHT_TILES + BUFFER_TILES, SQUARE_TILE_PALETTE);
       setSize(50, 50);
       drawLockListFirst();
       GUITools.setAnimationManager(getAnimationManager());
       tickCounter = 1;
-      
       GameEngine.setMapPanel(this);
    }
    
@@ -49,7 +48,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
       super.actionPerformed(ae);
       if(!GameEngine.getRunFlag())
          return;
-         
       tickCounter++;
       if(tickCounter > tickCounterReset)
          tickCounter = 1;
@@ -101,11 +99,25 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             else
             {
                setTile(x, y, ' ', Color.WHITE, BG_COLOR);
-               if(player.hasMotionSensor())
+          //      if(player.hasMotionSensor())
+//                {
+//                   Actor a = GameEngine.getActorAt(x + xCorner, y + yCorner);
+//                   if(a != null && (a.getAI().getPreviousAction() != ActorAction.DELAY || a.didForcedMovement()))
+//                      setTile(x, y, '?', SENSOR_COLOR, BG_COLOR);
+           //    }
+            }
+         }
+         
+         // draw motion sensor enemies
+         if(player.hasMotionSensor())
+         {
+            Vector<Actor> prospectList = GameEngine.getAllActorsWithinRange(player.getMapLoc(), (MAP_WIDTH_TILES + BUFFER_TILES) / 2);
+            for(Actor prospect : prospectList)
+            {
+               if((prospect.getAI().getPreviousAction() != ActorAction.DELAY || prospect.didForcedMovement()) &&
+                  !GameEngine.playerCanSee(prospect))
                {
-                  Actor a = GameEngine.getActorAt(x + xCorner, y + yCorner);
-                  if(a != null && (a.getAI().getPreviousAction() != ActorAction.DELAY || a.didForcedMovement()))
-                     setTile(x, y, '?', SENSOR_COLOR, BG_COLOR);
+                  setTile(prospect.getMapLoc().x - xCorner, prospect.getMapLoc().y - yCorner, '?', SENSOR_COLOR, BG_COLOR);
                }
             }
          }

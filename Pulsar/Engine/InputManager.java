@@ -166,6 +166,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             case KeyEvent.VK_5 : setPlayerAction(ActorAction.GADGET_4);
                                  break;
             case KeyEvent.VK_X : debug('x'); break;
+            case KeyEvent.VK_SPACE : debug(' '); break;
          }
       }
       
@@ -364,17 +365,12 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
          System.out.println("Total actors: " + GameEngine.getActorList().size());
          return;
       }
-      Actor player = GameEngine.getPlayer();
-      MainGameFGPanel mapPanel = GameEngine.getMapPanel();
-      Coord origin = new Coord(player.getMapLoc());
-      origin.x = origin.x + 1;
-      MovementScript ms = null;
-      switch(arg)
+      if(arg == ' ')
       {
-         case 'i' : ms = MovementScriptFactory.getImpactScript(player, origin, 0); break;
-         case 'm' : ms = MovementScriptFactory.getMeleeScript(player, origin); break;
-         case 's' : ms = MovementScriptFactory.getShootScript(player, origin); break;
+         Player player = GameEngine.getPlayer();
+         player.fullyRefresh();
+         player.updateFoV();
+         System.out.println("Lock list size: " + GameEngine.getMovingActorList().size());
       }
-      mapPanel.addLocking(ms, player);
    }
 }

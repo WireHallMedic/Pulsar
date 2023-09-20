@@ -333,6 +333,13 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       setCurHealth(getMaxHealth());
    }
    
+   public void fullyRefresh()
+   {
+      fullyHeal();
+      setTempStatusEffectList(new Vector<StatusEffect>());
+      burningCheck();
+   }
+   
    public void applyDamage(int damage, DamageType damageType, boolean doAnimation)
    {
       // double damage being electrified when in water

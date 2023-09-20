@@ -347,8 +347,8 @@ public class Combat implements GUIConstants, GearConstants
       if(targetTile == null)
          return;
       MovementScript ms = MovementScriptFactory.getKnockbackScript(actor, targetTile);
+      actor.setDidForcedMovement(true);
       GameEngine.getMapPanel().addLocking(ms, actor);
       actor.setMapLoc(targetTile);
-      actor.setDidForcedMovement(true);
    }
 }

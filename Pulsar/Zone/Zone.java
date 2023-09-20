@@ -72,6 +72,17 @@ public class Zone
       return getActorAt(c) != null;
    }
    
+   public Vector<Actor> getAllActorsWithinRange(Coord origin, int range)
+   {
+      Vector<Actor> list = new Vector<Actor>();
+      for(int i = 0; i < actorList.size(); i++)
+      {
+         if(EngineTools.getDistanceTo(actorList.elementAt(i).getMapLoc(), origin) <= range)
+            list.add(actorList.elementAt(i));
+      }
+      return list;
+   }
+   
    
    public Coord getClosestEmptyTile(int x, int y){return getClosestEmptyTile(new Coord(x, y));}
    public Coord getClosestEmptyTile(Coord c)

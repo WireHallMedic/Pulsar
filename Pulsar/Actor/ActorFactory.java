@@ -16,10 +16,9 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setAI(new PlayerAI(a));
       //Weapon weapon = WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE);
       //a.setWeapon(weapon);
-      a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.AUTORIFLE));
+      a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
       a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
       WeaponFactory.setElementAndStatusEffect(a.getPrimaryWeapon(), DamageType.KINETIC);
-      a.getPrimaryWeapon().setName("The Hammer");
       a.setShield(ShieldFactory.getBasicShield());
 //      a.setArmor(ArmorFactory.getScoutArmor());
  //     a.setArmor(ArmorFactory.getStandardArmor());
@@ -29,12 +28,12 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setAlertness(Alertness.CAUTIOUS);
  //     a.addGadget(GadgetFactory.getAdrenalInjector());
  //     a.addGadget(GadgetFactory.getGrenades());
-      a.addGadget(GadgetFactory.getNapalmGrenades());
+ //     a.addGadget(GadgetFactory.getNapalmGrenades());
       a.addGadget(GadgetFactory.getCryoGrenades());
  //     a.addGadget(GadgetFactory.getHoloclone());
  //     a.addGadget(GadgetFactory.getTurret());
- //     a.addGadget(GadgetFactory.getCombatDrone());
-      a.addGadget(GadgetFactory.getMotionSensor());
+      a.addGadget(GadgetFactory.getCombatDrone());
+ //     a.addGadget(GadgetFactory.getMotionSensor());
  //s     a.addGadget(GadgetFactory.getAirSupply());
       return a;
    }
@@ -67,7 +66,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    
    public static void populateWithAliens(Zone z, Coord playerLoc)
    {
-      double density = .05;
+      double density = .03;
       int totalCreatures = (int)(z.getMap().getWidth() * z.getMap().getHeight() * density);
       WeightedRandomizer table = new WeightedRandomizer(AlienType.values());
       for(int i = 0; i < totalCreatures; i++)
@@ -88,7 +87,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    
    public static void populateWithMercenaries(Zone z, Coord playerLoc)
    {
-      double density = .05;
+      double density = .01;
       int totalCreatures = (int)(z.getMap().getWidth() * z.getMap().getHeight() * density);
       WeightedRandomizer table = new WeightedRandomizer(MercenaryType.values());
       for(int i = 0; i < totalCreatures; i++)

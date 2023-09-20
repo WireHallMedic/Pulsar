@@ -33,6 +33,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static GameMode getGameMode(){return gameMode;}
    public static Coord getCursorLoc(){return new Coord(cursorLoc);}
    public static boolean getRunFlag(){return runFlag;}
+   public static Vector<Actor> getMovingActorList(){return movingActorList;}
 
 
 	public static void setActorList(Vector<Actor> a){if(curZone != null) curZone.setActorList(a);}
@@ -186,6 +187,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return visibleEnemyList;
    }
    
+   public static Vector<Actor> getAllActorsWithinRange(Coord origin, int range)
+   {
+      return curZone.getAllActorsWithinRange(origin, range);
+   }
+   
    public static Coord getClosestEmptyTile(int x, int y){return getClosestEmptyTile(new Coord(x, y));}
    public static Coord getClosestEmptyTile(Coord c)
    {
@@ -320,9 +326,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                   {
                      a.reconcileSprite();
                      MovementScript ms = MovementScriptFactory.getPushScript(a, pullLoc.elementAt(0));
+                     a.setDidForcedMovement(true);
                      GameEngine.getMapPanel().addLocking(ms, a);
                      a.setMapLoc(pullLoc.elementAt(0));
-                     a.setDidForcedMovement(true);
                   }
                }
             }
@@ -445,6 +451,16 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       {
          MessagePanel.addMessage("You have died.", Color.RED);
       }
+      for(int i = 0; i < getActorList().size(); i++)
+      {
+         Actor a = getActorList().elementAt(i);
+         if((a.getMapLoc().x != a.getSprite().getXLoc() ||
+            a.getMapLoc().y != a.getSprite().getYLoc()) &&
+            !movingActorList.contains(a))
+         {
+            System.out.println(a);
+         }
+      }
    }
    
    private void cleanUpSprites()
@@ -462,7 +478,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          }
          else
          {
-            newLockingAreWalking = newLockingAreWalking && curActor.getAI().getPreviousAction() == ActorAction.STEP;
+            newLockingAreWalking = newLockingAreWalking && curActor.getAI().getPreviousAction() == ActorAction.STEP && !curActor.didForcedMovement();
          }
       }
       allLockingAreWalking = newLockingAreWalking;
