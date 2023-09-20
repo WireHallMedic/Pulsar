@@ -364,7 +364,8 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       p.setAllLocs(2, 12);
       setPlayer(p);
       
-      ActorFactory.populateWithAliens(zone, p.getMapLoc());
+   //   ActorFactory.populateWithAliens(zone, p.getMapLoc());
+      ActorFactory.populateWithMercenaries(zone, p.getMapLoc());
       
       
          

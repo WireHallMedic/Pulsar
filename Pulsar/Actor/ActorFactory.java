@@ -52,6 +52,19 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       return null;
    }
    
+   public static Actor getMercenary(MercenaryType type)
+   {
+      switch(type)
+      {
+         case MERCENARY_DRONE    : return getMercenaryDrone();
+         case MERCENARY_GRUNT    : return getMercenaryGrunt();
+         case MERCENARY_COMMANDO : return getMercenaryCommando();
+         case MERCENARY_OFFICER  : return getMercenaryOfficer();
+      }
+      return null;
+   }
+      
+   
    public static void populateWithAliens(Zone z, Coord playerLoc)
    {
       double density = .05;
@@ -70,66 +83,27 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
          e.setAllLocs(c);
          z.add(e);
       }
-      /*
-      for(int i = 0; i < 25; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, map.getHeight() - 1);
-         }
-         Actor e = ActorFactory.getAlienWorker();
-         e.setAllLocs(c);
-         add(e);
-      }
+   }
       
-      for(int i = 0; i < 10; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, map.getHeight() - 1);
-         }
-         Actor e = ActorFactory.getAlienHunter();
-         e.setAllLocs(c);
-         add(e);
-      }
-      
-      for(int i = 0; i < 10; i++)
-      {
-         Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
-         {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, map.getHeight() - 1);
-         }
-         Actor e = ActorFactory.getAlienSoldier();
-         e.setAllLocs(c);
-         add(e);
-      }
    
-      for(int i = 0; i < 5; i++)
+   public static void populateWithMercenaries(Zone z, Coord playerLoc)
+   {
+      double density = .05;
+      int totalCreatures = (int)(z.getMap().getWidth() * z.getMap().getHeight() * density);
+      WeightedRandomizer table = new WeightedRandomizer(MercenaryType.values());
+      for(int i = 0; i < totalCreatures; i++)
       {
+         MercenaryType type = (MercenaryType)table.roll();
          Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         while(!z.getMap().getTile(c).isLowPassable() || z.isActorAt(c) || EngineTools.getDistanceTo(playerLoc, c) <= 10)
          {
-            c.x = randomInt(1, map.getWidth() - 1);
-            c.y = randomInt(1, map.getHeight() - 1);
+            c.x = GameEngine.randomInt(1, z.getMap().getWidth() - 1);
+            c.y = GameEngine.randomInt(1, z.getMap().getHeight() - 1);
          }
-         for(int j = 0; j < 5; j++)
-         {
-            Actor e = ActorFactory.getAlienLarva();
-            Coord loc = getClosestEmptyTile(c);
-            if(loc != null)
-            {
-               e.setAllLocs(loc);
-               add(e);
-            }
-         }
-      }*/
-
+         Actor e = getMercenary(type);
+         e.setAllLocs(c);
+         z.add(e);
+      }
    }
    
    public static Actor getHoloclone()
@@ -231,6 +205,54 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.fullyHeal();
       return a;
    }
+   
+   
+   // mercenaries
+   ////////////////////////////////////////////////////////////////////////////
+   
+   
+   public static Actor getMercenaryGrunt()
+   {
+      Actor a = new Actor('g');
+      a.setName("Grunt");
+      a.setAI(new StandardAI(a));
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
+      a.setShield(ShieldFactory.getBasicShield());
+      a.setMaxHealth(20);
+      a.fullyHeal();
+      return a;
+   }
+   
+   public static Actor getMercenaryDrone()
+   {
+      Actor a = getDrone();
+      a.setName("Drone");
+      return a;
+   }
+   
+   public static Actor getMercenaryCommando()
+   {
+      Actor a = getMercenaryGrunt();
+      a.setName("Commando");
+      a.setIconIndex('c');
+      WeaponFactory.setElementAndStatusEffect(a.getWeapon(), DamageType.ELECTRO);
+      a.setMaxHealth(a.getMaxHealth() * 3 / 2);
+      a.fullyHeal();
+      return a;
+   }
+   
+   public static Actor getMercenaryOfficer()
+   {
+      Actor a = getDrone();
+      a.setName("Officer");
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
+      a.setMaxHealth(a.getMaxHealth() * 2);
+      a.fullyHeal();
+      return a;
+   }
+   
+   // aliens
+   ////////////////////////////////////////////////////////////////////////////
    
    public static Actor getAlienWorker()
    {

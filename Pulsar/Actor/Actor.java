@@ -189,6 +189,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       sprite.setAffectedByAge(false);
    }
    
+   public void setIconIndex(int iconIndex)
+   {
+      createSprite(iconIndex, sprite.getFGColor(), sprite.getBGColor());
+   }
+   
    public UnboundTile generateUnboundTile(int icon, int fgColor, int bgColor)
    {
       return GUIConstants.SQUARE_TILE_PALETTE.getUnboundTile(icon, fgColor, bgColor, OuterPanel.getSizeMultiplier(), UnboundTile.CIRCLE_BACKGROUND);
