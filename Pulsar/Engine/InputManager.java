@@ -363,6 +363,12 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
                GameEngine.getZoneMap().breakTile(x, y);
          }*/
          System.out.println("Total actors: " + GameEngine.getActorList().size());
+         for(int i = 0; i < GameEngine.getActorList().size(); i++)
+         {
+            Actor a = GameEngine.getActorList().elementAt(i);
+            if(GameEngine.playerCanSee(a))
+               System.out.println(a + ": " + a.getSprite().isVisible());
+         }
          return;
       }
       if(arg == ' ')

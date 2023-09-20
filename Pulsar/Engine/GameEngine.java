@@ -403,6 +403,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public void run()
    {
       Vector<Actor> actorList = curZone.getActorList();
+      MainGameFGPanel.setNewActorsFlag();
       initiativeIndex = 0;
       Actor curActor = null;
       while(true)

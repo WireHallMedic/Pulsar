@@ -25,10 +25,13 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    public static final int FAST_TICK_COUNT = 5;
    private static final int tickCounterReset = SLOW_TICK_COUNT;
    private static final int BUFFER_TILES = 4;
+   private static boolean newActors = false;
    private int tickCounter;
    private boolean slowFlag;
    private boolean mediumFlag;
    private boolean fastFlag;
+   
+   public static void setNewActorsFlag(){newActors = true;}
    
 	public MainGameFGPanel()
    {
@@ -48,8 +51,13 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
       if(!GameEngine.getRunFlag())
          return;
       GameEngine.cleanUpSprites();
-      GameEngine.getPlayer().updateFoV();
       setActorVisibility();
+      if(newActors)
+      {
+         for(Actor a: GameEngine.getActorList())
+            addNonlocking(a.getSprite());
+         newActors = false;
+      }
       super.actionPerformed(ae);
       tickCounter++;
       if(tickCounter > tickCounterReset)
