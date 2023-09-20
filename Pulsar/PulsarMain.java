@@ -49,6 +49,7 @@ public class PulsarMain extends JFrame implements GUIConstants, WindowStateListe
    public static void main(String[] args)
    {
       PulsarMain frame = new PulsarMain();
+      // now called on title page
       /*
       GameEngine engine = new GameEngine();
       engine.newGame();

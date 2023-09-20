@@ -12,6 +12,7 @@ import java.awt.*;
 import Pulsar.Actor.*;
 import Pulsar.Gear.*;
 import Pulsar.Engine.*;
+import Pulsar.Zone.*;
 
 
 public class TitlePanel extends RogueTilePanel implements GUIConstants
@@ -75,7 +76,13 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       if(options[selectionIndex].equals("Aliens"))
       {
          GameEngine engine = new GameEngine();
-         engine.newGame();
+         ZoneMap map = ZoneMapFactory.getTestMap2();
+         Zone zone = new Zone("Test Zone", -1, map);
+         GameEngine.setCurZone(zone);
+         Player p = ActorFactory.getPlayer();
+         p.setAllLocs(2, 12);
+         engine.setPlayer(p);
+         ActorFactory.populateWithAliens(zone, p.getMapLoc());
          engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
@@ -83,7 +90,13 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       if(options[selectionIndex].equals("Mercenaries"))
       {
          GameEngine engine = new GameEngine();
-         engine.newGame();
+         ZoneMap map = ZoneMapFactory.getTestMap2();
+         Zone zone = new Zone("Test Zone", -1, map);
+         GameEngine.setCurZone(zone);
+         Player p = ActorFactory.getPlayer();
+         p.setAllLocs(2, 12);
+         engine.setPlayer(p);
+         ActorFactory.populateWithMercenaries(zone, p.getMapLoc());
          engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
