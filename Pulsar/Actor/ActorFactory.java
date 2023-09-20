@@ -216,6 +216,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       Actor a = new Actor('g');
       a.setName("Grunt");
       a.setAI(new StandardAI(a));
+      a.setColor(HUMAN_FLESH);
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
       a.setShield(ShieldFactory.getBasicShield());
       a.setMaxHealth(20);
