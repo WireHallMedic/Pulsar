@@ -96,6 +96,7 @@ public class MapTile implements ZoneConstants
    {
       if(this instanceof Vacuum ||
          this instanceof Fire ||
+         this instanceof Ice ||
          !isHighPassable() ||
          !isLowPassable() ||
          isLiquid())

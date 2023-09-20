@@ -394,7 +394,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       for(int i = 0; i < 25; i++)
       {
          Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) && EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
          {
             c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(1, map.getHeight() - 1);
@@ -407,7 +407,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       for(int i = 0; i < 10; i++)
       {
          Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) && EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
          {
             c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(1, map.getHeight() - 1);
@@ -420,7 +420,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       for(int i = 0; i < 10; i++)
       {
          Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) && EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
          {
             c.x = randomInt(1, map.getWidth() - 1);
             c.y = randomInt(1, map.getHeight() - 1);
@@ -433,10 +433,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       for(int i = 0; i < 5; i++)
       {
          Coord c = new Coord(-1, -1);
-         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c))
+         while(!getZoneMap().getTile(c).isLowPassable() || isActorAt(c) || EngineTools.getDistanceTo(p.getMapLoc(), c) <= 10)
          {
-            c.x = randomInt(10, map.getWidth());
-            c.y = randomInt(0, map.getHeight());
+            c.x = randomInt(1, map.getWidth() - 1);
+            c.y = randomInt(1, map.getHeight() - 1);
          }
          for(int j = 0; j < 5; j++)
          {
@@ -513,6 +513,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
             incrementInitiative();
          if(getPlayer().isDead())
             break;
+         thread.yield();
       }
    }
    
@@ -569,9 +570,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       // no animation lock, proceed
       if(!isAnimationLocked())
-      {
          return true;
-      }
+      
+      // curent actor is locked, deny
+      if(mapPanel.isOnLockList(curActor))
+         return false;
       
       // NPCs can step if all locking actors are only stepping
       if(allLockingAreWalking())

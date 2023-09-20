@@ -180,6 +180,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       return fov.isVisible(target);
    }
    
+   public boolean isInBounds(Coord c){return isInBounds(c.x, c.y);}
    public boolean isInBounds(int x, int y)
    {
       return x >= 0 && 
@@ -479,6 +480,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    {
       if(getTile(c).isIgnitable())
          ignite(c);
+      else if(getTile(c) instanceof Ice)
+         thaw(c);
    }
    
    public void ignite(int x, int y){ignite(new Coord(x, y));}
@@ -531,21 +534,28 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void tryToFreeze(int x, int y){tryToFreeze(new Coord(x, y));}
    public void tryToFreeze(Coord c)
    {
-      if(getTile(c).isLiquid())
+      if(getTile(c) instanceof Vacuum || !isInBounds(c))
+         return;
+      if(getTile(c) instanceof Fire)
+         extinguish(c);
+      else
          freeze(c);
    }
    
-   public void freeze(int x, int y){ignite(new Coord(x, y));}
+   public void freeze(int x, int y){freeze(new Coord(x, y));}
    public void freeze(Coord c)
    {
-      MapTile ice = new Ice(getTile(c));
-      setTile(c, ice);
       if(getTile(c) instanceof Ice)
       {
-         iceList.add(c);
-         if(isCorpseAt(c))
-            getCorpseAt(c).setColor(getTile(c).getFGColor());
+         Ice ice = (Ice)getTile(c);
+         ice.refreshDuration();
+         return;
       }
+      Ice ice = new Ice(getTile(c));
+      setTile(c, ice);
+      iceList.add(c);
+      if(isCorpseAt(c))
+         getCorpseAt(c).setColor(getTile(c).getFGColor());
    }
    
    public void thaw(int x, int y){thaw(new Coord(x, y));}
@@ -559,14 +569,11 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          if(isCorpseAt(c))
             getCorpseAt(c).setColor(getTile(c).getFGColor());
          
-         if(!(getTile(c) instanceof Ice))
+         for(int i = 0; i < iceList.size(); i++)
          {
-            for(int i = 0; i < iceList.size(); i++)
+            if(iceList.elementAt(i).equals(c))
             {
-               if(iceList.elementAt(i).equals(c))
-               {
-                  iceList.removeElementAt(i);
-               }
+               iceList.removeElementAt(i);
             }
          }
       }

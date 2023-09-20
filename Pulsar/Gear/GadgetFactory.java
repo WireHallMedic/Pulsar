@@ -38,6 +38,18 @@ public class GadgetFactory implements ActorConstants, GearConstants
       return g;
    }
    
+   public static Gadget getCryoGrenades()
+   {
+      Gadget g = new Gadget();
+      g.setName("Cryo Grenades");
+      g.setShortName("Cryo Grenades");
+      g.setWeaponEffect(WeaponFactory.getCryoExplosion());
+      g.setTargetsSelf(false);
+      g.setDescription("Explodes and freezes where you throw it.");
+      g.setSpecialEffect(GadgetSpecialEffect.FREEZE);
+      return g;
+   }
+   
    public static Gadget getHoloclone()
    {
       Gadget g = new Gadget();

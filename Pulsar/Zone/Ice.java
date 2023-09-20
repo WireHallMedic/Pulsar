@@ -19,6 +19,11 @@ public class Ice extends MapTile implements GUIConstants, ZoneConstants
       super(TileType.ICE.iconIndex, LIGHT_BLUE.getRGB(), WHITE.getRGB(), "Ice", true, true, true);
       originalTile = original;
       setAirPressure(original.getAirPressure());
+      refreshDuration();
+   }
+   
+   public void refreshDuration()
+   {
       duration = BASE_ICE_DURATION + GameEngine.randomInt(0, RANDOM_ICE_DURATION + 1);
    }
    

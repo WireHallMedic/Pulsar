@@ -103,6 +103,18 @@ public class WeaponFactory implements GearConstants, ActorConstants
       return w;
    }
    
+   public static Weapon getCryoExplosion()
+   {
+      Weapon w = getExplodingBarrel();
+      w.setName("Exploding Cryo Barrel");
+      w.removeWeaponTag(WeaponTag.KNOCKBACK);
+      w.removeWeaponTag(WeaponTag.HEAVY);
+      w.setDamageType(DamageType.CRYO);
+      w.setStatusEffectType(StatusEffectType.FROZEN);
+      w.setStatusEffectChance(1.0);
+      return w;
+   }
+   
    public static Weapon getNapalm()
    {
       Weapon w = getExplodingBarrel();
