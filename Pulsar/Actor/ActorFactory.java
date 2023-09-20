@@ -78,9 +78,28 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
             c.x = GameEngine.randomInt(1, z.getMap().getWidth() - 1);
             c.y = GameEngine.randomInt(1, z.getMap().getHeight() - 1);
          }
-         Actor e = getAlien(type);
-         e.setAllLocs(c);
-         z.add(e);
+         if(type == AlienType.ALIEN_LARVA)
+         {
+            int count = GameEngine.randomInt(5, 8);
+            i--;
+            for(int j = 0; j < count; j++)
+            {
+               Coord c2 = z.getClosestEmptyTile(c);
+               if(c2 != null)
+               {
+                  Actor e = getAlien(type);
+                  e.setAllLocs(c2);
+                  z.add(e);
+                  i++;
+               }
+            }
+         }
+         else
+         {
+            Actor e = getAlien(type);
+            e.setAllLocs(c);
+            z.add(e);
+         }
       }
    }
       
@@ -99,9 +118,40 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
             c.x = GameEngine.randomInt(1, z.getMap().getWidth() - 1);
             c.y = GameEngine.randomInt(1, z.getMap().getHeight() - 1);
          }
-         Actor e = getMercenary(type);
-         e.setAllLocs(c);
-         z.add(e);
+         if(type == MercenaryType.MERCENARY_COMMANDO)
+         {
+            Actor boss = getMercenary(MercenaryType.MERCENARY_COMMANDO);
+            Actor d1 = getMercenary(MercenaryType.MERCENARY_DRONE);
+            Actor d2 = getMercenary(MercenaryType.MERCENARY_DRONE);
+            d1.getAI().setLeader(boss);
+            d2.getAI().setLeader(boss);
+            Coord c2 = z.getClosestEmptyTile(c);
+            if(c2 != null)
+            {
+               boss.setAllLocs(c2);
+               z.add(boss);
+            }
+            c2 = z.getClosestEmptyTile(c);
+            if(c2 != null)
+            {
+               d1.setAllLocs(c2);
+               z.add(d1);
+               i++;
+            }
+            c2 = z.getClosestEmptyTile(c);
+            if(c2 != null)
+            {
+               d2.setAllLocs(c2);
+               z.add(d2);
+               i++;
+            }
+         }
+         else
+         {
+            Actor e = getMercenary(type);
+            e.setAllLocs(c);
+            z.add(e);
+         }
       }
    }
    

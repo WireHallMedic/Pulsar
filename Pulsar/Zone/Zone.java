@@ -83,7 +83,7 @@ public class Zone
       return list;
    }
    
-   
+   // nearest low passable tile with no actor in it
    public Coord getClosestEmptyTile(int x, int y){return getClosestEmptyTile(new Coord(x, y));}
    public Coord getClosestEmptyTile(Coord c)
    {

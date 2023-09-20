@@ -61,9 +61,9 @@ public interface ActorConstants
    
    public enum MercenaryType implements WeightedRandomizable
    {
-      MERCENARY_DRONE       (10),
       MERCENARY_GRUNT       (30),
       MERCENARY_COMMANDO    (10),
+      MERCENARY_DRONE       (0),
       MERCENARY_OFFICER     (5);
       
       private MercenaryType(int w)
