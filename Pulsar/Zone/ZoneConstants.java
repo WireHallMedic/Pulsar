@@ -23,6 +23,7 @@ public interface ZoneConstants extends WSFontConstants
       ACID        ('~', "Acid", true, true, true),
       FIRE        ('^', "Fire", true, true, true),
       ICE         ('-', "Ice", true, true, true),
+      DOOR        ('|', "Door", false, false, false),
       TERMINAL    (CAPITAL_OMEGA_TILE, "Terminal", false, true, true),
       NULL        (' ', "", false, false, false);
       
@@ -73,7 +74,16 @@ public interface ZoneConstants extends WSFontConstants
    
    public enum OnDestructionEffect
    {
-      EXPLOSION, FLOOD, FIRE;
+      EXPLOSION, FLOOD_WATER, FLOOD_ACID, FLOOD_FIRE;
+      
+      public boolean isFloodEffect()
+      {
+         if(this == FLOOD_WATER ||
+            this == FLOOD_ACID ||
+            this == FLOOD_FIRE)
+            return true;
+         return false;
+      }
    }
    
    // an array keyed to air pressure

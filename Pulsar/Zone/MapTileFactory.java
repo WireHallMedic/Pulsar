@@ -11,6 +11,7 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          return new Vacuum();
       return new MapTile(original);
    }
+   
    public static MapTile getTile(TileType baseType)
    {
       return getTile(baseType, DEFAULT_TILE_FG_COLOR, DEFAULT_TILE_BG_COLOR);
@@ -20,8 +21,12 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    {
       if(baseType == TileType.WATER)
          return getWater();
+      if(baseType == TileType.ACID)
+         return getAcid();
       if(baseType == TileType.TERMINAL)
          return getTerminal();
+      if(baseType == TileType.DOOR)
+         return getDoor();
       MapTile tile = new MapTile(baseType.iconIndex, fgColor.getRGB(), bgColor.getRGB(), baseType.name, 
                                  baseType.lowPassable, baseType.highPassable, baseType.transparent);
       if(baseType == TileType.NULL || baseType == TileType.CLEAR)
@@ -46,6 +51,11 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    public static MapTile getVacuum()
    {
       return new Vacuum();
+   }
+   
+   public static Acid getAcid()
+   {
+      return new Acid();
    }
    
    public static MapTile getBroken(MapTile originalTile)
@@ -89,7 +99,7 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       MapTile tile = getBarrel();
       tile.setName("Water Barrel");
       tile.setFGColor(LIGHT_BLUE.getRGB());
-      tile.setOnDestructionEffect(OnDestructionEffect.FLOOD);
+      tile.setOnDestructionEffect(OnDestructionEffect.FLOOD_WATER);
       return tile;
    }
    

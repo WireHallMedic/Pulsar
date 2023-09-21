@@ -9,16 +9,19 @@ public class ButtonTrigger implements EngineConstants
 	private int triggerIndex;
 	private ButtonAction buttonAction;
 	private Vector<Coord> targetList;
+   private int intensity;
 
 
 	public int getTriggerIndex(){return triggerIndex;}
 	public ButtonAction getButtonAction(){return buttonAction;}
 	public Vector<Coord> getTargetList(){return targetList;}
+   public int getIntensity(){return intensity;} 
 
 
 	public void setTriggerIndex(int t){triggerIndex = t;}
 	public void setButtonAction(ButtonAction b){buttonAction = b;}
 	public void setTargetList(Vector<Coord> t){targetList = t;}
+   public void setIntensity(int i){intensity = i;}
 
 
    public ButtonTrigger(int ti, ButtonAction ba)
@@ -26,6 +29,7 @@ public class ButtonTrigger implements EngineConstants
       triggerIndex = ti;
       buttonAction = ba;
       targetList = new Vector<Coord>();
+      intensity = 1;
    }
    
    public void addTarget(Coord c)

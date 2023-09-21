@@ -265,8 +265,9 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       switch(mt.getOnDestructionEffect())
       {
-         case EXPLOSION : Combat.nonWeaponExplosion(x, y); break;
-         case FLOOD     : getZoneMap().flood(x, y, randomInt(5, 10)); break;
+         case EXPLOSION   : Combat.nonWeaponExplosion(x, y); break;
+         case FLOOD_WATER : getZoneMap().flood(x, y, randomInt(5, 10), ZoneConstants.TileType.WATER); break;
+         case FLOOD_ACID  : getZoneMap().flood(x, y, randomInt(5, 10), ZoneConstants.TileType.ACID); break;
       }
    }
    

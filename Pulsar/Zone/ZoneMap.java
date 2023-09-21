@@ -328,8 +328,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       }
    }
    
-   public void flood(Coord c, int reps){flood(c.x, c.y, reps);}
-   public void flood(int x, int y, int reps)
+   public void flood(Coord c, int reps, TileType type){flood(c.x, c.y, reps, type);}
+   public void flood(int x, int y, int reps, TileType type)
    {
       if(!isInBounds(x, y))
          return;
