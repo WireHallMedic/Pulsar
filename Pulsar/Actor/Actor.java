@@ -520,7 +520,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       if(!getNeedsAir())
          return;
       if(this == GameEngine.getPlayer())
-         MessagePanel.addMessage("You are suffocating!");
+         MessagePanel.addMessage("You are suffocating!", GUIConstants.WARNING_COLOR);
       applyDamageToHealth(SUFFOCATION_DAMAGE);
       if(GameEngine.playerCanSee(getMapLoc()) && isDead())
          MessagePanel.addMessage(getName() + " suffocates!");
@@ -706,13 +706,21 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
          add(StatusEffectFactory.getEffect(StatusEffectType.BURNING));
       // only apply tile damage if not taking status effect damage
       if(!isOnFire())
+      {
          applyDamage(ZoneConstants.FIRE_DAMAGE, DamageType.THERMAL, true);
+         if(this == GameEngine.getPlayer())
+            MessagePanel.addMessage("You are burned by the fire!", GUIConstants.WARNING_COLOR);
+      }
    }
    
    public void endTurnInAcid()
    {
       if(!isFlying())
+      {
          applyDamage(ZoneConstants.ACID_DAMAGE, DamageType.KINETIC, true);
+         if(this == GameEngine.getPlayer())
+            MessagePanel.addMessage("You are burned by the acid!", GUIConstants.WARNING_COLOR);
+      }
    }
    
 }
