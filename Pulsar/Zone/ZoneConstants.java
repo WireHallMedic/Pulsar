@@ -9,6 +9,8 @@ public interface ZoneConstants extends WSFontConstants
    public static final int RANDOM_FIRE_DURATION = 10;
    public static final int BASE_ICE_DURATION = 30;
    public static final int RANDOM_ICE_DURATION = 10;
+   public static final int FIRE_DAMAGE = 3;
+   public static final int ACID_DAMAGE = 5;
    
    public enum TileType
    {

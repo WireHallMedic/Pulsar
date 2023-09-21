@@ -467,11 +467,13 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       updateMemory();
       if(GameEngine.getZoneMap().getTile(getMapLoc()).isLiquid() && isOnFire())
          extinguish();
-      applyOngoingDamage();
       if(GameEngine.getZoneMap().getTile(getMapLoc()).getAirPressure() == 0)
          suffocate();
       if(GameEngine.getZoneMap().getTile(getMapLoc()) instanceof Fire)
-         catchFireCheck();
+         endTurnInFire();
+      if(GameEngine.getZoneMap().getTile(getMapLoc()) instanceof Acid)
+         endTurnInAcid();
+      applyOngoingDamage();
       startOfTurnPerformed = false;
    }
    
@@ -695,13 +697,22 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       return speed;
    }
    
-   public void catchFireCheck()
+   public void endTurnInFire()
    {
       double fireChance = BIOLOGICAL_FIRE_CHANCE;
       if(isMechanical())
          fireChance = MECHANICAL_FIRE_CHANCE;
       if(GameEngine.random() <= fireChance)
          add(StatusEffectFactory.getEffect(StatusEffectType.BURNING));
+      // only apply tile damage if not taking status effect damage
+      if(!isOnFire())
+         applyDamage(ZoneConstants.FIRE_DAMAGE, DamageType.THERMAL, true);
+   }
+   
+   public void endTurnInAcid()
+   {
+      if(!isFlying())
+         applyDamage(ZoneConstants.ACID_DAMAGE, DamageType.KINETIC, true);
    }
    
 }

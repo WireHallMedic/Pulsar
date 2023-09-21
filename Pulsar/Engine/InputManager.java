@@ -367,8 +367,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
          a.fullyHeal();
          Coord loc = GameEngine.getPlayer().getMapLoc();
          loc.x += 2;
-         a.setAllLocs(loc);
-         GameEngine.add(a);
+         GameEngine.getZoneMap().setTile(loc, new Acid());
          return;
       }
       if(arg == ' ')

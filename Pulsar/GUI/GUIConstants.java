@@ -64,6 +64,7 @@ public interface GUIConstants
    // gradients
    public static final Color[] FIRE_COLOR_GRADIENT = WSTools.getGradient(YELLOW, RED, 21);
    public static final Color[] WATER_COLOR_GRADIENT = WSTools.getGradient(LIGHT_BLUE, DARK_BLUE, 21);
+   public static final Color[] ACID_COLOR_GRADIENT = WSTools.getGradient(LIGHT_GREEN, LIGHT_GREEN.darker(), 21);
    
    public static final double SLOW_MOVE_SPEED = .1;
    public static final double NORMAL_MOVE_SPEED = .25;

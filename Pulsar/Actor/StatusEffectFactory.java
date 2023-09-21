@@ -1,6 +1,7 @@
 package Pulsar.Actor;
 
 import Pulsar.Gear.*;
+import Pulsar.Zone.*;
 
 public class StatusEffectFactory implements ActorConstants, GearConstants
 {
@@ -15,7 +16,7 @@ public class StatusEffectFactory implements ActorConstants, GearConstants
 	                        se.setStacks(false);
                            se.setNegative(true);
                            se.setDescriptor("burning");
-                           se.setOngoingDamage(3);
+                           se.setOngoingDamage(ZoneConstants.FIRE_DAMAGE);
 	                        se.setDamageType(DamageType.THERMAL);
                            break;
          case FROZEN :     se.setName("Frozen");
