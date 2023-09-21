@@ -22,6 +22,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private Vector<Coord> iceList;
    private boolean alternatingTurns;
    private Vector<ButtonTrigger> buttonTriggerList;
+   private Vector<DelayedButtonTrigger> delayedButtonTriggerList;
    private Corpse[][] corpseMap;
 
 
@@ -68,6 +69,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       fireList = new Vector<Coord>();
       iceList = new Vector<Coord>();
       buttonTriggerList = new Vector<ButtonTrigger>();
+      delayedButtonTriggerList = new Vector<DelayedButtonTrigger>();
       refreshCorpseMap();
    }
    
@@ -77,6 +79,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       adjustAir();
       extinguishCheck();
       thawCheck();
+      processDelayedButtonTriggers();
    }
    
    public void postProcessing()
@@ -603,6 +606,51 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          tile.increment();
          if(tile.isExpired())
             thaw(loc);
+      }
+   }
+   
+   
+   // delayed button presses; button invocations staggered over turns
+   ///////////////////////////////////////////////////////////////////////
+   public void processDelayedButtonTriggers()
+   {
+      for(int i = 0; i < delayedButtonTriggerList.size(); i++)
+      {
+         DelayedButtonTrigger trigger = delayedButtonTriggerList.elementAt(i);
+         trigger.increment();
+         if(trigger.isReady())
+         {
+            buttonPressed(trigger.triggerIndex);
+            delayedButtonTriggerList.removeElementAt(i);
+            i--;
+         }
+      }
+   }
+   
+   public void addDelayedButtonEffect(int delay, Button button)
+   {
+      delayedButtonTriggerList.add(new DelayedButtonTrigger(delay, button));
+   }
+   
+   private class DelayedButtonTrigger
+   {
+      public int delay;
+      public int triggerIndex;
+      
+      public DelayedButtonTrigger(int d, Button button)
+      {
+         delay = d;
+         triggerIndex = button.getTriggerIndex();
+      }
+      
+      public void increment()
+      {
+         delay--;
+      }
+      
+      public boolean isReady()
+      {
+         return delay <= 0;
       }
    }
 

@@ -351,10 +351,15 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    }
    
    
-   public static void buttonPressed(int triggerIndex)
+   public static void buttonPressed(Pulsar.Zone.Button button)
    {
       MessagePanel.addMessage("You press the button.");
-      getZoneMap().buttonPressed(triggerIndex);
+      getZoneMap().buttonPressed(button.getTriggerIndex());
+      if(button.getRepetitions() > 1)
+      {
+         for(int i = 1; i < button.getRepetitions(); i++)
+            getZoneMap().addDelayedButtonEffect(i, button);
+      }
    }
    
    

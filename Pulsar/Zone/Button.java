@@ -8,17 +8,20 @@ public class Button extends MapTile implements ToggleTile, WSFontConstants
    public static final boolean UNPRESSED = true;
    public static final boolean PRESSED = false;
    
-   private boolean pressed = false;
+   private boolean pressed;
    private int triggerIndex;
-   private boolean oneUse = true;
+   private boolean oneUse;
+   private int repetitions;
    
    public int getTriggerIndex(){return triggerIndex;}
    public boolean isPressed(){return pressed;}
    public boolean isOneUse(){return oneUse;}
+   public int getRepetitions(){return repetitions;}
    
    public void setTriggerIndex(int ti){triggerIndex = ti;}
    public void setPressed(boolean p){pressed = p;}
    public void setOneUse(boolean ou){oneUse = ou;}
+   public void setRepetitions(int r){repetitions = r;}
    
    
    public Button(int fg, int bg, int ti)
@@ -26,6 +29,8 @@ public class Button extends MapTile implements ToggleTile, WSFontConstants
       super('x', fg, bg, "Button", false, true, true);
       triggerIndex = ti;
       oneUse = true;
+      pressed = false;
+      repetitions = 1;
    }
 
 	public int getIconIndex()
@@ -50,13 +55,13 @@ public class Button extends MapTile implements ToggleTile, WSFontConstants
       {
          if(!pressed)
          {
-            GameEngine.buttonPressed(triggerIndex);
+            GameEngine.buttonPressed(this);
          }
          pressed = true;
       }
       else
       {
-         GameEngine.buttonPressed(triggerIndex);
+         GameEngine.buttonPressed(this);
          pressed = !pressed;
       }
    }

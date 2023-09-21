@@ -161,20 +161,22 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       
       button = (Button)MapTileFactory.getButton(1);
       button.setName("Fire Control");
+      button.setRepetitions(15);
       m.setTile(16, 14, button);
       trigger = new ButtonTrigger(1, ButtonAction.FLOOD_WATER);
       trigger.addTarget(new Coord(14, 14));
       trigger.addTarget(new Coord(18, 14));
-      trigger.setIntensity(15);
+      trigger.setIntensity(1);
       m.add(trigger);
       
       button = (Button)MapTileFactory.getButton(2);
       button.setName("Biohazard Control");
+      button.setRepetitions(15);
       m.setTile(26, 14, button);
       trigger = new ButtonTrigger(2, ButtonAction.FLOOD_ACID);
       trigger.addTarget(new Coord(24, 14));
       trigger.addTarget(new Coord(28, 14));
-      trigger.setIntensity(15);
+      trigger.setIntensity(1);
       m.add(trigger);
       return m;
    }
