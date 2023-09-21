@@ -376,7 +376,6 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
          Player player = GameEngine.getPlayer();
          player.fullyRefresh();
          player.updateFoV();
-         System.out.println("Lock list size: " + GameEngine.getMovingActorList().size());
       }
    }
 }

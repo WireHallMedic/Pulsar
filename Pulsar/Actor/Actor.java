@@ -338,6 +338,10 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       fullyHeal();
       setTempStatusEffectList(new Vector<StatusEffect>());
       burningCheck();
+      if(hasWeapon())
+         getWeapon().fullyCharge();
+      if(hasShield())
+         getShield().fullyCharge();
    }
    
    public void applyDamage(int damage, DamageType damageType, boolean doAnimation)

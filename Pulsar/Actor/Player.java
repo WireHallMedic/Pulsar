@@ -160,6 +160,19 @@ public class Player extends Actor implements GUIConstants, GearConstants
       updateFoV();
    }
    
+   @Override
+   public void fullyRefresh()
+   {
+      super.fullyRefresh();
+      if(hasAltWeapon())
+         getAltWeapon().fullyCharge();
+      for(Gadget g : gadgetList)
+      {
+         g.fullyCharge();
+      }
+   }
+      
+   
    // players memoize an area, rather than calculating FoV with every call
    @Override
    public boolean canSee(int x, int y){return canSee(new Coord(x, y));}

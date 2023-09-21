@@ -275,7 +275,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static void addNonlocking(MovementScript ms){mapPanel.addNonlocking(ms);}
    
    
-   private void incrementInitiative()
+   private synchronized void incrementInitiative()
    {
       initiativeIndex++;
       if(initiativeIndex >= curZone.getActorList().size())
@@ -449,6 +449,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       Actor curActor;
       boolean newLockingAreWalking = true;
+      Vector<Actor> newList = new Vector<Actor>();
       for(int i = 0; i < movingActorList.size(); i++)
       {
          curActor = movingActorList.elementAt(i);
@@ -456,14 +457,15 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          {
             curActor.reconcileSprite();
             movingActorList.removeElementAt(i);
-            i--;
          }
          else
          {
             newLockingAreWalking = newLockingAreWalking && curActor.getAI().getPreviousAction() == ActorAction.STEP && !curActor.didForcedMovement();
+            newList.add(curActor);
          }
       }
       allLockingAreWalking = newLockingAreWalking;
+      movingActorList = newList;
    }
    
    private void cleanUpDead()
