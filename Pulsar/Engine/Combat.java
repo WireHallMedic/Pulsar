@@ -204,7 +204,9 @@ public class Combat implements GUIConstants, GearConstants
          if(defender.getCurHealth() < startingHealth)
          {
             VisualEffectFactory.createSpray(defender.getMapLoc(), origin, defender.getBloodColor(), delay);
-            GameEngine.getZoneMap().getTile(defender.getMapLoc()).setFGColor(defender.getBloodColor().getRGB());
+            MapTile tile = GameEngine.getZoneMap().getTile(defender.getMapLoc());
+            if(!tile.isLiquid())
+               tile.setFGColor(defender.getBloodColor().getRGB());
          }
       }
    }
