@@ -184,8 +184,11 @@ public class Combat implements GUIConstants, GearConstants
       if(GameEngine.playerCanSee(defender))
       {
          // target impact
-         MovementScript msd = MovementScriptFactory.getImpactScript(defender, origin, delay);
-         getMapPanel().addLocking(msd, defender);
+         if(!weapon.hasWeaponTag(WeaponTag.KNOCKBACK))
+         {
+            MovementScript msd = MovementScriptFactory.getImpactScript(defender, origin, delay);
+            getMapPanel().addLocking(msd, defender);
+         }
          
          // shield flicker
          if(hasShieldBefore)

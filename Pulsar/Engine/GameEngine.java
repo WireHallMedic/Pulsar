@@ -409,7 +409,10 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       while(true)
       {
          if(actorList.size() == 0)
+         {
+            thread.yield();
             continue;
+         }
          curActor = actorList.elementAt(initiativeIndex);
          // charge current actor
          curActor.charge();
