@@ -362,13 +362,13 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             if(GameEngine.getZoneMap().getTile(x, y).getIconIndex() == '#')
                GameEngine.getZoneMap().breakTile(x, y);
          }*/
-         System.out.println("Total actors: " + GameEngine.getActorList().size());
-         for(int i = 0; i < GameEngine.getActorList().size(); i++)
-         {
-            Actor a = GameEngine.getActorList().elementAt(i);
-            if(GameEngine.playerCanSee(a))
-               System.out.println(a + ": " + a.getSprite().isVisible());
-         }
+         Actor a = ActorFactory.getAlienSoldier();
+         a.setMaxHealth(100);
+         a.fullyHeal();
+         Coord loc = GameEngine.getPlayer().getMapLoc();
+         loc.x += 2;
+         a.setAllLocs(loc);
+         GameEngine.add(a);
          return;
       }
       if(arg == ' ')

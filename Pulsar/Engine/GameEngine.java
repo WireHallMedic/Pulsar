@@ -414,7 +414,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          // charge current actor
          curActor.charge();
          // act if able
-         if(curActor.isReadyToAct())
+         if(curActor.isReadyToAct() && allLockingAreWalking)
          {
             if(!(curActor.hasPlan()))
                curActor.plan();
@@ -456,7 +456,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(!mapPanel.isOnLockList(curActor))
          {
             curActor.reconcileSprite();
-            movingActorList.removeElementAt(i);
          }
          else
          {
@@ -485,11 +484,6 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       }
    }
    
-   public boolean allLockingAreWalking()
-   {
-      return allLockingAreWalking;
-   }
-   
    public boolean animationAllowsAction(Actor curActor)
    {
       // no animation lock, proceed
@@ -501,7 +495,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          return false;
       
       // NPCs can step if all locking actors are only stepping
-      if(allLockingAreWalking())
+      if(allLockingAreWalking)
          if(curActor != player)
             return curActor.getAI().getPendingAction().canUseDuringAnimationLock;
       return false;
