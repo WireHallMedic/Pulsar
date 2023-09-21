@@ -431,7 +431,6 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       {
          MapTile tile = getTile(x, y);
          if(tile.isLowPassable() && 
-            tile instanceof Fire == false &&
             tile instanceof Door == false &&
             !isCorpseAt(x, y))
             return true;
@@ -465,7 +464,9 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void setCorpseAt(Coord loc, Corpse corpse){setCorpseAt(loc.x, loc.y, corpse);}
    public void setCorpseAt(int x, int y, Corpse corpse)
    {
-      if(isInBounds(x, y))
+      if(isInBounds(x, y) &&
+         !(tileArray[x][y] instanceof Fire) &&
+         !(tileArray[x][y] instanceof Acid))
          corpseMap[x][y] = corpse;
    }
    
