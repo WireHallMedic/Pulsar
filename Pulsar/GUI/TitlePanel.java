@@ -118,7 +118,7 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
          switch(TITLE_ARRAY[y].charAt(x))
          {
             case '#' : setTile(x + X_ORIGIN, y + Y_ORIGIN, ' ', TERMINAL_FG_COLOR, TERMINAL_FG_COLOR); break;
-            case '.' : setTile(x + X_ORIGIN, y + Y_ORIGIN, '.', WHITE, BLACK); break;
+            case '.' : setTile(x + X_ORIGIN, y + Y_ORIGIN, '.', UPPER_GREY, BLACK); break;
             case ' ' : setTile(x + X_ORIGIN, y + Y_ORIGIN, ' ', WHITE, BLACK); break;
             case 'X' : setTile(x + X_ORIGIN, y + Y_ORIGIN, '.', STAR_GRADIENT[pulseIndex], BLACK); break;
          }
@@ -146,7 +146,7 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
    public static final String[] TITLE_ARRAY = {
       "                                                                              ",
       "    ######             ##                    .                                ",
-      "    ##    ##           ##                                         X           ",
+      "    ##    ##           ##                                      X              ",
       "    ##    ##           ##                                                     ",
       "    ######             ##    ##     ####  ##  ##                              ",
       "    ##      ##    ##   ##   ##    ##  ##  ####                                ",
