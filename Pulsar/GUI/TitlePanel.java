@@ -21,6 +21,10 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
    public static final int Y_ORIGIN = 1;
    public static final int WIDTH_TILES = TERMINAL_WIDTH_TILES - 2;
    public static final int HEIGHT_TILES = TERMINAL_HEIGHT_TILES - 2;
+   public static final Color UPPER_GREY = new Color(196, 196, 196);
+   public static final Color MID_GREY = new Color(128, 128, 128);
+   public static final Color LOWER_GREY = new Color(64, 64, 64);
+   public static final Color[] STAR_GRADIENT = WSTools.getGradient(MID_GREY, WHITE, 21);
    
    private int selectionIndex = 0;
    private String[] options = {"Aliens", "Mercenaries", "Exit"};
@@ -55,11 +59,11 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       {
          case KeyEvent.VK_UP :
          case KeyEvent.VK_NUMPAD8 : previous(); 
-                                    update();
+                                //    update();
                                     break;
          case KeyEvent.VK_DOWN :
          case KeyEvent.VK_NUMPAD2 : next(); 
-                                    update();
+                               //     update();
                                     break;
          case KeyEvent.VK_ENTER :
          case KeyEvent.VK_SPACE :   doSelection(); 
@@ -107,15 +111,25 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
    {
       int fgColor = TERMINAL_FG_COLOR.getRGB();
       int bgColor = BG_COLOR.getRGB();
-      write(1, 1, "Title Panel", fgColor, bgColor, TERMINAL_WIDTH_TILES - 2, 1);
-      
+      int pulseIndex = animationManager.mediumPulse();
+      for(int x = 0; x < TITLE_ARRAY[0].length(); x++)
+      for(int y = 0; y < TITLE_ARRAY.length; y++)
+      {
+         switch(TITLE_ARRAY[y].charAt(x))
+         {
+            case '#' : setTile(x + X_ORIGIN, y + Y_ORIGIN, ' ', TERMINAL_FG_COLOR, TERMINAL_FG_COLOR); break;
+            case '.' : setTile(x + X_ORIGIN, y + Y_ORIGIN, '.', WHITE, BLACK); break;
+            case ' ' : setTile(x + X_ORIGIN, y + Y_ORIGIN, ' ', WHITE, BLACK); break;
+            case 'X' : setTile(x + X_ORIGIN, y + Y_ORIGIN, '.', STAR_GRADIENT[pulseIndex], BLACK); break;
+         }
+      }
       for(int i = 0; i < options.length; i++)
       {
          if(selectionIndex == i)
             bgColor = ORANGE.getRGB();
          else
             bgColor = BG_COLOR.getRGB();
-         write(1, 10 + i, options[i], fgColor, bgColor, options[i].length(), 1);
+         write(5, 18 + i, options[i], fgColor, bgColor, options[i].length(), 1);
       }
    }
    
@@ -123,6 +137,34 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
    public void actionPerformed(ActionEvent ae)
    {
       if(isVisible())
+      {
+         update();
          super.actionPerformed(ae);
+      }
    }
+   
+   public static final String[] TITLE_ARRAY = {
+      "                                                                              ",
+      "    ######             ##                    .                                ",
+      "    ##    ##           ##                                         X           ",
+      "    ##    ##           ##                                                     ",
+      "    ######             ##    ##     ####  ##  ##                              ",
+      "    ##      ##    ##   ##   ##    ##  ##  ####                                ",
+      "    ##      ##    ##   ##    ##   ##  ##  ##                                  ",
+      "    ##        ####     ##   ##      ####  ##                           .      ",
+      "                                                                              ",
+      "        .                                             .                       ",
+      "                                                                              ",
+      "                                                                              ",
+      "                      .                  .                                    ",
+      "                                                                              ",
+      "                                                                              ",
+      "                                                                  .           ",
+      "                                                                              ",
+      "                                                 .                            ",
+      "                                .                                             ",
+      "                                                                              ",
+      "                                                                              ",
+      "                                                                              "
+   };
 }
