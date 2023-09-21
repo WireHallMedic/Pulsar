@@ -48,6 +48,8 @@ public class Combat implements GUIConstants, GearConstants
                {
                   int delay = weapon.hasWeaponTag(GearConstants.WeaponTag.MELEE) ? MELEE_ATTACK_HIT_DELAY : 0;
                   Color c = new Color(GameEngine.getZoneMap().getTile(target).getFGColor());
+                  if(GameEngine.getZoneMap().getTile(target).isLiquid())
+                     c = new Color(GameEngine.getZoneMap().getTile(target).getBGColor());
                   VisualEffectFactory.createRicochette(target, attacker.getMapLoc(), c, delay);
                }
             }
