@@ -89,7 +89,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       "v#.....................................................................................................#v",
       "v#.....................................................................................................#v",
       "v#....=.....#..........#..........#..........#..........#..........#..........#..........#..........#..#v",
-      "v/....=................................................................................................#v",
+      "v|....=................................................................................................#v",
       "v#....=................................................................................................#v",
       "v#..........#..........#..........#..........#..........#..........#..........#..........#..........#..#v",
       "v#.....................................................................................................#v",
@@ -136,7 +136,8 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
                case 'c' : mapTile = MapTileFactory.getCrate(); break;
                case '=' : mapTile = MapTileFactory.getTile(TileType.LOW_WALL); break;
                case ':' : mapTile = MapTileFactory.getTile(TileType.WINDOW); break;
-               case '/' : mapTile = MapTileFactory.getDoor(); break;
+               case '|' : mapTile = MapTileFactory.getDoor(); break;
+               case '/' : mapTile = MapTileFactory.getAutomaticDoor(); break;
                case '0' : mapTile = getRandomBarrel(); break;
                case '~' : mapTile = MapTileFactory.getWater(); break;
                case 'v' : mapTile = MapTileFactory.getVacuum();
@@ -177,6 +178,9 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       trigger.addTarget(new Coord(2, 2));
       trigger.setIntensity(3);
       m.add(trigger);
+      
+      labelBulkheads(m);
+      m.postProcessing();
       return m;
    }
    

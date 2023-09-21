@@ -36,10 +36,18 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       return tile;
    }
    
-   public static MapTile getDoor()
+   public static Door getDoor()
    {
       Door door = new Door(DEFAULT_TILE_FG_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB(), "Door");
       return door;
+   }
+   
+   public static Door getAutomaticDoor()
+   {
+      Door door = getDoor();
+      door.setAutomatic(true);
+      return door;
+      
    }
    
    public static MapTile getButton()

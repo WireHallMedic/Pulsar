@@ -20,6 +20,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private Vector<Coord> breachList;
    private Vector<Coord> fireList;
    private Vector<Coord> iceList;
+   private Vector<Coord> automaticDoorList;
    private boolean alternatingTurns;
    private Vector<ButtonTrigger> buttonTriggerList;
    private Vector<DelayedButtonTrigger> delayedButtonTriggerList;
@@ -36,6 +37,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public Vector<Coord> getBreachList(){return breachList;}
    public Vector<Coord> getFireList(){return fireList;}
    public Vector<Coord> getIceList(){return iceList;}
+   public Vector<Coord> getAutomaticDoorList(){return automaticDoorList;}
    public Vector<ButtonTrigger> getButtonTriggerList(){return buttonTriggerList;}
 
 
@@ -48,6 +50,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void setBreachList(Vector<Coord> bl){breachList = bl;}
    public void setFireList(Vector<Coord> fl){fireList = fl;}
    public void setIceList(Vector<Coord> il){iceList = il;}
+   public void setAutomaticDoorList(Vector<Coord> adl){automaticDoorList = adl;}
    public void setButtonTriggerList(Vector<ButtonTrigger> btl){buttonTriggerList = btl;}
 
 
@@ -70,6 +73,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       iceList = new Vector<Coord>();
       buttonTriggerList = new Vector<ButtonTrigger>();
       delayedButtonTriggerList = new Vector<DelayedButtonTrigger>();
+      automaticDoorList = new Vector<Coord>();
       refreshCorpseMap();
    }
    
@@ -79,6 +83,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       adjustAir();
       extinguishCheck();
       thawCheck();
+      checkAutomaticDoors();
       processDelayedButtonTriggers();
    }
    
@@ -89,6 +94,12 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       {
          if(tileArray[x][y] instanceof Vacuum)
             vacuumList.add(new Coord(x, y));
+         if(tileArray[x][y] instanceof Door)
+         {
+            Door d = (Door)tileArray[x][y];
+            if(d.isAutomatic())
+               registerAutomaticDoor(x, y);
+         }
       }
    }
    
@@ -651,6 +662,76 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       public boolean isReady()
       {
          return delay <= 0;
+      }
+   }
+   
+   
+   // automatic doors
+   ////////////////////////////////////////////////////////
+   public void registerAutomaticDoor(Coord c){registerAutomaticDoor(c.x, c.y);}
+   public void registerAutomaticDoor(int x, int y)
+   {
+      automaticDoorList.add(new Coord(x, y));
+   }
+   
+   public void unregisterAutomaticDoor(int x, int y){unregisterAutomaticDoor(new Coord(x, y));}
+   public void unregisterAutomaticDoor(Coord c)
+   {
+      for(int i = 0; i < automaticDoorList.size(); i++)
+      {
+         if(automaticDoorList.elementAt(i).equals(c))
+         {
+            automaticDoorList.removeElementAt(i);
+            i--;
+         }
+      }
+   }
+   
+   private void checkAutomaticDoors()
+   {
+      // memoize actor locations so that we only go through the list once
+      boolean[][] actorLocMap = new boolean[getWidth()][getHeight()];
+      for(int i = 0; i < GameEngine.getActorList().size(); i++)
+      {
+         Coord c = GameEngine.getActorList().elementAt(i).getMapLoc();
+         if(isInBounds(c))
+            actorLocMap[c.x][c.y] = true;
+      }
+      for(int i = 0; i < automaticDoorList.size(); i++)
+      {
+         if(getTile(automaticDoorList.elementAt(i)) instanceof Door)
+            checkAutomaticDoor(automaticDoorList.elementAt(i), actorLocMap);
+         else
+         {
+            automaticDoorList.removeElementAt(i);
+            i--;
+         }
+      }
+   }
+   
+   private void checkAutomaticDoor(Coord c, boolean[][] actorLocMap)
+   {
+      if(getTile(c) instanceof Door)
+      {
+         Door door = (Door)getTile(c);
+         if(!door.isLocked())
+         {
+            boolean shouldBeOpen = actorLocMap[c.x][c.y] ||
+                                   actorLocMap[c.x + 1][c.y] ||
+                                   actorLocMap[c.x - 1][c.y] ||
+                                   actorLocMap[c.x][c.y + 1] ||
+                                   actorLocMap[c.x][c.y - 1];
+            if(shouldBeOpen)
+            {
+               if(!door.isOpen())
+                  tryToToggle(c);
+            }
+            else
+            {
+               if(door.isOpen())
+                  tryToToggle(c);
+            }
+         }
       }
    }
 
