@@ -20,6 +20,8 @@ public interface ZoneConstants extends WSFontConstants
       WINDOW      (':', "Window", false, false, true),
       RUBBLE      (',', "Rubble", true, true, true),
       WATER       ('~', "Water", true, true, true),
+      ACID        ('~', "Acid", true, true, true),
+      FIRE        ('^', "Fire", true, true, true),
       ICE         ('-', "Ice", true, true, true),
       TERMINAL    (CAPITAL_OMEGA_TILE, "Terminal", false, true, true),
       NULL        (' ', "", false, false, false);
