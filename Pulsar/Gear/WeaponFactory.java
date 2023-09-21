@@ -71,6 +71,15 @@ public class WeaponFactory implements GearConstants, ActorConstants
       return w;
    }
    
+   // basic weapon for enemies
+   public static Weapon getPistol()
+   {
+      Weapon w = getBasicWeapon(WeaponType.BATTLE_RIFLE);
+      w.setAttacks(1);
+      w.setName("Pistol");
+      return w;
+   }
+   
    public static Weapon getAlienClaws()
    {
       Weapon w = getBasicWeapon(WeaponType.MELEE);

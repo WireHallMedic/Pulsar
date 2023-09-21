@@ -106,7 +106,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    
    public static void populateWithMercenaries(Zone z, Coord playerLoc)
    {
-      double density = .01;
+      double density = .02;
       int totalCreatures = (int)(z.getMap().getWidth() * z.getMap().getHeight() * density);
       WeightedRandomizer table = new WeightedRandomizer(MercenaryType.values());
       for(int i = 0; i < totalCreatures; i++)
@@ -118,9 +118,9 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
             c.x = GameEngine.randomInt(1, z.getMap().getWidth() - 1);
             c.y = GameEngine.randomInt(1, z.getMap().getHeight() - 1);
          }
-         if(type == MercenaryType.MERCENARY_COMMANDO)
+         if(type == MercenaryType.MERCENARY_COMMANDO || type == MercenaryType.MERCENARY_OFFICER)
          {
-            Actor boss = getMercenary(MercenaryType.MERCENARY_COMMANDO);
+            Actor boss = getMercenary(type);
             Actor d1 = getMercenary(MercenaryType.MERCENARY_DRONE);
             Actor d2 = getMercenary(MercenaryType.MERCENARY_DRONE);
             d1.getAI().setLeader(boss);
@@ -266,7 +266,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setName("Grunt");
       a.setAI(new StandardAI(a));
       a.setColor(HUMAN_FLESH);
-      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
+      a.setWeapon(WeaponFactory.getPistol());
       a.setShield(ShieldFactory.getBasicShield());
       a.setMaxHealth(20);
       a.fullyHeal();
@@ -285,7 +285,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       Actor a = getMercenaryGrunt();
       a.setName("Commando");
       a.setIconIndex('c');
-      WeaponFactory.setElementAndStatusEffect(a.getWeapon(), DamageType.ELECTRO);
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
       a.setMaxHealth(a.getMaxHealth() * 3 / 2);
       a.fullyHeal();
       return a;
@@ -295,7 +295,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    {
       Actor a = getDrone();
       a.setName("Officer");
-      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
+      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
       a.setMaxHealth(a.getMaxHealth() * 2);
       a.fullyHeal();
       return a;
