@@ -366,7 +366,7 @@ public class BasicAI implements AIConstants
    private void doStep()
    {
       // slide on ice
-      if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof Ice)
+      if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof Ice && !self.isFlying())
       {
          Coord newTarget = new Coord(pendingTarget.x - self.getMapLoc().x, pendingTarget.y - self.getMapLoc().y);
          newTarget.add(pendingTarget);
