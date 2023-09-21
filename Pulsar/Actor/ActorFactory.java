@@ -177,6 +177,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       Actor a = new Actor('t');
       a.setName("Turret");
       a.setAI(new TurretAI(a));
+      a.getAI().setUsesDoors(false);
       a.setMaxHealth(20);
       a.fullyHeal();
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
@@ -196,6 +197,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       Actor a = new Actor('d');
       a.setName("Combat Drone");
       a.setAI(new StandardAI(a));
+      a.getAI().setUsesDoors(false);
       a.setMaxHealth(20);
       a.fullyHeal();
       a.setWeapon(WeaponFactory.getCarbine());
@@ -248,6 +250,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       Actor a = new Actor('g');
       a.setName("Goat");
       a.setAI(new WanderAI(a));
+      a.getAI().setUsesDoors(false);
       a.getAI().setTeam(AIConstants.Team.NEUTRAL);
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
       a.setMaxHealth(20);
@@ -341,6 +344,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    public static Actor getAlienLarva()
    {
       Actor a = getAlienWorker();
+      a.getAI().setUsesDoors(false);
       a.setIconIndex('l');
       a.setName("Alien Larva");
       a.setMaxHealth(a.getMaxHealth() / 2);
