@@ -716,11 +716,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          Door door = (Door)getTile(c);
          if(!door.isLocked())
          {
-            boolean shouldBeOpen = actorLocMap[c.x][c.y] ||
-                                   actorLocMap[c.x + 1][c.y] ||
-                                   actorLocMap[c.x - 1][c.y] ||
-                                   actorLocMap[c.x][c.y + 1] ||
-                                   actorLocMap[c.x][c.y - 1];
+            boolean shouldBeOpen = doorShouldBeOpen(c, actorLocMap);
             if(shouldBeOpen)
             {
                if(!door.isOpen())
@@ -733,6 +729,18 @@ public class ZoneMap implements ZoneConstants, GUIConstants
             }
          }
       }
+   }
+   
+   private boolean doorShouldBeOpen(Coord c, boolean[][] actorLocMap)
+   {
+      boolean shouldBeOpen = false;
+      for(int x = -1; x < 2; x++)
+      for(int y = -1; y < 2; y++)
+      {
+         if(actorLocMap[c.x + x][c.y + y])
+            return true;
+      }
+      return false;
    }
 
 }

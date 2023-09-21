@@ -13,13 +13,13 @@ public class Zone
 	private String name;
 
 
-	public int getId(){return id;}
+	public int getID(){return id;}
 	public ZoneMap getMap(){return map;}
 	public Vector<Actor> getActorList(){return actorList;}
 	public String getName(){return name;}
 
 
-	public void setId(int i){id = i;}
+	public void setID(int i){id = i;}
 	public void setMap(ZoneMap m){map = m;}
 	public void setActorList(Vector<Actor> a){actorList = a;}
 	public void setName(String n){name = n;}

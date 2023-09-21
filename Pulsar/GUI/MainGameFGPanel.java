@@ -109,7 +109,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             }
             else
             {
-               setTile(x, y, ' ', Color.WHITE, BG_COLOR);
+               setTile(x, y, ' ', Color.WHITE, OUT_OF_SIGHT_COLOR);
             }
          }
          
@@ -122,7 +122,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                if((prospect.getAI().getPreviousAction() != ActorAction.DELAY || prospect.didForcedMovement()) &&
                   !GameEngine.playerCanSee(prospect))
                {
-                  setTile(prospect.getMapLoc().x - xCorner, prospect.getMapLoc().y - yCorner, '?', SENSOR_COLOR, BG_COLOR);
+                  setTile(prospect.getMapLoc().x - xCorner, prospect.getMapLoc().y - yCorner, '?', SENSOR_COLOR, OUT_OF_SIGHT_COLOR);
                }
             }
          }
