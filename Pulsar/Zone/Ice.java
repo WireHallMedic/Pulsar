@@ -21,7 +21,8 @@ public class Ice extends MapTile implements GUIConstants, ZoneConstants
          setName(original.getName() + " (Frozen)");
       if(!original.isLiquid())
          setSlowsMovement(original.slowsMovement());
-      if(original.isLowPassable() && !original.slowsMovement())
+      if(original.isLiquid() ||
+         (original.isLowPassable() && !original.slowsMovement()))
          setIconIndex(TileType.ICE.iconIndex);
       setDurability(original.getDurability());
       originalTile = original;
