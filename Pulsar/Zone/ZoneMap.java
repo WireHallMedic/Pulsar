@@ -107,6 +107,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
                switch(trigger.getButtonAction())
                {
                   case TOGGLE : tryToToggle(c); break;
+                  case FLOOD_WATER : flood(c, trigger.getIntensity(), TileType.WATER); break;
+                  case FLOOD_ACID : flood(c, trigger.getIntensity(), TileType.ACID); break;
                   default :     System.out.println("Error: ButtonTrigger with no action.");
                }
             }
@@ -342,7 +344,14 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          if(loc != null)
          {
             extinguish(loc);
-            setTile(loc, MapTileFactory.getWater());
+            setTile(loc, MapTileFactory.getTile(type));
+            if(corpseMap[loc.x][loc.y] != null)
+            {
+               if(getTile(loc) instanceof Acid)
+                  corpseMap[loc.x][loc.y] = null;
+               else
+                  corpseMap[loc.x][loc.y].setColor(getTile(loc).getFGColor());
+            }
          }
       }
    }

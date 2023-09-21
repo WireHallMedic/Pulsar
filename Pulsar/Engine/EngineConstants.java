@@ -11,7 +11,9 @@ public interface EngineConstants
    
    public enum ButtonAction
    {
-      TOGGLE;
+      TOGGLE,
+      FLOOD_WATER,
+      FLOOD_ACID;
    }
    
 }

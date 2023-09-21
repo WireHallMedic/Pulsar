@@ -74,13 +74,12 @@ public interface ZoneConstants extends WSFontConstants
    
    public enum OnDestructionEffect
    {
-      EXPLOSION, FLOOD_WATER, FLOOD_ACID, FLOOD_FIRE;
+      EXPLOSION, FLOOD_WATER, FLOOD_ACID;
       
       public boolean isFloodEffect()
       {
          if(this == FLOOD_WATER ||
-            this == FLOOD_ACID ||
-            this == FLOOD_FIRE)
+            this == FLOOD_ACID)
             return true;
          return false;
       }
