@@ -56,21 +56,51 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
       return actorsToShow;
    }
    
+   public Vector<MapTile> getTilesToShow()
+   {
+      Vector<MapTile> tilesToShow = new Vector<MapTile>();
+      ZoneMap map = GameEngine.getZoneMap();
+      Coord origin = GameEngine.getPlayer().getMapLoc();
+      Coord curLoc = null;
+      int radius = GameEngine.getPlayer().getVisionRange();
+      for(int x = -radius; x <= radius; x++)
+      for(int y = -radius; y <= radius; y++)
+      {
+         curLoc = new Coord(origin.x + x, origin.y + y);
+         if(GameEngine.playerCanSee(curLoc))
+         {
+            MapTile t = map.getTile(curLoc);
+            if(t instanceof Button)
+               tilesToShow.add(t);
+         }
+      }
+      return tilesToShow;
+   }
+   
    // standard mode
    public void showNearbyObjects()
    {
       clearInfoPanel();
       // show actors
       Vector<Actor> actorsToShow = getActorsToShow();
-      for(int i = 0; i < actorsToShow.size() && i < HEIGHT_TILES; i++)
+      int yInset = 0;
+      for(int i = 0; i < actorsToShow.size() && yInset < HEIGHT_TILES; i++)
       {
-         int yInset = 2 * i;
          Actor a = actorsToShow.elementAt(i);
          setTile(X_ORIGIN, Y_ORIGIN + yInset, a.getSprite().getIconIndex(), a.getSprite().getFGColor(), a.getSprite().getBGColor());
          write(X_ORIGIN + 2, Y_ORIGIN + yInset, a.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
          drawActorBars(a, 1, yInset + 1);
+         yInset += 2;
       }
-      // show objects
+      // show interesting tiles
+      Vector<MapTile> tileList = getTilesToShow();
+      for(int i = 0; i < tileList.size(); i++)
+      {
+         MapTile t = tileList.elementAt(i);
+         setTile(X_ORIGIN, Y_ORIGIN + yInset, t.getIconIndex(), t.getFGColor(), t.getBGColor());
+         write(X_ORIGIN + 2, Y_ORIGIN + yInset, t.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         yInset++;
+      }
    }
    
    // look mode

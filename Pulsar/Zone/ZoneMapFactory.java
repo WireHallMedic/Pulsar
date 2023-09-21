@@ -145,6 +145,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
          }
       }
       Button button = (Button)MapTileFactory.getButton(-1);
+      button.setName("Airlock Controls");
       button.setOneUse(false);
       m.setTile(6, 14, button);
       ButtonTrigger trigger = new ButtonTrigger(-1, ButtonAction.TOGGLE);
@@ -159,6 +160,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       m.setTile(6, 13, terminal);
       
       button = (Button)MapTileFactory.getButton(1);
+      button.setName("Fire Control");
       m.setTile(16, 14, button);
       trigger = new ButtonTrigger(1, ButtonAction.FLOOD_WATER);
       trigger.addTarget(new Coord(14, 14));
@@ -167,6 +169,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       m.add(trigger);
       
       button = (Button)MapTileFactory.getButton(2);
+      button.setName("Biohazard Control");
       m.setTile(26, 14, button);
       trigger = new ButtonTrigger(2, ButtonAction.FLOOD_ACID);
       trigger.addTarget(new Coord(24, 14));
