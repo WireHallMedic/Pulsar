@@ -42,9 +42,9 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       return door;
    }
    
-   public static MapTile getButton(int triggerIndex)
+   public static MapTile getButton()
    {
-      Button button = new Button(DEFAULT_TILE_FG_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB(), triggerIndex);
+      Button button = new Button(DEFAULT_TILE_FG_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB());
       return button;
    }
    

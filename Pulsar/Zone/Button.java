@@ -24,10 +24,10 @@ public class Button extends MapTile implements ToggleTile, WSFontConstants
    public void setRepetitions(int r){repetitions = r;}
    
    
-   public Button(int fg, int bg, int ti)
+   public Button(int fg, int bg)
    {
       super('x', fg, bg, "Button", false, true, true);
-      triggerIndex = ti;
+      triggerIndex = EngineTools.getUniqueNumber();
       oneUse = true;
       pressed = false;
       repetitions = 1;

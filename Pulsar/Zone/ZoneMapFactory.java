@@ -144,11 +144,11 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
             m.setTile(x, y, mapTile);
          }
       }
-      Button button = (Button)MapTileFactory.getButton(-1);
+      Button button = (Button)MapTileFactory.getButton();
       button.setName("Airlock Controls");
       button.setOneUse(false);
       m.setTile(6, 14, button);
-      ButtonTrigger trigger = new ButtonTrigger(-1, ButtonAction.TOGGLE);
+      ButtonTrigger trigger = new ButtonTrigger(button.getTriggerIndex(), ButtonAction.TOGGLE);
       trigger.addTarget(new Coord(1, 14));
       m.add(trigger);
       Door bulkheadDoor = (Door)m.getTile(1, 14);
@@ -159,21 +159,21 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       terminal.addPage("Supplemental Information: None");
       m.setTile(6, 13, terminal);
       
-      button = (Button)MapTileFactory.getButton(1);
+      button = (Button)MapTileFactory.getButton();
       button.setName("Fire Control");
       button.setRepetitions(15);
       m.setTile(16, 14, button);
-      trigger = new ButtonTrigger(1, ButtonAction.FLOOD_WATER);
+      trigger = new ButtonTrigger(button.getTriggerIndex(), ButtonAction.FLOOD_WATER);
       trigger.addTarget(new Coord(14, 14));
       trigger.addTarget(new Coord(18, 14));
       trigger.setIntensity(1);
       m.add(trigger);
       
-      button = (Button)MapTileFactory.getButton(2);
+      button = (Button)MapTileFactory.getButton();
       button.setName("Biohazard Control");
       button.setRepetitions(100);
       m.setTile(10, 9, button);
-      trigger = new ButtonTrigger(2, ButtonAction.FLOOD_ACID);
+      trigger = new ButtonTrigger(button.getTriggerIndex(), ButtonAction.FLOOD_ACID);
       trigger.addTarget(new Coord(2, 2));
       trigger.setIntensity(3);
       m.add(trigger);

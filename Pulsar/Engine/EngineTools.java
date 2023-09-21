@@ -13,7 +13,7 @@ public class EngineTools implements ActorConstants, GearConstants
    private static int uniqueNumber = 0;
    private static long lastTimeMark;
    
-   public static int getUniqueNumber()
+   public synchronized static int getUniqueNumber()
    {
       uniqueNumber++;
       return uniqueNumber;
