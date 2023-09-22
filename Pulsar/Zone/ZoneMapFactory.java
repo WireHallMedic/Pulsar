@@ -145,6 +145,9 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
             m.setTile(x, y, mapTile);
          }
       }
+      
+      m.setOOBTile(new Vacuum());
+      
       Button button = (Button)MapTileFactory.getButton();
       button.setName("Airlock Controls");
       button.setOneUse(false);

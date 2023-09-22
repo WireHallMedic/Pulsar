@@ -30,7 +30,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	public int getWidth(){return width;}
 	public int getHeight(){return height;}
 	public MapTile[][] getTileArray(){return tileArray;}
-	public MapTile getOobTile(){return oobTile;}
+	public MapTile getOOBTile(){return oobTile;}
    public boolean[][] getTransparencyMap(){return transparencyMap;}
    public ShadowFoVRect getFoV(){return fov;}
    public Vector<Coord> getVacuumList(){return vacuumList;}
@@ -44,7 +44,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	public void setWidth(int w){width = w;}
 	public void setHeight(int h){height = h;}
 	public void setTileArray(MapTile[][] t){tileArray = t;}
-	public void setOobTile(MapTile o){oobTile = o;}
+	public void setOOBTile(MapTile o){oobTile = o;}
    public void setFoV(ShadowFoVRect newFoV){fov = newFoV;}
    public void setVacuumList(Vector<Coord> vl){vacuumList = vl;}
    public void setBreachList(Vector<Coord> bl){breachList = bl;}
@@ -222,7 +222,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    {
       if(isInBounds(x, y))
          return tileArray[x][y];
-      return new MapTile(oobTile);
+      return MapTileFactory.getTile(oobTile);
    }
    
    public void breakTile(Coord c){breakTile(c.x, c.y);}
@@ -714,6 +714,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       if(getTile(c) instanceof Door)
       {
          Door door = (Door)getTile(c);
+         door.increment();
          if(!door.isLocked())
          {
             boolean shouldBeOpen = doorShouldBeOpen(c, actorLocMap);
@@ -721,10 +722,11 @@ public class ZoneMap implements ZoneConstants, GUIConstants
             {
                if(!door.isOpen())
                   tryToToggle(c);
+               door.setOpenDelay();
             }
             else
             {
-               if(door.isOpen())
+               if(door.isOpen() && door.isOkayToClose())
                   tryToToggle(c);
             }
          }

@@ -8,6 +8,7 @@ public class Door extends MapTile implements ToggleTile
    private boolean open;
    private boolean locked;
    private boolean automatic;
+   private int openDelay;
    
    public boolean isLocked(){return locked;}
    public boolean isAutomatic(){return automatic;}
@@ -23,6 +24,7 @@ public class Door extends MapTile implements ToggleTile
       open = false;
       locked = false;
       automatic = false;
+      openDelay = 0;
    }
 
 	public int getIconIndex()
@@ -53,6 +55,22 @@ public class Door extends MapTile implements ToggleTile
    {
       if(!locked)
          open = !open;
+   }
+   
+   public void increment()
+   {
+      if(openDelay > 0)
+         openDelay--;
+   }
+   
+   public void setOpenDelay()
+   {
+      openDelay = 4;
+   }
+   
+   public boolean isOkayToClose()
+   {
+      return openDelay == 0;
    }
    
 }
