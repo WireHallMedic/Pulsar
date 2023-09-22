@@ -56,6 +56,30 @@ public abstract class MapTemplate
       cellMap = newMap;
    }
    
+   public void mirrorX()
+   {
+      char[][] newMap = new char[width][height];
+      int w = width - 1;
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         newMap[x][y] = cellMap[w - x][y];
+      }
+      cellMap = newMap;
+   }
+   
+   public void mirrorY()
+   {
+      char[][] newMap = new char[width][height];
+      int h = height - 1;
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         newMap[x][y] = cellMap[x][h - y];
+      }
+      cellMap = newMap;
+   }
+   
    public void print()
    {
       for(int y = 0; y < height; y++)

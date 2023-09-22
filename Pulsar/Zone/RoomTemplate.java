@@ -91,6 +91,30 @@ public class RoomTemplate extends MapTemplate
       setConnections();
    }
    
+   @Override
+   public void mirrorX()
+   {
+      super.mirrorX();
+      setConnections();
+   }
+   
+   @Override
+   public void mirrorY()
+   {
+      super.mirrorY();
+      setConnections();
+   }
+   
+   public boolean canMirrorX()
+   {
+      return passEast() == passWest();
+   }
+   
+   public boolean canMirrorY()
+   {
+      return passNorth() == passSouth();
+   }
+   
    public void rotateUntilMatches(boolean[] target)
    {
       if(matchesPassArray(target))
