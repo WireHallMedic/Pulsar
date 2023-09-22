@@ -62,6 +62,11 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return lower + (int)(random() * (upper - lower));
    }
    
+   public static boolean randomBoolean()
+   {
+      return random() <= 0.5;
+   }
+   
    
    // actor stuff
    //////////////////////////////////////////////////////////////

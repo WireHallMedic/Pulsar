@@ -80,6 +80,15 @@ public abstract class MapTemplate
       cellMap = newMap;
    }
    
+   public boolean isInBounds(int x, int y)
+   {
+      if(x < 0 || x >= width)
+         return false;
+      if(y < 0 || y >= height)
+         return false;
+      return true;
+   }
+   
    public void print()
    {
       for(int y = 0; y < height; y++)

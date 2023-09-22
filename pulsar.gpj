@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!4247;g
+!4328;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
@@ -20,6 +20,7 @@ s#l0
 %\011Pulsar%sGUI%sWSFont_16x16.png
 %\011Pulsar%sZone%sMapTemplate.java
 %\011%uWidlerSuite%sCP437.java
+%\011Pulsar%sZone%sRoomTemplateManager.java
 %\011%uWidlerSuite%sAnimationManager.java
 %\011Pulsar%sAI%sAlertnessManager.java
 %\011Pulsar%sGear%sWeaponFactory.java
@@ -51,6 +52,7 @@ s#l0
 %\011Pulsar%sEngine%sWeightedRandomizer.java
 %\011%uWidlerSuite%sFontLoader.java
 %\011Pulsar%sActor%sCorpse.java
+%\011Pulsar%sZone%sZoneTemplate.java
 %\011Pulsar%sGUI%sPlayerPanel.java
 %\011Pulsar%sEngine%sWeightedRandomizable.java
 %\011Pulsar%sGear%sShield.java
@@ -131,7 +133,7 @@ s#l0
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sZone%sAcid.java
 %\011Pulsar%sGear%sGearConstants.java
-!4247;f
+!4328;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
@@ -139,6 +141,7 @@ s#l0
 %\011Pulsar%sGUI%sWSFont_16x16.png
 %\011Pulsar%sZone%sMapTemplate.java
 %\011%uWidlerSuite%sCP437.java
+%\011Pulsar%sZone%sRoomTemplateManager.java
 %\011%uWidlerSuite%sAnimationManager.java
 %\011Pulsar%sAI%sAlertnessManager.java
 %\011Pulsar%sGear%sWeaponFactory.java
@@ -170,6 +173,7 @@ s#l0
 %\011Pulsar%sEngine%sWeightedRandomizer.java
 %\011%uWidlerSuite%sFontLoader.java
 %\011Pulsar%sActor%sCorpse.java
+%\011Pulsar%sZone%sZoneTemplate.java
 %\011Pulsar%sGUI%sPlayerPanel.java
 %\011Pulsar%sEngine%sWeightedRandomizable.java
 %\011Pulsar%sGear%sShield.java
@@ -255,5 +259,5 @@ s#l0
 %\011Pulsar%sZone%sRoomTemplateTest.java
 %\011Pulsar%sEngine%sEngineTest.java
 %\011Pulsar%sGear%sGearTest.java
-!247;t
-jgrJUnit0xr	%\011Pulsar%sActor%sActorTest.java	1695135403874:P%\011Actor.java	%\011Pulsar%sActor%sActor.java	1695135403874:P%\011ActorTest.java	%\011Pulsar%sEngine%sEngineTest.java	1695135403874:P	%\011Pulsar%sGear%sGearTest.java	1695135403874:P	
+!405;t
+jgrJUnit0xr	%\011Pulsar%sActor%sActorTest.java	1695419069440:P%\011Actor.java	%\011Pulsar%sZone%sRoomTemplateTest.java	1695420846616:P%\011RoomTemplate.java	%\011Pulsar%sActor%sActor.java	1695419069440:P%\011ActorTest.java	%\011Pulsar%sEngine%sEngineTest.java	1695419069440:P	%\011Pulsar%sGear%sGearTest.java	1695419069440:P	%\011Pulsar%sZone%sRoomTemplate.java	1695420846616:P%\011RoomTemplateTest.java	
