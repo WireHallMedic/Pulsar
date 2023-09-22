@@ -39,6 +39,23 @@ public abstract class MapTemplate
          cellMap[x][y] = input.elementAt(y).charAt(x);
    }
    
+   // rotates a quarter turn clockwise
+   public void rotate()
+   {
+      int newHeight = width;
+      int newWidth = height;
+      char[][] newMap = new char[newWidth][newHeight];
+      int w = height - 1;
+      for(int x = 0; x < newWidth; x++)
+      for(int y = 0; y < newHeight; y++)
+      {
+         newMap[x][y] = cellMap[y][w - x];
+      }
+      width = newWidth;
+      height = newHeight;
+      cellMap = newMap;
+   }
+   
    public void print()
    {
       for(int y = 0; y < height; y++)

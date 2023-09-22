@@ -58,6 +58,13 @@ public class RoomTemplate extends MapTemplate
       super(input);
    }
    
+   // pass arrays are always ordered NESW.
+   public boolean[] getPassArray()
+   {
+      boolean[] passArr = {passNorth(), passEast(), passSouth, passWest()};
+      return passArr;
+   }
+   
    @Override
    public void set(Vector<String> input)
    {
@@ -65,6 +72,14 @@ public class RoomTemplate extends MapTemplate
       setConnections();
       setType();
    }
+   
+   @Override
+   public void rotate()
+   {
+      super.rotate();
+      setConnections();
+   }
+   
    
    private void setConnections()
    {
