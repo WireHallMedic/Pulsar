@@ -2,7 +2,7 @@ package Pulsar.Zone;
 
 import java.util.*;
 
-public class RoomTemplate extends MapTemplate
+public class RoomTemplate extends MapTemplate implements ZoneConstants
 {
    
    public enum RoomTemplateTile
@@ -33,36 +33,22 @@ public class RoomTemplate extends MapTemplate
    
    
 	private RoomTemplateType type;
-	private boolean passNorth;
-	private boolean passSouth;
-	private boolean passEast;
-	private boolean passWest;
+   private boolean[] passArray;
 
 
 	public RoomTemplateType getType(){return type;}
-	public boolean passNorth(){return passNorth;}
-	public boolean passSouth(){return passSouth;}
-	public boolean passEast(){return passEast;}
-	public boolean passWest(){return passWest;}
+   public boolean[] getPassArray(){return passArray;}
+   public boolean getPass(int dir){return passArray[dir];}
+	public boolean passNorth(){return passArray[NORTH];}
+	public boolean passSouth(){return passArray[SOUTH];}
+	public boolean passEast(){return passArray[EAST];}
+	public boolean passWest(){return passArray[WEST];}
 
 
-	public void setPassNorth(boolean p){passNorth = p;}
-	public void setPassSouth(boolean p){passSouth = p;}
-	public void setPassEast(boolean p){passEast = p;}
-	public void setPassWest(boolean p){passWest = p;}
-
-
-   
    public RoomTemplate(Vector<String> input)
    {
       super(input);
-   }
-   
-   // pass arrays are always ordered NESW.
-   public boolean[] getPassArray()
-   {
-      boolean[] passArr = {passNorth(), passEast(), passSouth, passWest()};
-      return passArr;
+      setPassArray();
    }
    
    public boolean matchesPassArray(boolean[] target)
@@ -80,7 +66,7 @@ public class RoomTemplate extends MapTemplate
    public void set(Vector<String> input)
    {
       super.set(input);
-      setConnections();
+      setPassArray();
       setType();
    }
    
@@ -88,31 +74,31 @@ public class RoomTemplate extends MapTemplate
    public void rotate()
    {
       super.rotate();
-      setConnections();
+      setPassArray();
    }
    
    @Override
    public void mirrorX()
    {
       super.mirrorX();
-      setConnections();
+      setPassArray();
    }
    
    @Override
    public void mirrorY()
    {
       super.mirrorY();
-      setConnections();
+      setPassArray();
    }
    
    public boolean canMirrorX()
    {
-      return passEast() == passWest();
+      return passArray[EAST] == passArray[WEST];
    }
    
    public boolean canMirrorY()
    {
-      return passNorth() == passSouth();
+      return passArray[NORTH] == passArray[SOUTH];
    }
    
    public void rotateUntilMatches(boolean[] target)
@@ -129,26 +115,23 @@ public class RoomTemplate extends MapTemplate
    }
    
    
-   private void setConnections()
+   private void setPassArray()
    {
-      passNorth = false;
-      passSouth = false;
-      passEast = false;
-      passWest = false;
+      passArray = new boolean[4];
       
       for(int x = 0; x < width; x++)
       {
          if(isPassCell(getCell(x, 0)))
-            passNorth = true;
+            passArray[NORTH] = true;
          if(isPassCell(getCell(x, height - 1)))
-            passSouth = true;
+            passArray[SOUTH] = true;
       }
       for(int y = 0; y < height; y++)
       {
          if(isPassCell(getCell(0, y)))
-            passWest = true;
+            passArray[WEST] = true;
          if(isPassCell(getCell(width - 1, y)))
-            passEast = true;
+            passArray[EAST] = true;
       }
    }
    
@@ -160,33 +143,40 @@ public class RoomTemplate extends MapTemplate
    
    private void setType()
    {
+      type = determineType(passArray);
+   }
+   
+   public static RoomTemplateType determineType(boolean[] passArr)
+   {  
       int totalConnections = 0;
-      if(passNorth) totalConnections++;
-      if(passSouth) totalConnections++;
-      if(passEast) totalConnections++;
-      if(passWest) totalConnections++;
+      RoomTemplateType t = null;
+      for(boolean dir : passArr)
+         if(dir)
+            totalConnections++;
       
       // no connections, it's a block
       if(totalConnections == 0)
-         type = RoomTemplateType.BLOCK;
+         t = RoomTemplateType.BLOCK;
       // one connection, it's a terminal
       else if(totalConnections == 1)
-         type = RoomTemplateType.TERMINAL;
+         t = RoomTemplateType.TERMINAL;
       // two connections, could be either a straight or an elbow
       else if(totalConnections == 2)
       {
          // two connections, opposite pairs both match; it's a straight
-         if((passNorth == passSouth) && (passEast == passWest))
-            type = RoomTemplateType.STRAIGHT;
+         if((passArr[NORTH] == passArr[SOUTH]) && (passArr[EAST] == passArr[WEST]))
+            t = RoomTemplateType.STRAIGHT;
          // two connections, opposite pairs don't both match; it's an elbow
          else
-            type = RoomTemplateType.ELBOW;
+            t = RoomTemplateType.ELBOW;
       }
       // three connections, it's a tee
       else if(totalConnections == 3)
-         type = RoomTemplateType.TEE;
+         t = RoomTemplateType.TEE;
       // four connections, it's a cross
       else if(totalConnections == 4)
-         type = RoomTemplateType.CROSS;
+         t = RoomTemplateType.CROSS;
+      
+      return t;
    }
 }
