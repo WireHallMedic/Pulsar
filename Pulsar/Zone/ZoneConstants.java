@@ -12,6 +12,11 @@ public interface ZoneConstants extends WSFontConstants
    public static final int FIRE_DAMAGE = 3;
    public static final int ACID_DAMAGE = 5;
    
+   public static final int NORTH = 0;
+   public static final int EAST = 1;
+   public static final int SOUTH = 2;
+   public static final int WEST = 3;
+   
    public enum TileType
    {
       CLEAR       (SMALL_BULLET_TILE, "Clear", true, true, true),
