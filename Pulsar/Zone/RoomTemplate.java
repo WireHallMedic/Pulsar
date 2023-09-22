@@ -65,6 +65,17 @@ public class RoomTemplate extends MapTemplate
       return passArr;
    }
    
+   public boolean matchesPassArray(boolean[] target)
+   {
+      boolean[] current = getPassArray();
+      for(int i = 0; i < current.length; i++)
+      {
+         if(current[i] != target[i])
+            return false;
+      }
+      return true;
+   }
+   
    @Override
    public void set(Vector<String> input)
    {
@@ -78,6 +89,19 @@ public class RoomTemplate extends MapTemplate
    {
       super.rotate();
       setConnections();
+   }
+   
+   public void rotateUntilMatches(boolean[] target)
+   {
+      if(matchesPassArray(target))
+         return;
+      for(int i = 0; i < 3; i++)
+      {
+         rotate();
+         if(matchesPassArray(target))
+            return;
+      }
+      throw new java.lang.Error("Room template cannot be rotated to match.");
    }
    
    
