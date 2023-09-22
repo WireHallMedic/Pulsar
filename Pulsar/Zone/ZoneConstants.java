@@ -87,4 +87,6 @@ public interface ZoneConstants extends WSFontConstants
    
    // an array keyed to air pressure
    public int[] EXTINGUISH_ARRAY = {1000, 10, 5, 0, 0, 0};
+   
+   
 }
