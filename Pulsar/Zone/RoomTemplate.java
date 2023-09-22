@@ -56,6 +56,12 @@ public class RoomTemplate extends MapTemplate
    public RoomTemplate(Vector<String> input)
    {
       super(input);
+   }
+   
+   @Override
+   public void set(Vector<String> input)
+   {
+      super.set(input);
       setConnections();
       setType();
    }
@@ -93,8 +99,31 @@ public class RoomTemplate extends MapTemplate
    {
       int totalConnections = 0;
       if(passNorth) totalConnections++;
-      if(passNorth) totalConnections++;
-      if(passNorth) totalConnections++;
-      if(passNorth) totalConnections++;
+      if(passSouth) totalConnections++;
+      if(passEast) totalConnections++;
+      if(passWest) totalConnections++;
+      
+      // no connections, it's a block
+      if(totalConnections == 0)
+         type = RoomTemplateType.BLOCK;
+      // one connection, it's a terminal
+      else if(totalConnections == 1)
+         type = RoomTemplateType.TERMINAL;
+      // two connections, could be either a straight or an elbow
+      else if(totalConnections == 2)
+      {
+         // two connections, opposite pairs both match; it's a straight
+         if((passNorth == passSouth) && (passEast == passWest))
+            type = RoomTemplateType.STRAIGHT;
+         // two connections, opposite pairs don't both match; it's an elbow
+         else
+            type = RoomTemplateType.ELBOW;
+      }
+      // three connections, it's a tee
+      else if(totalConnections == 3)
+         type = RoomTemplateType.TEE;
+      // four connections, it's a cross
+      else if(totalConnections == 4)
+         type = RoomTemplateType.CROSS;
    }
 }

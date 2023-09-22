@@ -31,12 +31,22 @@ public abstract class MapTemplate
    
    public void set(Vector<String> input)
    {
-      int width = input.elementAt(0).length();
-      int height = input.size();
+      width = input.elementAt(0).length();
+      height = input.size();
       cellMap = new char[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
          cellMap[x][y] = input.elementAt(y).charAt(x);
+   }
+   
+   public void print()
+   {
+      for(int y = 0; y < height; y++)
+      {
+         for(int x = 0; x < width; x++)
+            System.out.print("" + cellMap[x][y]);
+         System.out.println("");
+      }
    }
 
 }

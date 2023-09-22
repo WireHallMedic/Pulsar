@@ -250,8 +250,9 @@ s#l0
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sZone%sAcid.java
 %\011Pulsar%sGear%sGearConstants.java
-!105;l
+!146;l
 %\011Pulsar%sActor%sActorTest.java
+%\011Pulsar%sZone%sRoomTemplateTest.java
 %\011Pulsar%sEngine%sEngineTest.java
 %\011Pulsar%sGear%sGearTest.java
 !247;t
