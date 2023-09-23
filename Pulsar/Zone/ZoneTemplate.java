@@ -37,6 +37,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       super(input);
       setPassArray(mostRestrictive);
       generateRooms(rtm);
+      validate();
    }
    
    public void generateRooms(RoomTemplateManager rtm)
@@ -134,7 +135,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public void validate() 
    {
       if(!checkConnectivity())
-         throw new java.lang.Error("Zone Template has potentially unreachable rooms.");
+         throw new java.lang.Error("ZoneTemplate has potentially unreachable rooms.");
    }
    
    private boolean checkConnectivity()

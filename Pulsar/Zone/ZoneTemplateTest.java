@@ -26,7 +26,7 @@ public class ZoneTemplateTest implements ZoneConstants
       Vector<String> v = new Vector<String>();
       v.add("#...#");
       v.add(".???.");
-      v.add(".???.");
+      v.add(".?.?.");
       v.add(".???.");
       v.add("#...#");
       return new ZoneTemplate(v, rtm);
@@ -52,11 +52,14 @@ public class ZoneTemplateTest implements ZoneConstants
    }
 
 
-   // this should hit every zone template used
-   @Test public void testValidation() 
+   @Test public void testValidation()
    {
-      ZoneTemplate zt = getTestZoneTemplate();
-      Assert.assertTrue("No disconnected rooms", checkConnectivity(zt));
+      RoomTemplateManager rtm = new RoomTemplateManager();
+      rtm.loadDemos();
+      Vector<String> v = new Vector<String>();
+      v.add(".???.");
+      v.add(".???.");
+      assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v, rtm);});
    }
    
 }

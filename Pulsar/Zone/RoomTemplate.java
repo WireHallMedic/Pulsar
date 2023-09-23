@@ -208,13 +208,13 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       {
          if(isInvalidBorderTile(getCell(x, 0)) ||
             isInvalidBorderTile(getCell(x, height - 1)))
-            throw new java.lang.Error("Room template has invalid border tile.");
+            throw new java.lang.Error("RoomTemplate has invalid border tile.");
       }
       for(int y = 0; y < height; y++)
       {
          if(isInvalidBorderTile(getCell(0, y)) ||
             isInvalidBorderTile(getCell(width - 1, y)))
-            throw new java.lang.Error("Room template has invalid border tile.");
+            throw new java.lang.Error("RoomTemplate has invalid border tile.");
       }
    }
    
