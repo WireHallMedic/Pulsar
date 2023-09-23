@@ -9,6 +9,9 @@ public class RoomTemplateManager implements ZoneConstants
    private int tileHeight;
    private int tileWidth;
    
+   public int getHeight(){return tileHeight;}
+   public int getWidth(){return tileWidth;}
+   
    
    public RoomTemplateManager()
    {

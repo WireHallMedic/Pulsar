@@ -108,6 +108,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       for(int i = 0; i < 3; i++)
       {
          rotate();
+         System.out.println("Rotating");
          if(matchesPassArray(target))
             return;
       }
@@ -178,5 +179,30 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
          t = RoomTemplateType.CROSS;
       
       return t;
+   }
+   
+   public void print()
+   {
+      for(int y = 0; y < height; y++)
+      {
+         for(int x = 0; x < width; x++)
+         {
+            System.out.print(getCell(x, y));
+         }
+         System.out.println("");
+      }
+   }
+   
+   public static void main(String[] args)
+   {
+      Vector<String> v = new Vector<String>();
+      v.add("#..#");
+      v.add("#..#");
+      v.add("#..#");
+      v.add("####");
+      RoomTemplate t = new RoomTemplate(v);
+      t.print();
+      t.rotate();
+      t.print();
    }
 }

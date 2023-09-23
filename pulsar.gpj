@@ -254,10 +254,11 @@ s#l0
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sZone%sAcid.java
 %\011Pulsar%sGear%sGearConstants.java
-!146;l
+!187;l
+%\011Pulsar%sZone%sZoneTemplateTest.java
 %\011Pulsar%sActor%sActorTest.java
 %\011Pulsar%sZone%sRoomTemplateTest.java
 %\011Pulsar%sEngine%sEngineTest.java
 %\011Pulsar%sGear%sGearTest.java
 !405;t
-jgrJUnit0xr	%\011Pulsar%sActor%sActorTest.java	1695419069440:P%\011Actor.java	%\011Pulsar%sZone%sRoomTemplateTest.java	1695420846616:P%\011RoomTemplate.java	%\011Pulsar%sActor%sActor.java	1695419069440:P%\011ActorTest.java	%\011Pulsar%sEngine%sEngineTest.java	1695419069440:P	%\011Pulsar%sGear%sGearTest.java	1695419069440:P	%\011Pulsar%sZone%sRoomTemplate.java	1695420846616:P%\011RoomTemplateTest.java	
+jgrJUnit0xr	%\011Pulsar%sActor%sActorTest.java	1695419069440:P%\011Actor.java	%\011Pulsar%sZone%sRoomTemplateTest.java	1695425038560:P%\011RoomTemplate.java	%\011Pulsar%sActor%sActor.java	1695419069440:P%\011ActorTest.java	%\011Pulsar%sEngine%sEngineTest.java	1695419069440:P	%\011Pulsar%sGear%sGearTest.java	1695419069440:P	%\011Pulsar%sZone%sRoomTemplate.java	1695425038560:P%\011RoomTemplateTest.java	
