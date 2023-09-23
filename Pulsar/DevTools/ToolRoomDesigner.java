@@ -6,7 +6,7 @@ import java.awt.event.*;
 import WidlerSuite.*;
 import Pulsar.GUI.*;
 
-public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener
+public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
    public static final char[] buttonCharList = {'#', '.', '0', '/', 'V', '=', 
                                                 '~', 'a', 'c', 'b', 'w', 'e', 
@@ -54,10 +54,13 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       
       setButtonArray();
       mapPanel.addMouseListener(this);
+      mapPanel.addKeyListener(this);
+      this.addKeyListener(this);
       javax.swing.Timer timer = new javax.swing.Timer(1000 / 30, null);
       timer.addActionListener(this);
       timer.start();
       
+      mapPanel.grabFocus();
       setVisible(true);
    }
    
@@ -109,6 +112,14 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       mapPanel.setIcon(mouseLocX, mouseLocY, activeChar);
    }
    
+   public void keyPressed(KeyEvent ke){}
+   public void keyReleased(KeyEvent ke){}
+   public void keyTyped(KeyEvent ke)
+   {
+      activeChar = ke.getKeyChar();
+      label.setText("" + activeChar);
+   }
+   
    public void populateControlPanel()
    {
       controlPanel.add(new JLabel("Active char:"));
@@ -119,6 +130,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       {
          buttonList[i] = new JButton("" + buttonCharList[i]);
          buttonList[i].addActionListener(this);
+         buttonList[i].setFocusable(false);
          controlPanel.add(buttonList[i]);
       }
    }
