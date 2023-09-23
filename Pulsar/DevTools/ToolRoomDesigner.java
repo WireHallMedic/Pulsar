@@ -2,13 +2,19 @@ package Pulsar.DevTools;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 import WidlerSuite.*;
+import Pulsar.GUI.*;
 
-public class ToolRoomDesigner extends JFrame
+public class ToolRoomDesigner extends JFrame implements ActionListener
 {
-   private LayoutPanel layoutPanel;
-   private JPanel mapPanel;
+   private JPanel layoutPanel;
+   private RogueTilePanel mapPanel;
    private JPanel controlPanel;
+   
+   private int widthTiles = 13;
+   private int heightTiles = 13;
+   private JButton[][] buttonArray;
    
    
    public ToolRoomDesigner()
@@ -18,26 +24,47 @@ public class ToolRoomDesigner extends JFrame
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setTitle("Room Designer");
       
-      layoutPanel = new LayoutPanel(this);
+      buttonArray = null;
+      
+      layoutPanel = new JPanel();
+      layoutPanel.setLayout(new GridLayout(1, 2));
       layoutPanel.setVisible(true);
       this.add(layoutPanel);
       
-      mapPanel = new JPanel();
-      mapPanel.setBackground(Color.BLUE);
+      mapPanel = new RogueTilePanel(widthTiles, heightTiles, GUIConstants.SQUARE_TILE_PALETTE);
+      mapPanel.setSizeMultiplier(2.0);
       mapPanel.setVisible(true);
-      layoutPanel.add(mapPanel, 1.0, .75, 0.0, 0.0);
+      layoutPanel.add(mapPanel);
       
       controlPanel = new JPanel();
-      controlPanel.setBackground(Color.RED);
       controlPanel.setVisible(true);
-      layoutPanel.add(controlPanel, 1.0, .25, 0.0, .75);
+      layoutPanel.add(controlPanel);
+      
+      setButtonArray();
+      javax.swing.Timer timer = new javax.swing.Timer(1000 / 30, null);
+      timer.addActionListener(this);
+      timer.start();
       
       setVisible(true);
-      this.repaint();
+   }
+   
+   public void setButtonArray()
+   {
+      for(int x = 0; x < widthTiles; x++)
+      for(int y = 0; y < heightTiles; y++)
+      {
+         mapPanel.setIcon(x, y, '?');
+      }
    }
    
    public static void main(String[] args)
    {
-      new ToolRoomDesigner();
+      ToolRoomDesigner t = new ToolRoomDesigner();
+   }
+   
+   public void actionPerformed(ActionEvent ae)
+   {
+      mapPanel.actionPerformed(ae);
+      this.repaint();
    }
 }
