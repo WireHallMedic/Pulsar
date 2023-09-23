@@ -42,7 +42,6 @@ public class ZoneTemplateTest implements ZoneConstants
          Assert.assertEquals("Horizontally adjacent cells have matching pass values", true, zt.getPassArray(x, y)[EAST] == zt.getPassArray(x + 1, y)[WEST]);
          Assert.assertEquals("Vertically adjacent cells have matching pass values", true, zt.getPassArray(x, y)[SOUTH] == zt.getPassArray(x, y + 1)[NORTH]);
       }
-      zt.print();
       zt.setPassArray(true);
       zt.generateRooms();
       for(int x = 0; x < zt.getWidth() - 1; x++)
@@ -51,7 +50,6 @@ public class ZoneTemplateTest implements ZoneConstants
          Assert.assertEquals("Horizontally adjacent cells have matching pass values", true, zt.getPassArray(x, y)[EAST] == zt.getPassArray(x + 1, y)[WEST]);
          Assert.assertEquals("Vertically adjacent cells have matching pass values", true, zt.getPassArray(x, y)[SOUTH] == zt.getPassArray(x, y + 1)[NORTH]);
       }
-      zt.print();
    }
 
 
@@ -63,6 +61,18 @@ public class ZoneTemplateTest implements ZoneConstants
       v.add(".???.");
       v.add(".???.");
       assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v, rtm);});
+      Vector<String> v2 = new Vector<String>();
+      v2.add("......");
+      v2.add("..??..");
+      v2.add(".????.");
+      v2.add("..??..");
+      v2.add("......");
+      assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v2, rtm);});
+      Vector<String> v3 = new Vector<String>();
+      v3.add(".????.");
+      v3.add("..??..");
+      v3.add("......");
+      assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v3, rtm);});
    }
    
 }
