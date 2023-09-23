@@ -48,7 +48,7 @@ public class RoomTemplateManager implements ZoneConstants
    
    public RoomTemplate random(RoomTemplate.RoomTemplateType t)
    {
-      return typeList[t.ordinal()].random();
+      return new RoomTemplate(typeList[t.ordinal()].random());
    }
    
    public void loadDemos()

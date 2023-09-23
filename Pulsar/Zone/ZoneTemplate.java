@@ -133,10 +133,11 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       RoomTemplateManager rtm = new RoomTemplateManager();
       rtm.loadDemos();
       Vector<String> v = new Vector<String>();
-      v.add("#.#");
-      v.add("...");
-      v.add("#.#");
-      ZoneTemplate zt = new ZoneTemplate(v, rtm, true);
+      v.add("#..#");
+      v.add(".??.");
+      v.add(".??.");
+      v.add("#..#");
+      ZoneTemplate zt = new ZoneTemplate(v, rtm, false);
       zt.print();
    }
 }
