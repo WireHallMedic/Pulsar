@@ -81,8 +81,10 @@ public interface GUIConstants
    
    public static final String WINDOW_TITLE = "Pulsar: A Sci-Fi Roguelike";
    
-   public static TilePalette RECT_TILE_PALETTE = new TilePalette("Pulsar/GUI/WSFont_8x16.png", 16, 16);
-   public static TilePalette SQUARE_TILE_PALETTE = new TilePalette("Pulsar/GUI/WSFont_16x16.png", 16, 16);
+  //  public static TilePalette RECT_TILE_PALETTE = new TilePalette("Pulsar/GUI/WSFont_8x16.png", 16, 16);
+//    public static TilePalette SQUARE_TILE_PALETTE = new TilePalette("Pulsar/GUI/WSFont_16x16.png", 16, 16);
+   public static TilePalette RECT_TILE_PALETTE = new TilePalette("WSFont_8x16.png", 16, 16);
+   public static TilePalette SQUARE_TILE_PALETTE = new TilePalette("WSFont_16x16.png", 16, 16);
    
    
 }
