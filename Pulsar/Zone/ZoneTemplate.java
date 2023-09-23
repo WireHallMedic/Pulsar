@@ -2,6 +2,7 @@ package Pulsar.Zone;
 
 import java.util.*;
 import Pulsar.Engine.*;
+import WidlerSuite.*;
 
 public class ZoneTemplate extends MapTemplate implements ZoneConstants
 {
@@ -128,6 +129,45 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          }
          System.out.println("");
       }
+   }
+   
+   public void validate() 
+   {
+      if(!checkConnectivity())
+         throw new java.lang.Error("Zone Template has potentially unreachable rooms.");
+   }
+   
+   private boolean checkConnectivity()
+   {
+      // generate map using demo tileset; all # and .
+      RoomTemplateManager rtm = new RoomTemplateManager();
+      rtm.loadDemos();
+      setPassArray(ZoneTemplate.MOST_RESTRICTIVE);
+      generateRooms(rtm);
+      Coord origin = new Coord(-1, -1);
+      char[][] tileMap = getTileMap();
+      // create passability map
+      boolean[][] passMap = new boolean[tileMap.length][tileMap[0].length];
+      for(int x = 0; x < tileMap.length; x++)
+      for(int y = 0; y < tileMap[0].length; y++)
+      {
+         if(tileMap[x][y] == '.')
+         {
+            origin.x = x;
+            origin.y = y;
+            passMap[x][y] = true;
+         }
+      }
+      //create floodfill
+      boolean[][] fillMap = FloodFill.fill(passMap, origin);
+      // check all . tiles are flooded, and all # are not
+      for(int x = 0; x < tileMap.length; x++)
+      for(int y = 0; y < tileMap[0].length; y++)
+      {
+         if((tileMap[x][y] == '.') != fillMap[x][y])
+            return false;
+      }
+      return true;
    }
    
    public static void main(String[] args)
