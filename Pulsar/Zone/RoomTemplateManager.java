@@ -79,7 +79,7 @@ public class RoomTemplateManager implements ZoneConstants
       add(new RoomTemplate(str));
       
       str = new Vector<String>();
-      str.add("#...#");
+      str.add("#....");
       str.add("#....");
       str.add("#....");
       str.add("#....");
@@ -87,7 +87,7 @@ public class RoomTemplateManager implements ZoneConstants
       add(new RoomTemplate(str));
       
       str = new Vector<String>();
-      str.add("#...#");
+      str.add(".....");
       str.add(".....");
       str.add(".....");
       str.add(".....");
@@ -95,11 +95,11 @@ public class RoomTemplateManager implements ZoneConstants
       add(new RoomTemplate(str));
       
       str = new Vector<String>();
-      str.add("#...#");
       str.add(".....");
       str.add(".....");
       str.add(".....");
-      str.add("#...#");
+      str.add(".....");
+      str.add(".....");
       add(new RoomTemplate(str));
    }
    
