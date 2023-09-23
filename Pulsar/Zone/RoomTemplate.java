@@ -49,11 +49,14 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    {
       super(input);
       setPassArray();
+      setType();
    }
    
    public RoomTemplate(RoomTemplate that)
    {
-   
+      super(that);
+      setPassArray();
+      setType();
    }
    
    public boolean matchesPassArray(boolean[] target)
@@ -113,7 +116,6 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       for(int i = 0; i < 3; i++)
       {
          rotate();
-         System.out.println("Rotating");
          if(matchesPassArray(target))
             return;
       }
