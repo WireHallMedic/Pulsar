@@ -116,8 +116,8 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    public void mouseEntered(MouseEvent me){}
    public void mouseExited(MouseEvent me){}
    public void mouseReleased(MouseEvent me){}
-   public void mousePressed(MouseEvent me){}
-   public void mouseClicked(MouseEvent me)
+   public void mouseClicked(MouseEvent me){}
+   public void mousePressed(MouseEvent me)
    {
       mapPanel.setIcon(mouseLocX, mouseLocY, activeChar);
    }
@@ -141,6 +141,11 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
          buttonList[i].addActionListener(this);
          buttonList[i].setFocusable(false);
          controlPanel.add(buttonList[i]);
+      }
+      
+      for(int i = 0; i < 22 - (buttonStrList.length + 2); i++)
+      {
+         controlPanel.add(new JButton());
       }
    }
    
