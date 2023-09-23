@@ -36,8 +36,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm, boolean mostRestrictive)
    {
       super(input);
-      roomTemplateManager = rtm;
       validate();
+      roomTemplateManager = rtm;
       setPassArray(mostRestrictive);
       generateRooms();
    }
@@ -143,8 +143,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    private boolean checkConnectivity()
    {
       // generate map using demo tileset; all # and .
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadDemos();
+      roomTemplateManager = new RoomTemplateManager();
+      roomTemplateManager.loadDemos();
       setPassArray(ZoneTemplate.MOST_RESTRICTIVE);
       generateRooms();
       Coord origin = new Coord(-1, -1);
