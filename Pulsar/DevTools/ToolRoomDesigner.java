@@ -8,16 +8,22 @@ import Pulsar.GUI.*;
 
 public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener
 {
+   public static final char[] buttonCharList = {'#', '.', '0', '/', 'V', '=', 
+                                                '~', 'a', 'c', 'b', 'w', 'e', 
+                                                '!', '?', 's', 'd', 'u', '<'};
    private JPanel layoutPanel;
    private RogueTilePanel mapPanel;
    private JPanel controlPanel;
+   private JButton[][] buttonArray;
+   private JLabel label;
+   private JButton[] buttonList;
    
+   
+   private char activeChar;
    private int widthTiles = 13;
    private int heightTiles = 13;
    private int mouseLocX;
    private int mouseLocY;
-   private JButton[][] buttonArray;
-   private JLabel label;
    
    
    public ToolRoomDesigner()
@@ -41,11 +47,10 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       layoutPanel.add(mapPanel);
       
       controlPanel = new JPanel();
+      controlPanel.setLayout(new GridLayout(12, 2));
       controlPanel.setVisible(true);
+      populateControlPanel();
       layoutPanel.add(controlPanel);
-      
-      label = new JLabel("?");
-      controlPanel.add(label);
       
       setButtonArray();
       mapPanel.addMouseListener(this);
@@ -67,9 +72,21 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    
    public void actionPerformed(ActionEvent ae)
    {
-      mapPanel.actionPerformed(ae);
-      updateMouseLoc(mapPanel.mouseColumn(), mapPanel.mouseRow());
-      this.repaint();
+      if(ae.getSource() instanceof javax.swing.Timer)
+      {
+         mapPanel.actionPerformed(ae);
+         updateMouseLoc(mapPanel.mouseColumn(), mapPanel.mouseRow());
+         this.repaint();
+      }
+      for(int i = 0; i < buttonCharList.length; i++)
+      {
+         if(ae.getSource() == buttonList[i])
+         {
+            label.setText("" + buttonCharList[i]);
+            activeChar = buttonCharList[i];
+            break;
+         }
+      }
    }
    
    public void updateMouseLoc(int x, int y)
@@ -90,11 +107,26 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    public void mouseClicked(MouseEvent me)
    {
       label.setText("Clicked in [" + mouseLocX + ", " + mouseLocY + "]");
-      System.out.println("Click");
+   }
+   
+   public void populateControlPanel()
+   {
+      controlPanel.add(new JLabel("Active char:"));
+      label = new JLabel();
+      controlPanel.add(label);
+      buttonList = new JButton[buttonCharList.length];
+      for(int i = 0; i < buttonCharList.length; i++)
+      {
+         buttonList[i] = new JButton("" + buttonCharList[i]);
+         buttonList[i].addActionListener(this);
+         controlPanel.add(buttonList[i]);
+      }
    }
    
    public static void main(String[] args)
    {
       ToolRoomDesigner t = new ToolRoomDesigner();
    }
+   
+   
 }
