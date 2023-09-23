@@ -28,9 +28,11 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    private RoomTemplateManager roomTemplateManager;
    private boolean[][][] passArray;
    private RoomTemplate[][] roomTemplate;
+   private char[][] tileMap;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
    public RoomTemplate getRoomTemplate(int x, int y){return roomTemplate[x][y];}
+   public char[][] getTileMap(){return tileMap;}
    
    public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm){this(input, rtm, false);}
    public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm, boolean mostRestrictive)
@@ -51,6 +53,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          roomTemplate[x][y] = roomTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
          roomTemplate[x][y].rotateUntilMatches(passArray[x][y]);
       }
+      setTileMap();
    }
    
    public void setPassArray(boolean mostRestrictive)
@@ -108,47 +111,34 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
-   public char[][] getTileMap()
-   {
-      int roomWidth = roomTemplate[0][0].getWidth();
-      int roomHeight = roomTemplate[0][0].getHeight();
-      char[][] map = new char[width * roomWidth][height * roomHeight];
-      for(int x = 0; x < map.length; x++)
-      for(int y = 0; y < map[0].length; y++)
-      {
-         map[x][y] = roomTemplate[x / roomWidth][y / roomHeight].getCell(x % roomWidth, y % roomHeight);
-      }
-      return map;
-   }
-   
-   public char[][] newGetTileMap()
+   public void setTileMap()
    {
       // create tile map
       int roomWidth = roomTemplate[0][0].getWidth();
       int roomHeight = roomTemplate[0][0].getHeight();
       int mapWidth = ((roomWidth - 1) * width) + 1;
       int mapHeight = ((roomHeight - 1) * height) + 1;
-      char[][] tileMap = new char[mapWidth][mapHeight];
+      char[][] newMap = new char[mapWidth][mapHeight];
       // fill with lowest priority tile (OOB)
       for(int x = 0; x < mapWidth; x++)
       for(int y = 0; y < mapHeight; y++)
-         tileMap[x][y] = '0';
+         newMap[x][y] = '0';
       // place room at 0, 0
-      placeRoom(tileMap, 0, 0, roomTemplate[0][0]);
+      placeRoom(newMap, 0, 0, roomTemplate[0][0]);
       // place all rooms at y = 0 (except 0, 0)
       for(int x = 1; x < width; x++)
-         placeRoom(tileMap, x * (roomWidth - 1), 0, roomTemplate[x][0]);
+         placeRoom(newMap, x * (roomWidth - 1), 0, roomTemplate[x][0]);
       // place all rooms at x = 0 (except 0, 0)
       for(int y = 1; y < height; y++)
-         placeRoom(tileMap, 0, y * (roomHeight - 1), roomTemplate[0][y]);
+         placeRoom(newMap, 0, y * (roomHeight - 1), roomTemplate[0][y]);
       // place all other rooms
       for(int x = 1; x < width; x++)
       for(int y = 1; y < height; y++)
-         placeRoom(tileMap, x * (roomWidth - 1), y * (roomHeight - 1), roomTemplate[x][y]);
-      return tileMap;
+         placeRoom(newMap, x * (roomWidth - 1), y * (roomHeight - 1), roomTemplate[x][y]);
+      tileMap = newMap;
    }
    
-   public void placeRoom(char[][] tileMap, int xOrigin, int yOrigin, RoomTemplate roomTemplate)
+   private void placeRoom(char[][] tileMap, int xOrigin, int yOrigin, RoomTemplate roomTemplate)
    {
       int roomWidth = roomTemplate.getWidth();
       int roomHeight = roomTemplate.getHeight();
@@ -186,7 +176,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    
    public void print()
    {
-      char[][] charMap = newGetTileMap();
+      char[][] charMap = getTileMap();
       for(int y = 0; y < charMap[0].length; y++)
       {
          for(int x = 0; x < charMap.length; x++)
@@ -213,13 +203,13 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       setPassArray(ZoneTemplate.MOST_RESTRICTIVE);
       generateRooms();
       Coord origin = new Coord(-1, -1);
-      char[][] tileMap = getTileMap();
+      char[][] tempMap = getTileMap();
       // create passability map
-      boolean[][] passMap = new boolean[tileMap.length][tileMap[0].length];
-      for(int x = 0; x < tileMap.length; x++)
-      for(int y = 0; y < tileMap[0].length; y++)
+      boolean[][] passMap = new boolean[tempMap.length][tempMap[0].length];
+      for(int x = 0; x < tempMap.length; x++)
+      for(int y = 0; y < tempMap[0].length; y++)
       {
-         if(tileMap[x][y] == '.')
+         if(tempMap[x][y] == '.')
          {
             origin.x = x;
             origin.y = y;
@@ -229,10 +219,10 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       //create floodfill
       boolean[][] fillMap = FloodFill.fill(passMap, origin);
       // check all . tiles are flooded, and all # are not
-      for(int x = 0; x < tileMap.length; x++)
-      for(int y = 0; y < tileMap[0].length; y++)
+      for(int x = 0; x < tempMap.length; x++)
+      for(int y = 0; y < tempMap[0].length; y++)
       {
-         if((tileMap[x][y] == '.') != fillMap[x][y])
+         if((tempMap[x][y] == '.') != fillMap[x][y])
             return false;
       }
       return true;
