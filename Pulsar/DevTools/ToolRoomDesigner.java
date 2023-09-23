@@ -106,7 +106,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    public void mousePressed(MouseEvent me){}
    public void mouseClicked(MouseEvent me)
    {
-      label.setText("Clicked in [" + mouseLocX + ", " + mouseLocY + "]");
+      mapPanel.setIcon(mouseLocX, mouseLocY, activeChar);
    }
    
    public void populateControlPanel()
