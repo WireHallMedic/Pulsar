@@ -136,11 +136,13 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    
    public void validate() 
    {
-      if(!checkConnectivity())
+      if(!hasFullConnectivity())
          throw new java.lang.Error("ZoneTemplate has potentially unreachable rooms.");
+      if(!hasNoIsolation())
+         throw new java.lang.Error("ZoneTemplate has potentially isolated rooms.");
    }
    
-   private boolean checkConnectivity()
+   private boolean hasFullConnectivity()
    {
       // generate map using demo tileset; all # and .
       roomTemplateManager = new RoomTemplateManager();
@@ -171,6 +173,43 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
             return false;
       }
       return true;
+   }
+   
+   
+   // Isolation can occur if there are two ? tiles adjacent to each other, each entirely surrounded by ? or impassable tiles
+   private boolean hasNoIsolation()
+   {
+      boolean[][] surroundedMap = new boolean[width][height];
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+         surroundedMap[x][y] = isSurroundedProbabilistic(x, y);
+
+      for(int x = 0; x < width - 1; x++)
+      for(int y = 0; y < height; y++)
+      {
+         if(surroundedMap[x][y] && surroundedMap[x + 1][y])
+            return false;
+      }
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height - 1; y++)
+      {
+         if(surroundedMap[x][y] && surroundedMap[x][y + 1])
+            return false;
+      }
+      return true;
+   }
+   
+   private boolean isSurroundedProbabilistic(int x, int y)
+   {
+      if(getCell(x, y) == '?')
+      {
+         if(!isInBounds(x + 1, y) || getCell(x + 1, y) != '.')
+         if(!isInBounds(x - 1, y) || getCell(x - 1, y) != '.')
+         if(!isInBounds(x, y + 1) || getCell(x, y + 1) != '.')
+         if(!isInBounds(x, y - 1) || getCell(x, y - 1) != '.')
+            return true;
+      }
+      return false;
    }
    
    public static void main(String[] args)

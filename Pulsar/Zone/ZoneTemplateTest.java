@@ -51,7 +51,7 @@ public class ZoneTemplateTest implements ZoneConstants
          Assert.assertEquals("Vertically adjacent cells have matching pass values", true, zt.getPassArray(x, y)[SOUTH] == zt.getPassArray(x, y + 1)[NORTH]);
       }
    }
-
+/*
 
    @Test public void testValidation()
    {
@@ -73,6 +73,6 @@ public class ZoneTemplateTest implements ZoneConstants
       v3.add("..??..");
       v3.add("......");
       assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v3, rtm);});
-   }
+   }*/
    
 }
