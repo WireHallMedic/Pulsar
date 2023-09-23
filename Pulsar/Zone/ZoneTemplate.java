@@ -121,9 +121,72 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       return map;
    }
    
+   public char[][] newGetTileMap()
+   {
+      // create tile map
+      int roomWidth = roomTemplate[0][0].getWidth();
+      int roomHeight = roomTemplate[0][0].getHeight();
+      int mapWidth = ((roomWidth - 1) * width) + 1;
+      int mapHeight = ((roomHeight - 1) * height) + 1;
+      char[][] tileMap = new char[mapWidth][mapHeight];
+      // fill with lowest priority tile (OOB)
+      for(int x = 0; x < mapWidth; x++)
+      for(int y = 0; y < mapHeight; y++)
+         tileMap[x][y] = '0';
+      // place room at 0, 0
+      placeRoom(tileMap, 0, 0, roomTemplate[0][0]);
+      // place all rooms at y = 0 (except 0, 0)
+      for(int x = 1; x < width; x++)
+         placeRoom(tileMap, x * (roomWidth - 1), 0, roomTemplate[x][0]);
+      // place all rooms at x = 0 (except 0, 0)
+      for(int y = 1; y < height; y++)
+         placeRoom(tileMap, 0, y * (roomHeight - 1), roomTemplate[0][y]);
+      // place all other rooms
+      for(int x = 1; x < width; x++)
+      for(int y = 1; y < height; y++)
+         placeRoom(tileMap, x * (roomWidth - 1), y * (roomHeight - 1), roomTemplate[x][y]);
+      return tileMap;
+   }
+   
+   public void placeRoom(char[][] tileMap, int xOrigin, int yOrigin, RoomTemplate roomTemplate)
+   {
+      int roomWidth = roomTemplate.getWidth();
+      int roomHeight = roomTemplate.getHeight();
+      // north and south border cells
+      for(int x = 0; x < roomWidth; x++)
+      {
+         tileMap[x + xOrigin][yOrigin] = pickBorderTile(tileMap[x + xOrigin][yOrigin], roomTemplate.getCell(x, 0));
+         tileMap[x + xOrigin][yOrigin + roomHeight - 1] = pickBorderTile(tileMap[x + xOrigin][yOrigin + roomHeight - 1], roomTemplate.getCell(x, roomHeight - 1));
+      }
+      // east and west border cells
+      for(int y = 1; y < roomHeight - 1; y++)
+      {
+         tileMap[xOrigin][y + yOrigin] = pickBorderTile(tileMap[xOrigin][y + yOrigin], roomTemplate.getCell(0, y));
+         tileMap[xOrigin + roomWidth - 1][y + yOrigin] = pickBorderTile(tileMap[xOrigin + roomWidth - 1][y + yOrigin], roomTemplate.getCell(roomWidth - 1, y));
+      }
+      // non-border cells
+      for(int x = 1; x < roomWidth - 1; x++)
+      for(int y = 1; y < roomHeight - 1; y++)
+         tileMap[x + xOrigin][y + yOrigin] = roomTemplate.getCell(x, y);
+   }
+   
+   // returns the appropriate border tile from a pair
+   public char pickBorderTile(char a, char b)
+   {
+      if(a == '/' || b == '/')
+         return '/';
+      if(a == '#' || b == '#')
+         return '#';
+      if(a == '.' || b == '.')
+         return '.';
+      if(a == 'V' || b == 'V')
+         return 'V';
+      return '0';
+   }
+   
    public void print()
    {
-      char[][] charMap = getTileMap();
+      char[][] charMap = newGetTileMap();
       for(int y = 0; y < charMap[0].length; y++)
       {
          for(int x = 0; x < charMap.length; x++)
