@@ -138,18 +138,5 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("#.#");
       ZoneTemplate zt = new ZoneTemplate(v, rtm, true);
       zt.print();
-      zt.setPassArray(false);
-      System.out.println("");
-      zt.print();
-      
-      RoomTemplate rt = rtm.random(RoomTemplate.RoomTemplateType.TERMINAL);
-      rt.print();
-      System.out.println("" + rt.passNorth());
-      System.out.println("" + rt.passEast());
-      System.out.println("" + rt.passSouth());
-      System.out.println("" + rt.passWest());
-      
-      rt.rotate();
-      rt.print();
    }
 }

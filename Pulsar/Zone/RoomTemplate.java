@@ -51,6 +51,11 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       setPassArray();
    }
    
+   public RoomTemplate(RoomTemplate that)
+   {
+   
+   }
+   
    public boolean matchesPassArray(boolean[] target)
    {
       boolean[] current = getPassArray();

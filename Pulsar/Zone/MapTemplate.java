@@ -29,6 +29,21 @@ public abstract class MapTemplate
       }
    }
    
+   public MapTemplate(MapTemplate that)
+   {
+      this.width = that.width;
+      this.height = that.height;
+      if(that.cellMap == null)
+         this.cellMap = null;
+      else
+      {
+         this.cellMap = new char[width][height];
+         for(int x = 0; x < width; x++)
+         for(int y = 0; y < height; y++)
+            this.cellMap[x][y] = that.cellMap[x][y];
+      }
+   }
+   
    public void set(Vector<String> input)
    {
       width = input.elementAt(0).length();
