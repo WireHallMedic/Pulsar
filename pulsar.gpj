@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!4326;g
+!4371;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
@@ -108,6 +108,7 @@ s#l0
 %\011%uWidlerSuite%sAStar.java
 %\011%uWidlerSuite%sCoord.java
 %\011%uWidlerSuite%sStraightLine.java
+%\011Pulsar%sDevTools%sToolRoomDesigner.java
 %\011Pulsar%sEngine%sButtonTrigger.java
 %\011Pulsar%sGear%sGearObj.java
 %\011Pulsar%sGUI%sHelpPanel.java
@@ -134,7 +135,7 @@ s#l0
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sZone%sAcid.java
 %\011Pulsar%sGear%sGearConstants.java
-!4326;f
+!4371;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
@@ -230,6 +231,7 @@ s#l0
 %\011%uWidlerSuite%sAStar.java
 %\011%uWidlerSuite%sCoord.java
 %\011%uWidlerSuite%sStraightLine.java
+%\011Pulsar%sDevTools%sToolRoomDesigner.java
 %\011Pulsar%sEngine%sButtonTrigger.java
 %\011Pulsar%sGear%sGearObj.java
 %\011Pulsar%sGUI%sHelpPanel.java
