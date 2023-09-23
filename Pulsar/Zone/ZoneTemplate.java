@@ -268,7 +268,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public static void main(String[] args)
    {
       RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadDemos();
+      rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
       v.add("#..#");
       v.add(".??.");

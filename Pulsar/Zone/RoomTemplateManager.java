@@ -49,6 +49,22 @@ public class RoomTemplateManager implements ZoneConstants
       }
    }
    
+   public void add(Vector<String> strVect)
+   {
+      add(new RoomTemplate(strVect));
+   }
+   
+   public void validate()
+   {
+      for(RoomTemplate.RoomTemplateType t : RoomTemplate.RoomTemplateType.values())
+      {
+         if(typeList[t.ordinal()].size() == 0)
+         {
+            throw new java.lang.Error("No RoomTemplate entries for " + t);
+         }
+      }
+   }
+   
    public RoomTemplate random(RoomTemplate.RoomTemplateType t)
    {
       return new RoomTemplate(typeList[t.ordinal()].random());
@@ -78,7 +94,7 @@ public class RoomTemplateManager implements ZoneConstants
                // template has finished
                if(inTemplate)
                {
-                  add(new RoomTemplate(stringVect));
+                  add(stringVect);
                   inTemplate = false;
                }
             }
@@ -99,7 +115,7 @@ public class RoomTemplateManager implements ZoneConstants
          
          // if the last template was on the last line, add it. Otherwise it's already added.
          if(inTemplate)
-            add(new RoomTemplate(stringVect));
+            add(stringVect);
 
 			reader.close();
 		}
@@ -107,6 +123,8 @@ public class RoomTemplateManager implements ZoneConstants
       {
 			e.printStackTrace();
 		}
+      
+      validate();
    }
    
    public void loadDemos()
@@ -180,6 +198,11 @@ public class RoomTemplateManager implements ZoneConstants
       public RoomTemplate random()
       {
          return list.elementAt(GameEngine.randomInt(0, list.size()));
+      }
+      
+      public int size()
+      {
+         return list.size();
       }
    }
    
