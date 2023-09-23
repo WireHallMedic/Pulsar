@@ -5,6 +5,8 @@ import Pulsar.Engine.*;
 
 public class ZoneTemplate extends MapTemplate implements ZoneConstants
 {
+   public static final boolean MOST_RESTRICTIVE = true;
+   public static final boolean RANDOMIZE = false;
    
    public enum ZoneTemplateTile
    {
