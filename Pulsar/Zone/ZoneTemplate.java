@@ -25,6 +25,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
+   private RoomTemplateManager roomTemplateManager;
    private boolean[][][] passArray;
    private RoomTemplate[][] roomTemplate;
    
@@ -35,18 +36,19 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm, boolean mostRestrictive)
    {
       super(input);
-      setPassArray(mostRestrictive);
-      generateRooms(rtm);
+      roomTemplateManager = rtm;
       validate();
+      setPassArray(mostRestrictive);
+      generateRooms();
    }
    
-   public void generateRooms(RoomTemplateManager rtm)
+   public void generateRooms()
    {
       roomTemplate = new RoomTemplate[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
-         roomTemplate[x][y] = rtm.random(RoomTemplate.determineType(passArray[x][y]));
+         roomTemplate[x][y] = roomTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
          roomTemplate[x][y].rotateUntilMatches(passArray[x][y]);
       }
    }
@@ -144,7 +146,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       RoomTemplateManager rtm = new RoomTemplateManager();
       rtm.loadDemos();
       setPassArray(ZoneTemplate.MOST_RESTRICTIVE);
-      generateRooms(rtm);
+      generateRooms();
       Coord origin = new Coord(-1, -1);
       char[][] tileMap = getTileMap();
       // create passability map
