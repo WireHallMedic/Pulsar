@@ -50,6 +50,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       super(input);
       setPassArray();
       setType();
+      validate();
    }
    
    public RoomTemplate(RoomTemplate that)
@@ -57,6 +58,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       super(that);
       setPassArray();
       setType();
+      // copy constructor does not need to validate
    }
    
    public boolean matchesPassArray(boolean[] target)
@@ -197,6 +199,35 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
             System.out.print(getCell(x, y));
          }
          System.out.println("");
+      }
+   }
+   
+   public void validate()
+   {
+      for(int x = 0; x < width; x++)
+      {
+         if(isInvalidBorderTile(getCell(x, 0)) ||
+            isInvalidBorderTile(getCell(x, height - 1)))
+            throw new java.lang.Error("Room template has invalid border tile.");
+      }
+      for(int y = 0; y < height; y++)
+      {
+         if(isInvalidBorderTile(getCell(0, y)) ||
+            isInvalidBorderTile(getCell(width - 1, y)))
+            throw new java.lang.Error("Room template has invalid border tile.");
+      }
+   }
+   
+   private boolean isInvalidBorderTile(char c)
+   {
+      switch(c)
+      {
+         case '0' : return false;
+         case '.' : return false;
+         case '#' : return false;
+         case '/' : return false;
+         case 'V' : return false;
+         default  : return true;
       }
    }
    
