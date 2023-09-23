@@ -8,9 +8,8 @@ import Pulsar.GUI.*;
 
 public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
-   public static final char[] buttonCharList = {'#', '.', '0', '/', 'V', '=', 
-                                                '~', 'a', 'c', 'b', 'w', 'e', 
-                                                '!', '?', 's', 'd', 'u', '<'};
+   public static final String[] buttonStrList = {"#", ".", "0", "/", "V", 
+      "Set all #", "Set all .", "Set all 0", "Set all V"};
    private JPanel layoutPanel;
    private RogueTilePanel mapPanel;
    private JPanel controlPanel;
@@ -73,6 +72,13 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       }
    }
    
+   private void setActiveChar(String str){setActiveChar(str.charAt(0));}
+   private void setActiveChar(char c)
+   {
+      activeChar = c;
+      label.setText("" + activeChar);
+   }
+   
    public void actionPerformed(ActionEvent ae)
    {
       if(ae.getSource() instanceof javax.swing.Timer)
@@ -81,12 +87,16 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
          updateMouseLoc(mapPanel.mouseColumn(), mapPanel.mouseRow());
          this.repaint();
       }
-      for(int i = 0; i < buttonCharList.length; i++)
+      for(int i = 0; i < buttonStrList.length; i++)
       {
          if(ae.getSource() == buttonList[i])
          {
-            label.setText("" + buttonCharList[i]);
-            activeChar = buttonCharList[i];
+            JButton button = (JButton)ae.getSource();
+            String text = button.getText();
+            if(text.length() == 1)
+               setActiveChar(text);
+            if(text.contains("Set all"))
+               setAllTiles(text.charAt(text.length() - 1));
             break;
          }
       }
@@ -116,8 +126,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    public void keyReleased(KeyEvent ke){}
    public void keyTyped(KeyEvent ke)
    {
-      activeChar = ke.getKeyChar();
-      label.setText("" + activeChar);
+      setActiveChar(ke.getKeyChar());
    }
    
    public void populateControlPanel()
@@ -125,13 +134,22 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       controlPanel.add(new JLabel("Active char:"));
       label = new JLabel();
       controlPanel.add(label);
-      buttonList = new JButton[buttonCharList.length];
-      for(int i = 0; i < buttonCharList.length; i++)
+      buttonList = new JButton[buttonStrList.length];
+      for(int i = 0; i < buttonStrList.length; i++)
       {
-         buttonList[i] = new JButton("" + buttonCharList[i]);
+         buttonList[i] = new JButton(buttonStrList[i]);
          buttonList[i].addActionListener(this);
          buttonList[i].setFocusable(false);
          controlPanel.add(buttonList[i]);
+      }
+   }
+   
+   public void setAllTiles(char c)
+   {
+      for(int x = 0; x < widthTiles; x++)
+      for(int y = 0; y < heightTiles; y++)
+      {
+         mapPanel.setIcon(x, y, c);
       }
    }
    
