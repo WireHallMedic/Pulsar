@@ -9,8 +9,10 @@ import Pulsar.Zone.*;
 
 public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConstants
 {
-   private static final int MAP_WIDTH = (13 * 4) + 2;
-   private static final int MAP_HEIGHT = (13 * 4) + 2;
+   private static final int ROOM_WIDTH = 13;
+   private static final int ROOM_HEIGHT = 13;
+   private static final int MAP_WIDTH = ((ROOM_WIDTH - 1) * 4) + 3;
+   private static final int MAP_HEIGHT = ((ROOM_HEIGHT - 1) * 4) + 3;
    private static final int BUTTON_SLOTS = 20;
    
    private LayoutPanel layoutPanel;
@@ -19,6 +21,9 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    private JButton fullRerollB;
    private JButton probRerollB;
    private JButton obstacleRerollB;
+   private JRadioButton vacuumButton;
+   private JRadioButton wallButton;
+   private ButtonGroup borderGroup;
    
    private ZoneTemplate zoneTemplate;
    private ZoneMap zoneMap;
@@ -44,8 +49,25 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
       buttonPanel = new JPanel();
       buttonPanel.setLayout(new GridLayout(BUTTON_SLOTS, 1));
       buttonPanel.setVisible(true);
-      buttonPanel.setBackground(Color.RED);
       layoutPanel.add(buttonPanel, .2, 1.0, .8, 0.0);
+      
+      JPanel anonPanel = new JPanel();
+      anonPanel.setLayout(new GridLayout(2, 1));
+      buttonPanel.add(anonPanel);
+      wallButton = new JRadioButton("Wall Border");
+      wallButton.setSelected(true);
+      wallButton.addActionListener(this);
+      anonPanel.add(wallButton);
+      vacuumButton = new JRadioButton("Vacuum Border");
+      vacuumButton.setSelected(false);
+      vacuumButton.addActionListener(this);
+      anonPanel.add(vacuumButton);
+      borderGroup = new ButtonGroup();
+      borderGroup.add(wallButton);
+      borderGroup.add(vacuumButton);
+      
+      // spacer
+      buttonPanel.add(new JPanel());
       
       fullRerollB = new JButton("Reroll all");
       fullRerollB.addActionListener(this);
@@ -59,15 +81,14 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
       obstacleRerollB.addActionListener(this);
       buttonPanel.add(obstacleRerollB);
       
-      zoneTemplate = ZoneTemplate.getDemo("Room Templates.txt");
-      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), TileType.HIGH_WALL);
-      drawMap();
-      
-      for(int i = 0; i < BUTTON_SLOTS - 3; i++)
+      int curComponents = buttonPanel.getComponentCount();
+      for(int i = 0; i < BUTTON_SLOTS - curComponents; i++)
       {
          JPanel panel = new JPanel();
          buttonPanel.add(panel);
       }
+      
+      rerollAll();
       
       setVisible(true);
       layoutPanel.resizeComponents(true);
@@ -75,19 +96,21 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    
    public void actionPerformed(ActionEvent ae)
    {
-      if(ae.getSource()== fullRerollB)
+      if(ae.getSource() == fullRerollB)
       {
-         zoneTemplate = ZoneTemplate.getDemo("Room Templates.txt");
-         zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), TileType.HIGH_WALL);
-         drawMap();
+         rerollAll();
       }
-      if(ae.getSource()== probRerollB)
+      if(ae.getSource() == probRerollB)
       {
          drawMap();
       }
-      if(ae.getSource()== obstacleRerollB)
+      if(ae.getSource() == obstacleRerollB)
       {
          drawMap();
+      }
+      if(ae.getSource() == wallButton || ae.getSource() == vacuumButton)
+      {
+         rerollBorder();
       }
    }
    
@@ -100,6 +123,25 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
          mapPanel.setTile(x, y, tile.getIconIndex(), tile.getFGColor(), tile.getBGColor());
       }
       mapPanel.repaint();
+   }
+   
+   public void rerollAll()
+   {
+      TileType type = TileType.HIGH_WALL;
+      if(vacuumButton.isSelected())
+         type = TileType.VACUUM;
+      zoneTemplate = ZoneTemplate.getDemo("Room Templates.txt");
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), type);
+      drawMap();
+   }
+   
+   public void rerollBorder()
+   {
+      TileType type = TileType.HIGH_WALL;
+      if(vacuumButton.isSelected())
+         type = TileType.VACUUM;
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), type);
+      drawMap();
    }
       
    public static void main(String[] args)
