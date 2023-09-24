@@ -266,10 +266,11 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    }
    
    // returns a zone template that includes at least one of each RoomTemplate
-   public static ZoneTemplate getDemo()
+   public static ZoneTemplate getDemo(){return getDemo("Room Templates.txt");}
+   public static ZoneTemplate getDemo(String roomTemplateFileName)
    {
       RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile("Room Templates.txt");
+      rtm.loadFromFile(roomTemplateFileName);
       Vector<String> v = new Vector<String>();
       v.add("#.??");
       v.add("?.?.");

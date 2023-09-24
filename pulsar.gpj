@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!4424;g
+!4467;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
@@ -91,6 +91,7 @@ s#l0
 %\011%uWidlerSuite%sMovementScript.java
 %\011%uWidlerSuite%sWSFontConstants.java
 %\011%uWidlerSuite%sTileAnimationManager.java
+%\011Pulsar%sDevTools%sToolZoneViewer.java
 %\011Pulsar%sAI%sPlayerAI.java
 %\011%uWidlerSuite%sDijkstraRing.java
 %\011%uWidlerSuite%sObfuscator.java
@@ -136,7 +137,7 @@ s#l0
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sZone%sAcid.java
 %\011Pulsar%sGear%sGearConstants.java
-!4424;f
+!4467;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
@@ -215,6 +216,7 @@ s#l0
 %\011%uWidlerSuite%sMovementScript.java
 %\011%uWidlerSuite%sWSFontConstants.java
 %\011%uWidlerSuite%sTileAnimationManager.java
+%\011Pulsar%sDevTools%sToolZoneViewer.java
 %\011Pulsar%sAI%sPlayerAI.java
 %\011%uWidlerSuite%sDijkstraRing.java
 %\011%uWidlerSuite%sObfuscator.java
