@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import WidlerSuite.*;
 import Pulsar.GUI.*;
+import java.awt.datatransfer.*;
 
 public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
@@ -16,6 +17,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    private JButton[][] buttonArray;
    private JLabel label;
    private JButton[] buttonList;
+   private JButton clipboardButton;
    
    
    private char activeChar;
@@ -87,6 +89,12 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
          updateMouseLoc(mapPanel.mouseColumn(), mapPanel.mouseRow());
          this.repaint();
       }
+      if(ae.getSource() == clipboardButton)
+      {
+			String str = getClipboardString();
+			StringSelection ss = new StringSelection(str);
+		   Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+      }
       for(int i = 0; i < buttonStrList.length; i++)
       {
          if(ae.getSource() == buttonList[i])
@@ -111,6 +119,20 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       }
       mouseLocX = x;
       mouseLocY = y;
+   }
+   
+   public String getClipboardString()
+   {
+      String s = "";
+      for(int y = 0; y < heightTiles; y++)
+      {
+         for(int x = 0; x < widthTiles; x++)
+         {
+            s += (char)mapPanel.getIcon(x, y);
+         }
+         s += "\n";
+      }
+      return s;
    }
    
    public void mouseEntered(MouseEvent me){}
@@ -143,10 +165,18 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
          controlPanel.add(buttonList[i]);
       }
       
+      // spacer buttons that do nothing
       for(int i = 0; i < 22 - (buttonStrList.length + 2); i++)
       {
-         controlPanel.add(new JButton());
+         JButton button = new JButton();
+         button.setFocusable(false);
+         controlPanel.add(button);
       }
+      
+      clipboardButton = new JButton("Copy to Clipboard");
+      clipboardButton.setFocusable(false);
+      clipboardButton.addActionListener(this);
+      controlPanel.add(clipboardButton);
    }
    
    public void setAllTiles(char c)
