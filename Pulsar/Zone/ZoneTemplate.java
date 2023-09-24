@@ -44,7 +44,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       validate();
       roomTemplateManager = rtm;
       obstacleTemplateManager = new ObstacleTemplateManager();
-      obstacleTemplateManager.loadDemos();
+      obstacleTemplateManager.loadFromFile("Obstacle Templates.txt");
+   //   obstacleTemplateManager.loadDemos();
       setPassArray(mostRestrictive);
       generateRooms();
    }
