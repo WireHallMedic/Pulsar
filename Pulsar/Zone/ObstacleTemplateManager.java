@@ -106,11 +106,19 @@ public class ObstacleTemplateManager implements ZoneConstants
    {
       clear();
       Vector<String> str = new Vector<String>();
+      str.add(".55..");
+      str.add("5555.");
+      str.add("5555.");
+      str.add(".55..");
       str.add(".....");
-      str.add(".....");
-      str.add(".....");
-      str.add(".....");
-      str.add(".....");
+      add(new ObstacleTemplate(str));
+      
+      str = new Vector<String>();
+      str.add("#####");
+      str.add("#...#");
+      str.add("#.../");
+      str.add("#...#");
+      str.add("#####");
       add(new ObstacleTemplate(str));
    }
    

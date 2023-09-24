@@ -26,12 +26,15 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    }
    
    private RoomTemplateManager roomTemplateManager;
+   private ObstacleTemplateManager obstacleTemplateManager;
    private boolean[][][] passArray;
-   private RoomTemplate[][] roomTemplate;
+   private RoomTemplate[][] baseRoomTemplate;
+   private RoomTemplate[][] rolledRoomTemplate;
    private char[][] tileMap;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
-   public RoomTemplate getRoomTemplate(int x, int y){return roomTemplate[x][y];}
+   public RoomTemplate getBaseRoomTemplate(int x, int y){return baseRoomTemplate[x][y];}
+   public RoomTemplate getRolledRoomTemplate(int x, int y){return rolledRoomTemplate[x][y];}
    public char[][] getTileMap(){return tileMap;}
    
    public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm){this(input, rtm, false);}
@@ -40,19 +43,24 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       super(input);
       validate();
       roomTemplateManager = rtm;
+      obstacleTemplateManager = new ObstacleTemplateManager();
+      obstacleTemplateManager.loadDemos();
       setPassArray(mostRestrictive);
       generateRooms();
    }
    
    public void generateRooms()
    {
-      roomTemplate = new RoomTemplate[width][height];
+      baseRoomTemplate = new RoomTemplate[width][height];
+      rolledRoomTemplate = new RoomTemplate[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
-         roomTemplate[x][y] = roomTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
-         roomTemplate[x][y].rotateUntilMatches(passArray[x][y]);
+         baseRoomTemplate[x][y] = roomTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         baseRoomTemplate[x][y].rotateUntilMatches(passArray[x][y]);
+         rolledRoomTemplate[x][y] = null;
       }
+      setObstacles();
       setTileMap();
    }
    
@@ -111,11 +119,20 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
+   public void setObstacles()
+   {
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         rolledRoomTemplate[x][y] = baseRoomTemplate[x][y].resolveObstacles(obstacleTemplateManager);
+      }
+   }
+   
    public void setTileMap()
    {
       // create tile map
-      int roomWidth = roomTemplate[0][0].getWidth();
-      int roomHeight = roomTemplate[0][0].getHeight();
+      int roomWidth = rolledRoomTemplate[0][0].getWidth();
+      int roomHeight = rolledRoomTemplate[0][0].getHeight();
       int mapWidth = ((roomWidth - 1) * width) + 1;
       int mapHeight = ((roomHeight - 1) * height) + 1;
       char[][] newMap = new char[mapWidth][mapHeight];
@@ -124,17 +141,17 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       for(int y = 0; y < mapHeight; y++)
          newMap[x][y] = '0';
       // place room at 0, 0
-      placeRoom(newMap, 0, 0, roomTemplate[0][0].resolveProbTiles());
+      placeRoom(newMap, 0, 0, rolledRoomTemplate[0][0].resolveProbTiles());
       // place all rooms at y = 0 (except 0, 0)
       for(int x = 1; x < width; x++)
-         placeRoom(newMap, x * (roomWidth - 1), 0, roomTemplate[x][0].resolveProbTiles());
+         placeRoom(newMap, x * (roomWidth - 1), 0, rolledRoomTemplate[x][0].resolveProbTiles());
       // place all rooms at x = 0 (except 0, 0)
       for(int y = 1; y < height; y++)
-         placeRoom(newMap, 0, y * (roomHeight - 1), roomTemplate[0][y].resolveProbTiles());
+         placeRoom(newMap, 0, y * (roomHeight - 1), rolledRoomTemplate[0][y].resolveProbTiles());
       // place all other rooms
       for(int x = 1; x < width; x++)
       for(int y = 1; y < height; y++)
-         placeRoom(newMap, x * (roomWidth - 1), y * (roomHeight - 1), roomTemplate[x][y].resolveProbTiles());
+         placeRoom(newMap, x * (roomWidth - 1), y * (roomHeight - 1), rolledRoomTemplate[x][y].resolveProbTiles());
       tileMap = newMap;
    }
    
