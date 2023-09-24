@@ -21,9 +21,15 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    private ToolRoomDesignerMapPanel mapPanel;
    private JPanel controlPanel;
    private JButton[][] buttonArray;
-   private JLabel label;
+   private JLabel cursorLabel;
    private JButton[] buttonList;
    private JButton clipboardButton;
+   private JButton widthPlusB;
+   private JButton heightPlusB;
+   private JButton widthMinusB;
+   private JButton heightMinusB;
+   private JLabel widthLabel;
+   private JLabel heightLabel;
    private int innerPanelIndex;
    private JPanel[] innerPanel;
    private JButton setSizeButton;
@@ -62,7 +68,6 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       populateControlPanel();
       layoutPanel.add(controlPanel, .3, 1.0, .7, 0.0);
       
-      initializeMap();
       mapPanel.addMouseListener(this);
       this.addKeyListener(this);
       timer = new javax.swing.Timer(1000 / 30, null);
@@ -70,25 +75,17 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       timer.start();
       
       setActiveChar('#');
+      updateSizeLabels();
       
       setVisible(true);
       layoutPanel.resizeComponents(true);
-   }
-   
-   public void initializeMap()
-   {
-      for(int x = 0; x < widthTiles; x++)
-      for(int y = 0; y < heightTiles; y++)
-      {
-         mapPanel.setIcon(x, y, DEFAULT_CHAR);
-      }
    }
    
    private void setActiveChar(String str){setActiveChar(str.charAt(0));}
    private void setActiveChar(char c)
    {
       activeChar = c;
-      label.setText("" + activeChar);
+      cursorLabel.setText("Left Click: " + activeChar);
    }
    
    public void actionPerformed(ActionEvent ae)
@@ -105,21 +102,25 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
 			StringSelection ss = new StringSelection(str);
 		   Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
       }
-      if(ae.getSource() == setSizeButton)
+      if(ae.getSource() == widthPlusB)
       {
-         try
-         {
-            String str = JOptionPane.showInputDialog("New width: ");
-            int x  = Integer.parseInt(str);
-            str = JOptionPane.showInputDialog("New height: ");
-            int y = Integer.parseInt(str);
-            System.out.println("Size okay");
-            setSizes(x, y);
-         }
-         catch(Exception ex)
-         {
-            setSizes(13, 13);
-         }
+         mapPanel.incrementWidth();
+         updateSizeLabels();
+      }
+      if(ae.getSource() == widthMinusB)
+      {
+         mapPanel.decrementWidth();
+         updateSizeLabels();
+      }
+      if(ae.getSource() == heightPlusB)
+      {
+         mapPanel.incrementHeight();
+         updateSizeLabels();
+      }
+      if(ae.getSource() == heightMinusB)
+      {
+         mapPanel.decrementHeight();
+         updateSizeLabels();
       }
       for(int i = 0; i < buttonStrList.length; i++)
       {
@@ -148,30 +149,21 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       }
    }
    
-   private void setSizes(int w, int h)
+   public void updateSizeLabels()
    {
-      widthTiles = w;
-      heightTiles = h;
-      
-  /*    mapPanel = new RogueTilePanel(w, h, GUIConstants.SQUARE_TILE_PALETTE);
-      layoutPanel.add(mapPanel, 0.5, 1.0, 0.0, 0.0);
-      mapPanel.addMouseListener(this);
-      timer.addActionListener(this);
-      mapPanel.setBackground(Color.GRAY);
-      mapPanel.setSizeMultiplier(2.0);
-      for(int x = 0; x < widthTiles; x++)
-      for(int y = 0; y < heightTiles; y++)
-      {
-         mapPanel.setIcon(x, y, DEFAULT_CHAR);
-      }*/
-      this.repaint();
+      widthLabel.setText("Width: " + mapPanel.getWidthTiles());
+      heightLabel.setText("Height: " + mapPanel.getHeightTiles());
    }
-      public void updateMouseLoc(int x, int y)
+   
+   
+   public void updateMouseLoc(int x, int y)
    {
       if(mouseLocX != x || mouseLocY != y)
       {
-         mapPanel.setBGColor(mouseLocX, mouseLocY, Color.BLACK.getRGB());
-         mapPanel.setBGColor(x, y, Color.BLUE.getRGB());
+         if(mapPanel.isInActiveArea(mouseLocX, mouseLocY))
+            mapPanel.setBGColor(mouseLocX, mouseLocY, Color.BLACK.getRGB());
+         if(mapPanel.isInActiveArea(x, y))
+            mapPanel.setBGColor(x, y, Color.BLUE.getRGB());
       }
       mouseLocX = x;
       mouseLocY = y;
@@ -185,7 +177,8 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    public void mouseClicked(MouseEvent me){}
    public void mousePressed(MouseEvent me)
    {
-      mapPanel.setIcon(mouseLocX, mouseLocY, activeChar);
+      if(mapPanel.isInActiveArea(mouseLocX, mouseLocY))
+         mapPanel.setIcon(mouseLocX, mouseLocY, activeChar);
    }
    
    public void keyPressed(KeyEvent ke){}
@@ -212,14 +205,42 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
          innerPanel[i].setLayout(new GridLayout(12, 1));
          controlPanel.add(innerPanel[i]);
       }
-      addToControlPanel(new JLabel("Active char:"));
-      label = new JLabel();
-      addToControlPanel(label);
+      cursorLabel = new JLabel();
+      addToControlPanel(cursorLabel);
       
-      setSizeButton = new JButton("Set size");
-      setSizeButton.setFocusable(false);
-      setSizeButton.addActionListener(this);
-      addToControlPanel(setSizeButton);
+      JPanel widthOuterPanel = new JPanel();
+      widthOuterPanel.setLayout(new GridLayout(1, 2));
+      JPanel widthInnerPanel = new JPanel();
+      widthInnerPanel.setLayout(new GridLayout(2, 1));
+      widthLabel = new JLabel("Width: " + widthTiles);
+      widthOuterPanel.add(widthLabel);
+      widthOuterPanel.add(widthInnerPanel);
+      widthPlusB = new JButton("+");
+      widthPlusB.addActionListener(this);
+      widthPlusB.setFocusable(false);
+      widthInnerPanel.add(widthPlusB);
+      widthMinusB = new JButton("-");
+      widthMinusB.addActionListener(this);
+      widthMinusB.setFocusable(false);
+      widthInnerPanel.add(widthMinusB);
+      addToControlPanel(widthOuterPanel);
+      
+      JPanel heightOuterPanel = new JPanel();
+      heightOuterPanel.setLayout(new GridLayout(1, 2));
+      JPanel heightInnerPanel = new JPanel();
+      heightInnerPanel.setLayout(new GridLayout(2, 1));
+      heightLabel = new JLabel("Height: " + heightTiles);
+      heightOuterPanel.add(heightLabel);
+      heightOuterPanel.add(heightInnerPanel);
+      heightPlusB = new JButton("+");
+      heightPlusB.addActionListener(this);
+      heightPlusB.setFocusable(false);
+      heightInnerPanel.add(heightPlusB);
+      heightMinusB = new JButton("-");
+      heightMinusB.addActionListener(this);
+      heightMinusB.setFocusable(false);
+      heightInnerPanel.add(heightMinusB);
+      addToControlPanel(heightOuterPanel);
       
       
       buttonList = new JButton[buttonStrList.length];

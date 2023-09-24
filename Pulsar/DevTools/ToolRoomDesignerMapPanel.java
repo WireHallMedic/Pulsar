@@ -17,6 +17,7 @@ public class ToolRoomDesignerMapPanel extends RogueTilePanel
       "Set block", "Set terminal", "Set straight", "Set elbow", "Set tee", "Set cross"};
    public static final char DEFAULT_CHAR = '.';
    public static final int MAX_MAP_RADIUS = 21;
+   public static final int OOB_COLOR_VALUE = Color.GRAY.getRGB();
    
    private int widthTiles = 13;
    private int heightTiles = 13;
@@ -24,25 +25,50 @@ public class ToolRoomDesignerMapPanel extends RogueTilePanel
    public ToolRoomDesignerMapPanel()
    {
       super(MAX_MAP_RADIUS, MAX_MAP_RADIUS, GUIConstants.SQUARE_TILE_PALETTE);
+      setAllTiles('.');
    }
    
+   public int getWidthTiles(){return widthTiles;}
+   public int getHeightTiles(){return heightTiles;}
    
-   public int getXOrigin()
+   public boolean isInActiveArea(int x, int y)
    {
-      return (MAX_MAP_RADIUS - widthTiles) / 2;
+      return x < widthTiles && y < heightTiles;
    }
    
-   public int getYOrigin()
+   public void incrementWidth()
    {
-      return (MAX_MAP_RADIUS - heightTiles) / 2;
+      widthTiles = Math.min(MAX_MAP_RADIUS, widthTiles + 1);
+      setActiveTiles();
+   }
+   
+   public void incrementHeight()
+   {
+      heightTiles = Math.min(MAX_MAP_RADIUS, heightTiles + 1);
+      setActiveTiles();
+   }
+   
+   public void decrementWidth()
+   {
+      widthTiles = Math.max(3, widthTiles - 1);
+      setActiveTiles();
+   }
+   
+   public void decrementHeight()
+   {
+      heightTiles = Math.max(3, heightTiles - 1);
+      setActiveTiles();
    }
    
    public void setAllTiles(char c)
    {
-      for(int x = 0; x < widthTiles; x++)
-      for(int y = 0; y < heightTiles; y++)
+      for(int x = 0; x < MAX_MAP_RADIUS; x++)
+      for(int y = 0; y < MAX_MAP_RADIUS; y++)
       {
-         setIcon(x, y, c);
+         if(isInActiveArea(x, y))
+            setIcon(x, y, c);
+         else
+            setTile(x, y, ' ', Color.WHITE.getRGB(), OOB_COLOR_VALUE);
       }
    }
    
@@ -115,5 +141,22 @@ public class ToolRoomDesignerMapPanel extends RogueTilePanel
          s += "\n";
       }
       return s;
+   }
+   
+   public void setActiveTiles()
+   {
+      for(int x = 0; x < MAX_MAP_RADIUS; x++)
+      for(int y = 0; y < MAX_MAP_RADIUS; y++)
+      {
+         if(isInActiveArea(x, y))
+         {
+            if(getIcon(x, y) == ' ')
+            {
+               setTile(x, y, '.', Color.WHITE.getRGB(), Color.BLACK.getRGB());
+            }
+         }
+         else
+            setTile(x, y, ' ', Color.WHITE.getRGB(), OOB_COLOR_VALUE);
+      }
    }
 }
