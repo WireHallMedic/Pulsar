@@ -1,6 +1,7 @@
 package Pulsar.Zone;
 
 import java.util.*;
+import Pulsar.Engine.*;
 
 public class RoomTemplate extends MapTemplate implements ZoneConstants
 {
@@ -59,6 +60,66 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       setPassArray();
       setType();
       // copy constructor does not need to validate
+   }
+   
+   // returns a copy, with probabilistic tiles resolved
+   public RoomTemplate resolveProbTiles()
+   {
+      RoomTemplate newTemplate = new RoomTemplate(this);
+      boolean roomRoll = GameEngine.randomBoolean();
+      for(int x = 1; x < getWidth() - 1; x++)
+      for(int y = 1; y < getHeight() - 1; y++)
+      {
+         switch(newTemplate.getCell(x, y))
+         {
+            // room probabilites
+            case '1' :  if(roomRoll)         // wall
+                           newTemplate.setCell(x, y, TEMPLATE_WALL);
+                        else
+                           newTemplate.setCell(x, y, TEMPLATE_CLEAR);
+                        break;
+            case '2' :  if(roomRoll)         // table
+                           newTemplate.setCell(x, y, TEMPLATE_TABLE);
+                        else
+                           newTemplate.setCell(x, y, TEMPLATE_CLEAR);
+                        break;
+            case '3' :  newTemplate.setCell(x, y, TEMPLATE_CLEAR); // not in use
+                        break;
+            case '4' :  newTemplate.setCell(x, y, TEMPLATE_CLEAR); // not in use
+                        break;
+            
+            // instance probabilities
+            case '5' :  if(GameEngine.randomBoolean())         // random barrel
+                        {
+                           switch(GameEngine.randomInt(0, 4))
+                           {
+                              case 0 :
+                              case 1 : newTemplate.setCell(x, y, TEMPLATE_EXPLODING_BARREL); break;
+                              case 2 : newTemplate.setCell(x, y, TEMPLATE_BARREL); break;
+                              case 3 : newTemplate.setCell(x, y, TEMPLATE_WATER_BARREL); break;
+                           }
+                        }
+                        else
+                           newTemplate.setCell(x, y, TEMPLATE_CLEAR);
+                        break;
+            case '6' :  if(GameEngine.randomBoolean())         // exploding barrel
+                           newTemplate.setCell(x, y, TEMPLATE_EXPLODING_BARREL);
+                        else
+                           newTemplate.setCell(x, y, TEMPLATE_CLEAR);
+                        break;
+            case '7' :  if(GameEngine.randomBoolean())         // crate
+                           newTemplate.setCell(x, y, TEMPLATE_CRATE);
+                        else
+                           newTemplate.setCell(x, y, TEMPLATE_CLEAR);
+                        break;
+            case '8' :  newTemplate.setCell(x, y, TEMPLATE_CLEAR); // not in use
+                        break;
+            case '9' :  newTemplate.setCell(x, y, TEMPLATE_CLEAR); // not in use
+                        break;
+            default  :  continue;
+         }
+      }
+      return newTemplate;
    }
    
    public boolean matchesPassArray(boolean[] target)

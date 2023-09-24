@@ -43,13 +43,19 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    {
       switch(c)
       {
-         case TEMPLATE_VACUUM    : return getVacuum();
-         case TEMPLATE_CLEAR     : return getTile(TileType.CLEAR);
-         case TEMPLATE_DOOR      : return getDoor();
-         case TEMPLATE_WALL      : return getTile(TileType.HIGH_WALL);
-         case TEMPLATE_OOB       : return getTile(oob);
+         case TEMPLATE_VACUUM       : return getVacuum();
+         case TEMPLATE_CLEAR        : return getTile(TileType.CLEAR);
+         case TEMPLATE_DOOR         : return getDoor();
+         case TEMPLATE_WALL         : return getTile(TileType.HIGH_WALL);
+         case TEMPLATE_OOB          : return getTile(oob);
          
-         default        : return null;
+         case TEMPLATE_BARREL             : return getBarrel();
+         case TEMPLATE_WATER_BARREL       : return getWaterBarrel();
+         case TEMPLATE_EXPLODING_BARREL   : return getExplodingBarrel();
+         case TEMPLATE_CRATE              : return getCrate();
+         case TEMPLATE_TABLE              : return getTile(TileType.LOW_WALL);
+         
+         default        : System.out.println("Unrecognized tile type: " + ((char)c)); return null;
       }
    }
 

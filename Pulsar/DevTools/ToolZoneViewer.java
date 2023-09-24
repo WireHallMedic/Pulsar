@@ -102,7 +102,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
       }
       if(ae.getSource() == probRerollB)
       {
-         drawMap();
+         rerollProbs();
       }
       if(ae.getSource() == obstacleRerollB)
       {
@@ -125,22 +125,31 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
       mapPanel.repaint();
    }
    
-   public void rerollAll()
+   public TileType getOOBType()
    {
       TileType type = TileType.HIGH_WALL;
       if(vacuumButton.isSelected())
          type = TileType.VACUUM;
+      return type;
+   }
+   
+   public void rerollAll()
+   {
       zoneTemplate = ZoneTemplate.getDemo("Room Templates.txt");
-      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), type);
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), getOOBType());
       drawMap();
    }
    
    public void rerollBorder()
    {
-      TileType type = TileType.HIGH_WALL;
-      if(vacuumButton.isSelected())
-         type = TileType.VACUUM;
-      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), type);
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), getOOBType());
+      drawMap();
+   }
+   
+   public void rerollProbs()
+   {
+      zoneTemplate.setTileMap();
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), getOOBType());
       drawMap();
    }
       

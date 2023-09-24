@@ -22,6 +22,11 @@ public interface ZoneConstants extends WSFontConstants
    public static final char TEMPLATE_WALL = '#';
    public static final char TEMPLATE_DOOR = '/';
    public static final char TEMPLATE_OOB = '0';
+   public static final char TEMPLATE_BARREL = 'b';
+   public static final char TEMPLATE_WATER_BARREL = 'w';
+   public static final char TEMPLATE_EXPLODING_BARREL = 'e';
+   public static final char TEMPLATE_CRATE = 'c';
+   public static final char TEMPLATE_TABLE = '=';
       
    public enum TileType
    {
