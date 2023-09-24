@@ -9,8 +9,9 @@ import java.awt.datatransfer.*;
 
 public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
-   public static final String[] buttonStrList = {"#", ".", "0", "/", "V", 
-      "Set all #", "Set all .", "Set all 0", "Set all V"};
+   public static final String[] buttonStrList = {"#", ".", "0", "/", "V", "", 
+      "Set all #", "Set all .", "Set all 0", "Set all V",
+      "Set block", "Set terminal", "Set straight", "Set elbow", "Set tee", "Set cross"};
    private JPanel layoutPanel;
    private RogueTilePanel mapPanel;
    private JPanel controlPanel;
@@ -61,6 +62,8 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       timer.addActionListener(this);
       timer.start();
       
+      setActiveChar('.');
+      
       mapPanel.grabFocus();
       setVisible(true);
    }
@@ -105,9 +108,78 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
                setActiveChar(text);
             if(text.contains("Set all"))
                setAllTiles(text.charAt(text.length() - 1));
+            if(text.contains("Set block"))
+               setAllTiles('#');
+            if(text.contains("Set terminal"))
+               setTerminal();
+            if(text.contains("Set straight"))
+               setStraight();
+            if(text.contains("Set elbow"))
+               setElbow();
+            if(text.contains("Set tee"))
+               setTee();
+            if(text.contains("Set cross"))
+               setCross();
             break;
          }
       }
+   }
+   
+   private void setAllBorders(char c)
+   {
+      for(int x = 0; x < widthTiles; x++)
+      {
+         mapPanel.setIcon(x, 0, c);
+         mapPanel.setIcon(x, heightTiles - 1, c);
+      }
+      for(int y = 0; y < heightTiles; y++)
+      {
+         mapPanel.setIcon(0, y, c);
+         mapPanel.setIcon(widthTiles - 1, y, c);
+      }
+   }
+   
+   private void setTerminal()
+   {
+      setAllBorders('#');
+      for(int x = 1; x < widthTiles - 1; x++)
+         mapPanel.setIcon(x, 0, '.');
+   }
+   
+   private void setStraight()
+   {
+      setAllBorders('#');
+      for(int x = 1; x < widthTiles - 1; x++)
+      {
+         mapPanel.setIcon(x, 0, '.');
+         mapPanel.setIcon(x, heightTiles - 1, '.');
+      }
+   }
+   
+   private void setElbow()
+   {
+      setAllBorders('#');
+      for(int x = 1; x < widthTiles - 1; x++)
+         mapPanel.setIcon(x, 0, '.');
+      for(int y = 0; y < heightTiles - 1; y++)
+         mapPanel.setIcon(0, y, '.');
+   }
+   
+   private void setTee()
+   {
+      setAllBorders('#');
+      for(int x = 1; x < widthTiles - 1; x++)
+      {
+         mapPanel.setIcon(x, 0, '.');
+         mapPanel.setIcon(x, heightTiles - 1, '.');
+      }
+      for(int y = 0; y < heightTiles; y++)
+         mapPanel.setIcon(0, y, '.');
+   }
+   
+   private void setCross()
+   {
+      setAllBorders('.');
    }
    
    public void updateMouseLoc(int x, int y)
