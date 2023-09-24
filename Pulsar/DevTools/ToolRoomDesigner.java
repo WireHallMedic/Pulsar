@@ -9,14 +9,16 @@ import java.awt.datatransfer.*;
 
 public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
-   public static final String[] buttonStrList = {"", "#", ".", "0", "/", "V", "", 
+   public static final String[] buttonStrList = {"", "", "",
+      "#", ".", "0", "/", "V", "",
       "", "", "",
       "Set all #", "Set all .", "Set all 0", "Set all V", "", "", 
       "", "", "",
       "Set block", "Set terminal", "Set straight", "Set elbow", "Set tee", "Set cross"};
    public static final char DEFAULT_CHAR = '.';
-   private JPanel layoutPanel;
-   private RogueTilePanel mapPanel;
+   public static final int MAX_MAP_RADIUS = 21;
+   private LayoutPanel layoutPanel;
+   private ToolRoomDesignerMapPanel mapPanel;
    private JPanel controlPanel;
    private JButton[][] buttonArray;
    private JLabel label;
@@ -24,6 +26,8 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    private JButton clipboardButton;
    private int innerPanelIndex;
    private JPanel[] innerPanel;
+   private JButton setSizeButton;
+   private javax.swing.Timer timer;
    
    
    private char activeChar;
@@ -36,44 +40,42 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    public ToolRoomDesigner()
    {
       super();
-      setSize(1000, 800);
+      setSize(1200, 800);
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setTitle("Room Designer");
       
       buttonArray = null;
       
-      layoutPanel = new JPanel();
-      layoutPanel.setLayout(new GridLayout(1, 2));
+      layoutPanel = new LayoutPanel(this);
       layoutPanel.setVisible(true);
       this.add(layoutPanel);
       
-      mapPanel = new RogueTilePanel(widthTiles, heightTiles, GUIConstants.SQUARE_TILE_PALETTE);
+      mapPanel = new ToolRoomDesignerMapPanel();
       mapPanel.setBackground(Color.GRAY);
       mapPanel.setSizeMultiplier(2.0);
       mapPanel.setVisible(true);
-      layoutPanel.add(mapPanel);
+      layoutPanel.add(mapPanel, .7, 1.0, 0.0, 0.0);
       
       controlPanel = new JPanel();
       controlPanel.setLayout(new GridLayout(1, 3));
       controlPanel.setVisible(true);
       populateControlPanel();
-      layoutPanel.add(controlPanel);
+      layoutPanel.add(controlPanel, .3, 1.0, .7, 0.0);
       
-      setButtonArray();
+      initializeMap();
       mapPanel.addMouseListener(this);
-      mapPanel.addKeyListener(this);
       this.addKeyListener(this);
-      javax.swing.Timer timer = new javax.swing.Timer(1000 / 30, null);
+      timer = new javax.swing.Timer(1000 / 30, null);
       timer.addActionListener(this);
       timer.start();
       
       setActiveChar('#');
       
-      mapPanel.grabFocus();
       setVisible(true);
+      layoutPanel.resizeComponents(true);
    }
    
-   public void setButtonArray()
+   public void initializeMap()
    {
       for(int x = 0; x < widthTiles; x++)
       for(int y = 0; y < heightTiles; y++)
@@ -99,9 +101,25 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       }
       if(ae.getSource() == clipboardButton)
       {
-			String str = getClipboardString();
+			String str = mapPanel.getClipboardString();
 			StringSelection ss = new StringSelection(str);
 		   Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+      }
+      if(ae.getSource() == setSizeButton)
+      {
+         try
+         {
+            String str = JOptionPane.showInputDialog("New width: ");
+            int x  = Integer.parseInt(str);
+            str = JOptionPane.showInputDialog("New height: ");
+            int y = Integer.parseInt(str);
+            System.out.println("Size okay");
+            setSizes(x, y);
+         }
+         catch(Exception ex)
+         {
+            setSizes(13, 13);
+         }
       }
       for(int i = 0; i < buttonStrList.length; i++)
       {
@@ -112,82 +130,43 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
             if(text.length() == 1)
                setActiveChar(text);
             if(text.contains("Set all"))
-               setAllTiles(text.charAt(text.length() - 1));
+               mapPanel.setAllTiles(text.charAt(text.length() - 1));
             if(text.contains("Set block"))
-               setAllTiles('#');
+               mapPanel.setAllTiles('#');
             if(text.contains("Set terminal"))
-               setTerminal();
+               mapPanel.setTerminal();
             if(text.contains("Set straight"))
-               setStraight();
+               mapPanel.setStraight();
             if(text.contains("Set elbow"))
-               setElbow();
+               mapPanel.setElbow();
             if(text.contains("Set tee"))
-               setTee();
+               mapPanel.setTee();
             if(text.contains("Set cross"))
-               setCross();
+               mapPanel.setCross();
             break;
          }
       }
    }
    
-   private void setAllBorders(char c)
+   private void setSizes(int w, int h)
    {
+      widthTiles = w;
+      heightTiles = h;
+      
+  /*    mapPanel = new RogueTilePanel(w, h, GUIConstants.SQUARE_TILE_PALETTE);
+      layoutPanel.add(mapPanel, 0.5, 1.0, 0.0, 0.0);
+      mapPanel.addMouseListener(this);
+      timer.addActionListener(this);
+      mapPanel.setBackground(Color.GRAY);
+      mapPanel.setSizeMultiplier(2.0);
       for(int x = 0; x < widthTiles; x++)
-      {
-         mapPanel.setIcon(x, 0, c);
-         mapPanel.setIcon(x, heightTiles - 1, c);
-      }
       for(int y = 0; y < heightTiles; y++)
       {
-         mapPanel.setIcon(0, y, c);
-         mapPanel.setIcon(widthTiles - 1, y, c);
-      }
+         mapPanel.setIcon(x, y, DEFAULT_CHAR);
+      }*/
+      this.repaint();
    }
-   
-   private void setTerminal()
-   {
-      setAllBorders('#');
-      for(int x = 1; x < widthTiles - 1; x++)
-         mapPanel.setIcon(x, 0, '.');
-   }
-   
-   private void setStraight()
-   {
-      setAllBorders('#');
-      for(int x = 1; x < widthTiles - 1; x++)
-      {
-         mapPanel.setIcon(x, 0, '.');
-         mapPanel.setIcon(x, heightTiles - 1, '.');
-      }
-   }
-   
-   private void setElbow()
-   {
-      setAllBorders('#');
-      for(int x = 1; x < widthTiles - 1; x++)
-         mapPanel.setIcon(x, 0, '.');
-      for(int y = 0; y < heightTiles - 1; y++)
-         mapPanel.setIcon(0, y, '.');
-   }
-   
-   private void setTee()
-   {
-      setAllBorders('#');
-      for(int x = 1; x < widthTiles - 1; x++)
-      {
-         mapPanel.setIcon(x, 0, '.');
-         mapPanel.setIcon(x, heightTiles - 1, '.');
-      }
-      for(int y = 0; y < heightTiles; y++)
-         mapPanel.setIcon(0, y, '.');
-   }
-   
-   private void setCross()
-   {
-      setAllBorders('.');
-   }
-   
-   public void updateMouseLoc(int x, int y)
+      public void updateMouseLoc(int x, int y)
    {
       if(mouseLocX != x || mouseLocY != y)
       {
@@ -198,19 +177,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       mouseLocY = y;
    }
    
-   public String getClipboardString()
-   {
-      String s = "";
-      for(int y = 0; y < heightTiles; y++)
-      {
-         for(int x = 0; x < widthTiles; x++)
-         {
-            s += (char)mapPanel.getIcon(x, y);
-         }
-         s += "\n";
-      }
-      return s;
-   }
+
    
    public void mouseEntered(MouseEvent me){}
    public void mouseExited(MouseEvent me){}
@@ -248,6 +215,13 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       addToControlPanel(new JLabel("Active char:"));
       label = new JLabel();
       addToControlPanel(label);
+      
+      setSizeButton = new JButton("Set size");
+      setSizeButton.setFocusable(false);
+      setSizeButton.addActionListener(this);
+      addToControlPanel(setSizeButton);
+      
+      
       buttonList = new JButton[buttonStrList.length];
       for(int i = 0; i < buttonStrList.length; i++)
       {
@@ -272,15 +246,6 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       clipboardButton.setFocusable(false);
       clipboardButton.addActionListener(this);
       addToControlPanel(clipboardButton);
-   }
-   
-   public void setAllTiles(char c)
-   {
-      for(int x = 0; x < widthTiles; x++)
-      for(int y = 0; y < heightTiles; y++)
-      {
-         mapPanel.setIcon(x, y, c);
-      }
    }
    
    public static void main(String[] args)

@@ -12,7 +12,7 @@ s#i0
 s#k0
 s#j0
 s#l0
-!4371;g
+!4424;g
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
@@ -77,6 +77,7 @@ s#l0
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011Pulsar%sZone%sZone.java
 %\011Pulsar%sActor%sStatusEffect.java
+%\011Pulsar%sDevTools%sToolRoomDesignerMapPanel.java
 %\011%uWidlerSuite%sFloodFill.java
 %\011Pulsar%sGear%sArmor.java
 %\011Pulsar%sAI%sAIConstants.java
@@ -135,7 +136,7 @@ s#l0
 %\011Pulsar%sZone%sZoneMap.java
 %\011Pulsar%sZone%sAcid.java
 %\011Pulsar%sGear%sGearConstants.java
-!4371;f
+!4424;f
 %\011%uWidlerSuite%sUnboundTile.java
 %\011Pulsar%sGUI%sMapTerminalPanel.java
 %\011Pulsar%sActor%sActionSpeed.java
@@ -200,6 +201,7 @@ s#l0
 %\011%uWidlerSuite%sDijkstraMap.java
 %\011Pulsar%sZone%sZone.java
 %\011Pulsar%sActor%sStatusEffect.java
+%\011Pulsar%sDevTools%sToolRoomDesignerMapPanel.java
 %\011%uWidlerSuite%sFloodFill.java
 %\011Pulsar%sGear%sArmor.java
 %\011Pulsar%sAI%sAIConstants.java
