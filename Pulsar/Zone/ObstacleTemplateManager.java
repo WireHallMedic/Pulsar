@@ -36,7 +36,15 @@ public class ObstacleTemplateManager implements ZoneConstants
    {
       if(list.size() == 0)
          return generateEmpty();
-      return new ObstacleTemplate(list.elementAt(GameEngine.randomInt(0, list.size())));
+      ObstacleTemplate template = new ObstacleTemplate(list.elementAt(GameEngine.randomInt(0, list.size())));
+      int spins = GameEngine.randomInt(0, 4);
+      for(int i = 0; i < spins; i++)
+         template.rotate();
+      if(GameEngine.randomBoolean())
+         template.mirrorX();
+      if(GameEngine.randomBoolean())
+         template.mirrorY();
+      return template;
    }
    
    public void loadFromFile(String filename)

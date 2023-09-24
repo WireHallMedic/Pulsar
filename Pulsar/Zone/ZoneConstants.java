@@ -27,6 +27,8 @@ public interface ZoneConstants extends WSFontConstants
    public static final char TEMPLATE_EXPLODING_BARREL = 'e';
    public static final char TEMPLATE_CRATE = 'c';
    public static final char TEMPLATE_TABLE = '=';
+   
+   public static final char TEMPLATE_OBSTACLE = '?';
       
    public enum TileType
    {
