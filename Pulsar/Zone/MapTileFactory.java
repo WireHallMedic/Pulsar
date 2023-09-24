@@ -43,17 +43,30 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    {
       switch(c)
       {
+         // border legal tiles
          case TEMPLATE_VACUUM       : return getVacuum();
          case TEMPLATE_CLEAR        : return getTile(TileType.CLEAR);
          case TEMPLATE_DOOR         : return getDoor();
          case TEMPLATE_WALL         : return getTile(TileType.HIGH_WALL);
          case TEMPLATE_OOB          : return getTile(oob);
          
+         // misc tiles
          case TEMPLATE_BARREL             : return getBarrel();
          case TEMPLATE_WATER_BARREL       : return getWaterBarrel();
          case TEMPLATE_EXPLODING_BARREL   : return getExplodingBarrel();
          case TEMPLATE_CRATE              : return getCrate();
          case TEMPLATE_TABLE              : return getTile(TileType.LOW_WALL);
+         case TEMPLATE_RUBBLE             : return getTile(TileType.RUBBLE);
+         case TEMPLATE_WATER              : return getWater();
+         case TEMPLATE_ACID               : return getAcid();
+         case TEMPLATE_BUTTON             : return getButton();
+         case TEMPLATE_WINDOW             : return getTile(TileType.WINDOW);
+         case TEMPLATE_TERMINAL           : return getTerminal();
+         
+         // traversal tiles
+         case TEMPLATE_EXIT         : return getTile(TileType.CLEAR);
+         case TEMPLATE_DOWN_STAIRS  : return getTile(TileType.CLEAR);
+         case TEMPLATE_UP_STAIRS    : return getTile(TileType.CLEAR);
          
          default        : System.out.println("Unrecognized tile type: " + ((char)c)); return null;
       }
@@ -71,7 +84,6 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       Door door = getDoor();
       door.setAutomatic(true);
       return door;
-      
    }
    
    public static MapTile getButton()

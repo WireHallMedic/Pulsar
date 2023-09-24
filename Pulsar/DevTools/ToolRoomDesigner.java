@@ -46,7 +46,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    public ToolRoomDesigner()
    {
       super();
-      setSize(1200, 800);
+      setSize(1400, 800);
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setTitle("Room Designer");
       
@@ -60,13 +60,15 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       mapPanel.setBackground(Color.GRAY);
       mapPanel.setSizeMultiplier(2.0);
       mapPanel.setVisible(true);
-      layoutPanel.add(mapPanel, .7, 1.0, 0.0, 0.0);
+      layoutPanel.add(mapPanel, .6, 1.0, 0.0, 0.0);
       
       controlPanel = new JPanel();
       controlPanel.setLayout(new GridLayout(1, 3));
       controlPanel.setVisible(true);
       populateControlPanel();
-      layoutPanel.add(controlPanel, .3, 1.0, .7, 0.0);
+      layoutPanel.add(controlPanel, .25, 1.0, .6, 0.0);
+      
+      addInstructionPanel();
       
       mapPanel.addMouseListener(this);
       this.addKeyListener(this);
@@ -147,6 +149,36 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
             break;
          }
       }
+   }
+   
+   private void addInstructionPanel()
+   {
+      JPanel instructionPanel = new JPanel();
+      instructionPanel.setLayout(new GridLayout(20,1));
+      instructionPanel.setVisible(true);
+      
+      instructionPanel.add(new JLabel("  V Vacuum"));
+      instructionPanel.add(new JLabel("  . Clear"));
+      instructionPanel.add(new JLabel("  # Wall"));
+      instructionPanel.add(new JLabel("  / Door"));
+      instructionPanel.add(new JLabel("  0 Out of Bounds"));
+      instructionPanel.add(new JLabel("  b Barrel"));
+      instructionPanel.add(new JLabel("  w Water Barrel"));
+      instructionPanel.add(new JLabel("  e Exploding Barrel"));
+      instructionPanel.add(new JLabel("  c Crate"));
+      instructionPanel.add(new JLabel("  = Table"));
+      instructionPanel.add(new JLabel("  , Rubble"));
+      instructionPanel.add(new JLabel("  ~ Water"));
+      instructionPanel.add(new JLabel("  a Acid"));
+      instructionPanel.add(new JLabel("  ! Button"));
+      instructionPanel.add(new JLabel("  : Window"));
+      instructionPanel.add(new JLabel("  T Terminal"));
+      instructionPanel.add(new JLabel("  X Exit"));
+      instructionPanel.add(new JLabel("  > Up Stairs"));
+      instructionPanel.add(new JLabel("  < Down Stairs"));
+      instructionPanel.add(new JLabel(" ? Obstacle (5x5)"));
+      
+      layoutPanel.add(instructionPanel, .10, 1.0, .85, 0.0);
    }
    
    public void updateSizeLabels()
