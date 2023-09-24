@@ -69,6 +69,7 @@ public class RoomTemplateManager implements ZoneConstants
             throw new java.lang.Error("No RoomTemplate entries for " + t);
          }
       }
+      validated = true;
    }
    
    public RoomTemplate random(RoomTemplate.RoomTemplateType t)
