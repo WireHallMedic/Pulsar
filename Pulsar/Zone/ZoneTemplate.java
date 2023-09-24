@@ -265,19 +265,26 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       return false;
    }
    
-   public static void main(String[] args)
+   // returns a zone template that includes at least one of each RoomTemplate
+   public static ZoneTemplate getDemo()
    {
       RoomTemplateManager rtm = new RoomTemplateManager();
       rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
-      v.add("#..#");
-      v.add(".??.");
-      v.add(".??.");
-      v.add("#..#");
-      ZoneTemplate zt = new ZoneTemplate(v, rtm, false);
+      v.add("#.??");
+      v.add("?.?.");
+      v.add("??#.");
+      v.add("?.#.");
+      return new ZoneTemplate(v, rtm, false);
+   }
+   
+   public static void main(String[] args)
+   {
+      ZoneTemplate zt = getDemo();
       zt.print();
-      
+      /*
       ZoneMap map = ZoneMapFactory.buildFromTemplates(zt.getTileMap(), TileType.HIGH_WALL);
       map.print();
+      */
    }
 }
