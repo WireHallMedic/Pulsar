@@ -27,6 +27,8 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          return getTerminal();
       if(baseType == TileType.DOOR)
          return getDoor();
+      if(baseType == TileType.VACUUM)
+         return getVacuum();
       MapTile tile = new MapTile(baseType.iconIndex, fgColor.getRGB(), bgColor.getRGB(), baseType.name, 
                                  baseType.lowPassable, baseType.highPassable, baseType.transparent);
       if(baseType == TileType.NULL || baseType == TileType.CLEAR)

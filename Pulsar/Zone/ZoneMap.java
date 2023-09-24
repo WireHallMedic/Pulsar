@@ -744,5 +744,19 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       }
       return false;
    }
-
+   
+   
+   // testing method
+   //////////////////////////////////////////////
+   public void print()
+   {
+      for(int y = 0; y < height; y++)
+      {
+         for(int x = 0; x < width; x++)
+         {
+            System.out.print("" + (char)(getTile(x, y).getIconIndex()));
+         }
+         System.out.println("");
+      }
+   }
 }

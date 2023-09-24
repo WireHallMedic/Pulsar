@@ -276,5 +276,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("#..#");
       ZoneTemplate zt = new ZoneTemplate(v, rtm, false);
       zt.print();
+      
+      ZoneMap map = ZoneMapFactory.buildFromTemplates(zt.getTileMap(), TileType.HIGH_WALL);
+      map.print();
    }
 }

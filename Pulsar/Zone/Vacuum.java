@@ -11,6 +11,6 @@ public class Vacuum extends MapTile implements ZoneConstants, GUIConstants
    
    public Vacuum()
    {
-      super(' ', DEFAULT_TILE_FG_COLOR.getRGB(), BLACK.getRGB(), "Space", false, false, true);
+      super(' ', DEFAULT_TILE_FG_COLOR.getRGB(), BLACK.getRGB(), TileType.VACUUM.name, TileType.VACUUM.lowPassable, TileType.VACUUM.highPassable, TileType.VACUUM.transparent);
    }
 }

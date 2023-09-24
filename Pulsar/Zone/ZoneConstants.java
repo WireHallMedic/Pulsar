@@ -36,6 +36,7 @@ public interface ZoneConstants extends WSFontConstants
       ICE         ('-', "Ice", true, true, true),
       DOOR        ('|', "Door", false, false, false),
       TERMINAL    (CAPITAL_OMEGA_TILE, "Terminal", false, true, true),
+      VACUUM      (' ', "Vacuum", false, false, true),
       NULL        (' ', "", false, false, false);
       
       public int iconIndex;
