@@ -14,6 +14,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       "Set all #", "Set all .", "Set all 0", "Set all V", "", "", 
       "", "", "",
       "Set block", "Set terminal", "Set straight", "Set elbow", "Set tee", "Set cross"};
+   public static final char DEFAULT_CHAR = '.';
    private JPanel layoutPanel;
    private RogueTilePanel mapPanel;
    private JPanel controlPanel;
@@ -66,7 +67,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       timer.addActionListener(this);
       timer.start();
       
-      setActiveChar('.');
+      setActiveChar('#');
       
       mapPanel.grabFocus();
       setVisible(true);
@@ -77,7 +78,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       for(int x = 0; x < widthTiles; x++)
       for(int y = 0; y < heightTiles; y++)
       {
-         mapPanel.setIcon(x, y, '?');
+         mapPanel.setIcon(x, y, DEFAULT_CHAR);
       }
    }
    
