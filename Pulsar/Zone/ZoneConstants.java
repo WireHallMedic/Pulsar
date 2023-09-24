@@ -17,6 +17,12 @@ public interface ZoneConstants extends WSFontConstants
    public static final int SOUTH = 2;
    public static final int WEST = 3;
    
+   public static final char TEMPLATE_VACUUM = 'V';
+   public static final char TEMPLATE_CLEAR = '.';
+   public static final char TEMPLATE_WALL = '#';
+   public static final char TEMPLATE_DOOR = '/';
+   public static final char TEMPLATE_OOB = '0';
+      
    public enum TileType
    {
       CLEAR       (SMALL_BULLET_TILE, "Clear", true, true, true),

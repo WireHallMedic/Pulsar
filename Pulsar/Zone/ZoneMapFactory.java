@@ -53,6 +53,21 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       }
    }
    
+   public static ZoneMap buildFromTemplates(char[][] charMap, TileType oobTile)
+   {
+      int w = charMap.length + 2;
+      int h = charMap[0].length + 2;
+      ZoneMap map = new ZoneMap(w, h, MapTileFactory.getTile(oobTile));
+      map.setOOBTile(MapTileFactory.getTile(oobTile));
+      for(int x = 0; x < charMap.length; x++)
+      for(int y = 0; y < charMap[0].length; y++)
+         map.setTile(x + 1, y + 1, MapTileFactory.getTileFromTemplate(charMap[x][y], oobTile));
+      
+      labelBulkheads(map);
+      map.postProcessing();
+      return map;
+   }
+   
    public static ZoneMap getTestMap()
    {
       int w = 15;

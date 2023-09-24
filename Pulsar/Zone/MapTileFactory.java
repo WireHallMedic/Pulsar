@@ -36,6 +36,22 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       return tile;
    }
    
+   // getting tile from a templateTile; note that probabilistic tiles should already be determined
+   public static MapTile getTileFromTemplate(char c, TileType oob)
+   {
+      switch(c)
+      {
+         case TEMPLATE_VACUUM    : return getVacuum();
+         case TEMPLATE_CLEAR     : return getTile(TileType.CLEAR);
+         case TEMPLATE_DOOR      : return getDoor();
+         case TEMPLATE_WALL      : return getTile(TileType.HIGH_WALL);
+         case TEMPLATE_OOB       : return getTile(oob);
+         
+         default        : return null;
+      }
+   }
+
+   
    public static Door getDoor()
    {
       Door door = new Door(DEFAULT_TILE_FG_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB(), "Door");
