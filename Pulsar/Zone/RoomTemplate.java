@@ -135,7 +135,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
             for(int xx = 0; xx < ObstacleTemplate.REQUIRED_WIDTH; xx++)
             for(int yy = 0; yy < ObstacleTemplate.REQUIRED_HEIGHT; yy++)
             {
-               newTemplate.setCell(x + xx, y + yy, obstacle.getCell(x, y));
+               newTemplate.setCell(x + xx, y + yy, obstacle.getCell(xx, yy));
             }
          }
       }

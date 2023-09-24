@@ -73,13 +73,13 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
       fullRerollB.addActionListener(this);
       buttonPanel.add(fullRerollB);
       
-      probRerollB = new JButton("Reroll Prob. Tiles");
-      probRerollB.addActionListener(this);
-      buttonPanel.add(probRerollB);
-      
       obstacleRerollB = new JButton("Reroll Obstacles");
       obstacleRerollB.addActionListener(this);
       buttonPanel.add(obstacleRerollB);
+      
+      probRerollB = new JButton("Reroll Prob. Tiles");
+      probRerollB.addActionListener(this);
+      buttonPanel.add(probRerollB);
       
       int curComponents = buttonPanel.getComponentCount();
       for(int i = 0; i < BUTTON_SLOTS - curComponents; i++)
@@ -106,7 +106,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
       }
       if(ae.getSource() == obstacleRerollB)
       {
-         drawMap();
+         rerollObstacles();
       }
       if(ae.getSource() == wallButton || ae.getSource() == vacuumButton)
       {
@@ -148,6 +148,14 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    
    public void rerollProbs()
    {
+      zoneTemplate.setTileMap();
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), getOOBType());
+      drawMap();
+   }
+   
+   public void rerollObstacles()
+   {
+      zoneTemplate.setObstacles();
       zoneTemplate.setTileMap();
       zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), getOOBType());
       drawMap();
