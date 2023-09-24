@@ -9,8 +9,10 @@ import java.awt.datatransfer.*;
 
 public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
-   public static final String[] buttonStrList = {"#", ".", "0", "/", "V", "", 
-      "Set all #", "Set all .", "Set all 0", "Set all V",
+   public static final String[] buttonStrList = {"", "#", ".", "0", "/", "V", "", 
+      "", "", "",
+      "Set all #", "Set all .", "Set all 0", "Set all V", "", "", 
+      "", "", "",
       "Set block", "Set terminal", "Set straight", "Set elbow", "Set tee", "Set cross"};
    private JPanel layoutPanel;
    private RogueTilePanel mapPanel;
@@ -19,6 +21,8 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    private JLabel label;
    private JButton[] buttonList;
    private JButton clipboardButton;
+   private int innerPanelIndex;
+   private JPanel[] innerPanel;
    
    
    private char activeChar;
@@ -49,7 +53,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       layoutPanel.add(mapPanel);
       
       controlPanel = new JPanel();
-      controlPanel.setLayout(new GridLayout(12, 2));
+      controlPanel.setLayout(new GridLayout(1, 3));
       controlPanel.setVisible(true);
       populateControlPanel();
       layoutPanel.add(controlPanel);
@@ -223,32 +227,50 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       setActiveChar(ke.getKeyChar());
    }
    
+   public void addToControlPanel(Component c)
+   {
+      innerPanel[innerPanelIndex].add(c);
+      innerPanelIndex++;
+      if(innerPanelIndex >= innerPanel.length)
+         innerPanelIndex = 0;
+   }
+   
    public void populateControlPanel()
    {
-      controlPanel.add(new JLabel("Active char:"));
+      innerPanel = new JPanel[3];
+      for(int i = 0; i < innerPanel.length; i++)
+      {
+         innerPanel[i] = new JPanel();
+         innerPanel[i].setLayout(new GridLayout(12, 1));
+         controlPanel.add(innerPanel[i]);
+      }
+      addToControlPanel(new JLabel("Active char:"));
       label = new JLabel();
-      controlPanel.add(label);
+      addToControlPanel(label);
       buttonList = new JButton[buttonStrList.length];
       for(int i = 0; i < buttonStrList.length; i++)
       {
          buttonList[i] = new JButton(buttonStrList[i]);
          buttonList[i].addActionListener(this);
          buttonList[i].setFocusable(false);
-         controlPanel.add(buttonList[i]);
+         if(buttonStrList[i].equals(""))
+            buttonList[i].setVisible(false);
+         addToControlPanel(buttonList[i]);
       }
       
       // spacer buttons that do nothing
-      for(int i = 0; i < 22 - (buttonStrList.length + 2); i++)
+      for(int i = 0; i < 33 - (buttonStrList.length + 2); i++)
       {
          JButton button = new JButton();
          button.setFocusable(false);
-         controlPanel.add(button);
+         button.setVisible(false);
+         addToControlPanel(button);
       }
       
       clipboardButton = new JButton("Copy to Clipboard");
       clipboardButton.setFocusable(false);
       clipboardButton.addActionListener(this);
-      controlPanel.add(clipboardButton);
+      addToControlPanel(clipboardButton);
    }
    
    public void setAllTiles(char c)
