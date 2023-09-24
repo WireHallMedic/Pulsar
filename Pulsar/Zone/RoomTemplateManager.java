@@ -193,7 +193,7 @@ public class RoomTemplateManager implements ZoneConstants
       {
          String str = "";
          for(int x = 0; x < tileWidth; x++)
-            str += "#";
+            str += "0";
          strVect.add(str);
       }
       add(new RoomTemplate(strVect));
