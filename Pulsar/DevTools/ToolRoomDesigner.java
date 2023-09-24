@@ -178,7 +178,12 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    public void mousePressed(MouseEvent me)
    {
       if(mapPanel.isInActiveArea(mouseLocX, mouseLocY))
-         mapPanel.setIcon(mouseLocX, mouseLocY, activeChar);
+      {
+         if(me.getButton() == MouseEvent.BUTTON1)
+            mapPanel.setIcon(mouseLocX, mouseLocY, activeChar);
+         if(me.getButton() == MouseEvent.BUTTON3)
+            setActiveChar((char)mapPanel.getIcon(mouseLocX, mouseLocY));
+      }
    }
    
    public void keyPressed(KeyEvent ke){}
