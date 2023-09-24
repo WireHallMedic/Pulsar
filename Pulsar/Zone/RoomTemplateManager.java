@@ -11,6 +11,7 @@ public class RoomTemplateManager implements ZoneConstants
    private TypeList[] typeList;
    private int tileHeight;
    private int tileWidth;
+   private boolean validated;
    
    public int getHeight(){return tileHeight;}
    public int getWidth(){return tileWidth;}
@@ -31,6 +32,7 @@ public class RoomTemplateManager implements ZoneConstants
       {
          typeList[i] = new TypeList();
       }
+      validated = false;
    }
    
    public void add(RoomTemplate t)
@@ -56,6 +58,10 @@ public class RoomTemplateManager implements ZoneConstants
    
    public void validate()
    {
+      if(typeList[RoomTemplate.RoomTemplateType.BLOCK.ordinal()].size() == 0)
+      {
+         generateBlock();
+      }
       for(RoomTemplate.RoomTemplateType t : RoomTemplate.RoomTemplateType.values())
       {
          if(typeList[t.ordinal()].size() == 0)
@@ -67,6 +73,8 @@ public class RoomTemplateManager implements ZoneConstants
    
    public RoomTemplate random(RoomTemplate.RoomTemplateType t)
    {
+      if(!validated)
+         validate();
       return new RoomTemplate(typeList[t.ordinal()].random());
    }
    
@@ -123,8 +131,6 @@ public class RoomTemplateManager implements ZoneConstants
       {
 			e.printStackTrace();
 		}
-      
-      validate();
    }
    
    public void loadDemos()
@@ -177,6 +183,19 @@ public class RoomTemplateManager implements ZoneConstants
       str.add(".....");
       str.add(".....");
       add(new RoomTemplate(str));
+   }
+   
+   private void generateBlock()
+   {
+      Vector<String> strVect = new Vector<String>();
+      for(int y = 0; y < tileHeight; y++)
+      {
+         String str = "";
+         for(int x = 0; x < tileWidth; x++)
+            str += "#";
+         strVect.add(str);
+      }
+      add(new RoomTemplate(strVect));
    }
    
    

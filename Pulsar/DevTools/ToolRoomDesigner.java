@@ -170,7 +170,6 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    }
    
 
-   
    public void mouseEntered(MouseEvent me){}
    public void mouseExited(MouseEvent me){}
    public void mouseReleased(MouseEvent me){}
