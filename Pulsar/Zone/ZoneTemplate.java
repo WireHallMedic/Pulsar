@@ -263,9 +263,10 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
                for(int xx = 0; xx < tileMap.length; xx++)
                for(int yy = 0; yy < tileMap[0].length; yy++)
                {
-                  buttons += "[" + xx + ", " + yy + "] ";
+                  if(tileMap[xx][yy] == TEMPLATE_BUTTON)
+                     buttons += "[" + xx + ", " + yy + "] ";
                }
-               throw new java.lang.Error("ZoneTemplate has ButtonTrigger with bad callerLoc: expected " + c + ", found: " + buttons);
+               throw new java.lang.Error("ZoneTemplate has ButtonTrigger with bad callerLoc: expected " + c + ", found: " + buttons + " buttons with " + triggerList.size() + " triggers.");
             }
          }
       }

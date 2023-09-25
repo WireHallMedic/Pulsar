@@ -68,6 +68,14 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       return map;
    }
    
+   private static void setButtonValues(ZoneMap map, ButtonTrigger trigger)
+   {
+      Button button = (Button)map.getTile(trigger.getCallerLoc());
+      trigger.setTriggerIndex(button.getTriggerIndex());
+      button.setRepetitions(trigger.getCallerReps());
+      
+   }
+   
    public static ZoneMap getTestMap()
    {
       int w = 15;

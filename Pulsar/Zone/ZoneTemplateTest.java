@@ -77,13 +77,22 @@ public class ZoneTemplateTest implements ZoneConstants
       ZoneTemplate zt = ZoneTemplate.getDemo("Room Templates.txt");
       zt.setObstacles();
       zt.process();
-      while(!zt.hasButton())
+      assertTrue("Zone Template passes both validations", zt.validateButtons());
+   }
+   
+   @Test public void test1000Zones()
+   {
+      for(int i = 0; i < 1000; i++)
       {
-         zt = ZoneTemplate.getDemo("Room Templates.txt");
+         ZoneTemplate zt = ZoneTemplate.getDemo("Room Templates.txt");
          zt.setObstacles();
          zt.process();
+         assertTrue("Zone Template passes both validations", zt.validateButtons());
+         assertTrue("Zone Template passes initial validation a second time", zt.validateInitial());
+         zt.setObstacles();
+         zt.process();
+         assertTrue("Zone Template passes button validation a second time", zt.validateButtons());
       }
-      assertTrue("Zone Template passes validation", zt.validate());
    }
    
 }

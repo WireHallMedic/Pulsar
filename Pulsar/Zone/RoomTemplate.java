@@ -151,7 +151,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
                ButtonTrigger trigger = new ButtonTrigger(obstacle.getButtonTrigger());
                Coord oldLoc = new Coord(trigger.getCallerLoc());
                trigger.shift(x, y);
-               addButtonTrigger(trigger);
+               newTemplate.addButtonTrigger(trigger);
             }
          }
       }
