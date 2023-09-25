@@ -260,4 +260,27 @@ public class RoomTemplateTest implements ZoneConstants
       assertEquals("RTM cross is a cross", RoomTemplate.RoomTemplateType.CROSS, rtm.random(RoomTemplate.RoomTemplateType.CROSS).getType());
    }
    
+   @Test public void testAllRooms()
+   {
+      RoomTemplateManager rtm = new RoomTemplateManager();
+      rtm.loadFromFile("Room Templates.txt");
+      Vector<RoomTemplate> bigList = rtm.getAll();
+      for(RoomTemplate template : bigList)
+      {
+         assertTrue("RoomTemplate passes validation without error.", template.validate());
+         assertTrue("RoomTemplate passes button validation without error.", template.validateButtons());
+         template.rotate();
+         assertTrue("RoomTemplate passes button validation without error after rotation.", template.validateButtons());
+         template.rotate();
+         assertTrue("RoomTemplate passes button validation without error after rotation.", template.validateButtons());
+         template.rotate();
+         assertTrue("RoomTemplate passes button validation without error after rotation.", template.validateButtons());
+         template.mirrorY();
+         assertTrue("RoomTemplate passes button validation without error after mirrorY.", template.validateButtons());
+         template.mirrorX();
+         assertTrue("RoomTemplate passes button validation without error after mirrorX.", template.validateButtons());
+      }
+      System.out.println("Tested " + bigList.size() + " RoomTemplates.");
+   }
+   
 }
