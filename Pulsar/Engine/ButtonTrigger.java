@@ -10,18 +10,26 @@ public class ButtonTrigger implements EngineConstants
 	private ButtonAction buttonAction;
 	private Vector<Coord> targetList;
    private int intensity;
+   private Coord callerLoc;         // used by template generation, where the trigger exists before the button
+   private int callerRepetitions;   // same
 
 
 	public int getTriggerIndex(){return triggerIndex;}
 	public ButtonAction getButtonAction(){return buttonAction;}
 	public Vector<Coord> getTargetList(){return targetList;}
-   public int getIntensity(){return intensity;} 
+   public int getIntensity(){return intensity;}
+   public Coord getCallerLoc(){return callerLoc;}
+   public boolean hasCallerLoc(){return callerLoc != null;}
+   public int getCallerReps(){return callerRepetitions;}
 
 
 	public void setTriggerIndex(int t){triggerIndex = t;}
 	public void setButtonAction(ButtonAction b){buttonAction = b;}
 	public void setTargetList(Vector<Coord> t){targetList = t;}
    public void setIntensity(int i){intensity = i;}
+   public void setCallerLoc(int x, int y){callerLoc = new Coord(x, y);}
+   public void setCallerLoc(Coord c){setCallerLoc(c.x, c.y);}
+   public void setCallerReps(int r){callerRepetitions = r;}
 
 
    public ButtonTrigger(int ti, ButtonAction ba)
@@ -30,6 +38,8 @@ public class ButtonTrigger implements EngineConstants
       buttonAction = ba;
       targetList = new Vector<Coord>();
       intensity = 1;
+      callerLoc = null;
+      callerRepetitions = 1;
    }
    
    public ButtonTrigger(ButtonTrigger that)
@@ -40,7 +50,10 @@ public class ButtonTrigger implements EngineConstants
       this.targetList = new Vector<Coord>();
       for(Coord c : that.targetList)
          this.targetList.add(new Coord(c));
-      
+      this.callerLoc = null;
+      if(that.callerLoc != null)
+         this.callerLoc = new Coord(that.callerLoc);
+      this.callerRepetitions = that.callerRepetitions;
    }
    
    public void addTarget(Coord c)
@@ -66,6 +79,11 @@ public class ButtonTrigger implements EngineConstants
       {
          c.x += x;
          c.y += y;
+      }
+      if(callerLoc != null)
+      {
+         callerLoc.x += x;
+         callerLoc.y += y;
       }
    }
 }
