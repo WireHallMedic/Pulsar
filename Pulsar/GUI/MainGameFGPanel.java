@@ -50,6 +50,8 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    {
       if(!GameEngine.getRunFlag())
          return;
+      
+      super.actionPerformed(ae);
       GameEngine.cleanUpSprites();
       setActorVisibility();
       if(newActors)
@@ -58,7 +60,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             addNonlocking(a.getSprite());
          newActors = false;
       }
-      super.actionPerformed(ae);
       tickCounter++;
       if(tickCounter > tickCounterReset)
          tickCounter = 1;
