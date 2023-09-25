@@ -35,22 +35,25 @@ public class ObstacleTemplate extends MapTemplate implements ZoneConstants
    @Override
    public void rotate()
    {
+      if(hasButtonTrigger())
+         buttonTrigger.shiftFromRotation(REQUIRED_WIDTH, REQUIRED_HEIGHT);
       super.rotate();
-      // TODO: apply to button triggers
    }
    
    @Override
    public void mirrorX()
    {
+      if(hasButtonTrigger())
+         buttonTrigger.shiftFromMirrorX(REQUIRED_WIDTH, REQUIRED_HEIGHT);
       super.mirrorX();
-      // TODO: apply to button triggers
    }
    
    @Override
    public void mirrorY()
    {
+      if(hasButtonTrigger())
+         buttonTrigger.shiftFromMirrorY(REQUIRED_WIDTH, REQUIRED_HEIGHT);
       super.mirrorY();
-      // TODO: apply to button triggers
    }
       
    public void print()
