@@ -14,6 +14,16 @@ public interface EngineConstants
       TOGGLE,
       FLOOD_WATER,
       FLOOD_ACID;
+      
+      public static ButtonAction getFromString(String s)
+      {
+         for(ButtonAction action : ButtonAction.values())
+         {
+            if(action.toString().toLowerCase().equals(s.toLowerCase().trim()))
+               return action;
+         }
+         return null;
+      }
    }
    
 }

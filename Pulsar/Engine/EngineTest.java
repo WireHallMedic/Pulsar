@@ -8,7 +8,8 @@ import Pulsar.Actor.*;
 import Pulsar.Gear.*;
 
 
-public class EngineTest {
+public class EngineTest implements EngineConstants
+{
 
 
    /** Fixture initialization (common initialization
@@ -65,5 +66,13 @@ public class EngineTest {
       defender.getArmor().setDamageReduction(5);
       Combat.resolveAttackAgainstActor(attacker, defender, attacker.getWeapon());
       Assert.assertEquals("Minimum non-shielded damage is 1 per hit", 16, defender.getCurHealth());
+   }
+   
+   @Test public void testGetButtonActionFromString()
+   {
+      Assert.assertEquals("Getting TOGGLE by string works", ButtonAction.TOGGLE, ButtonAction.getFromString("Toggle"));
+      Assert.assertEquals("Getting FLOOD_WATER by string works", ButtonAction.FLOOD_WATER, ButtonAction.getFromString("FLOOD_WATER"));
+      Assert.assertEquals("Getting FLOOD_ACID by string works", ButtonAction.FLOOD_ACID, ButtonAction.getFromString("flood_acid"));
+      Assert.assertEquals("Getting ButtonAction with bad string returns null", null, ButtonAction.getFromString("Blarg"));
    }
 }
