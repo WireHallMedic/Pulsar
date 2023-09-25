@@ -37,7 +37,6 @@ public class RoomTemplateManager implements ZoneConstants
    
    public void add(RoomTemplate t)
    {
-      typeList[t.getType().ordinal()].add(t);
       if(tileWidth == -1 || tileHeight == -1)
       {
          tileWidth = t.getWidth();
@@ -49,6 +48,8 @@ public class RoomTemplateManager implements ZoneConstants
             tileHeight != t.getHeight())
             throw new java.lang.Error("Added room does not match existing dimensions.");
       }
+      t.validateButtons();
+      typeList[t.getType().ordinal()].add(t);
    }
    
    public void add(Vector<String> strVect, Vector<String> buttonVect)

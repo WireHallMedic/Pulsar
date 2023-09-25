@@ -318,6 +318,40 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
+   public void validateButtons()
+   {
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         if(getCell(x, y) == TEMPLATE_BUTTON)
+         {
+            Coord c = new Coord(x, y);
+            if(triggerList.size() == 0)
+            {
+               throw new java.lang.Error("RoomTemplate has button with no trigger.");
+            }
+            boolean foundF = false;
+            for(ButtonTrigger trigger : triggerList)
+            {
+               
+               if(trigger.getCallerLoc() == null)
+               {
+                  throw new java.lang.Error("RoomTemplate has ButtonTrigger with no callerLoc.");
+               }
+               if(trigger.getCallerLoc().equals(c))
+               {
+                  foundF = true;
+                  break;
+               }
+            }
+            if(!foundF)
+            {
+               throw new java.lang.Error("RoomTemplate has ButtonTrigger with bad callerLoc: expected " + c);
+            }
+         }
+      }
+   }
+   
    private boolean isInvalidBorderTile(char c)
    {
       switch(c)

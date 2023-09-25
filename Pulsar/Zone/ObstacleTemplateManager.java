@@ -24,6 +24,7 @@ public class ObstacleTemplateManager implements ZoneConstants
    
    public void add(ObstacleTemplate t)
    {
+      t.validateButtons();
       list.add(t);
    }
    
@@ -47,6 +48,7 @@ public class ObstacleTemplateManager implements ZoneConstants
             throw new java.lang.Error("Button instructions with no button.");
          template.setButtonTrigger(trigger);
       }
+      template.validateButtons();
       add(template);
    }
    
