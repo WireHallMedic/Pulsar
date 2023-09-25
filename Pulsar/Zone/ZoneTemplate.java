@@ -358,5 +358,19 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("?.#.");
       return new ZoneTemplate(v, rtm, false);
    }
+   
+   public static ZoneTemplate getBasicZoneTemplate()
+   {
+   
+      RoomTemplateManager rtm = new RoomTemplateManager();
+      rtm.loadFromFile("Room Templates.txt");
+      Vector<String> v = new Vector<String>();
+      v.add("?.?###");
+      v.add("?.?.##");
+      v.add("?.??..");
+      v.add("?.?.##");
+      v.add("?.?###");
+      return new ZoneTemplate(v, rtm, false);
+   }
 
 }
