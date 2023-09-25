@@ -36,6 +36,8 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
 	private RoomTemplateType type;
    private boolean[] passArray;
    private ButtonTrigger buttonTrigger;
+   
+   public void setButtonTrigger(ButtonTrigger t){buttonTrigger = t;}
 
 
 	public RoomTemplateType getType(){return type;}

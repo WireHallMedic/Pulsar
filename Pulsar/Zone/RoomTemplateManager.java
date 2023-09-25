@@ -51,9 +51,27 @@ public class RoomTemplateManager implements ZoneConstants
       }
    }
    
-   public void add(Vector<String> strVect)
+   public void add(Vector<String> strVect, Vector<String> buttonVect)
    {
-      add(new RoomTemplate(strVect));
+      RoomTemplate template = new RoomTemplate(strVect);
+      if(buttonVect.size() > 0)
+      {
+         ButtonTrigger trigger = new ButtonTrigger();
+         for(String instruction : buttonVect)
+            trigger.parse(instruction);
+         for(int x = 0; x < tileWidth; x++)
+         for(int y = 0; y < tileHeight; y++)
+         {
+            if(template.getCell(x, y) == TEMPLATE_BUTTON)
+            {
+               trigger.setCallerLoc(x, y);
+            }
+         }
+         if(trigger.getCallerLoc() == null)
+            throw new java.lang.Error("Button instructions with no button.");
+         template.setButtonTrigger(trigger);
+      }
+      add(template);
    }
    
    public void validate()
@@ -104,10 +122,8 @@ public class RoomTemplateManager implements ZoneConstants
                // template has finished
                if(inTemplate)
                {
-                  add(stringVect);
+                  add(stringVect, buttonVect);
                   inTemplate = false;
-                  if(buttonVect.size() > 0)
-                     System.out.println("buttonVect.size() = " + buttonVect.size());
                }
             }
             // has text
@@ -131,7 +147,7 @@ public class RoomTemplateManager implements ZoneConstants
          
          // if the last template was on the last line, add it. Otherwise it's already added.
          if(inTemplate)
-            add(stringVect);
+            add(stringVect, buttonVect);
 
 			reader.close();
 		}
