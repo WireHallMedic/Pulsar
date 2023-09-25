@@ -102,7 +102,7 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
          }
          p.setAllLocs(xStart, yStart);
          engine.setPlayer(p);
-   //      ActorFactory.populateWithAliens(zone, p.getMapLoc());
+         ActorFactory.populateWithAliens(zone, p.getMapLoc());
          engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);

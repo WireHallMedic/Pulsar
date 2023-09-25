@@ -501,7 +501,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public boolean animationAllowsAction(Actor curActor)
    {
       // no animation lock, proceed
-      if(!isAnimationLocked())
+      if(!isAnimationLocked() && !curActor.hasUnreconciledSprite())
          return true;
       
       // curent actor is locked, deny

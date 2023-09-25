@@ -416,7 +416,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    ////////////////////////////////////////////////////////////////////
    public boolean isReadyToAct()
    {
-      return turnEnergy >= FULLY_CHARGED && !hasUnreconciledSprite();
+      return turnEnergy >= FULLY_CHARGED;
    }
    
    public void charge()
