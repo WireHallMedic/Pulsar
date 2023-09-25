@@ -161,31 +161,12 @@ public class ObstacleTemplateManager implements ZoneConstants
       return new ObstacleTemplate(strVect);
    }
    
-   
-   
-   private class TypeList
+   public Vector<ObstacleTemplate> getAll()
    {
-      public Vector<RoomTemplate> list;
-      
-      public TypeList()
-      {
-         list = new Vector<RoomTemplate>();
-      }
-      
-      public void add(RoomTemplate t)
-      {
-         list.add(t);
-      }
-      
-      public RoomTemplate random()
-      {
-         return list.elementAt(GameEngine.randomInt(0, list.size()));
-      }
-      
-      public int size()
-      {
-         return list.size();
-      }
+      Vector<ObstacleTemplate> bigList = new Vector<ObstacleTemplate>();
+      for(ObstacleTemplate template : list)
+         bigList.add(new ObstacleTemplate(template));
+      return bigList;
    }
    
    

@@ -73,6 +73,17 @@ public class ZoneTemplateTest implements ZoneConstants
       v3.add("..??..");
       v3.add("......");
       assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v3, rtm);});
+      
+      ZoneTemplate zt = ZoneTemplate.getDemo("Room Templates.txt");
+      zt.setObstacles();
+      zt.process();
+      while(!zt.hasButton())
+      {
+         zt = ZoneTemplate.getDemo("Room Templates.txt");
+         zt.setObstacles();
+         zt.process();
+      }
+      assertTrue("Zone Template passes validation", zt.validate());
    }
    
 }

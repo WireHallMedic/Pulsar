@@ -31,22 +31,24 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    private RoomTemplate[][] baseRoomTemplate;
    private RoomTemplate[][] rolledRoomTemplate;
    private char[][] tileMap;
+   private Vector<ButtonTrigger> triggerList;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
    public RoomTemplate getBaseRoomTemplate(int x, int y){return baseRoomTemplate[x][y];}
    public RoomTemplate getRolledRoomTemplate(int x, int y){return rolledRoomTemplate[x][y];}
    public char[][] getTileMap(){return tileMap;}
+   public Vector<ButtonTrigger> getTriggerList(){return triggerList;}
    
    public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm){this(input, rtm, false);}
    public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm, boolean mostRestrictive)
    {
       super(input);
-      validate();
+      validateInitial();
       roomTemplateManager = rtm;
       obstacleTemplateManager = new ObstacleTemplateManager();
       obstacleTemplateManager.loadFromFile("Obstacle Templates.txt");
-   //   obstacleTemplateManager.loadDemos();
       setPassArray(mostRestrictive);
+      triggerList = new Vector<ButtonTrigger>();
       generateRooms();
    }
    
@@ -62,7 +64,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          rolledRoomTemplate[x][y] = null;
       }
       setObstacles();
-      setTileMap();
+      process();
+      validateButtons();
    }
    
    public void setPassArray(boolean mostRestrictive)
@@ -129,8 +132,10 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
-   public void setTileMap()
+   public void process()
    {
+      // clear trigger list
+      triggerList = new Vector<ButtonTrigger>();
       // create tile map
       int roomWidth = rolledRoomTemplate[0][0].getWidth();
       int roomHeight = rolledRoomTemplate[0][0].getHeight();
@@ -160,6 +165,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    {
       int roomWidth = roomTemplate.getWidth();
       int roomHeight = roomTemplate.getHeight();
+      
       // north and south border cells
       for(int x = 0; x < roomWidth; x++)
       {
@@ -176,6 +182,14 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       for(int x = 1; x < roomWidth - 1; x++)
       for(int y = 1; y < roomHeight - 1; y++)
          tileMap[x + xOrigin][y + yOrigin] = roomTemplate.getCell(x, y);
+      
+      // button triggers
+      for(ButtonTrigger trigger : roomTemplate.getTriggerList())
+      {
+         trigger = new ButtonTrigger(trigger);
+         trigger.shift(xOrigin, yOrigin);
+         triggerList.add(trigger);
+      }
    }
    
    // returns the appropriate border tile from a pair
@@ -205,12 +219,58 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
-   public boolean validate() 
+   // has the side effects, set rooms after
+   public boolean validateInitial() 
    {
       if(!hasFullConnectivity())
          throw new java.lang.Error("ZoneTemplate has potentially unreachable rooms.");
       if(!hasNoIsolation())
          throw new java.lang.Error("ZoneTemplate has potentially isolated rooms.");
+      return true;
+   }
+   
+   public boolean validateButtons()
+   {
+      int buttonsFound = 0;
+      for(int x = 0; x < tileMap.length; x++)
+      for(int y = 0; y < tileMap[0].length; y++)
+      {
+         if(tileMap[x][y] == TEMPLATE_BUTTON)
+         {
+            Coord c = new Coord(x, y);
+            if(triggerList.size() == 0)
+            {
+               throw new java.lang.Error("ZoneTemplate has button with no trigger.");
+            }
+            boolean foundF = false;
+            for(ButtonTrigger trigger : triggerList)
+            {
+               
+               if(trigger.getCallerLoc() == null)
+               {
+                  throw new java.lang.Error("ZoneTemplate has ButtonTrigger with no callerLoc.");
+               }
+               if(trigger.getCallerLoc().equals(c))
+               {
+                  buttonsFound++;
+                  foundF = true;
+                  break;
+               }
+            }
+            if(!foundF)
+            {
+               String buttons = "";
+               for(int xx = 0; xx < tileMap.length; xx++)
+               for(int yy = 0; yy < tileMap[0].length; yy++)
+               {
+                  buttons += "[" + xx + ", " + yy + "] ";
+               }
+               throw new java.lang.Error("ZoneTemplate has ButtonTrigger with bad callerLoc: expected " + c + ", found: " + buttons);
+            }
+         }
+      }
+      if(buttonsFound != triggerList.size())
+         throw new java.lang.Error("ZoneTemplate has " + triggerList.size() + " ButtonTriggers, but " + buttonsFound + "buttons were found.");
       return true;
    }
    
@@ -297,14 +357,5 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("?.#.");
       return new ZoneTemplate(v, rtm, false);
    }
-   
-   public static void main(String[] args)
-   {
-      ZoneTemplate zt = getDemo();
-      zt.print();
-      /*
-      ZoneMap map = ZoneMapFactory.buildFromTemplates(zt.getTileMap(), TileType.HIGH_WALL);
-      map.print();
-      */
-   }
+
 }

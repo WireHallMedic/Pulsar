@@ -137,7 +137,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    {
       zoneTemplate = ZoneTemplate.getDemo("Room Templates.txt");
       zoneTemplate.setObstacles();
-      zoneTemplate.setTileMap();
+      zoneTemplate.process();
       zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), getOOBType());
       drawMap();
    }
@@ -150,7 +150,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    
    public void rerollProbs()
    {
-      zoneTemplate.setTileMap();
+      zoneTemplate.process();
       zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), getOOBType());
       drawMap();
    }
@@ -158,7 +158,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    public void rerollObstacles()
    {
       zoneTemplate.setObstacles();
-      zoneTemplate.setTileMap();
+      zoneTemplate.process();
       zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate.getTileMap(), getOOBType());
       drawMap();
    }

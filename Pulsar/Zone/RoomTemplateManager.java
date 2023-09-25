@@ -158,6 +158,18 @@ public class RoomTemplateManager implements ZoneConstants
 		}
    }
    
+   public Vector<RoomTemplate> getAll()
+   {
+      Vector<RoomTemplate> bigList = new Vector<RoomTemplate>();
+      int len = RoomTemplate.RoomTemplateType.values().length;
+      for(int i = 0; i < len; i++)
+      {
+         for(int j = 0; j < typeList[i].list.size(); j++)
+            bigList.add(new RoomTemplate(typeList[i].list.elementAt(j)));
+      }
+      return bigList;
+   }
+   
    public void loadDemos()
    {
       clear();
