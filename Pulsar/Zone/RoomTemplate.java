@@ -2,6 +2,7 @@ package Pulsar.Zone;
 
 import java.util.*;
 import Pulsar.Engine.*;
+import WidlerSuite.*;
 
 public class RoomTemplate extends MapTemplate implements ZoneConstants
 {
@@ -145,6 +146,13 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
             {
                newTemplate.setCell(x + xx, y + yy, obstacle.getCell(xx, yy));
             }
+            if(obstacle.hasButtonTrigger())
+            {
+               ButtonTrigger trigger = new ButtonTrigger(obstacle.getButtonTrigger());
+               Coord oldLoc = new Coord(trigger.getCallerLoc());
+               trigger.shift(x, y);
+               addButtonTrigger(trigger);
+            }
          }
       }
       return newTemplate;
@@ -174,6 +182,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    {
       super.rotate();
       setPassArray();
+      // TODO: apply to button triggers
    }
    
    @Override
@@ -181,6 +190,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    {
       super.mirrorX();
       setPassArray();
+      // TODO: apply to button triggers
    }
    
    @Override
@@ -188,6 +198,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    {
       super.mirrorY();
       setPassArray();
+      // TODO: apply to button triggers
    }
    
    public boolean canMirrorX()
