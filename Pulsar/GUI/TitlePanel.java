@@ -80,11 +80,27 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       if(options[selectionIndex].equals("Aliens"))
       {
          GameEngine engine = new GameEngine();
-         ZoneMap map = ZoneMapFactory.getTestMap2();
-         Zone zone = new Zone("Test Zone", -1, map);
+         ZoneTemplate zoneTemplate = ZoneTemplate.getDemo("Room Templates.txt");
+         zoneTemplate.setObstacles();
+         zoneTemplate.process();
+         ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneTemplate, ZoneConstants.TileType.VACUUM);
+         Zone zone = new Zone("Random Aliens", -1, map);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
-         p.setAllLocs(2, 12);
+         int xStart = 0;
+         int yStart = 0;
+         boolean continueF = true;
+         for(int x = 0; x < 20 && continueF; x++)
+         for(int y = 5; y < map.getHeight() && continueF; y += 3)
+         {
+            if(map.getTile(x, y).isLowPassable())
+            {
+               xStart = x;
+               yStart = y;
+               continueF = false;
+            }
+         }
+         p.setAllLocs(xStart, yStart);
          engine.setPlayer(p);
          ActorFactory.populateWithAliens(zone, p.getMapLoc());
          engine.begin();

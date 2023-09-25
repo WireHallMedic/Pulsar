@@ -70,6 +70,8 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
          for(ButtonTrigger trigger : zoneTemplate.getTriggerList())
          {
             trigger.shift(1, 1); // 'cause we added the border
+            if(trigger.getButtonAction() == null)
+               System.out.println("Bad button");
             setButtonValues(map, trigger);
          }
       }
