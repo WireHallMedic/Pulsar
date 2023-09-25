@@ -92,7 +92,9 @@ public class ZoneTemplateTest implements ZoneConstants
          zt.setObstacles();
          zt.process();
          assertTrue("Zone Template passes button validation a second time", zt.validateButtons());
+         ZoneMapFactory.buildFromTemplates(zt, TileType.VACUUM); // make sure we can build maps without errors
       }
    }
+   
    
 }

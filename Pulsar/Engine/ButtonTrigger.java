@@ -10,8 +10,9 @@ public class ButtonTrigger implements EngineConstants
 	private ButtonAction buttonAction;
 	private Vector<Coord> targetList;
    private int intensity;
-   private Coord callerLoc;         // used by template generation, where the trigger exists before the button
-   private int callerRepetitions;   // same
+   private Coord callerLoc;            // used by template generation, where the trigger exists before the button
+   private int callerRepetitions;      // same
+   private boolean callerOneUseOnly;   // same
 
 
 	public int getTriggerIndex(){return triggerIndex;}
@@ -21,6 +22,7 @@ public class ButtonTrigger implements EngineConstants
    public Coord getCallerLoc(){return callerLoc;}
    public boolean hasCallerLoc(){return callerLoc != null;}
    public int getCallerReps(){return callerRepetitions;}
+   public boolean getCallerOneUseOnly(){return callerOneUseOnly;}
 
 
 	public void setTriggerIndex(int t){triggerIndex = t;}
@@ -30,6 +32,7 @@ public class ButtonTrigger implements EngineConstants
    public void setCallerLoc(int x, int y){callerLoc = new Coord(x, y);}
    public void setCallerLoc(Coord c){setCallerLoc(c.x, c.y);}
    public void setCallerReps(int r){callerRepetitions = r;}
+   public void setCallerOneUseOnly(boolean ouo){callerOneUseOnly = ouo;}
 
 
    public ButtonTrigger(int ti, ButtonAction ba)
@@ -40,6 +43,7 @@ public class ButtonTrigger implements EngineConstants
       intensity = 1;
       callerLoc = null;
       callerRepetitions = 1;
+      callerOneUseOnly = false;
    }
    
    public ButtonTrigger()
@@ -59,6 +63,7 @@ public class ButtonTrigger implements EngineConstants
       if(that.callerLoc != null)
          this.callerLoc = new Coord(that.callerLoc);
       this.callerRepetitions = that.callerRepetitions;
+      this.callerOneUseOnly = that.callerOneUseOnly;
    }
    
    public void addTarget(Coord c)
@@ -146,5 +151,7 @@ public class ButtonTrigger implements EngineConstants
          setIntensity(Integer.parseInt(operand));
       if(instruction.contains("BUTTON_REPS"))
          setCallerReps(Integer.parseInt(operand));
+      if(instruction.contains("BUTTON_ONE_USE_ONLY"))
+         setCallerOneUseOnly(Boolean.parseBoolean(operand));
    }
 }

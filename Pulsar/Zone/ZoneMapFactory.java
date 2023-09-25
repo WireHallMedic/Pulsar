@@ -2,6 +2,7 @@ package Pulsar.Zone;
 
 import Pulsar.Engine.*;
 import WidlerSuite.*;
+import java.util.*;
 
 public class ZoneMapFactory implements ZoneConstants, EngineConstants
 {
@@ -53,8 +54,9 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       }
    }
    
-   public static ZoneMap buildFromTemplates(char[][] charMap, TileType oobTile)
+   public static ZoneMap buildFromTemplates(ZoneTemplate zoneTemplate, TileType oobTile)
    {
+      char[][] charMap = zoneTemplate.getTileMap();
       int w = charMap.length + 2;
       int h = charMap[0].length + 2;
       ZoneMap map = new ZoneMap(w, h, MapTileFactory.getTile(oobTile));
@@ -63,6 +65,14 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       for(int y = 0; y < charMap[0].length; y++)
          map.setTile(x + 1, y + 1, MapTileFactory.getTileFromTemplate(charMap[x][y], oobTile));
       
+      if(zoneTemplate.getTriggerList() != null)
+      {
+         for(ButtonTrigger trigger : zoneTemplate.getTriggerList())
+         {
+            trigger.shift(1, 1); // 'cause we added the border
+            setButtonValues(map, trigger);
+         }
+      }
       labelBulkheads(map);
       map.postProcessing();
       return map;
@@ -73,7 +83,8 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       Button button = (Button)map.getTile(trigger.getCallerLoc());
       trigger.setTriggerIndex(button.getTriggerIndex());
       button.setRepetitions(trigger.getCallerReps());
-      
+      button.setOneUse(trigger.getCallerOneUseOnly());
+      map.add(trigger);
    }
    
    public static ZoneMap getTestMap()

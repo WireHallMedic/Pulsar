@@ -110,5 +110,8 @@ public class EngineTest implements EngineConstants
       
       trigger.parse("BUTTON_REPS : 5 ");
       assertEquals("Setting reps works.", 5, trigger.getCallerReps());
+      
+      trigger.parse("BUTTON_ONE_USE_ONLY : true ");
+      assertEquals("Setting OUO works.", true, trigger.getCallerOneUseOnly());
    }
 }
