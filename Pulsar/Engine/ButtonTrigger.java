@@ -32,6 +32,17 @@ public class ButtonTrigger implements EngineConstants
       intensity = 1;
    }
    
+   public ButtonTrigger(ButtonTrigger that)
+   {
+      this.triggerIndex = that.triggerIndex;
+      this.buttonAction = that.buttonAction;
+      this.intensity = that.intensity;
+      this.targetList = new Vector<Coord>();
+      for(Coord c : that.targetList)
+         this.targetList.add(new Coord(c));
+      
+   }
+   
    public void addTarget(Coord c)
    {
       targetList.add(new Coord(c));
@@ -46,6 +57,15 @@ public class ButtonTrigger implements EngineConstants
             targetList.removeElementAt(i);
             i--;
          }
+      }
+   }
+   
+   public void adjustTargets(int x, int y)
+   {
+      for(Coord c : targetList)
+      {
+         c.x += x;
+         c.y += y;
       }
    }
 }
