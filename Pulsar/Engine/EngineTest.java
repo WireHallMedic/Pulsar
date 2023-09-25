@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import Pulsar.Actor.*;
 import Pulsar.Gear.*;
+import WidlerSuite.*;
 
 
 public class EngineTest implements EngineConstants
@@ -52,7 +53,7 @@ public class EngineTest implements EngineConstants
       Actor defender = getTestActor();
       
       Combat.resolveAttackAgainstActor(attacker, defender, attacker.getWeapon());
-      Assert.assertEquals("Damage applied as expected", 17, defender.getCurHealth());
+      assertEquals("Damage applied as expected", 17, defender.getCurHealth());
    }
 
    
@@ -62,17 +63,26 @@ public class EngineTest implements EngineConstants
       Actor defender = getTestActorWithArmor();
       
       Combat.resolveAttackAgainstActor(attacker, defender, attacker.getWeapon());
-      Assert.assertEquals("Armor stops damage that gets through shields", 19, defender.getCurHealth());
+      assertEquals("Armor stops damage that gets through shields", 19, defender.getCurHealth());
       defender.getArmor().setDamageReduction(5);
       Combat.resolveAttackAgainstActor(attacker, defender, attacker.getWeapon());
-      Assert.assertEquals("Minimum non-shielded damage is 1 per hit", 16, defender.getCurHealth());
+      assertEquals("Minimum non-shielded damage is 1 per hit", 16, defender.getCurHealth());
    }
    
    @Test public void testGetButtonActionFromString()
    {
-      Assert.assertEquals("Getting TOGGLE by string works", ButtonAction.TOGGLE, ButtonAction.getFromString("Toggle"));
-      Assert.assertEquals("Getting FLOOD_WATER by string works", ButtonAction.FLOOD_WATER, ButtonAction.getFromString("FLOOD_WATER"));
-      Assert.assertEquals("Getting FLOOD_ACID by string works", ButtonAction.FLOOD_ACID, ButtonAction.getFromString("flood_acid"));
-      Assert.assertEquals("Getting ButtonAction with bad string returns null", null, ButtonAction.getFromString("Blarg"));
+      assertEquals("Getting TOGGLE by string works", ButtonAction.TOGGLE, ButtonAction.getFromString("Toggle"));
+      assertEquals("Getting FLOOD_WATER by string works", ButtonAction.FLOOD_WATER, ButtonAction.getFromString("FLOOD_WATER"));
+      assertEquals("Getting FLOOD_ACID by string works", ButtonAction.FLOOD_ACID, ButtonAction.getFromString("flood_acid"));
+      assertEquals("Getting ButtonAction with bad string returns null", null, ButtonAction.getFromString("Blarg"));
+   }
+   
+   @Test public void testGetCoordFromString()
+   {
+      Coord exemplar = new Coord(1, -5);
+      assertTrue("Generating brackets, valid numbers", exemplar.equals(EngineTools.parseCoord("[1, -5]")));
+      assertTrue("Generating no brackets, valid numbers", exemplar.equals(EngineTools.parseCoord("1, -5")));
+      assertThrows(java.lang.NumberFormatException.class, () -> {EngineTools.parseCoord("1.3, 4");});
+      assertThrows(java.lang.ArrayIndexOutOfBoundsException.class, () -> {EngineTools.parseCoord("pants");});
    }
 }

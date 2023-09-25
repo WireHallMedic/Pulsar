@@ -78,4 +78,14 @@ public class EngineTools implements ActorConstants, GearConstants
       }
       return curLoc;
    }
+   
+   public static Coord parseCoord(String s)
+   {
+      String[] splitStr = s.split(",");
+      splitStr[0] = splitStr[0].replace("[", "");
+      splitStr[0] = splitStr[0].trim();
+      splitStr[1] = splitStr[1].replace("]", "");
+      splitStr[1] = splitStr[1].trim();
+      return new Coord(Integer.parseInt(splitStr[0]), Integer.parseInt(splitStr[1]));
+   }
 }
