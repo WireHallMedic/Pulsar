@@ -54,13 +54,36 @@ public class ObstacleTemplateTest implements ZoneConstants
    {
       assertThrows(java.lang.Error.class, () -> {getBadObstacle();});
       ObstacleTemplate template = getButtonObstacle();
-      assertTrue("RoomTemplate passes button validation without error.", template.validateButtons());
+      assertTrue("ObstacleTemplate passes button validation without error.", template.validateButtons());
       template.rotate();
-      assertTrue("RoomTemplate passes button validation without error after rotation.", template.validateButtons());
+      assertTrue("ObstacleTemplate passes button validation without error after rotation.", template.validateButtons());
       template.mirrorY();
-      assertTrue("RoomTemplate passes button validation without error after mirrorY.", template.validateButtons());
+      assertTrue("ObstacleTemplate passes button validation without error after mirrorY.", template.validateButtons());
       template.mirrorX();
-      assertTrue("RoomTemplate passes button validation without error after mirrorX.", template.validateButtons());
+      assertTrue("ObstacleTemplate passes button validation without error after mirrorX.", template.validateButtons());
+   }
+   
+   @Test public void testAllObstacles()
+   {
+      ObstacleTemplateManager otm = new ObstacleTemplateManager();
+      otm.loadFromFile("Obstacle Templates.txt");
+      Vector<ObstacleTemplate> bigList = otm.getAll();
+      for(ObstacleTemplate template : bigList)
+      {
+         assertTrue("ObstacleTemplate passes validation without error.", template.validate());
+         assertTrue("ObstacleTemplate passes button validation without error.", template.validateButtons());
+         template.rotate();
+         assertTrue("ObstacleTemplate passes button validation without error after rotation.", template.validateButtons());
+         template.rotate();
+         assertTrue("ObstacleTemplate passes button validation without error after rotation.", template.validateButtons());
+         template.rotate();
+         assertTrue("ObstacleTemplate passes button validation without error after rotation.", template.validateButtons());
+         template.mirrorY();
+         assertTrue("ObstacleTemplate passes button validation without error after mirrorY.", template.validateButtons());
+         template.mirrorX();
+         assertTrue("ObstacleTemplate passes button validation without error after mirrorX.", template.validateButtons());
+      }
+      System.out.println("Tested " + bigList.size() + " ObstacleTemplates.");
    }
 
    
