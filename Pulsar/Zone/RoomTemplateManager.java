@@ -69,7 +69,7 @@ public class RoomTemplateManager implements ZoneConstants
          }
          if(trigger.getCallerLoc() == null)
             throw new java.lang.Error("Button instructions with no button.");
-         template.setButtonTrigger(trigger);
+         template.addButtonTrigger(trigger);
       }
       add(template);
    }
