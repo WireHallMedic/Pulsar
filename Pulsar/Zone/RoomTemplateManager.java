@@ -88,6 +88,7 @@ public class RoomTemplateManager implements ZoneConstants
 			String line = reader.readLine();
          boolean inTemplate = false;
          Vector<String> stringVect = new Vector<String>();
+         Vector<String> buttonVect = new Vector<String>();
 			while (line != null) 
          {
             // remove comments and trim
@@ -105,6 +106,8 @@ public class RoomTemplateManager implements ZoneConstants
                {
                   add(stringVect);
                   inTemplate = false;
+                  if(buttonVect.size() > 0)
+                     System.out.println("buttonVect.size() = " + buttonVect.size());
                }
             }
             // has text
@@ -114,9 +117,13 @@ public class RoomTemplateManager implements ZoneConstants
                if(!inTemplate)
                {
                   stringVect = new Vector<String>();
+                  buttonVect = new Vector<String>();
                   inTemplate = true;
                }
-               stringVect.add(line);
+               if(line.toUpperCase().contains("BUTTON"))
+                  buttonVect.add(line);
+               else
+                  stringVect.add(line);
             }
 				// read next line
 				line = reader.readLine();

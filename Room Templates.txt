@@ -178,6 +178,10 @@
 .......#..!=#
 .......#....#
 #############
+BUTTON_ACTION: FLOOD_WATER
+BUTTON_TARGET: 11, 11
+BUTTON_INTENSITY: 3
+BUTTON_REPS: 5
 
 ............#
 ............#
