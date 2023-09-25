@@ -10,7 +10,7 @@ import javax.swing.border.*;
 
 public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
-   public static final String[] buttonStrList = {"", "", "",
+   public static final String[] buttonStrList = {"", "",
       "#", ".", "0", "/", "V", "",
       "", "", "",
       "Set all #", "Set all .", "Set all 0", "Set all V", "", "", 
@@ -31,6 +31,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    private JButton heightMinusB;
    private JLabel widthLabel;
    private JLabel heightLabel;
+   private JLabel locationLabel;
    private int innerPanelIndex;
    private JPanel[] innerPanel;
    private JButton setSizeButton;
@@ -207,10 +208,18 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
          if(mapPanel.isInActiveArea(mouseLocX, mouseLocY))
             mapPanel.setBGColor(mouseLocX, mouseLocY, Color.BLACK.getRGB());
          if(mapPanel.isInActiveArea(x, y))
+         {
             mapPanel.setBGColor(x, y, Color.BLUE.getRGB());
+            locationLabel.setText("Location: [" + x + ", " + y + "]");
+         }
+         else
+         {
+            locationLabel.setText("Location: []");
+         }
       }
       mouseLocX = x;
       mouseLocY = y;
+      
    }
    
 
@@ -290,6 +299,8 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       heightInnerPanel.add(heightMinusB);
       addToControlPanel(heightOuterPanel);
       
+      locationLabel = new JLabel("");
+      addToControlPanel(locationLabel);
       
       buttonList = new JButton[buttonStrList.length];
       for(int i = 0; i < buttonStrList.length; i++)
@@ -302,8 +313,13 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
          addToControlPanel(buttonList[i]);
       }
       
+      int componentCount = 0;
+      for(int i = 0; i < innerPanel.length; i++)
+      {
+         componentCount += innerPanel[i].getComponentCount();
+      }
       // spacer buttons that do nothing
-      for(int i = 0; i < 33 - (buttonStrList.length + 2); i++)
+      for(int i = 0; i < 33 - componentCount; i++)
       {
          JButton button = new JButton();
          button.setFocusable(false);

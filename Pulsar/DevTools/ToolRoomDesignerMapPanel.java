@@ -33,7 +33,10 @@ public class ToolRoomDesignerMapPanel extends RogueTilePanel
    
    public boolean isInActiveArea(int x, int y)
    {
-      return x < widthTiles && y < heightTiles;
+      return x < widthTiles && 
+             x > -1 &&
+             y < heightTiles &&
+             y > -1;
    }
    
    public void incrementWidth()
