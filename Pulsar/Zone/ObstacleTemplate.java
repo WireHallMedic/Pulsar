@@ -78,11 +78,13 @@ public class ObstacleTemplate extends MapTemplate implements ZoneConstants
    // buttonTriggers aren't set at obstacleTemplate generation, so the manager validates them after
    public boolean validateButtons()
    {
+      int buttonsFound = 0;
       for(int x = 0; x < REQUIRED_WIDTH; x++)
       for(int y = 0; y < REQUIRED_HEIGHT; y++)
       {
          if(getCell(x, y) == TEMPLATE_BUTTON)
          {
+            buttonsFound++;
             if(buttonTrigger == null)
             {
                throw new java.lang.Error("ObstacleTemplate has button with no trigger.");
@@ -98,6 +100,8 @@ public class ObstacleTemplate extends MapTemplate implements ZoneConstants
             }
          }
       }
+      if(buttonsFound == 0 && buttonTrigger != null)
+         throw new java.lang.Error("ObstacleTemplate has ButtonTrigger with no corresponding button.");
       return true;
    }
 }

@@ -325,11 +325,13 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    
    public boolean validateButtons()
    {
+      int buttonsFound = 0;
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
          if(getCell(x, y) == TEMPLATE_BUTTON)
          {
+            buttonsFound++;
             Coord c = new Coord(x, y);
             if(triggerList.size() == 0)
             {
@@ -355,6 +357,8 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
             }
          }
       }
+      if(buttonsFound != triggerList.size())
+         throw new java.lang.Error("RoomTemplate has " + triggerList.size() + " ButtonTriggers but " + buttonsFound + " buttons.");
       return true;
    }
    
