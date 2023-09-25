@@ -67,7 +67,7 @@ public class ObstacleTemplate extends MapTemplate implements ZoneConstants
    
    public boolean validate()
    {
-      if(getWidth() != REQUIRED_WIDTH || getWidth() != REQUIRED_HEIGHT)
+      if(getWidth() != REQUIRED_WIDTH || getHeight() != REQUIRED_HEIGHT)
             throw new java.lang.Error("ObstacleTemplate has invalid size.");
       return true;
    }

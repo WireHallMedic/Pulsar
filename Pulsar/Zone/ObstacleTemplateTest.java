@@ -52,8 +52,7 @@ public class ObstacleTemplateTest implements ZoneConstants
       
    @Test public void testValidation()
    {
-      ObstacleTemplate badTemplate = getBadObstacle();
-      assertThrows(java.lang.Error.class, () -> {badTemplate.validate();});
+      assertThrows(java.lang.Error.class, () -> {getBadObstacle();});
       ObstacleTemplate template = getButtonObstacle();
       assertTrue("RoomTemplate passes button validation without error.", template.validateButtons());
       template.rotate();
