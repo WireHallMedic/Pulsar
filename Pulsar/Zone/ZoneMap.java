@@ -103,6 +103,18 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       }
    }
    
+   public int countOpenTiles()
+   {
+      int count = 0;
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         if(getTile(x, y).isLowPassable())
+            count++;
+      }
+      return count;
+   }
+   
    public void add(ButtonTrigger buttonTrigger)
    {
       buttonTriggerList.add(buttonTrigger);

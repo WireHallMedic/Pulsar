@@ -64,10 +64,10 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    }
       
    
-   public static void populateWithAliens(Zone z, Coord playerLoc)
+   public static void populateWithAliens(Zone z, Coord playerLoc){populateWithAliens(z, playerLoc, MEDIUM_DENSITY);}
+   public static void populateWithAliens(Zone z, Coord playerLoc, double density)
    {
-      double density = .03;
-      int totalCreatures = (int)(z.getMap().getWidth() * z.getMap().getHeight() * density);
+      int totalCreatures = (int)(z.getMap().countOpenTiles() * density);
       WeightedRandomizer table = new WeightedRandomizer(AlienType.values());
       for(int i = 0; i < totalCreatures; i++)
       {
@@ -104,10 +104,10 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    }
       
    
-   public static void populateWithMercenaries(Zone z, Coord playerLoc)
+   public static void populateWithMercenaries(Zone z, Coord playerLoc){populateWithAliens(z, playerLoc, LOW_DENSITY);}
+   public static void populateWithMercenaries(Zone z, Coord playerLoc, double density)
    {
-      double density = .02;
-      int totalCreatures = (int)(z.getMap().getWidth() * z.getMap().getHeight() * density);
+      int totalCreatures = (int)(z.getMap().countOpenTiles() * density);
       WeightedRandomizer table = new WeightedRandomizer(MercenaryType.values());
       for(int i = 0; i < totalCreatures; i++)
       {

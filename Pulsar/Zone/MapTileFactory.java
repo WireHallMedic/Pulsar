@@ -14,6 +14,8 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    
    public static MapTile getTile(TileType baseType)
    {
+      if(baseType == TileType.VACUUM)
+         return new Vacuum();
       return getTile(baseType, DEFAULT_TILE_FG_COLOR, DEFAULT_TILE_BG_COLOR);
    }
    

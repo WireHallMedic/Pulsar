@@ -18,6 +18,11 @@ public interface ActorConstants
    public static final double BIOLOGICAL_FIRE_CHANCE = .5;
    public static final double MECHANICAL_FIRE_CHANCE = .25;
    
+   // generation constants
+   public static final double HIGH_DENSITY = .05;
+   public static final double MEDIUM_DENSITY = .03;
+   public static final double LOW_DENSITY = .015;
+   
    public enum DeathEffect
    {
       EXPLODE;
