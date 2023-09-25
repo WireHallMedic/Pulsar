@@ -180,25 +180,29 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    @Override
    public void rotate()
    {
+      // order matters on this one
+      for(ButtonTrigger trigger : triggerList)
+         trigger.shiftFromRotation(width, height);
       super.rotate();
       setPassArray();
-      // TODO: apply to button triggers
    }
    
    @Override
    public void mirrorX()
    {
+      for(ButtonTrigger trigger : triggerList)
+         trigger.shiftFromMirrorX(width, height);
       super.mirrorX();
       setPassArray();
-      // TODO: apply to button triggers
    }
    
    @Override
    public void mirrorY()
    {
+      for(ButtonTrigger trigger : triggerList)
+         trigger.shiftFromMirrorY(width, height);
       super.mirrorY();
       setPassArray();
-      // TODO: apply to button triggers
    }
    
    public boolean canMirrorX()

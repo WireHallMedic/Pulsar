@@ -96,15 +96,15 @@ public class ButtonTrigger implements EngineConstants
    {
       for(Coord c : targetList)
       {
-         int newX = c.y;
-         int newY = (h - 1) - c.x;
+         int newX = (h - 1) - c.y;
+         int newY = c.x;
          c.x = newX;
          c.y = newY;
       }
       if(callerLoc != null)
       {
-         int newX = callerLoc.y;
-         int newY = (h - 1) - callerLoc.x;
+         int newX = (h - 1) - callerLoc.y;
+         int newY = callerLoc.x;
          callerLoc.x = newX;
          callerLoc.y = newY;
       }
