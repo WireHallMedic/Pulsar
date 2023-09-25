@@ -27,9 +27,27 @@ public class ObstacleTemplateManager implements ZoneConstants
       list.add(t);
    }
    
-   public void add(Vector<String> strVect)
+   public void add(Vector<String> strVect, Vector<String> buttonVect)
    {
-      add(new ObstacleTemplate(strVect));
+      ObstacleTemplate template = new ObstacleTemplate(strVect);
+      if(buttonVect.size() > 0)
+      {
+         ButtonTrigger trigger = new ButtonTrigger();
+         for(String instruction : buttonVect)
+            trigger.parse(instruction);
+         for(int x = 0; x < ObstacleTemplate.REQUIRED_WIDTH; x++)
+         for(int y = 0; y < ObstacleTemplate.REQUIRED_HEIGHT; y++)
+         {
+            if(template.getCell(x, y) == TEMPLATE_BUTTON)
+            {
+               trigger.setCallerLoc(x, y);
+            }
+         }
+         if(trigger.getCallerLoc() == null)
+            throw new java.lang.Error("Button instructions with no button.");
+         template.setButtonTrigger(trigger);
+      }
+      add(template);
    }
    
    public ObstacleTemplate random()
@@ -56,6 +74,7 @@ public class ObstacleTemplateManager implements ZoneConstants
 			String line = reader.readLine();
          boolean inTemplate = false;
          Vector<String> stringVect = new Vector<String>();
+         Vector<String> buttonVect = new Vector<String>();
 			while (line != null) 
          {
             // remove comments and trim
@@ -71,7 +90,7 @@ public class ObstacleTemplateManager implements ZoneConstants
                // template has finished
                if(inTemplate)
                {
-                  add(stringVect);
+                  add(stringVect, buttonVect);
                   inTemplate = false;
                }
             }
@@ -82,9 +101,13 @@ public class ObstacleTemplateManager implements ZoneConstants
                if(!inTemplate)
                {
                   stringVect = new Vector<String>();
+                  buttonVect = new Vector<String>();
                   inTemplate = true;
                }
-               stringVect.add(line);
+               if(line.toUpperCase().contains("BUTTON"))
+                  buttonVect.add(line);
+               else
+                  stringVect.add(line);
             }
 				// read next line
 				line = reader.readLine();
@@ -92,7 +115,7 @@ public class ObstacleTemplateManager implements ZoneConstants
          
          // if the last template was on the last line, add it. Otherwise it's already added.
          if(inTemplate)
-            add(stringVect);
+            add(stringVect, buttonVect);
 
 			reader.close();
 		}
