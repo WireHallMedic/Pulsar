@@ -205,12 +205,13 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
-   public void validate() 
+   public boolean validate() 
    {
       if(!hasFullConnectivity())
          throw new java.lang.Error("ZoneTemplate has potentially unreachable rooms.");
       if(!hasNoIsolation())
          throw new java.lang.Error("ZoneTemplate has potentially isolated rooms.");
+      return true;
    }
    
    private boolean hasFullConnectivity()

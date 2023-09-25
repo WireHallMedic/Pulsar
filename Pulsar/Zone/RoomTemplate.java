@@ -302,7 +302,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
-   public void validate()
+   public boolean validate()
    {
       for(int x = 0; x < width; x++)
       {
@@ -316,9 +316,10 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
             isInvalidBorderTile(getCell(width - 1, y)))
             throw new java.lang.Error("RoomTemplate has invalid border tile.");
       }
+      return true;
    }
    
-   public void validateButtons()
+   public boolean validateButtons()
    {
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
@@ -350,6 +351,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
             }
          }
       }
+      return true;
    }
    
    private boolean isInvalidBorderTile(char c)

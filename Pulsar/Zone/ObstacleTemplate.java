@@ -65,14 +65,15 @@ public class ObstacleTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
-   public void validate()
+   public boolean validate()
    {
       if(getWidth() != REQUIRED_WIDTH || getWidth() != REQUIRED_HEIGHT)
             throw new java.lang.Error("ObstacleTemplate has invalid size.");
+      return true;
    }
    
    // buttonTriggers aren't set at obstacleTemplate generation, so the manager validates them after
-   public void validateButtons()
+   public boolean validateButtons()
    {
       for(int x = 0; x < REQUIRED_WIDTH; x++)
       for(int y = 0; y < REQUIRED_HEIGHT; y++)
@@ -94,5 +95,6 @@ public class ObstacleTemplate extends MapTemplate implements ZoneConstants
             }
          }
       }
+      return true;
    }
 }

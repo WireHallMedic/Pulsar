@@ -92,6 +92,48 @@ public class ButtonTrigger implements EngineConstants
       }
    }
    
+   public void shiftFromRotation(int w, int h)
+   {
+      for(Coord c : targetList)
+      {
+         int newX = c.y;
+         int newY = (h - 1) - c.x;
+         c.x = newX;
+         c.y = newY;
+      }
+      if(callerLoc != null)
+      {
+         int newX = callerLoc.y;
+         int newY = (h - 1) - callerLoc.x;
+         callerLoc.x = newX;
+         callerLoc.y = newY;
+      }
+   }
+   
+   public void shiftFromMirrorX(int w, int h)
+   {
+      for(Coord c : targetList)
+      {
+         c.x = (w - 1) - c.x;
+      }
+      if(callerLoc != null)
+      {
+         callerLoc.x = (w - 1) - callerLoc.x;
+      }
+   }
+   
+   public void shiftFromMirrorY(int w, int h)
+   {
+      for(Coord c : targetList)
+      {
+         c.y = (h - 1) - c.y;
+      }
+      if(callerLoc != null)
+      {
+         callerLoc.y = (h - 1) - callerLoc.y;
+      }
+   }
+   
    public void parse(String s)
    {
       String instruction = s.split(":")[0].toUpperCase();
