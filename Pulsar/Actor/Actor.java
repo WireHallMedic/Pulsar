@@ -177,6 +177,12 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       sprite.setYOffset(0.0);
    }
    
+   public boolean hasUnreconciledSprite()
+   {
+      return getMapLoc().x != sprite.getXLoc() ||
+             getMapLoc().y != sprite.getYLoc();
+   }
+   
    @Override
    public String toString()
    {
@@ -410,7 +416,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    ////////////////////////////////////////////////////////////////////
    public boolean isReadyToAct()
    {
-      return turnEnergy >= FULLY_CHARGED;
+      return turnEnergy >= FULLY_CHARGED && !hasUnreconciledSprite();
    }
    
    public void charge()
