@@ -35,6 +35,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    
 	private RoomTemplateType type;
    private boolean[] passArray;
+   private ButtonTrigger buttonTrigger;
 
 
 	public RoomTemplateType getType(){return type;}
@@ -44,6 +45,8 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
 	public boolean passSouth(){return passArray[SOUTH];}
 	public boolean passEast(){return passArray[EAST];}
 	public boolean passWest(){return passArray[WEST];}
+   public ButtonTrigger getButtonTrigger(){return buttonTrigger;}
+   public boolean hasButtonTrigger(){return buttonTrigger != null;}
 
 
    public RoomTemplate(Vector<String> input)
@@ -51,12 +54,16 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       super(input);
       setPassArray();
       setType();
+      buttonTrigger = null;
       validate();
    }
    
    public RoomTemplate(RoomTemplate that)
    {
       super(that);
+      buttonTrigger = null;
+      if(hasButtonTrigger())
+         this.buttonTrigger = new ButtonTrigger(that.buttonTrigger);
       setPassArray();
       setType();
       // copy constructor does not need to validate
