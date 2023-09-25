@@ -93,7 +93,7 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
       clear();
       String str = "No data.";
       String footer = "";
-      if(pageList != null)
+      if(pageList != null && pageList.size() > 0)
       {
          str = pageList.elementAt(curPageIndex);
          if(pageList.size() > 1)
