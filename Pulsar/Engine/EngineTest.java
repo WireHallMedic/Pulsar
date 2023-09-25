@@ -69,20 +69,46 @@ public class EngineTest implements EngineConstants
       assertEquals("Minimum non-shielded damage is 1 per hit", 16, defender.getCurHealth());
    }
    
-   @Test public void testGetButtonActionFromString()
+   @Test public void testButtonActionParsing()
    {
-      assertEquals("Getting TOGGLE by string works", ButtonAction.TOGGLE, ButtonAction.getFromString("Toggle"));
-      assertEquals("Getting FLOOD_WATER by string works", ButtonAction.FLOOD_WATER, ButtonAction.getFromString("FLOOD_WATER"));
-      assertEquals("Getting FLOOD_ACID by string works", ButtonAction.FLOOD_ACID, ButtonAction.getFromString("flood_acid"));
-      assertEquals("Getting ButtonAction with bad string returns null", null, ButtonAction.getFromString("Blarg"));
+      assertEquals("Getting TOGGLE by string works", ButtonAction.TOGGLE, ButtonAction.parse("Toggle"));
+      assertEquals("Getting FLOOD_WATER by string works", ButtonAction.FLOOD_WATER, ButtonAction.parse("FLOOD_WATER"));
+      assertEquals("Getting FLOOD_ACID by string works", ButtonAction.FLOOD_ACID, ButtonAction.parse("flood_acid"));
+      assertEquals("Getting ButtonAction with bad string returns null", null, ButtonAction.parse("Blarg"));
    }
    
-   @Test public void testGetCoordFromString()
+   @Test public void testCoordParsing()
    {
       Coord exemplar = new Coord(1, -5);
       assertTrue("Generating brackets, valid numbers", exemplar.equals(EngineTools.parseCoord("[1, -5]")));
       assertTrue("Generating no brackets, valid numbers", exemplar.equals(EngineTools.parseCoord("1, -5")));
       assertThrows(java.lang.NumberFormatException.class, () -> {EngineTools.parseCoord("1.3, 4");});
       assertThrows(java.lang.ArrayIndexOutOfBoundsException.class, () -> {EngineTools.parseCoord("pants");});
+   }
+   
+   @Test public void testButtonTriggerParsing()
+   {
+      ButtonTrigger trigger = new ButtonTrigger();
+      Coord exemplar = new Coord(1, 3);
+      assertEquals("Initial buttonAction is null.", null, trigger.getButtonAction());
+      assertEquals("Initial targetList is empty.", 0, trigger.getTargetList().size());
+      assertEquals("Initial intensity is 1.", 1, trigger.getIntensity());
+      assertEquals("Initial callerReps is 1.", 1, trigger.getCallerReps());
+      
+      trigger.parse("BUTTON_ACTION:toggle");
+      assertEquals("Setting buttonAction works", ButtonAction.TOGGLE, trigger.getButtonAction());
+      
+      trigger.parse("BUTTON_target:1,3");
+      assertTrue("Adding target works.", trigger.getTargetList().elementAt(0).equals(exemplar));
+      
+      exemplar = new Coord(3, 1);
+      trigger.parse("BUTTON_TARGET : 3 , 1 ");
+      assertTrue("Adding multiple targets works.", trigger.getTargetList().elementAt(1).equals(exemplar));
+      
+      trigger.parse("  BUTTON_INTENSITY : 5");
+      assertEquals("Setting intensity works.", 5, trigger.getIntensity());
+      
+      trigger.parse("BUTTON_REPS : 5 ");
+      assertEquals("Setting reps works.", 5, trigger.getCallerReps());
    }
 }

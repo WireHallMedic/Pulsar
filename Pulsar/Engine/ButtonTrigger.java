@@ -42,6 +42,11 @@ public class ButtonTrigger implements EngineConstants
       callerRepetitions = 1;
    }
    
+   public ButtonTrigger()
+   {
+      this(-1, null);
+   }
+   
    public ButtonTrigger(ButtonTrigger that)
    {
       this.triggerIndex = that.triggerIndex;
@@ -85,5 +90,19 @@ public class ButtonTrigger implements EngineConstants
          callerLoc.x += x;
          callerLoc.y += y;
       }
+   }
+   
+   public void parse(String s)
+   {
+      String instruction = s.split(":")[0].toUpperCase();
+      String operand = s.split(":")[1].trim();
+      if(instruction.contains("BUTTON_ACTION"))
+         setButtonAction(ButtonAction.parse(operand));
+      if(instruction.contains("BUTTON_TARGET"))
+         addTarget(EngineTools.parseCoord(operand));
+      if(instruction.contains("BUTTON_INTENSITY"))
+         setIntensity(Integer.parseInt(operand));
+      if(instruction.contains("BUTTON_REPS"))
+         setCallerReps(Integer.parseInt(operand));
    }
 }

@@ -15,7 +15,7 @@ public interface EngineConstants
       FLOOD_WATER,
       FLOOD_ACID;
       
-      public static ButtonAction getFromString(String s)
+      public static ButtonAction parse(String s)
       {
          for(ButtonAction action : ButtonAction.values())
          {
