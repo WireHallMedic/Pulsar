@@ -145,13 +145,15 @@ public class ButtonTrigger implements EngineConstants
       String operand = s.split(":")[1].trim();
       if(instruction.contains("BUTTON_ACTION"))
          setButtonAction(ButtonAction.parse(operand));
-      if(instruction.contains("BUTTON_TARGET"))
+      else if(instruction.contains("BUTTON_TARGET"))
          addTarget(EngineTools.parseCoord(operand));
-      if(instruction.contains("BUTTON_INTENSITY"))
+      else if(instruction.contains("BUTTON_INTENSITY"))
          setIntensity(Integer.parseInt(operand));
-      if(instruction.contains("BUTTON_REPS"))
+      else if(instruction.contains("BUTTON_REPS"))
          setCallerReps(Integer.parseInt(operand));
-      if(instruction.contains("BUTTON_ONE_USE_ONLY"))
+      else if(instruction.contains("BUTTON_ONE_USE_ONLY"))
          setCallerOneUseOnly(Boolean.parseBoolean(operand));
+      else
+         throw new java.lang.Error("Unknown command when parsing ButtonTrigger: " + instruction);
    }
 }
