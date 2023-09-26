@@ -44,7 +44,6 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
    }
    
    
-   
    @Override
    public void actionPerformed(ActionEvent ae)
    {
