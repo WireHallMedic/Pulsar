@@ -274,5 +274,5 @@ a0	b68	c255	f%\011pulsar.jar	g%\011pulsar.zip	hManifest-Version\0111.0\011Main-C
 %\011Pulsar%sZone%sRoomTemplateTest.java
 %\011Pulsar%sEngine%sEngineTest.java
 %\011Pulsar%sGear%sGearTest.java
-!563;t
-jgrJUnit0xr	%\011Pulsar%sZone%sZoneTemplateTest.java	1695645963929:P%\011ZoneTemplate.java	%\011Pulsar%sActor%sActorTest.java	1695645963929:P%\011Actor.java	%\011Pulsar%sZone%sRoomTemplateTest.java	1695654887415:P%\011RoomTemplate.java	%\011Pulsar%sZone%sZoneTemplate.java	1695645963929:P%\011ZoneTemplateTest.java	%\011Pulsar%sActor%sActor.java	1695645963929:P%\011ActorTest.java	%\011Pulsar%sEngine%sEngineTest.java	1695645963929:P	%\011Pulsar%sGear%sGearTest.java	1695645963929:P	%\011Pulsar%sZone%sRoomTemplate.java	1695654887415:P%\011RoomTemplateTest.java	
+!737;t
+jgrJUnit0xr	%\011Pulsar%sZone%sZoneTemplateTest.java	1695671235113:P%\011ZoneTemplate.java	%\011Pulsar%sZone%sObstacleTemplateTest.java	1695671235113:P%\011ObstacleTemplate.java	%\011Pulsar%sActor%sActorTest.java	1695671235113:P%\011Actor.java	%\011Pulsar%sZone%sRoomTemplateTest.java	1695671235113:P%\011RoomTemplate.java	%\011Pulsar%sZone%sZoneTemplate.java	1695671235113:P%\011ZoneTemplateTest.java	%\011Pulsar%sActor%sActor.java	1695671235113:P%\011ActorTest.java	%\011Pulsar%sEngine%sEngineTest.java	1695671235113:P	%\011Pulsar%sZone%sObstacleTemplate.java	1695671235113:P%\011ObstacleTemplateTest.java	%\011Pulsar%sGear%sGearTest.java	1695671235113:P	%\011Pulsar%sZone%sRoomTemplate.java	1695671235113:P%\011RoomTemplateTest.java	

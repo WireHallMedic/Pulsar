@@ -83,6 +83,11 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       }
    }
    
+   private boolean isSection(char c)
+   {
+      return c >= '1' && c <= '9';
+   }
+   
    private void setPassArrayCell(int x, int y, boolean mostRestrictive)
    {
       char thisCell = getCell(x, y);
@@ -92,30 +97,48 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       char southCell = '0';
       if(isInBounds(x, y + 1))
          southCell = getCell(x, y + 1);
-         
+      
+      // clear
       if(thisCell == '.')
       {
-         if(eastCell == '.' || eastCell == '?')
+         if(eastCell == '.' || eastCell == '?' || isSection(eastCell))
          {
             passArray[x][y][EAST] = true;
             passArray[x + 1][y][WEST] = true;
          }
-         if(southCell == '.' || southCell == '?')
+         if(southCell == '.' || southCell == '?' || isSection(southCell))
          {
             passArray[x][y][SOUTH] = true;
             passArray[x][y + 1][NORTH] = true;
          }
       }
-      else if(thisCell == '?')
+      
+      // clear and sections
+      if(isSection(thisCell))
       {
-         boolean eastRoll = GameEngine.randomBoolean() && (!mostRestrictive);
-         boolean southRoll = GameEngine.randomBoolean() && (!mostRestrictive);
-         if(eastCell == '.' || (eastCell == '?' && eastRoll))
+         if(eastCell == '.' || eastCell == '?' || eastCell == thisCell)
          {
             passArray[x][y][EAST] = true;
             passArray[x + 1][y][WEST] = true;
          }
-         if(southCell == '.' || (southCell == '?' && southRoll))
+         if(southCell == '.' || southCell == '?' || southCell == thisCell)
+         {
+            passArray[x][y][SOUTH] = true;
+            passArray[x][y + 1][NORTH] = true;
+         }
+      }
+      
+      // probabalistic
+      else if(thisCell == '?')
+      {
+         boolean eastRoll = GameEngine.randomBoolean() && (!mostRestrictive);
+         boolean southRoll = GameEngine.randomBoolean() && (!mostRestrictive);
+         if(eastCell == '.' || isSection(eastCell) || (eastCell == '?' && eastRoll))
+         {
+            passArray[x][y][EAST] = true;
+            passArray[x + 1][y][WEST] = true;
+         }
+         if(southCell == '.' || isSection(southCell) ||  (southCell == '?' && southRoll))
          {
             passArray[x][y][SOUTH] = true;
             passArray[x][y + 1][NORTH] = true;
@@ -371,6 +394,29 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("?.?.##");
       v.add("?.?###");
       return new ZoneTemplate(v, rtm, false);
+   }
+   
+   public static ZoneTemplate getSectionTemplate()
+   {
+   
+      RoomTemplateManager rtm = new RoomTemplateManager();
+      rtm.loadFromFile("Room Templates.txt");
+      Vector<String> v = new Vector<String>();
+      v.add("1100011");
+      v.add("11...11");
+      v.add("220.022");
+      v.add("22...22");
+      v.add("220.022");
+      v.add("11...11");
+      v.add("1100011");
+      return new ZoneTemplate(v, rtm, false);
+   }
+   
+   public static void main(String[] args)
+   {
+      ZoneTemplate zt = ZoneTemplate.getSectionTemplate();
+    //  zt.validateInitial();
+      zt.print();
    }
 
 }
