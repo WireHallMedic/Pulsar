@@ -11,6 +11,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
 
    
    private RoomTemplateManager roomTemplateManager;
+   private RoomTemplateManager corridorTemplateManager;
    private ObstacleTemplateManager obstacleTemplateManager;
    private boolean[][][] passArray;
    private boolean[][] corridorArray;
@@ -32,6 +33,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       super(input);
       validateInitial();
       roomTemplateManager = rtm;
+      corridorTemplateManager = new RoomTemplateManager();
+      corridorTemplateManager.loadFromFile("Corridor Templates.txt");
       obstacleTemplateManager = new ObstacleTemplateManager();
       obstacleTemplateManager.loadFromFile("Obstacle Templates.txt");
       setPassArray(mostRestrictive);
@@ -39,14 +42,18 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       generateRooms();
    }
    
-   public void generateRooms()
+   public void generateRooms(){generateRooms(false);}
+   public void generateRooms(boolean testing)
    {
       baseRoomTemplate = new RoomTemplate[width][height];
       rolledRoomTemplate = new RoomTemplate[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
-         baseRoomTemplate[x][y] = roomTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         if(corridorArray[x][y] && !testing)
+            baseRoomTemplate[x][y] = corridorTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         else
+            baseRoomTemplate[x][y] = roomTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
          baseRoomTemplate[x][y].rotateUntilMatches(passArray[x][y]);
          rolledRoomTemplate[x][y] = null;
       }
@@ -300,7 +307,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       roomTemplateManager = new RoomTemplateManager();
       roomTemplateManager.loadDemos();
       setPassArray(ZoneTemplate.MOST_RESTRICTIVE);
-      generateRooms();
+      generateRooms(true);
       Coord origin = new Coord(-1, -1);
       char[][] tempMap = getTileMap();
       // create passability map
