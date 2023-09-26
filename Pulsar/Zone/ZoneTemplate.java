@@ -8,22 +8,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
 {
    public static final boolean MOST_RESTRICTIVE = true;
    public static final boolean RANDOMIZE = false;
-   
-   public enum ZoneTemplateTile
-   {
-      DEFAULT_OOB    ('0'),
-      ROOM           ('.'),
-      WALL_BLOCK     ('#'),
-      VACUUM_BLOCK   ('V'),
-      INDETERMINATE  ('?');
-      
-      public char character;
-      
-      private ZoneTemplateTile(char c)
-      {
-         character = c;
-      }
-   }
+
    
    private RoomTemplateManager roomTemplateManager;
    private ObstacleTemplateManager obstacleTemplateManager;
