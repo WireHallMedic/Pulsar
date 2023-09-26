@@ -11,8 +11,8 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
 {
    private static final int ROOM_WIDTH = 13;
    private static final int ROOM_HEIGHT = 13;
-   private static final int MAP_WIDTH = ((ROOM_WIDTH - 1) * 4) + 3;
-   private static final int MAP_HEIGHT = ((ROOM_HEIGHT - 1) * 4) + 3;
+   private static final int MAP_WIDTH = ((ROOM_WIDTH - 1) * 7) + 3;
+   private static final int MAP_HEIGHT = ((ROOM_HEIGHT - 1) * 5) + 3;
    private static final int BUTTON_SLOTS = 20;
    
    private LayoutPanel layoutPanel;
@@ -32,13 +32,14 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    public ToolZoneViewer()
    {
       super();
-      setSize(1200, 1000);
+      setSize(1800, 1100);
       setDefaultCloseOperation(EXIT_ON_CLOSE);
       setTitle("Zone Viewer");
       
       layoutPanel = new LayoutPanel(this);
       layoutPanel.setVisible(true);
       this.add(layoutPanel);
+      
       
       mapPanel = new RogueTilePanel(MAP_WIDTH, MAP_HEIGHT, GUIConstants.SQUARE_TILE_PALETTE);
       mapPanel.setBackground(Color.GRAY);
@@ -55,11 +56,11 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
       anonPanel.setLayout(new GridLayout(2, 1));
       buttonPanel.add(anonPanel);
       wallButton = new JRadioButton("Wall Border");
-      wallButton.setSelected(true);
+      wallButton.setSelected(false);
       wallButton.addActionListener(this);
       anonPanel.add(wallButton);
       vacuumButton = new JRadioButton("Vacuum Border");
-      vacuumButton.setSelected(false);
+      vacuumButton.setSelected(true);
       vacuumButton.addActionListener(this);
       anonPanel.add(vacuumButton);
       borderGroup = new ButtonGroup();
@@ -116,6 +117,8 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    
    public void drawMap()
    {
+      if(mapPanel == null)
+         return;
       for(int x = 0; x < MAP_WIDTH; x++)
       for(int y = 0; y < MAP_HEIGHT; y++)
       {
@@ -135,7 +138,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    
    public void rerollAll()
    {
-      zoneTemplate = ZoneTemplate.getDemo("Room Templates.txt");
+      zoneTemplate = ZoneTemplate.getExclusiveSectionTemplate();
       zoneTemplate.setObstacles();
       zoneTemplate.process();
       zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate, getOOBType());
