@@ -441,13 +441,16 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       RoomTemplateManager rtm = new RoomTemplateManager();
       rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
-      v.add("110001122");
-      v.add("11cc011c2");
-      v.add("220c000c0");
-      v.add("22ccccccc");
-      v.add("220c00020");
-      v.add("11ccc1122");
-      v.add("110001122");
+      v.add("CCcCCCcCCC");
+      v.add("C11122222C");
+      v.add("c555.2222c");
+      v.add("C555cc222C");
+      v.add("c44443333c");
+      v.add("C44443333c");
+      v.add("C11100111C");
+      v.add("c111cc111c");
+      v.add("C11100111C");
+      v.add("CCcCCCCcCC");
       return new ZoneTemplate(v, rtm, false);
    }
    
@@ -467,7 +470,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    
    public static void main(String[] args)
    {
-      ZoneTemplate zt = ZoneTemplate.getExclusiveSectionTemplate();
+      ZoneTemplate zt = ZoneTemplate.getSectionTemplate();
    //   zt.validateInitial();
       zt.print();
    }
