@@ -105,6 +105,11 @@ public class Combat implements GUIConstants, GearConstants
       {
          return getBlastTargets(origin, initialTarget);
       }
+      // beam
+      if(weapon.hasWeaponTag(GearConstants.WeaponTag.BEAM))
+      {
+         return getBeamTargets(origin, initialTarget);
+      }
       // melee
       if(weapon.hasWeaponTag(GearConstants.WeaponTag.MELEE))
       {
@@ -289,6 +294,22 @@ public class Combat implements GUIConstants, GearConstants
          blastList.add(new Coord(detonationLoc.x +x, detonationLoc.y + y));
       }
       return blastList;
+   }
+   
+   public static Vector<Coord> getBeamTargets(Coord origin, Coord initialTarget)
+   {
+      Vector<Coord> targetList = new Vector<Coord>();
+      Vector<Coord> lineOfFire = GameEngine.getBeam(origin, initialTarget);
+      for(Coord c : lineOfFire)
+      {
+         if(GameEngine.isActorAt(c) || !GameEngine.getZoneMap().getTile(c).isLowPassable())
+         {
+            targetList.add(c);
+            if(!GameEngine.getZoneMap().getTile(c).isHighPassable())
+               break;
+         }
+      }
+      return targetList;
    }
    
    public static boolean involvesPlayer(Actor attacker, Vector<Actor> targetActorList)

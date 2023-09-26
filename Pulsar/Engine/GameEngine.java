@@ -266,6 +266,28 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       return lastGoodTarget;
    }
    
+   // returns a vector containing all coords in a beam
+   public static Vector<Coord> getBeam(Coord origin, Coord originalTarget)
+   {
+      // calculate max range target
+      Coord target = new Coord(originalTarget);
+      target.subtract(origin);
+      Vect vect = new Vect(target);
+      vect.magnitude = 10.0;
+      target = new Coord(vect);
+      target.add(origin);
+      // get list of possible targets
+      Vector<Coord> targetList = new Vector<Coord>();
+      Vector<Coord> lineOfFire = StraightLine.findLine(origin, target, StraightLine.REMOVE_ORIGIN);
+      for(Coord c : lineOfFire)
+      {
+         targetList.add(c);
+         if(!getZoneMap().getTile(c).isHighPassable())
+            break;
+      }
+      return targetList;
+   }
+   
    public static void doDestructionEffect(int x, int y, MapTile mt)
    {
       switch(mt.getOnDestructionEffect())

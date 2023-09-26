@@ -56,6 +56,15 @@ public class WeaponFactory implements GearConstants, ActorConstants
             w.addWeaponTag(WeaponTag.KNOCKBACK);
             w.setHitDescriptor("blasts");
             break;
+         case BEAM       :
+            w.setBaseDamage(DEFAULT_BASE_DAMAGE * 4);
+            w.setChargeCost(BASE_WEAPON_CHARGE_COST * 2);
+            w.setMaxCharge(w.getChargeCost() * 3);
+            w.addWeaponTag(WeaponTag.BEAM);
+            w.addWeaponTag(WeaponTag.HEAVY);
+            w.addWeaponTag(WeaponTag.KNOCKBACK);
+            w.setHitDescriptor("blasts");
+            break;
       }
       
       w.fullyCharge();
