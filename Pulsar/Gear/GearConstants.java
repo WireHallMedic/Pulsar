@@ -49,6 +49,7 @@ public interface GearConstants extends WSFontConstants
       SPREAD       ("Spread"),      // fires in a spread like a shotgun
       MELEE        ("Melee"),       // attacks against adjacent actors only
       BLAST        ("Blast"),       // 1-tile radius explosion
+      BEAM         ("Beam"),        // hits actors and low-impassable tiles until it hits a high-impassable or 10 tiles
       KNOCKBACK    ("Knockback"),   // pushes targets hit
       HEAVY        ("Heavy");       // damages terrain
       
@@ -68,26 +69,12 @@ public interface GearConstants extends WSFontConstants
       AUTORIFLE      ("Autorifle"),
       SHOTGUN        ("Shotgun"),
       MELEE          ("Melee"),
+      BEAM           ("Beam Cannon"),
       PLASMA         ("Plasma Launcher");
       
       public String name;
       
       private WeaponType(String n)
-      {
-         name = n;
-      }
-   }
-   
-   public enum GadgetType
-   {
-      DEFAULT        ("Unknown Gadget"),
-      GRENADE        ("Grenade"),
-      BUFF           ("Buff"),
-      MAP_OBJ        ("Map Object");
-      
-      public String name;
-      
-      private GadgetType(String n)
       {
          name = n;
       }
@@ -99,7 +86,8 @@ public interface GearConstants extends WSFontConstants
       TURRET            ("Turret"),
       COMBAT_DRONE      ("Combat Drone"),
       NAPALM            ("Napalm"),
-      MOTION_SENSOR     ("Motion Sensor");
+      MOTION_SENSOR     ("Motion Sensor"),
+      RECHARGE          ("Quick Charger");
       
       public String name;
       
