@@ -13,12 +13,14 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    private RoomTemplateManager roomTemplateManager;
    private ObstacleTemplateManager obstacleTemplateManager;
    private boolean[][][] passArray;
+   private boolean[][] corridorArray;
    private RoomTemplate[][] baseRoomTemplate;
    private RoomTemplate[][] rolledRoomTemplate;
    private char[][] tileMap;
    private Vector<ButtonTrigger> triggerList;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
+   public boolean[][] getCorridorArray(){return corridorArray;}
    public RoomTemplate getBaseRoomTemplate(int x, int y){return baseRoomTemplate[x][y];}
    public RoomTemplate getRolledRoomTemplate(int x, int y){return rolledRoomTemplate[x][y];}
    public char[][] getTileMap(){return tileMap;}
@@ -56,6 +58,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public void setPassArray(boolean mostRestrictive)
    {
       passArray = new boolean[width][height][4];
+      corridorArray = new boolean[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
@@ -73,6 +76,11 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       return c >= '1' && c <= '9';
    }
    
+   private boolean isGuaranteedPassable(char c)
+   {
+      return c == '.' || c == 'c';
+   }
+   
    private void setPassArrayCell(int x, int y, boolean mostRestrictive)
    {
       char thisCell = getCell(x, y);
@@ -83,15 +91,18 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       if(isInBounds(x, y + 1))
          southCell = getCell(x, y + 1);
       
-      // clear
-      if(thisCell == '.')
+      if(thisCell == 'c')
+         corridorArray[x][y] = true;
+      
+      // clear and corridor
+      if(thisCell == '.' || thisCell == 'c')
       {
-         if(eastCell == '.' || eastCell == '?' || isSection(eastCell))
+         if(isGuaranteedPassable(eastCell) || eastCell == '?' || isSection(eastCell))
          {
             passArray[x][y][EAST] = true;
             passArray[x + 1][y][WEST] = true;
          }
-         if(southCell == '.' || southCell == '?' || isSection(southCell))
+         if(isGuaranteedPassable(southCell) || southCell == '?' || isSection(southCell))
          {
             passArray[x][y][SOUTH] = true;
             passArray[x][y + 1][NORTH] = true;
@@ -101,12 +112,12 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       // clear and sections
       if(isSection(thisCell))
       {
-         if(eastCell == '.' || eastCell == '?' || eastCell == thisCell)
+         if(isGuaranteedPassable(eastCell) || eastCell == '?' || eastCell == thisCell)
          {
             passArray[x][y][EAST] = true;
             passArray[x + 1][y][WEST] = true;
          }
-         if(southCell == '.' || southCell == '?' || southCell == thisCell)
+         if(isGuaranteedPassable(southCell) || southCell == '?' || southCell == thisCell)
          {
             passArray[x][y][SOUTH] = true;
             passArray[x][y + 1][NORTH] = true;
@@ -118,12 +129,12 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       {
          boolean eastRoll = GameEngine.randomBoolean() && (!mostRestrictive);
          boolean southRoll = GameEngine.randomBoolean() && (!mostRestrictive);
-         if(eastCell == '.' || isSection(eastCell) || (eastCell == '?' && eastRoll))
+         if(isGuaranteedPassable(eastCell) || isSection(eastCell) || (eastCell == '?' && eastRoll))
          {
             passArray[x][y][EAST] = true;
             passArray[x + 1][y][WEST] = true;
          }
-         if(southCell == '.' || isSection(southCell) ||  (southCell == '?' && southRoll))
+         if(isGuaranteedPassable(southCell) || isSection(southCell) ||  (southCell == '?' && southRoll))
          {
             passArray[x][y][SOUTH] = true;
             passArray[x][y + 1][NORTH] = true;
@@ -388,11 +399,11 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
       v.add("1100011");
-      v.add("11...11");
-      v.add("220.022");
-      v.add("22...22");
-      v.add("220.022");
-      v.add("11...11");
+      v.add("11ccc11");
+      v.add("220c022");
+      v.add("22ccc22");
+      v.add("220c022");
+      v.add("11ccc11");
       v.add("1100011");
       return new ZoneTemplate(v, rtm, false);
    }
