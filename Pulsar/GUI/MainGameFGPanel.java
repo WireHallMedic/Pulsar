@@ -180,7 +180,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                // blast targeting
                else if(player.pendingAttackIsBlast())
                {
-                  Coord blastLocation = GameEngine.getDetonationLoc(GameEngine.getPlayer().getMapLoc(), GameEngine.getCursorLoc());
+                  Coord blastLocation = GameEngine.getDetonationLoc(player.getMapLoc(), GameEngine.getCursorLoc());
                   for(int x = -1; x < 2; x++)
                   for(int y = -1; y < 2; y++)
                   {
@@ -190,6 +190,21 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                      }
                   }
                   setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
+               }
+               // beam targeting
+               else if(player.pendingAttackIsBeam())
+               {
+                  Vector<Coord> targetList = GameEngine.getBeam(player.getMapLoc(), GameEngine.getCursorLoc());
+                  for(Coord targetTile : targetList)
+                  {
+                     if(GameEngine.playerCanSee(targetTile.x, targetTile.y))
+                     {
+                        setBGColor(targetTile.x - xCorner, targetTile.y - yCorner, TARGETING_GRADIENT[animationManager.mediumPulse()].getRGB());
+                     }
+                  }
+                  if((GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner) && !GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner)) ||
+                     !GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
+                     setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
                }
                // melee targeting
                else if(player.pendingAttackIsMelee() || (player.getPendingGadget() != null && player.getPendingGadget().getPlaceAdjacent()))
