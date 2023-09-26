@@ -405,13 +405,13 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       RoomTemplateManager rtm = new RoomTemplateManager();
       rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
-      v.add("1100011");
-      v.add("11ccc11");
-      v.add("220c022");
-      v.add("22ccc22");
-      v.add("220c022");
-      v.add("11ccc11");
-      v.add("1100011");
+      v.add("110001122");
+      v.add("11cc011c2");
+      v.add("220c000c0");
+      v.add("22ccccccc");
+      v.add("220c00020");
+      v.add("11ccc1122");
+      v.add("110001122");
       return new ZoneTemplate(v, rtm, false);
    }
    
