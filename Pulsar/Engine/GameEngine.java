@@ -312,6 +312,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(getZoneMap() != null)
          {
             getZoneMap().takeTurn();
+            cleanUpDead();
          }
       }
    }
