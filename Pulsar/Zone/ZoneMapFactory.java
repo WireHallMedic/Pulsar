@@ -3,6 +3,7 @@ package Pulsar.Zone;
 import Pulsar.Engine.*;
 import WidlerSuite.*;
 import java.util.*;
+import java.awt.*;
 
 public class ZoneMapFactory implements ZoneConstants, EngineConstants
 {
@@ -32,6 +33,8 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
                map.getTile(x, y).setName("Bulkhead Door");
             else if(!map.getTile(x, y).isHighPassable())
                map.getTile(x, y).setName("Bulkhead");
+            Color fgColor = new Color(map.getTile(x, y).getFGColor());
+            map.getTile(x, y).setFGColor(fgColor.darker().getRGB());
          }
       }
    }
