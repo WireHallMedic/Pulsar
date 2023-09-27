@@ -64,7 +64,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       highPassMap = new boolean[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
-         setTile(x, y, new MapTile(defaultTile));
+         setTile(x, y, MapTileFactory.getTile(defaultTile));
       oobTile = MapTileFactory.getTile(TileType.NULL);
       fov = new ShadowFoVRect(transparencyMap);
       vacuumList = new Vector<Coord>();
