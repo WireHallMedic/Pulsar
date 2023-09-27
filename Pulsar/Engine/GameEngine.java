@@ -342,7 +342,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
                {
                   MessagePanel.addMessage(a.getName() + " is violently sucked out into space!");
                }
-               a.kill();
+               a.killNoCorpse();
             }
             else
             {
@@ -512,7 +512,8 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          a = deadActorList.elementAt(deadActorList.size() - 1);
          deadActorList.removeElementAt(deadActorList.size() - 1);
          a.doDeathEffect();
-         getZoneMap().dropCorpse(a);
+         if(a.getDropsCorpse())
+            getZoneMap().dropCorpse(a);
          remove(a);
       }
       if(getPlayer().isDead())

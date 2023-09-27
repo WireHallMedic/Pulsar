@@ -39,6 +39,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    protected boolean mechanical;
    protected boolean needsAir;
    protected boolean onFire;
+   protected boolean dropsCorpse;
    protected boolean forcedMovementSinceLastTurn;
 
 
@@ -66,6 +67,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public boolean isBiological(){return biological;}
    public boolean isMechanical(){return mechanical;}
    public boolean isOnFire(){return onFire;}
+   public boolean getDropsCorpse(){return dropsCorpse;}
    public boolean didForcedMovement(){return forcedMovementSinceLastTurn;}
 
 
@@ -96,6 +98,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void setMechanical(boolean m){mechanical = m;}
    public void setNeedsAir(boolean na){needsAir = na;}
    public void setOnFire(boolean of){onFire = of;}
+   public void setDropsCorpse(boolean dc){dropsCorpse = dc;}
    public void setDidForcedMovement(boolean dfm){forcedMovementSinceLastTurn = dfm;}
 
 
@@ -128,6 +131,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       mechanical = false;
       needsAir = true;
       onFire = false;
+      dropsCorpse = true;
       forcedMovementSinceLastTurn = false;
    }
    
@@ -399,6 +403,12 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void kill()
    {
       applyDamageToHealth(curHealth + 1);
+   }
+   
+   public void killNoCorpse()
+   {
+      setDropsCorpse(false);
+      kill();
    }
    
    public void doDeathEffect()
