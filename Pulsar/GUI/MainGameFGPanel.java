@@ -94,7 +94,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
          for(int x = 0; x < columns(); x++)
          for(int y = 0; y < rows(); y++)
          {
-            if(GameEngine.playerCanSee(x + xCorner, y + yCorner))
+            if(player.canSee(x + xCorner, y + yCorner))
             {
                tile = zoneMap.getTile(x + xCorner, y + yCorner);
                int iconIndex = tile.getIconIndex();
@@ -109,7 +109,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             }
             else
             {
-               setTile(x, y, ' ', Color.WHITE, OUT_OF_SIGHT_COLOR);
+               setTile(x, y, player.getLastSeen(x + xCorner, y + yCorner), Color.BLUE, OUT_OF_SIGHT_COLOR);
             }
          }
          

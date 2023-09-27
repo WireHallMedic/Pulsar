@@ -81,6 +81,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       add(player);
       addToMapPanel(player);
       initiativeIndex = 0;
+      player.resetLastSeen();
    }
    
    public static void clearActorList()

@@ -14,6 +14,7 @@ public class Player extends Actor implements GUIConstants, GearConstants
    private static final int VISIBILITY_MAP_HEIGHT = MAP_HEIGHT_TILES + 2;
    
    private boolean[][] visibilityMap;
+   private char[][] lastSeen;
    private Coord visibilityMapCorner;
    private Weapon secondaryWeapon;
    private boolean usingPrimaryWeapon;
@@ -127,6 +128,12 @@ public class Player extends Actor implements GUIConstants, GearConstants
       visibilityMapCorner = new Coord(getMapLoc().x - (VISIBILITY_MAP_WIDTH / 2), 
                                        getMapLoc().y - (VISIBILITY_MAP_HEIGHT / 2));
       visibilityMap = fov.getArray(visibilityMapCorner.x, visibilityMapCorner.y, VISIBILITY_MAP_WIDTH, VISIBILITY_MAP_HEIGHT);
+      for(int x = 0; x < visibilityMap.length; x++)
+      for(int y = 0; y < visibilityMap[0].length; y++)
+      {
+         if(canSee(x, y))
+            setLastSeen(visibilityMapCorner.x + x, visibilityMapCorner.y + y, (char)GameEngine.getZoneMap().getTile(visibilityMapCorner.x + x, visibilityMapCorner.y + y).getIconIndex());
+      }
    }
    
    @Override
@@ -194,6 +201,31 @@ public class Player extends Actor implements GUIConstants, GearConstants
       int shiftedX = target.x - visibilityMapCorner.x;
       int shiftedY = target.y - visibilityMapCorner.y;
       return visibilityMap[shiftedX][shiftedY];
+   }
+   
+   public void resetLastSeen()
+   {
+      lastSeen = new char[GameEngine.getZoneMap().getWidth()][GameEngine.getZoneMap().getHeight()];
+      for(int x = 0; x < lastSeen.length; x++)
+      for(int y = 0; y < lastSeen[0].length; y++)
+         lastSeen[x][y] = ' ';
+   }
+   
+   public void setLastSeen(int x, int y, char c)
+   {
+      if(lastSeen == null)
+         resetLastSeen();
+      if(GameEngine.getZoneMap().isInBounds(x, y))
+         lastSeen[x][y] = c;
+   }
+   
+   public char getLastSeen(int x, int y)
+   {
+      if(lastSeen == null)
+         resetLastSeen();
+      if(GameEngine.getZoneMap().isInBounds(x, y))
+         return lastSeen[x][y];
+      return ' ';
    }
    
    private Weapon getPendingWeapon()
