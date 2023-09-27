@@ -109,7 +109,7 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             }
             else
             {
-               setTile(x, y, player.getLastSeen(x + xCorner, y + yCorner), Color.BLUE, OUT_OF_SIGHT_COLOR);
+               setTile(x, y, player.getLastSeen(x + xCorner, y + yCorner), MEMORY_COLOR, OUT_OF_SIGHT_COLOR);
             }
          }
          

@@ -60,6 +60,7 @@ public interface GUIConstants
    public static final Color FIRE_COLOR = Color.ORANGE;  // the regular one, not the custom orange
    public static final Color ASH_COLOR = LIGHT_GREY;
    public static final Color SENSOR_COLOR = LIGHT_GREEN;
+   public static final Color MEMORY_COLOR = SENSOR_COLOR.darker().darker();
    public static final Color OUT_OF_SIGHT_COLOR = DARK_GREY.darker().darker().darker();
    
    // gradients
