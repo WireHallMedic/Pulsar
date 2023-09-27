@@ -107,7 +107,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    }
       
    
-   public static void populateWithMercenaries(Zone z, Coord playerLoc){populateWithAliens(z, playerLoc, LOW_DENSITY);}
+   public static void populateWithMercenaries(Zone z, Coord playerLoc){populateWithMercenaries(z, playerLoc, LOW_DENSITY);}
    public static void populateWithMercenaries(Zone z, Coord playerLoc, double density)
    {
       int totalCreatures = (int)(z.getMap().countOpenTiles() * density);

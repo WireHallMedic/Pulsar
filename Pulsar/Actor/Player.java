@@ -351,4 +351,18 @@ public class Player extends Actor implements GUIConstants, GearConstants
       }
       return seList;
    }
+   
+   
+   @Override
+   public void applyDamage(int damage, DamageType damageType, boolean doAnimation)
+   {
+      super.applyDamage(damage, damageType, doAnimation);
+      int shieldVal = 0;
+      if(hasShield())
+         shieldVal = getShield().getCurCharge();
+      if(shieldVal == 0 && getCurHealth() < getMaxHealth())
+         MainGameBGPanel.setBorderFlash(HEALTH_COLOR);
+      else
+         MainGameBGPanel.setBorderFlash(SHIELD_COLOR);
+   }
 }

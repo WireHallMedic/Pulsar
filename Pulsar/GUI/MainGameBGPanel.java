@@ -11,21 +11,46 @@ import java.awt.*;
 
 public class MainGameBGPanel extends PlayerPanel implements GUIConstants
 {
+   private static Color borderFlashColor = null;
+   private static int borderFlashDuration = 0;
+   
    public MainGameBGPanel()
    {
       super(TERMINAL_WIDTH_TILES, TERMINAL_HEIGHT_TILES, RECT_TILE_PALETTE);
       setSize(50, 50);
-      setBorder();
+      setBorder(BG_COLOR);
    }
    
    @Override
    public void actionPerformed(ActionEvent ae)
    {
       if(isVisible())
+      {
+         if(borderFlashColor != null)
+         {
+            setBorder(borderFlashColor);
+         }
          super.actionPerformed(ae);
+      }
+      
+      if(borderFlashDuration > 0)
+      {
+         borderFlashDuration--;
+         if(borderFlashDuration == 0)
+         {
+            borderFlashColor = null;
+            setBorder(BG_COLOR);
+         }
+      }
    }
    
-   private void setBorder()
+   public static void setBorderFlash(Color c)
+   {
+      borderFlashDuration = 2;
+      borderFlashColor = c;
+   }
+   
+   private void setBorder(Color bgColor)
    {
       int[][] borderTemplate = new int[TERMINAL_WIDTH_TILES][TERMINAL_HEIGHT_TILES];
       for(int x = 0; x < TERMINAL_WIDTH_TILES; x++)
@@ -50,8 +75,9 @@ public class MainGameBGPanel extends PlayerPanel implements GUIConstants
       {
          if(borderTemplate[x][y] != 0)
          {
-            setTile(x, y, borderArr[x][y], TERMINAL_FG_COLOR, BG_COLOR);
+            setTile(x, y, borderArr[x][y], TERMINAL_FG_COLOR, bgColor);
          }
       }
+      this.repaint();
    }
 }
