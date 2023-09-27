@@ -538,6 +538,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       if(this == GameEngine.getPlayer())
          MessagePanel.addMessage("You are suffocating!", GUIConstants.WARNING_COLOR);
       applyDamageToHealth(SUFFOCATION_DAMAGE);
+      if(this instanceof Player)
+         MainGameBGPanel.setBorderFlash(HEALTH_COLOR);
       if(GameEngine.playerCanSee(getMapLoc()) && isDead())
          MessagePanel.addMessage(getName() + " suffocates!");
    }
@@ -614,6 +616,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
          if(se.getOngoingDamage() > 0)
          {
             applyDamage(se.getOngoingDamage(), se.getDamageType(), true);
+            if(this instanceof Player)
+               MainGameBGPanel.setBorderFlash(((Player)this).getFlashColor());
             if(isDead() && !alreadyDead)
             {
                alreadyDead = true;
@@ -725,7 +729,10 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       {
          applyDamage(ZoneConstants.FIRE_DAMAGE, DamageType.THERMAL, true);
          if(this == GameEngine.getPlayer())
+         {
             MessagePanel.addMessage("You are burned by the fire!", GUIConstants.WARNING_COLOR);
+            MainGameBGPanel.setBorderFlash(((Player)this).getFlashColor());
+         }
       }
    }
    
@@ -735,7 +742,10 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       {
          applyDamage(ZoneConstants.ACID_DAMAGE, DamageType.KINETIC, true);
          if(this == GameEngine.getPlayer())
+         {
             MessagePanel.addMessage("You are burned by the acid!", GUIConstants.WARNING_COLOR);
+            MainGameBGPanel.setBorderFlash(((Player)this).getFlashColor());
+         }
       }
    }
    

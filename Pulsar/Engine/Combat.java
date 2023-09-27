@@ -216,6 +216,11 @@ public class Combat implements GUIConstants, GearConstants
                tile.setFGColor(defender.getBloodColor().getRGB());
          }
       }
+      if(defender == GameEngine.getPlayer())
+      {
+         Player player = (Player)defender;
+         MainGameBGPanel.setBorderFlash(player.getFlashColor(), delay);
+      }
    }
    
    public static boolean shouldInflictStatusEffect(Weapon weapon)

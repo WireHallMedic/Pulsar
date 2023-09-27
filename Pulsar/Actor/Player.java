@@ -7,6 +7,7 @@ import Pulsar.Engine.*;
 import Pulsar.Zone.*;
 import Pulsar.Gear.*;
 import java.util.*;
+import java.awt.*;
 
 public class Player extends Actor implements GUIConstants, GearConstants
 {
@@ -352,17 +353,14 @@ public class Player extends Actor implements GUIConstants, GearConstants
       return seList;
    }
    
-   
-   @Override
-   public void applyDamage(int damage, DamageType damageType, boolean doAnimation)
+   public Color getFlashColor()
    {
-      super.applyDamage(damage, damageType, doAnimation);
       int shieldVal = 0;
       if(hasShield())
          shieldVal = getShield().getCurCharge();
       if(shieldVal == 0 && getCurHealth() < getMaxHealth())
-         MainGameBGPanel.setBorderFlash(HEALTH_COLOR);
-      else
-         MainGameBGPanel.setBorderFlash(SHIELD_COLOR);
+         return HEALTH_COLOR;
+      return SHIELD_COLOR;
    }
+
 }

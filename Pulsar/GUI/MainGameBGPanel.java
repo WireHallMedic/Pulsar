@@ -13,6 +13,7 @@ public class MainGameBGPanel extends PlayerPanel implements GUIConstants
 {
    private static Color borderFlashColor = null;
    private static int borderFlashDuration = 0;
+   private static int borderFlashDelay = 0;
    
    public MainGameBGPanel()
    {
@@ -26,14 +27,14 @@ public class MainGameBGPanel extends PlayerPanel implements GUIConstants
    {
       if(isVisible())
       {
-         if(borderFlashColor != null)
+         if(borderFlashColor != null && borderFlashDelay == 0)
          {
             setBorder(borderFlashColor);
          }
          super.actionPerformed(ae);
       }
       
-      if(borderFlashDuration > 0)
+      if(borderFlashDelay == 0 && borderFlashDuration > 0)
       {
          borderFlashDuration--;
          if(borderFlashDuration == 0)
@@ -42,10 +43,17 @@ public class MainGameBGPanel extends PlayerPanel implements GUIConstants
             setBorder(BG_COLOR);
          }
       }
+      
+      if(borderFlashDelay > 0)
+      {
+         borderFlashDelay--;
+      }
    }
    
-   public static void setBorderFlash(Color c)
+   public static void setBorderFlash(Color c){setBorderFlash(c, 0);}
+   public static void setBorderFlash(Color c, int delay)
    {
+      borderFlashDelay = delay;
       borderFlashDuration = 2;
       borderFlashColor = c;
    }
