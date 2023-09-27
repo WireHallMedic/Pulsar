@@ -109,4 +109,15 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setDescription("Provides a continuous supply of air.");
       return g;
    }
+   
+   public static Gadget getQuickCharger()
+   {
+      Gadget g = new Gadget();
+      g.setName("Quick Charger");
+      g.setShortName("Quick Charger");
+      g.setTargetsSelf(true);
+      g.setSpecialEffect(GadgetSpecialEffect.RECHARGE);
+      g.setDescription("Immedeatly charges your shield and weapons.");
+      return g;
+   }
 }

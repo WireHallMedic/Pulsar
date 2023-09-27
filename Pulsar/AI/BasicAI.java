@@ -456,6 +456,7 @@ public class BasicAI implements AIConstants
             gadget.use(self, pendingTarget);
             self.discharge(self.getInteractSpeed().timeCost);
             gadget.discharge();
+            MessagePanel.addMessage(self.getName() + " uses a " + gadget.getName() + ".");
          }
       }
    }

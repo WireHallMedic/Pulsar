@@ -158,6 +158,19 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
                GameEngine.getZoneMap().tryToIgnite(target.x + x, target.y + y);
             }
          }
+         if(getSpecialEffect() == GadgetSpecialEffect.RECHARGE)
+         {
+            if(user.hasShield())
+               user.getShield().fullyCharge();
+            if(user.hasWeapon())
+               user.getWeapon().fullyCharge();
+            if(user instanceof Player)
+            {
+               Player player = (Player)user;
+               if(player.hasAltWeapon())
+                  player.getAltWeapon().fullyCharge();
+            }
+         }
       }
    }
 }

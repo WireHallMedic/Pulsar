@@ -108,7 +108,7 @@ public class Player extends Actor implements GUIConstants, GearConstants
    
    public boolean hasAltWeapon()
    {
-      return getAltWeapon() != null;
+      return getAltWeapon() != unarmed;
    }
    
    public int[] getAltWeaponBar(int length)
