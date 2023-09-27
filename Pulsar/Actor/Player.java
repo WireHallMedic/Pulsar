@@ -131,7 +131,7 @@ public class Player extends Actor implements GUIConstants, GearConstants
       for(int x = 0; x < visibilityMap.length; x++)
       for(int y = 0; y < visibilityMap[0].length; y++)
       {
-         if(canSee(x, y))
+         if(canSee(visibilityMapCorner.x + x, visibilityMapCorner.y + y))
             setLastSeen(visibilityMapCorner.x + x, visibilityMapCorner.y + y, (char)GameEngine.getZoneMap().getTile(visibilityMapCorner.x + x, visibilityMapCorner.y + y).getIconIndex());
       }
    }
@@ -196,7 +196,7 @@ public class Player extends Actor implements GUIConstants, GearConstants
       {
          return false;
       }
-      if(WSTools.getAngbandMetric(getMapLoc(), target) > (double)getVisionRange())
+      if(WSTools.getAngbandMetric(getMapLoc(), target) > getVisionRange())
          return false;
       int shiftedX = target.x - visibilityMapCorner.x;
       int shiftedY = target.y - visibilityMapCorner.y;
