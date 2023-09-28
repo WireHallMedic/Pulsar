@@ -190,7 +190,7 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
          "",
          "If your enemies seem to be taking quite a lot of turns, you're probably acting",
          "  slowly; check the character panel [c]. Heavy armor limits your maximum",
-         "  speeds",
+         "  speeds, as does movement through liquids or rough terrain.",
          "",
          "You have three speeds; movement, attacking, and interactions (such as opening",
          "  doors, pressing buttons, etc). If you wait on your turn ([5] or [.]), you'll",
