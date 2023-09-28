@@ -331,7 +331,8 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       for(int i = 0; i < getActorList().size(); i++)
       {
          Actor a = getActorList().elementAt(i);
-         if(depressurizationMap[a.getMapLoc().x][a.getMapLoc().y])
+         if(depressurizationMap[a.getMapLoc().x][a.getMapLoc().y] && 
+            GameEngine.getZoneMap().getTile(a.getMapLoc()).getAirPressure() > 0)
          {
             boolean nextToVacuum = false;
             for(Coord breach : breachList)
