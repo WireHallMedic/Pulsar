@@ -80,7 +80,7 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       if(options[selectionIndex].equals("Aliens"))
       {
          GameEngine engine = new GameEngine();
-         ZoneTemplate zoneTemplate = ZoneTemplate.getBasicZoneTemplate();
+         ZoneTemplate zoneTemplate = ZoneTemplate.getBigHonkinTemplate();
          zoneTemplate.setObstacles();
          zoneTemplate.process();
          ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneTemplate, ZoneConstants.TileType.VACUUM);

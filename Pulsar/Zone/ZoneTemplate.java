@@ -37,7 +37,6 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm, boolean mostRestrictive)
    {
       super(input);
-      validateInitial();
       roomTemplateManager = rtm;
       corridorTemplateManager = new RoomTemplateManager();
       corridorTemplateManager.loadFromFile("Corridor Templates.txt");
@@ -147,13 +146,13 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    {
       if(adjRoom.x - origin.x == 1)
       {
-         passArray[origin.x][origin.y][WEST] = true;
-         passArray[adjRoom.x][adjRoom.y][EAST] = true;
+         passArray[origin.x][origin.y][EAST] = true;
+         passArray[adjRoom.x][adjRoom.y][WEST] = true;
       }
       if(adjRoom.x - origin.x == -1)
       {
-         passArray[origin.x][origin.y][EAST] = true;
-         passArray[adjRoom.x][adjRoom.y][WEST] = true;
+         passArray[origin.x][origin.y][WEST] = true;
+         passArray[adjRoom.x][adjRoom.y][EAST] = true;
       }
       if(adjRoom.y - origin.y == 1)
       {
@@ -363,16 +362,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          System.out.println("");
       }
    }
-   
-   // has the side effects, set rooms after
-   public boolean validateInitial() 
-   {
-  //     if(!hasFullConnectivity())
-//          throw new java.lang.Error("ZoneTemplate has potentially unreachable rooms.");
-  //    if(!hasNoIsolation())
- //       throw new java.lang.Error("ZoneTemplate has potentially isolated rooms.");
-      return true;
-   }
+
    
    public boolean validateButtons()
    {
@@ -419,76 +409,6 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          throw new java.lang.Error("ZoneTemplate has " + triggerList.size() + " ButtonTriggers, but " + buttonsFound + "buttons were found.");
       return true;
    }
-   /*
-   private boolean hasFullConnectivity()
-   {
-      // generate map using demo tileset; all # and .
-      roomTemplateManager = new RoomTemplateManager();
-      roomTemplateManager.loadDemos();
-      setPassArray(ZoneTemplate.MOST_RESTRICTIVE);
-      generateRooms(true);
-      Coord origin = new Coord(-1, -1);
-      char[][] tempMap = getTileMap();
-      // create passability map
-      boolean[][] passMap = new boolean[tempMap.length][tempMap[0].length];
-      for(int x = 0; x < tempMap.length; x++)
-      for(int y = 0; y < tempMap[0].length; y++)
-      {
-         if(tempMap[x][y] == '.')
-         {
-            origin.x = x;
-            origin.y = y;
-            passMap[x][y] = true;
-         }
-      }
-      //create floodfill
-      boolean[][] fillMap = FloodFill.fill(passMap, origin);
-      // check all . tiles are flooded, and all # are not
-      for(int x = 0; x < tempMap.length; x++)
-      for(int y = 0; y < tempMap[0].length; y++)
-      {
-         if((tempMap[x][y] == '.') != fillMap[x][y])
-            return false;
-      }
-      return true;
-   }*/
-   
-   /*
-   // Isolation can occur if there are two ? tiles adjacent to each other, each entirely surrounded by ? or impassable tiles
-   private boolean hasNoIsolation()
-   {
-      boolean[][] surroundedMap = new boolean[width][height];
-      for(int x = 0; x < width; x++)
-      for(int y = 0; y < height; y++)
-         surroundedMap[x][y] = isSurroundedProbabilistic(x, y);
-
-      for(int x = 0; x < width - 1; x++)
-      for(int y = 0; y < height; y++)
-      {
-         if(surroundedMap[x][y] && surroundedMap[x + 1][y])
-            return false;
-      }
-      for(int x = 0; x < width; x++)
-      for(int y = 0; y < height - 1; y++)
-      {
-         if(surroundedMap[x][y] && surroundedMap[x][y + 1])
-            return false;
-      }
-      return true;
-   }
-   
-   private boolean isSurroundedProbabilistic(int x, int y)
-   {
-      if(getCell(x, y) == '?')
-      {
-         if(!isInBounds(x + 1, y) || getCell(x + 1, y) != '.')
-         if(!isInBounds(x - 1, y) || getCell(x - 1, y) != '.')
-         if(!isInBounds(x, y + 1) || getCell(x, y + 1) != '.')
-         if(!isInBounds(x, y - 1) || getCell(x, y - 1) != '.')
-            return true;
-      }
-      return false;
-   }*/
    
    private boolean[][] getFloodMap(Coord start)
    {
@@ -496,18 +416,18 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
-         int xTranslation = 3 * x;
-         int yTranslation = 3 * y;
+         int xTranslation = (3 * x) + 1;
+         int yTranslation = (3 * y) + 1;
          if(getCell(x, y) != OOB_ROOM)
-            boolMap[xTranslation + 1][yTranslation + 1] = true;
+            boolMap[xTranslation][yTranslation] = true;
          if(passArray[x][y][NORTH])
-            boolMap[xTranslation + 1][yTranslation] = true;
+            boolMap[xTranslation][yTranslation - 1] = true;
          if(passArray[x][y][SOUTH])
-            boolMap[xTranslation + 1][yTranslation + 2] = true;
-         if(passArray[x][y][EAST])
             boolMap[xTranslation][yTranslation + 1] = true;
+         if(passArray[x][y][EAST])
+            boolMap[xTranslation + 1][yTranslation] = true;
          if(passArray[x][y][WEST])
-            boolMap[xTranslation + 2][yTranslation + 1] = true;
+            boolMap[xTranslation - 1][yTranslation] = true;
       }
       return FloodFill.fill(boolMap, (start.x * 3) + 1, (start.y * 3) + 1);
    }
@@ -594,10 +514,25 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       return new ZoneTemplate(v, rtm, false);
    }
    
+   public static ZoneTemplate getBigHonkinTemplate()
+   {
+      RoomTemplateManager rtm = new RoomTemplateManager();
+      rtm.loadFromFile("Room Templates.txt");
+      int size = 17;
+      Vector<String> v = new Vector<String>();
+      for(int y = 0; y < size; y++)
+      {
+         String str = "";
+         for(int x = 0; x < size; x++)
+            str += "?";
+         v.add(str);
+      }
+      return new ZoneTemplate(v, rtm, false);
+   }
+   
    public static void main(String[] args)
    {
       ZoneTemplate zt = ZoneTemplate.getOopsAllProbabalistic();
-      zt.validateInitial();
       zt.print();
    }
 

@@ -55,29 +55,10 @@ public class ZoneTemplateTest implements ZoneConstants
 
    @Test public void testValidation()
    {
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadDemos();
-      Vector<String> v = new Vector<String>();
-      v.add(".???.");
-      v.add(".???.");
-      assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v, rtm);});
-      Vector<String> v2 = new Vector<String>();
-      v2.add("......");
-      v2.add("..??..");
-      v2.add(".????.");
-      v2.add("..??..");
-      v2.add("......");
-      assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v2, rtm);});
-      Vector<String> v3 = new Vector<String>();
-      v3.add(".????.");
-      v3.add("..??..");
-      v3.add("......");
-      assertThrows(java.lang.Error.class, () -> {new ZoneTemplate(v3, rtm);});
-      
       ZoneTemplate zt = ZoneTemplate.getDemo("Room Templates.txt");
       zt.setObstacles();
       zt.process();
-      assertTrue("Zone Template passes both validations", zt.validateButtons());
+      assertTrue("Zone Template passes validation", zt.validateButtons());
    }
    
    @Test public void test1000Zones()
@@ -87,11 +68,10 @@ public class ZoneTemplateTest implements ZoneConstants
          ZoneTemplate zt = ZoneTemplate.getDemo("Room Templates.txt");
          zt.setObstacles();
          zt.process();
-         assertTrue("Zone Template passes both validations", zt.validateButtons());
-         assertTrue("Zone Template passes initial validation a second time", zt.validateInitial());
+         assertTrue("Zone Template passes validation validations", zt.validateButtons());
          zt.setObstacles();
          zt.process();
-         assertTrue("Zone Template passes button validation a second time", zt.validateButtons());
+         assertTrue("Zone Template passes validation a second time", zt.validateButtons());
          ZoneMapFactory.buildFromTemplates(zt, TileType.VACUUM); // make sure we can build maps without errors
       }
    }
