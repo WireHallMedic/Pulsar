@@ -132,6 +132,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             case KeyEvent.VK_NUMPAD3 : target = new Coord(playerLoc.x + 1, playerLoc.y + 1); break;
             case KeyEvent.VK_LEFT    :
             case KeyEvent.VK_NUMPAD4 : target = new Coord(playerLoc.x - 1, playerLoc.y); break;
+            case KeyEvent.VK_PERIOD  :
             case KeyEvent.VK_NUMPAD5 : target = new Coord(playerLoc.x, playerLoc.y); break;
             case KeyEvent.VK_RIGHT   :
             case KeyEvent.VK_NUMPAD6 : target = new Coord(playerLoc.x + 1, playerLoc.y); break;

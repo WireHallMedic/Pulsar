@@ -155,21 +155,21 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
          GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
       String[] pageThree = {
-         GUITools.centerString("Page Three [^/$]", WIDTH_TILES),
+         GUITools.centerString("Weapon Properties [^/$]", WIDTH_TILES),
+         "Standard:  Can fire over low barriers.",
+         "Blast:     Hits everything in a 3x3 area.",
+         "Spray:     Fires in a cone. Hits low barriers, is blocked by high barriers and",
+         "           enemies.",
+         "Beam:      Fires a ray that hits low barriers and enemies. Only stopped by high",
+         "           barriers or reaching max range (" + GearConstants.BEAM_MAX_RANGE + " meters).",
+         "Heavy:     Can destroy walls. Be careful near bulkheads.",
+         "Knockback: Pushes targets back.",
          "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
+         "Kinetic:   Deals physical damage. Commonly deals knockback.",
+         "Cryo:      Deals cold damage. Commonly freezes.",
+         "Thermal:   Deals fire damage. Commonly deals ongoing damage.",
+         "Electro:   Deals electric damage. Deals double damage to shields or enemies",
+         "           standing in water (quad damage for both!).",
          "",
          "",
          "",
@@ -178,7 +178,31 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
          "",
          GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
-      String[][] pageArr = {pageOne, pageTwo, pageThree};
+      String[] pageFour = {
+         GUITools.centerString("Speed [^/$]", WIDTH_TILES),
+         "This game is entirely turn-based. You have as much time as you want to take",
+         "  your turns. A standard length turn is \"1 second.\"",
+         "",
+         "Fast actions take half a standard turn (0.5 seconds).",
+         "Slow actions take two standard turns (2.0 seconds).",
+         "Instantenous actions don't take any time; if you take one, it'll still be",
+         "  your turn.",
+         "",
+         "If your enemies seem to be taking quite a lot of turns, you're probably acting",
+         "  slowly; check the character panel [c]. Heavy armor limits your maximum",
+         "  speeds",
+         "",
+         "You have three speeds; movement, attacking, and interactions (such as opening",
+         "  doors, pressing buttons, etc). If you wait on your turn ([5] or [.]), you'll",
+         "  wait only as long as your fastest speed.",
+         "",
+         "A boost in speed is a massive advantage; be on the lookout for ways to",
+         "  increase your speeds.",
+         "",
+         "",
+         GUITools.centerString("Press Escape to exit", WIDTH_TILES)
+      };
+      String[][] pageArr = {pageOne, pageTwo, pageThree, pageFour};
       for(int i = 0; i < pageArr.length; i++)
       {
          String newStr = pageArr[i][0];
