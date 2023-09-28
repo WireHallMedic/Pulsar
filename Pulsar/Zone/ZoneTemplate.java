@@ -82,6 +82,89 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       {
          setPassArrayCell(x, y, mostRestrictive);
       }
+      resolveRandomlyBlocked();
+   }
+   
+   private void resolveRandomlyBlocked()
+   {
+      // find a cell to start our floodfill from
+      Coord startLoc = new Coord(-1, 0);
+      while(getCell(startLoc.x, startLoc.y) == OOB_ROOM)
+      {
+         startLoc.x++;
+         if(startLoc.y == width)
+         {
+            startLoc.y++;
+            startLoc.x = 0;
+         }
+         if(startLoc.x == width && startLoc.y == height)
+            return;
+      }
+      // create a floodfill map (3x size) based on directional passability
+      boolean[][] floodMap = getFloodMap(startLoc);
+      boolean goAgain = false;
+      // find an unflooded prob. room
+      for(int x = 0; x < width && !goAgain; x++)
+      for(int y = 0; y < height && !goAgain; y++)
+      {
+         // find adj flooded prob rooms
+         if(getCell(x, y) == PROBABILISTIC_ROOM &&
+            !floodMap[(x * 3) + 1][(y * 3) + 1])
+         {
+            Vector<Coord> prospectList = new Vector<Coord>();
+            int newX = x + 1;
+            int newY = y;
+            if(getCell(newX, newY) == PROBABILISTIC_ROOM &&
+               floodMap[(newX * 3) + 1][(newY * 3) + 1])
+               prospectList.add(new Coord(newX, newY));
+            newX = x - 1;
+            if(getCell(newX, newY) == PROBABILISTIC_ROOM &&
+               floodMap[(newX * 3) + 1][(newY * 3) + 1])
+               prospectList.add(new Coord(newX, newY));
+            newX = x;
+            newY = y + 1;
+            if(getCell(newX, newY) == PROBABILISTIC_ROOM &&
+               floodMap[(newX * 3) + 1][(newY * 3) + 1])
+               prospectList.add(new Coord(newX, newY));
+            newX = x;
+            newY = y - 1;
+            if(getCell(newX, newY) == PROBABILISTIC_ROOM &&
+               floodMap[(newX * 3) + 1][(newY * 3) + 1])
+               prospectList.add(new Coord(newX, newY));
+            // if there are any adj prospect, punch a hole to a random one and run again
+            if(prospectList.size() > 0)
+            {
+               goAgain = true;
+               knockOutWall(new Coord(x, y), prospectList.elementAt(GameEngine.randomInt(0, prospectList.size())));
+            }
+         }
+      }
+      if(goAgain)
+         resolveRandomlyBlocked();
+   }
+   
+   private void knockOutWall(Coord origin, Coord adjRoom)
+   {
+      if(adjRoom.x - origin.x == 1)
+      {
+         passArray[origin.x][origin.y][WEST] = true;
+         passArray[adjRoom.x][adjRoom.y][EAST] = true;
+      }
+      if(adjRoom.x - origin.x == -1)
+      {
+         passArray[origin.x][origin.y][EAST] = true;
+         passArray[adjRoom.x][adjRoom.y][WEST] = true;
+      }
+      if(adjRoom.y - origin.y == 1)
+      {
+         passArray[origin.x][origin.y][SOUTH] = true;
+         passArray[adjRoom.x][adjRoom.y][NORTH] = true;
+      }
+      if(adjRoom.y - origin.y == -1)
+      {
+         passArray[origin.x][origin.y][NORTH] = true;
+         passArray[adjRoom.x][adjRoom.y][SOUTH] = true;
+      }
    }
    
    private boolean isSection(char c)
@@ -284,10 +367,10 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    // has the side effects, set rooms after
    public boolean validateInitial() 
    {
-      if(!hasFullConnectivity())
-         throw new java.lang.Error("ZoneTemplate has potentially unreachable rooms.");
-      if(!hasNoIsolation())
-         throw new java.lang.Error("ZoneTemplate has potentially isolated rooms.");
+  //     if(!hasFullConnectivity())
+//          throw new java.lang.Error("ZoneTemplate has potentially unreachable rooms.");
+  //    if(!hasNoIsolation())
+ //       throw new java.lang.Error("ZoneTemplate has potentially isolated rooms.");
       return true;
    }
    
@@ -336,7 +419,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          throw new java.lang.Error("ZoneTemplate has " + triggerList.size() + " ButtonTriggers, but " + buttonsFound + "buttons were found.");
       return true;
    }
-   
+   /*
    private boolean hasFullConnectivity()
    {
       // generate map using demo tileset; all # and .
@@ -368,9 +451,9 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
             return false;
       }
       return true;
-   }
+   }*/
    
-   
+   /*
    // Isolation can occur if there are two ? tiles adjacent to each other, each entirely surrounded by ? or impassable tiles
    private boolean hasNoIsolation()
    {
@@ -405,6 +488,36 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
             return true;
       }
       return false;
+   }*/
+   
+   private boolean[][] getFloodMap(Coord start)
+   {
+      boolean[][] boolMap = new boolean[width * 3][height * 3];
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         int xTranslation = 3 * x;
+         int yTranslation = 3 * y;
+         if(getCell(x, y) != OOB_ROOM)
+            boolMap[xTranslation + 1][yTranslation + 1] = true;
+         if(passArray[x][y][NORTH])
+            boolMap[xTranslation + 1][yTranslation] = true;
+         if(passArray[x][y][SOUTH])
+            boolMap[xTranslation + 1][yTranslation + 2] = true;
+         if(passArray[x][y][EAST])
+            boolMap[xTranslation][yTranslation + 1] = true;
+         if(passArray[x][y][WEST])
+            boolMap[xTranslation + 2][yTranslation + 1] = true;
+      }
+      return FloodFill.fill(boolMap, (start.x * 3) + 1, (start.y * 3) + 1);
+   }
+   
+   @Override
+   public char getCell(int x, int y)
+   {
+      if(isInBounds(x, y))
+         return super.getCell(x, y);
+      return OOB_ROOM;
    }
    
    // returns a zone template that includes at least one of each RoomTemplate
@@ -423,7 +536,6 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    
    public static ZoneTemplate getBasicZoneTemplate()
    {
-   
       RoomTemplateManager rtm = new RoomTemplateManager();
       rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
@@ -434,6 +546,20 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("?.?###");
       return new ZoneTemplate(v, rtm, false);
    }
+   
+   public static ZoneTemplate getOopsAllProbabalistic()
+   {
+      RoomTemplateManager rtm = new RoomTemplateManager();
+      rtm.loadFromFile("Room Templates.txt");
+      Vector<String> v = new Vector<String>();
+      v.add("?????");
+      v.add("?????");
+      v.add("?????");
+      v.add("?????");
+      v.add("?????");
+      return new ZoneTemplate(v, rtm, false);
+   }
+   
    
    public static ZoneTemplate getSectionTemplate()
    {
@@ -470,8 +596,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    
    public static void main(String[] args)
    {
-      ZoneTemplate zt = ZoneTemplate.getSectionTemplate();
-   //   zt.validateInitial();
+      ZoneTemplate zt = ZoneTemplate.getOopsAllProbabalistic();
+      zt.validateInitial();
       zt.print();
    }
 
