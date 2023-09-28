@@ -242,9 +242,12 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
                   }
                }
                // don't obscure targets with the blue cursor, it makes it hard to tell if you can hit them or not
-               if((GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner) && !GameEngine.isActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner)) ||
-                  !GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
-                  setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
+               if(GameEngine.playerCanSee(cursorLoc.x + xCorner, cursorLoc.y + yCorner))
+               {
+                  Actor actorAt = GameEngine.getActorAt(cursorLoc.x + xCorner, cursorLoc.y + yCorner);
+                  if(actorAt == null || actorAt == player)
+                     setBGColor(cursorLoc.x, cursorLoc.y, TERMINAL_GRADIENT[animationManager.mediumPulse()].getRGB());
+               }
             }
          }
          if(GameEngine.getGameMode() == GameMode.STANDARD)
