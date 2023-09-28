@@ -382,15 +382,15 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    // returns the appropriate border tile from a pair
    public char pickBorderTile(char a, char b)
    {
-      if(a == '/' || b == '/')
-         return '/';
-      if(a == '#' || b == '#')
-         return '#';
-      if(a == '.' || b == '.')
-         return '.';
-      if(a == 'V' || b == 'V')
-         return 'V';
-      return '0';
+      if(a == TEMPLATE_DOOR || b == TEMPLATE_DOOR)
+         return TEMPLATE_DOOR;
+      if(a == TEMPLATE_WALL || b == TEMPLATE_WALL)
+         return TEMPLATE_WALL;
+      if(a == TEMPLATE_CLEAR || b == TEMPLATE_CLEAR)
+         return TEMPLATE_CLEAR;
+      if(a == TEMPLATE_VACUUM || b == TEMPLATE_VACUUM)
+         return TEMPLATE_VACUUM;
+      return TEMPLATE_OOB;
    }
    
    public void print()
