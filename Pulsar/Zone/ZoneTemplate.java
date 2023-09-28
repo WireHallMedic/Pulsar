@@ -61,6 +61,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
             baseRoomTemplate[x][y] = roomTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
          baseRoomTemplate[x][y].rotateUntilMatches(passArray[x][y]);
          rolledRoomTemplate[x][y] = null;
+         addCorridorDoors(x, y);
       }
       setObstacles();
       process();
@@ -82,6 +83,48 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          setPassArrayCell(x, y, mostRestrictive);
       }
       resolveRandomlyBlocked();
+   }
+   
+   // add a door to each corrider
+   private void addCorridorDoors(int x, int y)
+   {
+      if(corridorArray[x][y])
+      {
+         int w = baseRoomTemplate[x][y].getWidth();
+         int h = baseRoomTemplate[x][y].getHeight();
+         if(passArray[x][y][NORTH] && 
+            getCell(x, y - 1) != INCLUSIVE_CORRIDOR && 
+            getCell(x, y - 1) != EXCLUSIVE_CORRIDOR)
+         {
+            for(int i = 0; i < w; i++)
+               baseRoomTemplate[x][y].setCell(i, 0, TEMPLATE_WALL);
+            baseRoomTemplate[x][y].setCell(w / 2, 0, TEMPLATE_DOOR);
+         }
+         if(passArray[x][y][SOUTH] && 
+            getCell(x, y + 1) != INCLUSIVE_CORRIDOR && 
+            getCell(x, y + 1) != EXCLUSIVE_CORRIDOR)
+         {
+            for(int i = 0; i < w; i++)
+               baseRoomTemplate[x][y].setCell(i, h - 1, TEMPLATE_WALL);
+            baseRoomTemplate[x][y].setCell(w / 2, h - 1, TEMPLATE_DOOR);
+         }
+         if(passArray[x][y][EAST] && 
+            getCell(x + 1, y) != INCLUSIVE_CORRIDOR && 
+            getCell(x + 1, y) != EXCLUSIVE_CORRIDOR)
+         {
+            for(int i = 0; i < w; i++)
+               baseRoomTemplate[x][y].setCell(w - 1, i, TEMPLATE_WALL);
+            baseRoomTemplate[x][y].setCell(w - 1, h / 2, TEMPLATE_DOOR);
+         }
+         if(passArray[x][y][WEST] && 
+            getCell(x - 1, y) != INCLUSIVE_CORRIDOR && 
+            getCell(x - 1, y) != EXCLUSIVE_CORRIDOR)
+         {
+            for(int i = 0; i < w; i++)
+               baseRoomTemplate[x][y].setCell(0, i, TEMPLATE_WALL);
+            baseRoomTemplate[x][y].setCell(0, h / 2, TEMPLATE_DOOR);
+         }
+      }
    }
    
    private void resolveRandomlyBlocked()
@@ -520,19 +563,29 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       rtm.loadFromFile("Room Templates.txt");
       int size = 17;
       Vector<String> v = new Vector<String>();
-      for(int y = 0; y < size; y++)
-      {
-         String str = "";
-         for(int x = 0; x < size; x++)
-            str += "?";
-         v.add(str);
-      }
+      v.add("CCcCCCCCcCCCCCcCC");
+      v.add("C????C?????C????C");
+      v.add("c????c?????c????c");
+      v.add("C????C?????C????C");
+      v.add("C????C?????C????C");
+      v.add("CCcCCCCCcCCCCCcCC");
+      v.add("C????C?????C????C");
+      v.add("C????C?????C????C");
+      v.add("c????c?????c????c");
+      v.add("C????C?????C????C");
+      v.add("C????C?????C????C");
+      v.add("CCcCCCCCcCCCCCcCC");
+      v.add("C????C?????C????C");
+      v.add("C????C?????C????C");
+      v.add("c????c?????c????c");
+      v.add("C????C?????C????C");
+      v.add("CCcCCCCCcCCCCCcCC");
       return new ZoneTemplate(v, rtm, false);
    }
    
    public static void main(String[] args)
    {
-      ZoneTemplate zt = ZoneTemplate.getOopsAllProbabalistic();
+      ZoneTemplate zt = ZoneTemplate.getBigHonkinTemplate();
       zt.print();
    }
 
