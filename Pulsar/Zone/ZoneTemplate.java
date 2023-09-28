@@ -585,7 +585,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    
    public static void main(String[] args)
    {
-      ZoneTemplate zt = ZoneTemplate.getBigHonkinTemplate();
+      ZoneTemplate zt = ZoneTemplate.getExclusiveSectionTemplate();
       zt.print();
    }
 
