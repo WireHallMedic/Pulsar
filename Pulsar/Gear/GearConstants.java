@@ -19,6 +19,7 @@ public interface GearConstants extends WSFontConstants
    public static final int BASE_WEAPON_CHARGE_COST = 24;
    public static final int BASE_WEAPON_CHARGE_RATE = 4;
    public static final int SHOTGUN_MAX_RANGE = 8;
+   public static final int BEAM_MAX_RANGE = 8;
    
    // shield defaults
    public static final int DEFAULT_SHIELD_MAX_CHARGE = 20;

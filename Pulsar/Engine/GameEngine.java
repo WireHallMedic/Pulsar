@@ -274,7 +274,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
       Coord target = new Coord(originalTarget);
       target.subtract(origin);
       Vect vect = new Vect(target);
-      vect.magnitude = 10.0;
+      vect.magnitude = GearConstants.BEAM_MAX_RANGE;
       target = new Coord(vect);
       target.add(origin);
       // get list of possible targets
