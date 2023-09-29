@@ -67,8 +67,6 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          
          // traversal tiles
          case TEMPLATE_EXIT         : return getTile(TileType.CLEAR);
-         case TEMPLATE_DOWN_STAIRS  : return getTile(TileType.CLEAR);
-         case TEMPLATE_UP_STAIRS    : return getTile(TileType.CLEAR);
          
          default        : System.out.println("Unrecognized tile type: " + ((char)c)); return null;
       }

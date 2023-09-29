@@ -10,7 +10,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public static final boolean RANDOMIZE = false;
    
    public static final char OPEN_ROOM = '.';
-   public static final char OOB_ROOM = '#';
+   public static final char OOB_ROOM = 'X';
    public static final char INCLUSIVE_CORRIDOR = 'c';
    public static final char EXCLUSIVE_CORRIDOR = 'C';
    public static final char PROBABILISTIC_ROOM = '?';
@@ -222,9 +222,9 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    {
       char thisCell = getCell(x, y);
       char eastCell = OOB_ROOM;
+      char southCell = OOB_ROOM;
       if(isInBounds(x + 1, y))
          eastCell = getCell(x + 1, y);
-      char southCell = OOB_ROOM;
       if(isInBounds(x, y + 1))
          southCell = getCell(x, y + 1);
       
@@ -331,7 +331,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       // fill with lowest priority tile (OOB)
       for(int x = 0; x < mapWidth; x++)
       for(int y = 0; y < mapHeight; y++)
-         newMap[x][y] = '0';
+         newMap[x][y] = OOB_ROOM;
       // place room at 0, 0
       placeRoom(newMap, 0, 0, rolledRoomTemplate[0][0].resolveProbTiles());
       // place all rooms at y = 0 (except 0, 0)
@@ -399,7 +399,10 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       {
          for(int x = 0; x < charMap.length; x++)
          {
-            System.out.print(charMap[x][y] + "");
+            if(charMap[x][y] == TEMPLATE_OOB)
+               System.out.print(" ");
+            else
+               System.out.print(charMap[x][y] + "");
          }
          System.out.println("");
       }
@@ -535,9 +538,9 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("C555cc222C");
       v.add("c44443333c");
       v.add("C44443333c");
-      v.add("C111#0111C");
+      v.add("C111X0111C");
       v.add("c111cc111c");
-      v.add("C111#0111C");
+      v.add("C111X0111C");
       v.add("CCcCCCCcCC");
       return new ZoneTemplate(v, rtm);
    }
@@ -587,13 +590,13 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       rtm.loadFromFile("Room Templates.txt");
       int size = 17;
       Vector<String> v = new Vector<String>();
-      v.add("#0111#0");
-      v.add("#0111#0");
-      v.add("#02C2#0");
-      v.add("#02c2#0");
-      v.add("#03C3#0");
+      v.add("XX111XX");
+      v.add("XX111XX");
+      v.add("XX2C2XX");
+      v.add("XX2c2XX");
+      v.add("XX3C3XX");
       v.add("4.3c3.4");
-      v.add("4440444");    
+      v.add("444X444");    
       return new ZoneTemplate(v, rtm);
    }
    

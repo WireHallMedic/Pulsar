@@ -9,7 +9,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    
    public enum RoomTemplateTile
    {
-      DEFAULT_OOB ('0'),
+      DEFAULT_OOB ('X'),
       CLEAR       ('.'),
       WALL        ('#'),
       DOOR        ('/'),
@@ -366,7 +366,7 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    {
       switch(c)
       {
-         case '0' : return false;
+         case 'X' : return false;
          case '.' : return false;
          case '#' : return false;
          case '/' : return false;

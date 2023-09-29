@@ -21,7 +21,7 @@ public interface ZoneConstants extends WSFontConstants
    public static final char TEMPLATE_CLEAR = '.';
    public static final char TEMPLATE_WALL = '#';
    public static final char TEMPLATE_DOOR = '/';
-   public static final char TEMPLATE_OOB = '0';
+   public static final char TEMPLATE_OOB = 'X';
    public static final char TEMPLATE_BARREL = 'b';
    public static final char TEMPLATE_WATER_BARREL = 'w';
    public static final char TEMPLATE_EXPLODING_BARREL = 'e';
@@ -32,9 +32,7 @@ public interface ZoneConstants extends WSFontConstants
    public static final char TEMPLATE_ACID = 'a';
    public static final char TEMPLATE_BUTTON = '!';
    public static final char TEMPLATE_WINDOW = ':';
-   public static final char TEMPLATE_EXIT = 'X';
-   public static final char TEMPLATE_UP_STAIRS = '>';
-   public static final char TEMPLATE_DOWN_STAIRS = '<';
+   public static final char TEMPLATE_EXIT = '>';
    public static final char TEMPLATE_TERMINAL = 'T';
    
    public static final char TEMPLATE_OBSTACLE = '?';
