@@ -138,7 +138,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    
    public void rerollAll()
    {
-      zoneTemplate = ZoneTemplate.getExclusiveSectionTemplate();
+      zoneTemplate = ZoneTemplate.getDemo();
       zoneTemplate.setObstacles();
       zoneTemplate.process();
       zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate, getOOBType());
