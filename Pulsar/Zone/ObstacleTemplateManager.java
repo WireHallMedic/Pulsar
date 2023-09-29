@@ -17,6 +17,12 @@ public class ObstacleTemplateManager implements ZoneConstants
       clear();
    }
    
+   public ObstacleTemplateManager(String fileName)
+   {
+      this();
+      loadFromFile(fileName);
+   }
+   
    public void clear()
    {
       list = new Vector<ObstacleTemplate>();

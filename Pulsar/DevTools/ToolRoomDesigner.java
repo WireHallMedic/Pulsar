@@ -11,9 +11,9 @@ import javax.swing.border.*;
 public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
    public static final String[] buttonStrList = {"", "",
-      "#", ".", "0", "/", "V", "",
+      "#", ".", "X", "/", "V", "",
       "", "", "",
-      "Set all #", "Set all .", "Set all 0", "Set all V", "", "", 
+      "Set all #", "Set all .", "Set all X", "Set all V", "", "", 
       "", "", "",
       "Set block", "Set terminal", "Set straight", "Set elbow", "Set tee", "Set cross"};
    public static final char DEFAULT_CHAR = '.';
@@ -165,7 +165,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       instructionPanel.add(new JLabel(". Clear"));
       instructionPanel.add(new JLabel("# Wall"));
       instructionPanel.add(new JLabel("/ Door"));
-      instructionPanel.add(new JLabel("0 Out of Bounds"));
+      instructionPanel.add(new JLabel("X Out of Bounds"));
       instructionPanel.add(new JLabel("b Barrel"));
       instructionPanel.add(new JLabel("w Water Barrel"));
       instructionPanel.add(new JLabel("e Exploding Barrel"));

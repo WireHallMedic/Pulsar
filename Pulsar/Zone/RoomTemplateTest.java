@@ -263,7 +263,7 @@ public class RoomTemplateTest implements ZoneConstants
    @Test public void testAllRooms()
    {
       RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile("Room Templates.txt");
+      rtm.loadFromFile("Open Room Templates.txt");
       Vector<RoomTemplate> bigList = rtm.getAll();
       for(RoomTemplate template : bigList)
       {

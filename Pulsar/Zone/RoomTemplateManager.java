@@ -22,6 +22,12 @@ public class RoomTemplateManager implements ZoneConstants
       clear();
    }
    
+   public RoomTemplateManager(String fileName)
+   {
+      this();
+      loadFromFile(fileName);
+   }
+   
    public void clear()
    {
       tileHeight = -1;

@@ -29,7 +29,7 @@ public class ZoneTemplateTest implements ZoneConstants
       v.add(".???.");
       v.add(".???.");
       v.add("#...#");
-      return new ZoneTemplate(v, rtm);
+      return new ZoneTemplate(v);
    }
 
 
@@ -55,7 +55,7 @@ public class ZoneTemplateTest implements ZoneConstants
 
    @Test public void testValidation()
    {
-      ZoneTemplate zt = ZoneTemplate.getDemo("Room Templates.txt");
+      ZoneTemplate zt = ZoneTemplate.getDemo();
       zt.setObstacles();
       zt.process();
       assertTrue("Zone Template passes validation", zt.validateButtons());
@@ -65,7 +65,7 @@ public class ZoneTemplateTest implements ZoneConstants
    {
       for(int i = 0; i < 1000; i++)
       {
-         ZoneTemplate zt = ZoneTemplate.getDemo("Room Templates.txt");
+         ZoneTemplate zt = ZoneTemplate.getDemo();
          zt.setObstacles();
          zt.process();
          assertTrue("Zone Template passes validation validations", zt.validateButtons());

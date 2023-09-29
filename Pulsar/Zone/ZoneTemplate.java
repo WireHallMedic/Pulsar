@@ -10,13 +10,15 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public static final boolean RANDOMIZE = false;
    
    public static final char OPEN_ROOM = TEMPLATE_CLEAR;
+   public static final char CLOSED_ROOM = '+';
    public static final char OOB_ROOM = TEMPLATE_OOB;
    public static final char INCLUSIVE_CORRIDOR = 'c';
    public static final char EXCLUSIVE_CORRIDOR = 'C';
    public static final char PROBABILISTIC_ROOM = '?';
 
    
-   private RoomTemplateManager roomTemplateManager;
+   private RoomTemplateManager openTemplateManager;
+   private RoomTemplateManager closedTemplateManager;
    private RoomTemplateManager corridorTemplateManager;
    private ObstacleTemplateManager obstacleTemplateManager;
    private boolean[][][] passArray;
@@ -33,31 +35,73 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public char[][] getTileMap(){return tileMap;}
    public Vector<ButtonTrigger> getTriggerList(){return triggerList;}
    
-   public ZoneTemplate(Vector<String> input, RoomTemplateManager rtm)
+   public ZoneTemplate(Vector<String> input, RoomTemplateManager openTM, RoomTemplateManager closedTM,
+                       RoomTemplateManager corridorTM, ObstacleTemplateManager obstacleTM)
    {
       super(input);
-      roomTemplateManager = rtm;
-      corridorTemplateManager = new RoomTemplateManager();
-      corridorTemplateManager.loadFromFile("Corridor Templates.txt");
-      obstacleTemplateManager = new ObstacleTemplateManager();
-      obstacleTemplateManager.loadFromFile("Obstacle Templates.txt");
+      openTemplateManager = openTM;
+      closedTemplateManager = closedTM;
+      corridorTemplateManager = corridorTM;
+      obstacleTemplateManager = obstacleTM;
+      if(openTemplateManager == null)
+         openTemplateManager = new RoomTemplateManager("Open Room Templates.txt");
+      if(closedTemplateManager == null)
+         closedTemplateManager = new RoomTemplateManager("Closed Room Templates.txt");
+      if(corridorTemplateManager == null)
+         corridorTemplateManager = new RoomTemplateManager("Corridor Templates.txt");
+      if(obstacleTemplateManager == null)
+         obstacleTemplateManager = new ObstacleTemplateManager("Obstacle Templates.txt");
       setPassArray();
       triggerList = new Vector<ButtonTrigger>();
       generateRooms();
    }
    
-   public void generateRooms(){generateRooms(false);}
-   public void generateRooms(boolean testing)
+   public ZoneTemplate(ZoneTemplate that)
+   {
+      this(that.serialize(), that.openTemplateManager, that.closedTemplateManager, 
+           that.corridorTemplateManager, that.obstacleTemplateManager);
+   }
+   
+   public ZoneTemplate(Vector<String> input)
+   {
+      this(input, null, null, null, null);
+   }
+   
+   public Vector<String> serialize()
+   {
+      Vector<String> vect = new Vector<String>();
+      for(int y = 0; y < getHeight(); y++)
+      {
+         String str = "";
+         for(int x = 0; x < getWidth(); x++)
+         {
+            str += getCell(x, y);
+         }
+         vect.add(str);
+      }
+      return vect;  
+   }
+   
+   public void generateRooms()
    {
       baseRoomTemplate = new RoomTemplate[width][height];
       rolledRoomTemplate = new RoomTemplate[width][height];
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
-         if(corridorArray[x][y] && !testing)
+         if(corridorArray[x][y])
             baseRoomTemplate[x][y] = corridorTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
          else
-            baseRoomTemplate[x][y] = roomTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         {
+            if(getCell(x, y) == OPEN_ROOM)
+               baseRoomTemplate[x][y] = openTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+            else if(getCell(x, y) == CLOSED_ROOM)
+               baseRoomTemplate[x][y] = closedTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+            else if(GameEngine.randomBoolean())
+               baseRoomTemplate[x][y] = openTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+            else
+               baseRoomTemplate[x][y] = closedTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         }
          baseRoomTemplate[x][y].rotateUntilMatches(passArray[x][y]);
          rolledRoomTemplate[x][y] = null;
          addCorridorDoors(x, y);
@@ -133,12 +177,12 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       while(getCell(startLoc.x, startLoc.y) == OOB_ROOM)
       {
          startLoc.x++;
-         if(startLoc.y == width)
+         if(startLoc.x == width - 1)
          {
             startLoc.y++;
             startLoc.x = 0;
          }
-         if(startLoc.x == width && startLoc.y == height)
+         if(startLoc.x == width - 1 && startLoc.y == height - 1)
             return;
       }
       // create a floodfill map (3x size) based on directional passability
@@ -215,7 +259,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    
    private boolean isGuaranteedPassable(char c)
    {
-      return c == OPEN_ROOM || c == INCLUSIVE_CORRIDOR;
+      return c == OPEN_ROOM || c == CLOSED_ROOM || c == INCLUSIVE_CORRIDOR;
    }
    
    private void setPassArrayCell(int x, int y)
@@ -232,7 +276,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          corridorArray[x][y] = true;
       
       // clear
-      if(thisCell == OPEN_ROOM)
+      if(thisCell == OPEN_ROOM || thisCell == CLOSED_ROOM)
       {
          if(isGuaranteedPassable(eastCell) || eastCell == PROBABILISTIC_ROOM || isSection(eastCell))
          {
@@ -276,7 +320,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          }
       }
       
-      // clear and sections
+      // sections
       if(isSection(thisCell))
       {
          if(isGuaranteedPassable(eastCell) || eastCell == PROBABILISTIC_ROOM || eastCell == thisCell)
@@ -486,51 +530,41 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    }
    
    // returns a zone template that includes at least one of each RoomTemplate
-   public static ZoneTemplate getDemo(){return getDemo("Room Templates.txt");}
-   public static ZoneTemplate getDemo(String roomTemplateFileName)
+   public static ZoneTemplate getDemo()
    {
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile(roomTemplateFileName);
       Vector<String> v = new Vector<String>();
       v.add("#.??");
       v.add("?.?.");
       v.add("??#.");
       v.add("?.#.");
-      return new ZoneTemplate(v, rtm);
+      return new ZoneTemplate(v);
    }
    
    public static ZoneTemplate getBasicZoneTemplate()
    {
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
       v.add("?.?###");
       v.add("?.?.##");
       v.add("?.??..");
       v.add("?.?.##");
       v.add("?.?###");
-      return new ZoneTemplate(v, rtm);
+      return new ZoneTemplate(v);
    }
    
    public static ZoneTemplate getOopsAllProbabalistic()
    {
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
       v.add("?????");
       v.add("?????");
       v.add("?????");
       v.add("?????");
       v.add("?????");
-      return new ZoneTemplate(v, rtm);
+      return new ZoneTemplate(v);
    }
    
    
    public static ZoneTemplate getSectionTemplate()
    {
-   
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
       v.add("CCcCCCcCCC");
       v.add("C11122222C");
@@ -542,27 +576,22 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("c111cc111c");
       v.add("C111X0111C");
       v.add("CCcCCCCcCC");
-      return new ZoneTemplate(v, rtm);
+      return new ZoneTemplate(v);
    }
    
    public static ZoneTemplate getExclusiveSectionTemplate()
    {
-   
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
       v.add("CCcCCCC");
       v.add("C11122C");
       v.add("c11c22c");
       v.add("C11122C");
       v.add("CCCCcCC");
-      return new ZoneTemplate(v, rtm);
+      return new ZoneTemplate(v);
    }
    
    public static ZoneTemplate getBigHonkinTemplate()
    {
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile("Room Templates.txt");
       Vector<String> v = new Vector<String>();
       v.add("CCcCCCCCcCCCCCcCC");
       v.add("C????C?????C????C");
@@ -581,14 +610,11 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("c????c?????c????c");
       v.add("C????C?????C????C");
       v.add("CCcCCCCCcCCCCCcCC");
-      return new ZoneTemplate(v, rtm);
+      return new ZoneTemplate(v);
    }
    
    public static ZoneTemplate getShipTemplate()
    {
-      RoomTemplateManager rtm = new RoomTemplateManager();
-      rtm.loadFromFile("Room Templates.txt");
-      int size = 17;
       Vector<String> v = new Vector<String>();
       v.add("XX111XX");
       v.add("XX111XX");
@@ -597,7 +623,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       v.add("XX3C3XX");
       v.add("4.3c3.4");
       v.add("444X444");    
-      return new ZoneTemplate(v, rtm);
+      return new ZoneTemplate(v);
    }
    
    
@@ -606,6 +632,10 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    {
       ZoneTemplate zt = ZoneTemplate.getShipTemplate();
       zt.print();
+      
+      Vector<String> strList = zt.serialize();
+      for(String str : strList)
+         System.out.println(str);
    }
 
 }
