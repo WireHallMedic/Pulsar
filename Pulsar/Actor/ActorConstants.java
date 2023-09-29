@@ -64,14 +64,14 @@ public interface ActorConstants
       public int getWeight(){return weight;}
    }
    
-   public enum MercenaryType implements WeightedRandomizable
+   public enum PirateType implements WeightedRandomizable
    {
-      MERCENARY_GRUNT       (30),
-      MERCENARY_COMMANDO    (10),
-      MERCENARY_DRONE       (0),
-      MERCENARY_OFFICER     (5);
+      PIRATE_GRUNT       (30),
+      PIRATE_COMMANDO    (10),
+      PIRATE_DRONE       (0),
+      PIRATE_OFFICER     (5);
       
-      private MercenaryType(int w)
+      private PirateType(int w)
       {
          weight = w;
       }

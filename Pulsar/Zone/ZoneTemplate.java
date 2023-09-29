@@ -9,8 +9,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public static final boolean MOST_RESTRICTIVE = true;
    public static final boolean RANDOMIZE = false;
    
-   public static final char OPEN_ROOM = '.';
-   public static final char OOB_ROOM = 'X';
+   public static final char OPEN_ROOM = TEMPLATE_CLEAR;
+   public static final char OOB_ROOM = TEMPLATE_OOB;
    public static final char INCLUSIVE_CORRIDOR = 'c';
    public static final char EXCLUSIVE_CORRIDOR = 'C';
    public static final char PROBABILISTIC_ROOM = '?';

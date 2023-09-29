@@ -27,7 +27,7 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
    public static final Color[] STAR_GRADIENT = WSTools.getGradient(MID_GREY, WHITE, 21);
    
    private int selectionIndex = 0;
-   private String[] options = {"Aliens", "Mercenaries", "Exit"};
+   private String[] options = {"Aliens", "Pirates", "Exit"};
    
    
    public TitlePanel()
@@ -107,19 +107,19 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
       }
-      if(options[selectionIndex].equals("Mercenaries"))
+      if(options[selectionIndex].equals("Pirates"))
       {
          GameEngine engine = new GameEngine();
          ZoneTemplate zoneTemplate = ZoneTemplate.getBasicZoneTemplate();
          zoneTemplate.setObstacles();
          zoneTemplate.process();
          ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneTemplate, ZoneConstants.TileType.VACUUM);
-         Zone zone = new Zone("Random Mercenaries", -1, map);
+         Zone zone = new Zone("Random Pirates", -1, map);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
          p.setAllLocs(2, 12);
          engine.setPlayer(p);
-         ActorFactory.populateWithMercenaries(zone, p.getMapLoc());
+         ActorFactory.populateWithPirates(zone, p.getMapLoc());
          engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);

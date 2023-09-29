@@ -54,14 +54,14 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       return null;
    }
    
-   public static Actor getMercenary(MercenaryType type)
+   public static Actor getPirate(PirateType type)
    {
       switch(type)
       {
-         case MERCENARY_DRONE    : return getMercenaryDrone();
-         case MERCENARY_GRUNT    : return getMercenaryGrunt();
-         case MERCENARY_COMMANDO : return getMercenaryCommando();
-         case MERCENARY_OFFICER  : return getMercenaryOfficer();
+         case PIRATE_DRONE    : return getPirateDrone();
+         case PIRATE_GRUNT    : return getPirateGrunt();
+         case PIRATE_COMMANDO : return getPirateCommando();
+         case PIRATE_OFFICER  : return getPirateOfficer();
       }
       return null;
    }
@@ -107,25 +107,25 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    }
       
    
-   public static void populateWithMercenaries(Zone z, Coord playerLoc){populateWithMercenaries(z, playerLoc, LOW_DENSITY);}
-   public static void populateWithMercenaries(Zone z, Coord playerLoc, double density)
+   public static void populateWithPirates(Zone z, Coord playerLoc){populateWithPirates(z, playerLoc, LOW_DENSITY);}
+   public static void populateWithPirates(Zone z, Coord playerLoc, double density)
    {
       int totalCreatures = (int)(z.getMap().countOpenTiles() * density);
-      WeightedRandomizer table = new WeightedRandomizer(MercenaryType.values());
+      WeightedRandomizer table = new WeightedRandomizer(PirateType.values());
       for(int i = 0; i < totalCreatures; i++)
       {
-         MercenaryType type = (MercenaryType)table.roll();
+         PirateType type = (PirateType)table.roll();
          Coord c = new Coord(-1, -1);
          while(!z.getMap().getTile(c).isLowPassable() || z.isActorAt(c) || EngineTools.getDistanceTo(playerLoc, c) <= 10)
          {
             c.x = GameEngine.randomInt(1, z.getMap().getWidth() - 1);
             c.y = GameEngine.randomInt(1, z.getMap().getHeight() - 1);
          }
-         if(type == MercenaryType.MERCENARY_COMMANDO || type == MercenaryType.MERCENARY_OFFICER)
+         if(type == PirateType.PIRATE_COMMANDO || type == PirateType.PIRATE_OFFICER)
          {
-            Actor boss = getMercenary(type);
-            Actor d1 = getMercenary(MercenaryType.MERCENARY_DRONE);
-            Actor d2 = getMercenary(MercenaryType.MERCENARY_DRONE);
+            Actor boss = getPirate(type);
+            Actor d1 = getPirate(PirateType.PIRATE_DRONE);
+            Actor d2 = getPirate(PirateType.PIRATE_DRONE);
             d1.getAI().setLeader(boss);
             d2.getAI().setLeader(boss);
             Coord c2 = z.getClosestEmptyTile(c);
@@ -151,7 +151,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
          }
          else
          {
-            Actor e = getMercenary(type);
+            Actor e = getPirate(type);
             e.setAllLocs(c);
             z.add(e);
          }
@@ -266,7 +266,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    ////////////////////////////////////////////////////////////////////////////
    
    
-   public static Actor getMercenaryGrunt()
+   public static Actor getPirateGrunt()
    {
       Actor a = new Actor('g');
       a.setName("Grunt");
@@ -279,16 +279,16 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       return a;
    }
    
-   public static Actor getMercenaryDrone()
+   public static Actor getPirateDrone()
    {
       Actor a = getDrone();
       a.setName("Drone");
       return a;
    }
    
-   public static Actor getMercenaryCommando()
+   public static Actor getPirateCommando()
    {
-      Actor a = getMercenaryGrunt();
+      Actor a = getPirateGrunt();
       a.setName("Commando");
       a.setIconIndex('c');
       a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
@@ -297,7 +297,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       return a;
    }
    
-   public static Actor getMercenaryOfficer()
+   public static Actor getPirateOfficer()
    {
       Actor a = getDrone();
       a.setName("Officer");
