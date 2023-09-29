@@ -8,14 +8,12 @@ import Pulsar.GUI.*;
 import java.awt.datatransfer.*;
 import javax.swing.border.*;
 
-public class ToolRoomDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
+public class ToolZoneDesigner extends JFrame implements ActionListener, MouseListener, KeyListener
 {
    public static final String[] buttonStrList = {"", "",
-      "#", ".", "X", "/", "V", "",
+      "X", ".", "+", "c", "C", "",
       "", "", "",
-      "Set all #", "Set all .", "Set all X", "Set all V", "", "", 
-      "", "", "",
-      "Set block", "Set terminal", "Set straight", "Set elbow", "Set tee", "Set cross"};
+      "Set all X", "Set all .", "Set all +", "Set all c", "Set all C"};
    public static final char DEFAULT_CHAR = '.';
    public static final int MAX_MAP_RADIUS = 21;
    private LayoutPanel layoutPanel;
@@ -45,7 +43,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    private int mouseLocY;
    
    
-   public ToolRoomDesigner()
+   public ToolZoneDesigner()
    {
       super();
       setSize(1400, 800);
@@ -79,7 +77,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       timer.addActionListener(this);
       timer.start();
       
-      setActiveChar('#');
+      setActiveChar('.');
       updateSizeLabels();
       
       setVisible(true);
@@ -137,21 +135,10 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
                setActiveChar(text);
             if(text.contains("Set all"))
                mapPanel.setAllTiles(text.charAt(text.length() - 1));
-            if(text.contains("Set block"))
-               mapPanel.setAllTiles('#');
-            if(text.contains("Set terminal"))
-               mapPanel.setTerminal();
-            if(text.contains("Set straight"))
-               mapPanel.setStraight();
-            if(text.contains("Set elbow"))
-               mapPanel.setElbow();
-            if(text.contains("Set tee"))
-               mapPanel.setTee();
-            if(text.contains("Set cross"))
-               mapPanel.setCross();
             break;
          }
       }
+      
    }
    
    private void addInstructionPanel()
@@ -161,35 +148,11 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       instructionPanel.setVisible(true);
       instructionPanel.setBorder(new EmptyBorder(0, 15, 0, 0));
       
-      instructionPanel.add(new JLabel("V Vacuum"));
-      instructionPanel.add(new JLabel(". Clear"));
-      instructionPanel.add(new JLabel("# Wall"));
-      instructionPanel.add(new JLabel("/ Door"));
       instructionPanel.add(new JLabel("X Out of Bounds"));
-      instructionPanel.add(new JLabel("b Barrel"));
-      instructionPanel.add(new JLabel("w Water Barrel"));
-      instructionPanel.add(new JLabel("e Exploding Barrel"));
-      instructionPanel.add(new JLabel("c Crate"));
-      instructionPanel.add(new JLabel("= Table"));
-      instructionPanel.add(new JLabel(", Rubble"));
-      instructionPanel.add(new JLabel("~ Water"));
-      instructionPanel.add(new JLabel("a Acid"));
-      instructionPanel.add(new JLabel("! Button"));
-      instructionPanel.add(new JLabel(": Window"));
-      instructionPanel.add(new JLabel("T Terminal"));
-      instructionPanel.add(new JLabel("X Exit"));
-      instructionPanel.add(new JLabel("> Up Stairs"));
-      instructionPanel.add(new JLabel("< Down Stairs"));
-      instructionPanel.add(new JLabel("? Obstacle (5x5)"));
-      instructionPanel.add(new JLabel("1 Wall (Room Prob)"));
-      instructionPanel.add(new JLabel("2 Table (Room Prob)"));
-      instructionPanel.add(new JLabel("3 Unused"));
-      instructionPanel.add(new JLabel("4 Unused"));
-      instructionPanel.add(new JLabel("5 Random Barrel (Instance Prob)"));
-      instructionPanel.add(new JLabel("6 Exploding Barrel (Instance Prob)"));
-      instructionPanel.add(new JLabel("7 Crate (Instance Prob)"));
-      instructionPanel.add(new JLabel("8 Unused"));
-      instructionPanel.add(new JLabel("9 Unused"));
+      instructionPanel.add(new JLabel(". Open Room"));
+      instructionPanel.add(new JLabel("+ Closed Room"));
+      instructionPanel.add(new JLabel("c Inclusive Corridor"));
+      instructionPanel.add(new JLabel("C Exclusive Corridor"));
       
       layoutPanel.add(instructionPanel, .2, 1.0, .8, 0.0);
    }
@@ -335,7 +298,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
    
    public static void main(String[] args)
    {
-      ToolRoomDesigner t = new ToolRoomDesigner();
+      ToolZoneDesigner t = new ToolZoneDesigner();
    }
    
    
