@@ -42,7 +42,7 @@ public class ZoneTemplateTest implements ZoneConstants
          Assert.assertEquals("Horizontally adjacent cells have matching pass values", true, zt.getPassArray(x, y)[EAST] == zt.getPassArray(x + 1, y)[WEST]);
          Assert.assertEquals("Vertically adjacent cells have matching pass values", true, zt.getPassArray(x, y)[SOUTH] == zt.getPassArray(x, y + 1)[NORTH]);
       }
-      zt.setPassArray(true);
+      zt.setPassArray();
       zt.generateRooms();
       for(int x = 0; x < zt.getWidth() - 1; x++)
       for(int y = 0; y < zt.getHeight() - 1; y++)
