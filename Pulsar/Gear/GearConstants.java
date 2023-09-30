@@ -12,6 +12,8 @@ public interface GearConstants extends WSFontConstants
    public static final int GADGET_ICON = '+';
    public static final int CREDIT_ICON = CENT_TILE;
    
+   public static final int DEFAULT_MAX_INVENTORY = 5;
+   
    public static final Color DEFAULT_WEAPON_COLOR = Color.WHITE;
    
    // weapon defaults

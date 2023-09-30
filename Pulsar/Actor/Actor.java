@@ -22,10 +22,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    protected Shield shield;
    protected Weapon weapon;
    protected Armor armor;
+   protected Weapon unarmed;
+   protected Inventory inventory;
    protected int curHealth;
    protected int maxHealth;
    protected Color bloodColor;
-   protected Weapon unarmed;
    protected boolean startOfTurnPerformed;
    protected boolean flying;
    protected ActionSpeed attackSpeed;
@@ -52,6 +53,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public int getBaseVisionRange(){return visionRange;}
    public Shield getShield(){return shield;}
    public Armor getArmor(){return armor;}
+   public Inventory getInventory(){return inventory;}
    public int getCurHealth(){return curHealth;}
    public int getMaxHealth(){return maxHealth;}
    public Color getBloodColor(){return bloodColor;}
@@ -82,6 +84,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void setShield(Shield s){shield = s;}
    public void setWeapon(Weapon w){weapon = w;}
    public void setArmor(Armor a){armor = a;}
+   public void setInventory(Inventory i){inventory = i;}
    public void setCurHealth(int h){curHealth = h;}
    public void setMaxHealth(int h){maxHealth = h;}
    public void setBloodColor(Color c){bloodColor = c;}
@@ -114,6 +117,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       visionRange = DEFAULT_VISION_RANGE;
       setShield(null);
       setWeapon(null);
+      inventory = new Inventory();
       setCurHealth(20);
       setMaxHealth(20);
       setBloodColor(GUIConstants.HUMAN_BLOOD);
