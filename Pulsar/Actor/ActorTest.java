@@ -31,26 +31,26 @@ public class ActorTest
       assertEquals("Starting inventory has no credits.", 0, inv.getCredits().getAmount());
       assertEquals("Starting inventory has no list items.", 0, inv.size());
       assertFalse("Empty inventory not full.", inv.isFull());
-      assertTrue("Empty inventory has expected string.", "Credits: 0".equals(inv.toString()));
+      assertTrue("Empty inventory has expected string.", "0 Credits".equals(inv.toString()));
       
       inv.add(new Credits(10));
       assertEquals("Adding credits adds to inventory credit.", 10, inv.getCredits().getAmount());
       assertEquals("Adding credits does not add list item.", 0, inv.size());
-      assertTrue("Expected string after adding credits.", "Credits: 10".equals(inv.toString()));
+      assertTrue("Expected string after adding credits.", "10 Credits".equals(inv.toString()));
       
       inv.add(WeaponFactory.getPistol());
       assertEquals("Adding list item increases carried items.", 1, inv.size());
       assertFalse("Inventory below max size is not full.", inv.isFull());
-      assertTrue("Expected string after adding pistol.", "Credits: 10, Pistol".equals(inv.toString()));
+      assertTrue("Expected string after adding pistol.", "10 Credits, Pistol".equals(inv.toString()));
       
       GearObj carbine = WeaponFactory.getCarbine();
       inv.add(carbine);
       assertEquals("Adding list item increases carried items.", 2, inv.size());
       assertTrue("Inventory at max size is full.", inv.isFull());
-      assertTrue("Expected string after adding carbine.", "Credits: 10, Pistol, Carbine".equals(inv.toString()));
+      assertTrue("Expected string after adding carbine.", "10 Credits, Pistol, Carbine".equals(inv.toString()));
       
       assertEquals("Taking item returns item.", carbine, inv.take(1));
       assertEquals("Taking item reduces size.", 1, inv.size());
-      assertTrue("Expected string after removing carbine.", "Credits: 10, Pistol".equals(inv.toString()));
+      assertTrue("Expected string after removing carbine.", "10 Credits, Pistol".equals(inv.toString()));
    }
 }

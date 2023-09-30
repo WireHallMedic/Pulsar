@@ -463,9 +463,8 @@ public class BasicAI implements AIConstants
       if(pickupF)
       {
          GearObj gear = GameEngine.getZoneMap().getGearAt(self.getMapLoc());
-         self.getInventory().add(gear);
          GameEngine.getZoneMap().setGearAt(self.getMapLoc(), null);
-         self.discharge(self.getInteractSpeed().timeCost);
+         // must be before pickup, as adding credits to inventory sets original amt to 0
          if(self instanceof Player)
          {
             String particle = "a ";
@@ -473,6 +472,8 @@ public class BasicAI implements AIConstants
                particle = "";
             MessagePanel.addMessage("You pick up " + particle + gear.getName() + ".");
          }
+         self.getInventory().add(gear);
+         self.discharge(self.getInteractSpeed().timeCost);
       }
    }
    

@@ -57,7 +57,7 @@ public class Inventory implements GearConstants
    
    public String toString()
    {
-      String str = "Credits: " + credits.getAmount();
+      String str = credits.getName();
       for(int i = 0; i < list.size(); i++)
          str += ", " + list.elementAt(i).getName();
       return str;
