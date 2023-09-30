@@ -80,10 +80,8 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       if(options[selectionIndex].equals("Aliens"))
       {
          GameEngine engine = new GameEngine();
-         ZoneTemplate zoneTemplate = ZoneTemplate.getDemo();
-         zoneTemplate.setObstacles();
-         zoneTemplate.process();
-         ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneTemplate, ZoneConstants.TileType.VACUUM);
+         ZoneTemplateManager ztm = new ZoneTemplateManager();
+         ZoneMap map = ZoneMapFactory.buildFromTemplates(ztm.random(), ZoneConstants.TileType.VACUUM);
          Zone zone = new Zone("Random Aliens", -1, map);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
@@ -110,10 +108,8 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       if(options[selectionIndex].equals("Pirates"))
       {
          GameEngine engine = new GameEngine();
-         ZoneTemplate zoneTemplate = ZoneTemplate.getDemo();
-         zoneTemplate.setObstacles();
-         zoneTemplate.process();
-         ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneTemplate, ZoneConstants.TileType.VACUUM);
+         ZoneTemplateManager ztm = new ZoneTemplateManager();
+         ZoneMap map = ZoneMapFactory.buildFromTemplates(ztm.random(), ZoneConstants.TileType.VACUUM);
          Zone zone = new Zone("Random Pirates", -1, map);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();

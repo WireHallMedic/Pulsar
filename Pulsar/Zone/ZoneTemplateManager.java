@@ -22,6 +22,8 @@ public class ZoneTemplateManager implements ZoneConstants
       closedTemplateManager = new RoomTemplateManager("Closed Room Templates.txt");
       corridorTemplateManager = new RoomTemplateManager("Corridor Templates.txt");
       obstacleTemplateManager = new ObstacleTemplateManager("Obstacle Templates.txt");
+      
+      loadFromFile("Zone Templates.txt");
    }
    
    public void add(Vector<String> strVect)

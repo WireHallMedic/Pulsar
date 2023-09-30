@@ -2,6 +2,7 @@ package Pulsar.Gear;
 
 import java.awt.*;
 import WidlerSuite.*;
+import Pulsar.Engine.*;
 
 public interface GearConstants extends WSFontConstants
 {
@@ -96,5 +97,23 @@ public interface GearConstants extends WSFontConstants
       {
          name = n;
       }
+   }
+   
+   public enum LootType implements WeightedRandomizable
+   {
+      CREDITS  (100),
+      WEAPON   (10),
+      GADGET   (10),
+      ARMOR    (5),
+      SHIELD   (5);
+      
+      private LootType(int w)
+      {
+         weight = w;
+      }
+      
+      private int weight;
+      
+      public int getWeight(){return weight;}
    }
 }
