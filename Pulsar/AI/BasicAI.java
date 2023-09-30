@@ -472,6 +472,10 @@ public class BasicAI implements AIConstants
                particle = "";
             MessagePanel.addMessage("You pick up " + particle + gear.getName() + ".");
          }
+         if(GameEngine.playerCanSee(self.getMapLoc()))
+         {
+            VisualEffectFactory.addPickupIndicator(self, gear);
+         }
          self.getInventory().add(gear);
          self.discharge(self.getInteractSpeed().timeCost);
       }

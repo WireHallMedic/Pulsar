@@ -1,6 +1,8 @@
 package Pulsar.Gear;
 
-public class Credits extends GearObj implements GearConstants
+import Pulsar.GUI.*;
+
+public class Credits extends GearObj implements GearConstants, GUIConstants
 {
    private int amount;
    
@@ -11,6 +13,7 @@ public class Credits extends GearObj implements GearConstants
    public Credits(int amt)
    {
       super(CREDIT_ICON, "Credits");
+      setColor(GOLD);
       amount = amt;
    }
    

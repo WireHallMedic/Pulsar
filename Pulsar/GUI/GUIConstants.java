@@ -35,6 +35,7 @@ public interface GUIConstants
    public static final Color YELLOW = new Color(245, 245, 89);
    public static final Color ORANGE = new Color(239, 125, 13);
    public static final Color PINK = new Color(238, 83, 185);
+   public static final Color GOLD = new Color(255,215,0);
    public static final Color TRANSPARENT = new Color(255, 255, 255, 0);
    
    public static final Color ALIEN_COLOR = PURPLE;
