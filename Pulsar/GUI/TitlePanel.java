@@ -27,7 +27,7 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
    public static final Color[] STAR_GRADIENT = WSTools.getGradient(MID_GREY, WHITE, 21);
    
    private int selectionIndex = 0;
-   private String[] options = {"Aliens", "Pirates", "Exit"};
+   private String[] options = {"Testing", "Aliens", "Pirates", "Exit"};
    
    
    public TitlePanel()
@@ -76,6 +76,19 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       if(options[selectionIndex].equals("Exit"))
       {
          System.exit(0);
+      }
+      if(options[selectionIndex].equals("Testing"))
+      {
+         GameEngine engine = new GameEngine();
+         ZoneMap map = ZoneMapFactory.getTestMap2();
+         Zone zone = new Zone("Testing zone", -1, map);
+         GameEngine.setCurZone(zone);
+         Player p = ActorFactory.getPlayer();
+         p.setAllLocs(12, 4);
+         engine.setPlayer(p);
+         engine.begin();
+         InnerPanel.setActivePanel(MainGameBGPanel.class); 
+         GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
       }
       if(options[selectionIndex].equals("Aliens"))
       {

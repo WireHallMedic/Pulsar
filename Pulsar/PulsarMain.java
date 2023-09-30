@@ -31,6 +31,8 @@ public class PulsarMain extends JFrame implements GUIConstants, WindowStateListe
       VisualEffectFactory veFactory = new VisualEffectFactory();
       timer.addActionListener(veFactory);
       
+      GameEngine.setGameMode(EngineConstants.GameMode.OTHER_PANEL);
+      
       timer.start();
       outerPanel.arrange();
    }

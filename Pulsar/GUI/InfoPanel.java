@@ -9,6 +9,7 @@ import java.awt.event.*;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import Pulsar.Zone.*;
+import Pulsar.Gear.*;
 import java.util.*;
 
 public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineConstants
@@ -77,6 +78,25 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
       return tilesToShow;
    }
    
+   public Vector<GearObj> getGearToShow()
+   {
+      Vector<GearObj> gearToShow = new Vector<GearObj>();
+      ZoneMap map = GameEngine.getZoneMap();
+      Coord origin = GameEngine.getPlayer().getMapLoc();
+      Coord curLoc = null;
+      int radius = GameEngine.getPlayer().getVisionRange();
+      for(int x = -radius; x <= radius; x++)
+      for(int y = -radius; y <= radius; y++)
+      {
+         curLoc = new Coord(origin.x + x, origin.y + y);
+         if(map.isGearAt(curLoc) && GameEngine.playerCanSee(curLoc))
+         {
+            gearToShow.add(map.getGearAt(curLoc));
+         }
+      }
+      return gearToShow;
+   }
+   
    // standard mode
    public void showNearbyObjects()
    {
@@ -94,11 +114,20 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
       }
       // show interesting tiles
       Vector<MapTile> tileList = getTilesToShow();
-      for(int i = 0; i < tileList.size(); i++)
+      for(int i = 0; i < tileList.size() && yInset < HEIGHT_TILES; i++)
       {
          MapTile t = tileList.elementAt(i);
          setTile(X_ORIGIN, Y_ORIGIN + yInset, t.getIconIndex(), t.getFGColor(), t.getBGColor());
          write(X_ORIGIN + 2, Y_ORIGIN + yInset, t.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+         yInset++;
+      }
+      // show gear on ground
+      Vector<GearObj> gearList = getGearToShow();
+      for(int i = 0; i < gearList.size() && yInset < HEIGHT_TILES; i++)
+      {
+         GearObj g = gearList.elementAt(i);
+         setTile(X_ORIGIN, Y_ORIGIN + yInset, g.getIconIndex(), g.getColor().getRGB(), BG_COLOR.getRGB());
+         write(X_ORIGIN + 2, Y_ORIGIN + yInset, g.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
          yInset++;
       }
    }
@@ -137,6 +166,14 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
          {
             setTile(X_ORIGIN, Y_ORIGIN + dynamicY, corpse.getIconIndex(), corpse.getColor(), tile.getBGColor());
             write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, corpse.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
+            dynamicY++;
+         }
+         
+         GearObj gear = GameEngine.getZoneMap().getGearAt(GameEngine.getCursorLoc());
+         if(gear != null)
+         {
+            setTile(X_ORIGIN, Y_ORIGIN + dynamicY, gear.getIconIndex(), gear.getColor().getRGB(), BG_COLOR.getRGB());
+            write(X_ORIGIN + 2, Y_ORIGIN + dynamicY, gear.getName(), TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES - 2, 1);
             dynamicY++;
          }
          

@@ -77,6 +77,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       delayedButtonTriggerList = new Vector<DelayedButtonTrigger>();
       automaticDoorList = new Vector<Coord>();
       refreshCorpseMap();
+      refreshGearMap();
    }
    
    public void takeTurn()
@@ -554,6 +555,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    {
       if(canDropGearAt(c))
          return c;
+      
       SpiralSearch search = new SpiralSearch(lowPassMap, c);
       Coord target = search.getNext();
       while(target != null)
@@ -570,7 +572,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    {
       Coord loc = getNearestGearLocation(x, y);
       if(loc != null)
-         setGearAt(x, y, gear);
+         setGearAt(loc, gear);
    }
    
    public void setGearAt(Coord loc, GearObj gear){setGearAt(loc.x, loc.y, gear);}

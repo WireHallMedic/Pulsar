@@ -373,9 +373,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       }
       if(arg == ' ')
       {
-         Player player = GameEngine.getPlayer();
-         player.fullyRefresh();
-         player.updateFoV();
+         GameEngine.getZoneMap().dropGear(GameEngine.getPlayer().getMapLoc(), new Credits(10));
       }
    }
 }
