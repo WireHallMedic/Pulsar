@@ -54,4 +54,12 @@ public class Inventory implements GearConstants
       list.removeElementAt(index);
       return gear;
    }
+   
+   public String toString()
+   {
+      String str = "Credits: " + credits.getAmount();
+      for(int i = 0; i < list.size(); i++)
+         str += ", " + list.elementAt(i).getName();
+      return str;
+   }
 }

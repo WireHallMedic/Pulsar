@@ -14,6 +14,7 @@ public interface AIConstants
       ATTACK               (false),
       UNARMED_ATTACK       (false),
       USE                  (false),
+      GRAB                 (false),
       SWITCH_WEAPONS       (true),
       GADGET_0             (false),
       GADGET_1             (false),

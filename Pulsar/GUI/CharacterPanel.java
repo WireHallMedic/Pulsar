@@ -138,9 +138,15 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
          Color c = TERMINAL_FG_COLOR;
          if(se.isNegative())
             c = WARNING_COLOR;
-         write(X_ORIGIN, Y_ORIGIN + 9 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), c.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
+         write(X_ORIGIN, Y_ORIGIN + 8 + additionalYSpacing, se.getName() + " " + GUITools.initToSec(se.getRemainingDuration()), c.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 1);
          additionalYSpacing++;
       }
+      if(statusEffectList.size() > 0)
+         additionalYSpacing++;
+      
+      // inventory
+      write(X_ORIGIN, Y_ORIGIN + 8 + additionalYSpacing, player.getInventory().toString(),TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB(), WIDTH_TILES, 2);
+      additionalYSpacing++;
    }
    
    public void clear()
