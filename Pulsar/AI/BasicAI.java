@@ -433,6 +433,48 @@ public class BasicAI implements AIConstants
       }
    }
    
+   private void doGrab()
+   {
+      boolean pickupF = false;
+      // nothing at location
+      if(!GameEngine.getZoneMap().isGearAt(self.getMapLoc()))
+      {
+         MessagePanel.addMessage("Nothing to pick up here.");
+      }
+      // credits
+      else if(GameEngine.getZoneMap().getGearAt(self.getMapLoc()) instanceof Credits)
+      {
+         pickupF = true;
+      }
+      // anything else
+      else
+      {
+         // inventory is full
+         if(self.getInventory().isFull())
+         {
+            MessagePanel.addMessage("Your inventory is full.");
+         }
+         else
+         {
+            pickupF = true;
+         }
+      }
+      if(pickupF)
+      {
+         GearObj gear = GameEngine.getZoneMap().getGearAt(self.getMapLoc());
+         self.getInventory().add(gear);
+         GameEngine.getZoneMap().setGearAt(self.getMapLoc(), null);
+         self.discharge(self.getInteractSpeed().timeCost);
+         if(self instanceof Player)
+         {
+            String particle = "a ";
+            if(gear instanceof Credits)
+               particle = "";
+            MessagePanel.addMessage("You pick up " + particle + gear.getName() + ".");
+         }
+      }
+   }
+   
    private void doGadgetAction(int index)
    {
       if(self instanceof Player)
