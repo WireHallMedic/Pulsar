@@ -2,6 +2,7 @@ package Pulsar.GUI;
 
 import java.awt.*;
 import WidlerSuite.*;
+import Pulsar.Gear.*;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import java.awt.event.*;
@@ -175,6 +176,17 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
    public static void addSurpriseIndicator(Actor a)
    {
       UnboundTile ut = getPalette().getUnboundTile('!', TERMINAL_FG_COLOR.getRGB(), getSizeMultiplier());
+      ut.setSpeed(0.0, -FLOAT_EFFECT_SPEED);
+      UnboundTile actorSprite = a.getSprite();
+      ut.setLoc(new Coord(actorSprite.getXLoc(), actorSprite.getYLoc()));
+      ut.setXOffset(actorSprite.getXOffset());
+      ut.setYOffset(actorSprite.getYOffset()- .5);
+      add(ut);
+   }
+   
+   public static void addPickupIndicator(Actor a, GearObj g)
+   {
+      UnboundTile ut = getPalette().getUnboundTile(g.getIconIndex(), g.getColor().getRGB(), getSizeMultiplier());
       ut.setSpeed(0.0, -FLOAT_EFFECT_SPEED);
       UnboundTile actorSprite = a.getSprite();
       ut.setLoc(new Coord(actorSprite.getXLoc(), actorSprite.getYLoc()));
