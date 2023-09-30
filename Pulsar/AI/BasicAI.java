@@ -126,6 +126,7 @@ public class BasicAI implements AIConstants
          case ATTACK :           doAttack(); break;
          case SWITCH_WEAPONS :   doWeaponSwitch(); break;
          case UNARMED_ATTACK :   doUnarmedAttack(); break;
+         case GRAB :             doGrab(); break;
       }
       if(pendingAction.isGadgetAction())
          doGadgetAction(pendingAction.getGadgetIndex());

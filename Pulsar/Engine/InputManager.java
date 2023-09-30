@@ -150,6 +150,8 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             case KeyEvent.VK_U : setPlayerAction(ActorAction.USE);
                                  MessagePanel.addMessage("Choose a direction.");
                                  break;
+            case KeyEvent.VK_G : setPlayerAction(ActorAction.GRAB);
+                                 break;
             case KeyEvent.VK_C : InnerPanel.setActivePanel(CharacterPanel.class); 
                                  GameEngine.setGameMode(GameMode.OTHER_PANEL);
                                  break;
@@ -173,10 +175,16 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       
       ActorAction pendingAction = player.getAI().getPendingAction();
       
+      // picking something up
+      if(pendingAction == ActorAction.GRAB)
+      {
+         player.getAI().setPendingTarget(new Coord(playerLoc.x, playerLoc.y));
+      }
+      
       // check if trying to press already pressed button
-      if(target != null && (player.getAI().getPendingAction() == ActorAction.USE || 
-                            player.getAI().getPendingAction() == ActorAction.CONTEXT_SENSITIVE ||
-                            player.getAI().getPendingAction() == null))
+      if(target != null && (pendingAction == ActorAction.USE || 
+                            pendingAction == ActorAction.CONTEXT_SENSITIVE ||
+                            pendingAction == null))
       {
          MapTile tile = GameEngine.getZoneMap().getTile(target);
          if(tile instanceof Pulsar.Zone.Button)
