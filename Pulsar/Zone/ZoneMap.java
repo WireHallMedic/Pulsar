@@ -1,6 +1,7 @@
 package Pulsar.Zone;
 
 import Pulsar.GUI.*;
+import Pulsar.Gear.*;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import WidlerSuite.*;
@@ -11,11 +12,13 @@ public class ZoneMap implements ZoneConstants, GUIConstants
 	private int width;
 	private int height;
 	private MapTile[][] tileArray;
-	private MapTile oobTile;
    private boolean[][] transparencyMap;
-   private ShadowFoVRect fov;
    private boolean[][] lowPassMap;
    private boolean[][] highPassMap;
+   private GearObj[][] gearMap;
+   private Corpse[][] corpseMap;
+	private MapTile oobTile;
+   private ShadowFoVRect fov;
    private Vector<Coord> vacuumList;
    private Vector<Coord> breachList;
    private Vector<Coord> fireList;
@@ -24,7 +27,6 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private boolean alternatingTurns;
    private Vector<ButtonTrigger> buttonTriggerList;
    private Vector<DelayedButtonTrigger> delayedButtonTriggerList;
-   private Corpse[][] corpseMap;
 
 
 	public int getWidth(){return width;}
@@ -510,6 +512,80 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    {
       if(isInBounds(x, y))
          return corpseMap[x][y];
+      return null;
+   }
+
+   
+   // gear stuff
+   ////////////////////////////////////////////////////////////////////////////
+   
+   private void refreshGearMap()
+   {
+      gearMap = new GearObj[width][height];
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+         gearMap[x][y] = null;
+   }
+   
+   public boolean isGearAt(Coord c){return isGearAt(c.x, c.y);}
+   public boolean isGearAt(int x, int y)
+   {
+      if(isInBounds(x, y))
+         return gearMap[x][y] != null;
+      return false;
+   }
+   
+   public boolean canDropGearAt(Coord c){return canDropGearAt(c.x, c.y);}
+   public boolean canDropGearAt(int x, int y)
+   {
+      if(isInBounds(x, y))
+      {
+         MapTile tile = getTile(x, y);
+         if(tile.isLowPassable() && 
+            tile instanceof Door == false &&
+            !isGearAt(x, y))
+            return true;
+      }
+      return false;
+   }
+   
+   public Coord getNearestGearLocation(int x, int y){return getNearestGearLocation(new Coord(x, y));}
+   public Coord getNearestGearLocation(Coord c)
+   {
+      if(canDropGearAt(c))
+         return c;
+      SpiralSearch search = new SpiralSearch(lowPassMap, c);
+      Coord target = search.getNext();
+      while(target != null)
+      {
+         if(canDropGearAt(target))
+            return target;
+         target = search.getNext();
+      }
+      return null;
+   }
+   
+   public void dropGear(Coord c, GearObj gear){dropGear(c.x, c.y, gear);}
+   public void dropGear(int x, int y, GearObj gear)
+   {
+      Coord loc = getNearestGearLocation(x, y);
+      if(loc != null)
+         setGearAt(x, y, gear);
+   }
+   
+   public void setGearAt(Coord loc, GearObj gear){setGearAt(loc.x, loc.y, gear);}
+   public void setGearAt(int x, int y, GearObj gear)
+   {
+      if(isInBounds(x, y) &&
+         !(tileArray[x][y] instanceof Acid))
+         gearMap[x][y] = gear;
+   }
+   
+   public GearObj getGearAt(Coord loc){return getGearAt(loc.x, loc.y);}
+   public GearObj getGearAt(int x, int y)
+   {
+      if(isInBounds(x, y))
+         return gearMap[x][y];
       return null;
    }
    
