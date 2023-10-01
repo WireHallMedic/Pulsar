@@ -196,9 +196,6 @@ public class BasicAI implements AIConstants
          else if(that.getAI().isFollowerOf(self) && self.canStepIgnoringActors(pendingTarget))
          {
             setPendingAction(ActorAction.STEP);
-            that.getAI().setPendingAction(ActorAction.STEP);
-            that.getAI().setPendingTarget(self.getMapLoc());
-            that.getAI().doStep();
          }
          // friendly, no action
          else
@@ -393,6 +390,20 @@ public class BasicAI implements AIConstants
    //////////////////////////////////////////////////////////////////
    private void doStep()
    {
+      // push follower on tile
+      Actor that = GameEngine.getActorAt(pendingTarget);
+      if(that != null && that.getAI().isFollowerOf(self))
+      {
+         that.getAI().setPendingAction(ActorAction.STEP);
+         that.getAI().setPendingTarget(self.getMapLoc());
+         that.getAI().doStep();
+         that.getAI().clearPlan();
+      }
+      else if(that != null && !that.getAI().isLeaderOf(self))
+      {
+         System.out.println("Actor " + self.getName() + " stepping into occupied tile " + pendingTarget);
+      }
+      
       // slide on ice
       if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof Ice && !self.isFlying())
       {
