@@ -125,6 +125,8 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
             target = GameEngine.getActualTarget(user.getMapLoc(), target);
             clone.setAllLocs(GameEngine.getClosestEmptyTile(target));
             clone.setAlertness(Alertness.ALERT);
+            clone.getAI().setTeam(user.getAI().getTeam());
+            clone.getAI().setLeader(user);
             GameEngine.add(clone);
          }
          if(getSpecialEffect() == GadgetSpecialEffect.TURRET)
@@ -132,7 +134,8 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
             Actor turret = ActorFactory.getTurret();
             target = GameEngine.getActualTarget(user.getMapLoc(), target);
             turret.setAllLocs(GameEngine.getClosestEmptyTile(target));
-            turret.getAI().setTeam(Team.PLAYER);
+            turret.getAI().setLeader(user);
+            turret.getAI().setTeam(user.getAI().getTeam());
             turret.setAlertness(Alertness.ALERT);
             GameEngine.add(turret);
          }
@@ -141,7 +144,7 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
             Actor drone = ActorFactory.getDrone();
             target = GameEngine.getActualTarget(user.getMapLoc(), target);
             drone.setAllLocs(GameEngine.getClosestEmptyTile(target));
-            drone.getAI().setTeam(Team.PLAYER);
+            drone.getAI().setTeam(user.getAI().getTeam());
             drone.getAI().setLeader(user);
             drone.setAlertness(Alertness.ALERT);
             GameEngine.add(drone);

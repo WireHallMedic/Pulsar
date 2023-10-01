@@ -75,14 +75,14 @@ public class BasicAI implements AIConstants
       setPendingTarget(self.getMapLoc());
    }
    
-   public boolean isLeader(Actor that)
+   public boolean isLeaderOf(Actor that)
    {
-      return that == leader;
+      return that.getAI().isFollowerOf(self);
    }
    
-   public boolean isFollower(Actor that)
+   public boolean isFollowerOf(Actor that)
    {
-      return that.getAI().isLeader(self);
+      return that == leader;
    }
    
    public boolean hasPlan()
@@ -186,13 +186,22 @@ public class BasicAI implements AIConstants
       // actor
       else if(GameEngine.isActorAt(pendingTarget))
       {
+         Actor that = GameEngine.getActorAt(pendingTarget);
          // enemy, unarmed attack
-         if(isHostile(GameEngine.getActorAt(pendingTarget)))
+         if(isHostile(that))
          {
             setPendingAction(ActorAction.UNARMED_ATTACK);
          }
-         else
+         // push follower
+         else if(that.getAI().isFollowerOf(self) && self.canStepIgnoringActors(pendingTarget))
+         {
+            setPendingAction(ActorAction.STEP);
+            that.getAI().setPendingAction(ActorAction.STEP);
+            that.getAI().setPendingTarget(self.getMapLoc());
+            that.getAI().doStep();
+         }
          // friendly, no action
+         else
          {
             MessagePanel.addMessage("There's a dude there.");
             clearPlan();

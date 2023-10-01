@@ -257,6 +257,12 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       if(GameEngine.isActorAt(x, y))
          return false;
+      return canStepIgnoringActors(x, y);
+   }
+   
+   public boolean canStepIgnoringActors(Coord c){return canStepIgnoringActors(c.x, c.y);}
+   public boolean canStepIgnoringActors(int x, int y)
+   {
       MapTile tile = GameEngine.getZoneMap().getTile(x, y);
       if(isFlying() && tile.isHighPassable())
          return true;
