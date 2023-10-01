@@ -23,6 +23,7 @@ public class Fire extends GradientTile implements GUIConstants, ZoneConstants
       setGradient(FIRE_COLOR_GRADIENT);
       setDurability(Durability.UNBREAKABLE);
       duration = BASE_FIRE_DURATION + GameEngine.randomInt(0, RANDOM_FIRE_DURATION + 1);
+      setHazard(true);
    }
    
    public void setAndBurnOriginalTile(MapTile tile)

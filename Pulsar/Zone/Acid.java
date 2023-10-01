@@ -14,5 +14,6 @@ public class Acid extends GradientTile implements ZoneConstants, GUIConstants
       setPulseSpeed(GradientTile.SLOW);
       setLiquid(true);
       setSlowsMovement(true);
+      setHazard(true);
    }
 }

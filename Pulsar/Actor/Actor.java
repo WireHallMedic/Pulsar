@@ -265,15 +265,13 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       return false;
    }
    
-   public boolean isDangerous(Coord c){return isDangerous(c.x, c.y);}
-   public boolean isDangerous(int x, int y)
+   public boolean isHazard(Coord c){return isHazard(c.x, c.y);}
+   public boolean isHazard(int x, int y)
    {
       MapTile tile = GameEngine.getZoneMap().getTile(x, y);
-      if(!isFlying() && tile instanceof Acid)
-         return true;
-      if(tile instanceof Fire)
-         return true;
-      return false;
+      if(isFlying() && tile instanceof Acid)
+         return false;
+      return tile.isHazard();
    }
    
    public boolean canSee(int x, int y){return canSee(new Coord(x, y));}
