@@ -14,10 +14,10 @@ public class ArmorFactory implements GearConstants, ActorConstants
       return a;
    }
    
-   public static Armor getStandardArmor()
+   public static Armor getEngineerArmor()
    {
       Armor a = new Armor();
-      a.setName("Standard Armor");
+      a.setName("Engineer Armor");
       a.setDamageReduction(2);
 	   a.setSpeedCap(ActionSpeed.FAST);
       a.setInventorySpace(2);
@@ -32,5 +32,15 @@ public class ArmorFactory implements GearConstants, ActorConstants
 	   a.setSpeedCap(ActionSpeed.STANDARD);
       a.setStatusEffect(StatusEffectFactory.getEffect(StatusEffectType.AIR_SUPPLY));
       return a;
+   }
+   
+   public static void main(String[] args)
+   {
+      Armor a = getScoutArmor();
+      System.out.println(a.getName() + ": " + a.getSummary());
+      a = getEngineerArmor();
+      System.out.println(a.getName() + ": " + a.getSummary());
+      a = getAssaultArmor();
+      System.out.println(a.getName() + ": " + a.getSummary());
    }
 }
