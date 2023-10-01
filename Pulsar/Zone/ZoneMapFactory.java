@@ -176,7 +176,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
                case '=' : mapTile = MapTileFactory.getTile(TileType.LOW_WALL); break;
                case ':' : mapTile = MapTileFactory.getTile(TileType.WINDOW); break;
                case '|' : mapTile = MapTileFactory.getDoor(); break;
-               case '/' : mapTile = MapTileFactory.getAutomaticDoor(); break;
+               case '/' : mapTile = MapTileFactory.getDoor(); break;
                case '0' : mapTile = getRandomBarrel(); break;
                case '~' : mapTile = MapTileFactory.getWater(); break;
                case 'v' : mapTile = MapTileFactory.getVacuum();

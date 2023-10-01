@@ -801,40 +801,31 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       }
    }
    
+   // most doors automatically close if they have no air and no adjacent actors
    private void checkAutomaticDoor(Coord c, boolean[][] actorLocMap)
    {
       if(getTile(c) instanceof Door)
       {
          Door door = (Door)getTile(c);
-         door.increment();
-         if(!door.isLocked())
+         if(!door.isLocked() && door.isOpen() && door.getAirPressure() == 0)
          {
-            boolean shouldBeOpen = doorShouldBeOpen(c, actorLocMap);
-            if(shouldBeOpen)
+            if(okayToCloseDoor(c, actorLocMap))
             {
-               if(!door.isOpen())
-                  tryToToggle(c);
-               door.setOpenDelay();
-            }
-            else
-            {
-               if(door.isOpen() && door.isOkayToClose())
-                  tryToToggle(c);
+               tryToToggle(c);
             }
          }
       }
    }
    
-   private boolean doorShouldBeOpen(Coord c, boolean[][] actorLocMap)
+   private boolean okayToCloseDoor(Coord c, boolean[][] actorLocMap)
    {
-      boolean shouldBeOpen = false;
       for(int x = -1; x < 2; x++)
       for(int y = -1; y < 2; y++)
       {
          if(actorLocMap[c.x + x][c.y + y])
-            return true;
+            return false;
       }
-      return false;
+      return true;
    }
    
    
