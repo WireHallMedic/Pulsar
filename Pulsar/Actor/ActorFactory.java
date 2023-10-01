@@ -228,6 +228,17 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       return a;
    }
    
+   public static Actor getVictim()
+   {
+      Actor a = new Actor('v');
+      a.setName("Victim");
+      a.setAI(new VictimAI(a));
+      a.setMaxHealth(20);
+      a.fullyHeal();
+      a.setAlertness(Alertness.ALERT);
+      return a;
+   }
+   
    public static Actor getMeleeTestEnemy()
    {
       Actor a = getTestEnemy();

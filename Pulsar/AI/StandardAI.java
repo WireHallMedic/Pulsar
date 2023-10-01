@@ -62,7 +62,6 @@ public class StandardAI extends WanderAI implements AIConstants
          else
          // no known enemies
          {
-            
            // too close to leader
            if(hasLeader() && EngineTools.getDistanceTo(getLeader().getMapLoc(), self.getMapLoc()) == 1)
            {

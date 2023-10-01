@@ -84,8 +84,11 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
          Zone zone = new Zone("Testing zone", -1, map);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
-         p.setAllLocs(12, 4);
+         p.setAllLocs(4, 12);
          engine.setPlayer(p);
+         Actor victim = ActorFactory.getVictim();
+         victim.setAllLocs(20, 12);
+         engine.add(victim);
          engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
