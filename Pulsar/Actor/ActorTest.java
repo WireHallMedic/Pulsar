@@ -47,10 +47,49 @@ public class ActorTest
       inv.add(carbine);
       assertEquals("Adding list item increases carried items.", 2, inv.size());
       assertTrue("Inventory at max size is full.", inv.isFull());
+      assertFalse("Inventory at max size is not over full.", inv.isOverFull());
       assertTrue("Expected string after adding carbine.", "10 Credits, Pistol, Carbine".equals(inv.toString()));
       
       assertEquals("Taking item returns item.", carbine, inv.take(1));
       assertEquals("Taking item reduces size.", 1, inv.size());
       assertTrue("Expected string after removing carbine.", "10 Credits, Pistol".equals(inv.toString()));
+      
+      inv.add(WeaponFactory.getPistol());
+      inv.add(WeaponFactory.getPistol());
+      assertEquals("Adding list item increases carried items, even above size limit.", 3, inv.size());
+      assertTrue("Inventory above max size is full.", inv.isFull());
+      assertTrue("Inventory above max size is over full.", inv.isOverFull());
+   }
+   
+   @Test public void modifiedInventoryTest()
+   {
+      Actor a = ActorFactory.getTestEnemy();
+      Inventory inv = a.getInventory();
+      inv.setMaxSize(2);
+      a.setArmor(ArmorFactory.getEngineerArmor());
+      assertFalse("Empty inventory not full.", inv.isFull());
+      assertTrue("Empty inventory has expected string.", "0 Credits".equals(inv.toString()));
+      assertEquals("Max size includes armor mod", 4, inv.getMaxSize());
+      
+      inv.add(WeaponFactory.getPistol());
+      assertFalse("Inventory below base max size is not full.", inv.isFull());
+      assertFalse("Inventory below base max size is not over full.", inv.isOverFull());
+      
+      inv.add(WeaponFactory.getPistol());
+      assertFalse("Inventory at max base size but below adjusted max is not full.", inv.isFull());
+      assertFalse("Inventory at max base size but below adjusted max is not over full.", inv.isOverFull());
+      
+      inv.add(WeaponFactory.getPistol());
+      assertFalse("Inventory above max base size but below adjusted max is not full.", inv.isFull());
+      assertFalse("Inventory above max base size but below adjusted max is not over full.", inv.isOverFull());
+      
+      inv.add(WeaponFactory.getPistol());
+      assertTrue("Inventory above max base size but below adjusted max is full.", inv.isFull());
+      assertFalse("Inventory above max base size but below adjusted max is not over full.", inv.isOverFull());
+      
+      a.setArmor(null);
+      assertEquals("Removing armor does not change carried items.", 4, inv.size());
+      assertTrue("Inventory over adjusted max size is full.", inv.isFull());
+      assertTrue("Inventory over adjusted max size is over full.", inv.isOverFull());
    }
 }

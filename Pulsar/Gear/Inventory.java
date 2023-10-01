@@ -34,6 +34,11 @@ public class Inventory implements GearConstants
       return size() >= getMaxSize();
    }
    
+   public boolean isOverFull()
+   {
+      return size() > getMaxSize();
+   }
+   
 	public int getMaxSize()
    {
       int armorMod = 0;
