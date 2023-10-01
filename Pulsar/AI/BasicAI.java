@@ -75,6 +75,16 @@ public class BasicAI implements AIConstants
       setPendingTarget(self.getMapLoc());
    }
    
+   public boolean isLeader(Actor that)
+   {
+      return that == leader;
+   }
+   
+   public boolean isFollower(Actor that)
+   {
+      return that.getAI().isLeader(self);
+   }
+   
    public boolean hasPlan()
    {
       return pendingAction != null && pendingTarget != null;
