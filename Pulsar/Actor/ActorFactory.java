@@ -28,14 +28,14 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setAlertness(Alertness.CAUTIOUS);
  //     a.addGadget(GadgetFactory.getAdrenalInjector());
       a.addGadget(GadgetFactory.getGrenades());
- //     a.addGadget(GadgetFactory.getNapalmGrenades());
+      a.addGadget(GadgetFactory.getNapalmGrenades());
  //     a.addGadget(GadgetFactory.getCryoGrenades());
  //     a.addGadget(GadgetFactory.getHoloclone());
  //     a.addGadget(GadgetFactory.getTurret());
       a.addGadget(GadgetFactory.getCombatDrone());
  //     a.addGadget(GadgetFactory.getMotionSensor());
  //     a.addGadget(GadgetFactory.getAirSupply());
-      a.addGadget(GadgetFactory.getQuickCharger());
+ //     a.addGadget(GadgetFactory.getQuickCharger());
  
  
       return a;
@@ -201,6 +201,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setName("Combat Drone");
       a.setAI(new StandardAI(a));
       a.getAI().setUsesDoors(false);
+      a.getAI().setAvoidsHazards(false);
       a.setMaxHealth(20);
       a.fullyHeal();
       a.setWeapon(WeaponFactory.getCarbine());

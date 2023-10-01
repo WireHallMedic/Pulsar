@@ -20,6 +20,7 @@ public class BasicAI implements AIConstants
    protected Team team;
    protected int pathfindingRadius;
    protected boolean usesDoors;
+   protected boolean avoidsHazards;
    protected Actor leader;
    protected int followDistance;
 
@@ -33,6 +34,7 @@ public class BasicAI implements AIConstants
    public Team getTeam(){return team;}
    public int getPathfindingRadius(){return pathfindingRadius;}
    public boolean getUsesDoors(){return usesDoors;}
+   public boolean getAvoidsHazards(){return avoidsHazards;}
    public Actor getLeader(){return leader;}
    public int getFollowDistance(){return followDistance;}
    public boolean hasLeader(){return leader != null;}
@@ -46,6 +48,7 @@ public class BasicAI implements AIConstants
    public void setTeam(Team t){team = t;}
    public void setPathfindingRadius(int pr){pathfindingRadius = pr;}
    public void setUsesDoors(boolean ud){usesDoors = ud;}
+   public void setAvoidsHazards(boolean ah){avoidsHazards = ah;}
    public void setLeader(Actor a){leader = a;}
    public void setFollowDistance(int fd){followDistance = fd;}
 
@@ -59,6 +62,7 @@ public class BasicAI implements AIConstants
       team = Team.VILLAIN;
       pathfindingRadius = PATHFINDING_MAP_RADIUS;
       usesDoors = true;
+      avoidsHazards = true;
       leader = null;
       followDistance = 4;
       clearPlan();
@@ -224,7 +228,8 @@ public class BasicAI implements AIConstants
       return true;
    }
    
-   protected Coord getStepTowards(Coord target)
+   protected Coord getStepTowards(Coord target){return getStepTowards(target, getAvoidsHazards());}
+   protected Coord getStepTowards(Coord target, boolean noHazards)
    {
       if(EngineTools.isAdjacent(target, self.getMapLoc()))
       {
@@ -234,7 +239,7 @@ public class BasicAI implements AIConstants
       }
       AStar pathing = new AStar();
       // get passability map
-      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);
+      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self, noHazards);
       Coord passMapInset = GameEngine.getZoneMap().getPassMapInset(self);
       // modify stuff for reduced size
       Coord adjustedSelfLoc = self.getMapLoc();
@@ -269,6 +274,9 @@ public class BasicAI implements AIConstants
       Vector<Coord> path = pathing.path(passMap, adjustedSelfLoc, adjustedTarget);
       if(path.size() == 0)
       {
+         // if no non-hazardous path, try with hazards
+         if(noHazards)
+            return getStepTowards(target, false);
          return null;
       }
       Coord stepLoc = path.elementAt(0);
@@ -288,7 +296,7 @@ public class BasicAI implements AIConstants
             continue;
          Coord prospect = new Coord(x, y);
          prospect.add(self.getMapLoc());
-         if(self.canStep(prospect))
+         if(self.canStep(prospect) && !(getAvoidsHazards() && self.isHazard(prospect)))
          {
             int dist = EngineTools.getDistanceTo(prospect, target);
             if(dist > highestDist)
@@ -305,7 +313,7 @@ public class BasicAI implements AIConstants
    protected Coord getNearestSafeTile()
    {
       Vector<Actor> enemyList = GameEngine.getVisibleEnemies(self);
-      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);
+      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self, getAvoidsHazards());
       Coord passMapInset = GameEngine.getZoneMap().getPassMapInset(self);
       // modify stuff for reduced size
       Coord adjustedSelfLoc = self.getMapLoc();
@@ -340,7 +348,7 @@ public class BasicAI implements AIConstants
       {
          return getStepTowards(target);
       }
-      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self);
+      boolean[][] passMap = GameEngine.getZoneMap().getPassMap(self, getAvoidsHazards());
       Coord passMapInset = GameEngine.getZoneMap().getPassMapInset(self);
       // modify stuff for reduced size
       Coord adjustedSelfLoc = self.getMapLoc();

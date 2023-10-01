@@ -261,7 +261,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    }
    
    // return a passability map accounting for movement type, door usage, and pathfinding radius
-   public boolean[][] getPassMap(Actor a)
+   public boolean[][] getPassMap(Actor a, boolean noHazards)
    {
       int radius = a.getAI().getPathfindingRadius();
       boolean[][] passMap = new boolean[radius + radius + 1][radius + radius + 1];
@@ -271,6 +271,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
          Coord realLoc = new Coord(x + a.getMapLoc().x - radius, y + a.getMapLoc().y - radius);
          if(a.getAI().getUsesDoors() && getTile(realLoc) instanceof Door)
             passMap[x][y] = true;
+         else if(noHazards && a.isHazard(realLoc))
+            passMap[x][y] = false;
          else
             passMap[x][y] = isPassable(a, realLoc);
       }
