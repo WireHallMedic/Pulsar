@@ -66,8 +66,8 @@ public class VictimAI extends BasicAI implements AIConstants
               return;
            }
         }
-         super.plan();
-         return;
+        super.plan();
+        return;
       }
       
       // default
