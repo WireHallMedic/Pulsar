@@ -1,33 +1,45 @@
 package Pulsar.Gear;
 
+import Pulsar.Actor.*;
 import java.util.*;
 
 public class Inventory implements GearConstants
 {
-	private int maxSize;
+   private Actor self;
+	private int baseMaxSize;
 	private Vector<GearObj> list;
 	private Credits credits;
 
 
-	public int getMaxSize(){return maxSize;}
+   public Actor getSelf(){return self;}
 	public Vector<GearObj> getList(){return list;}
 	public Credits getCredits(){return credits;}
 
 
-	public void setMaxSize(int m){maxSize = m;}
+   public void setSelf(Actor s){self = s;}
+	public void setMaxSize(int m){baseMaxSize = m;}
 	public void setList(Vector<GearObj> l){list = l;}
 	public void setCredits(Credits c){credits = c;}
 
-   public Inventory()
+   public Inventory(Actor s)
    {
-      maxSize = DEFAULT_MAX_INVENTORY;
+      self = s;
+      baseMaxSize = DEFAULT_MAX_INVENTORY;
       credits = new Credits(0);
       list = new Vector<GearObj>();
    }
    
    public boolean isFull()
    {
-      return size() >= maxSize;
+      return size() >= getMaxSize();
+   }
+   
+	public int getMaxSize()
+   {
+      int armorMod = 0;
+      if(self.hasArmor() && self.getArmor().hasInventorySpace())
+         armorMod = self.getArmor().getInventorySpace();
+      return baseMaxSize + armorMod;
    }
    
    public int size()

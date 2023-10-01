@@ -20,6 +20,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
       a.setName("Standard Armor");
       a.setDamageReduction(2);
 	   a.setSpeedCap(ActionSpeed.FAST);
+      a.setInventorySpace(2);
       return a;
    }
    

@@ -117,7 +117,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       visionRange = DEFAULT_VISION_RANGE;
       setShield(null);
       setWeapon(null);
-      inventory = new Inventory();
+      inventory = new Inventory(this);
       setCurHealth(20);
       setMaxHealth(20);
       setBloodColor(GUIConstants.HUMAN_BLOOD);
