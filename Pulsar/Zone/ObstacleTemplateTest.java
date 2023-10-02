@@ -22,11 +22,10 @@ public class ObstacleTemplateTest implements ZoneConstants
       
    public ObstacleTemplate getButtonObstacle()
    {
-      String[] strArr = {"#...#",
-                         "..!..",
-                         ".....",
-                         ".....",
-                         "#...#"};
+      String[] strArr = {"#..#",
+                         "..!.",
+                         "....",
+                         "#..#"};
       Vector<String> v = new Vector<String>();
       for(int i = 0; i < strArr.length; i++)
          v.add(strArr[i]);

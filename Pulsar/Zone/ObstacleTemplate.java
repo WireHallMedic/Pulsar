@@ -6,8 +6,8 @@ import WidlerSuite.*;
 
 public class ObstacleTemplate extends MapTemplate implements ZoneConstants
 {
-   public static final int REQUIRED_WIDTH = 5;
-   public static final int REQUIRED_HEIGHT = 5;
+   public static final int REQUIRED_WIDTH = 4;
+   public static final int REQUIRED_HEIGHT = 4;
    
    private ButtonTrigger buttonTrigger;
    
@@ -71,7 +71,10 @@ public class ObstacleTemplate extends MapTemplate implements ZoneConstants
    public boolean validate()
    {
       if(getWidth() != REQUIRED_WIDTH || getHeight() != REQUIRED_HEIGHT)
-            throw new java.lang.Error("ObstacleTemplate has invalid size.");
+      {
+         //print();
+         throw new java.lang.Error("ObstacleTemplate has invalid size");
+      }
       return true;
    }
    
