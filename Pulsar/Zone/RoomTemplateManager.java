@@ -101,7 +101,12 @@ public class RoomTemplateManager implements ZoneConstants
    {
       if(!validated)
          validate();
-      return new RoomTemplate(typeList[t.ordinal()].random());
+      RoomTemplate template = new RoomTemplate(typeList[t.ordinal()].random());
+      if(template.canMirrorX() && GameEngine.randomBoolean())
+         template.mirrorX();
+      if(template.canMirrorY() && GameEngine.randomBoolean())
+         template.mirrorY();
+      return template;
    }
    
    public void loadFromFile(String filename)
