@@ -51,6 +51,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       setPassArray();
       triggerList = new Vector<ButtonTrigger>();
       generateRooms();
+      cleanUpStruts();
    }
    
    public ZoneTemplate(ZoneTemplate that)
@@ -389,6 +390,29 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
             boolMap[xTranslation - 1][yTranslation] = true;
       }
       return FloodFill.fill(boolMap, (start.x * 3) + 1, (start.y * 3) + 1);
+   }
+   
+   public void cleanUpStruts()
+   {
+      for(int x = 0; x < tileMap.length; x++)
+      for(int y = 0; y < tileMap[0].length; y++)
+      {
+         if(isStrut(x, y))
+         {
+            tileMap[x][y] = TEMPLATE_OOB;
+         }
+      }
+   }
+   
+   private boolean isStrut(int xOrigin, int yOrigin)
+   {
+      for(int x = Math.max(0, xOrigin - 1); x < Math.min(tileMap.length, xOrigin + 2); x++)
+      for(int y = Math.max(0, yOrigin - 1); y < Math.min(tileMap[0].length, yOrigin + 2); y++)
+      {
+         if(tileMap[x][y] != TEMPLATE_WALL && tileMap[x][y] != TEMPLATE_OOB)
+            return false;
+      }
+      return true;
    }
    
    @Override
