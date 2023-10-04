@@ -68,6 +68,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       for(int y = 0; y < charMap[0].length; y++)
          map.setTile(x + 1, y + 1, MapTileFactory.getTileFromTemplate(charMap[x][y], oobTile));
       
+      map.setExit(zoneTemplate.getExit());
       if(zoneTemplate.getTriggerList() != null)
       {
          for(ButtonTrigger trigger : zoneTemplate.getTriggerList())

@@ -5,7 +5,6 @@ import java.util.*;
 
 public class ZoneDivisor implements ZoneConstants
 {
-   
    private ZoneTemplate template;
    private char[][] tileMap;
    private boolean[][] floodMap;
@@ -360,6 +359,29 @@ public class ZoneDivisor implements ZoneConstants
                System.out.print(" ");
          }
          System.out.println();
+      }
+   }
+   
+   private class RegionDepth
+   {
+      private Vector<Integer> regionList;
+      
+      public RegionDepth()
+      {
+         regionList = new Vector<Integer>();
+      }
+      
+      public void add(int index)
+      {
+         regionList.add(index);
+      }
+      
+      public boolean contains(int index)
+      {
+         for(int member : regionList)
+            if(index == member)
+               return true;
+         return false;
       }
    }
    
