@@ -27,6 +27,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    private boolean alternatingTurns;
    private Vector<ButtonTrigger> buttonTriggerList;
    private Vector<DelayedButtonTrigger> delayedButtonTriggerList;
+   private Coord startingLoc;
 
 
 	public int getWidth(){return width;}
@@ -41,6 +42,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public Vector<Coord> getIceList(){return iceList;}
    public Vector<Coord> getAutomaticDoorList(){return automaticDoorList;}
    public Vector<ButtonTrigger> getButtonTriggerList(){return buttonTriggerList;}
+   public Coord getStartingLoc(){return new Coord(startingLoc);}
 
 
 	public void setWidth(int w){width = w;}
@@ -54,6 +56,8 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public void setIceList(Vector<Coord> il){iceList = il;}
    public void setAutomaticDoorList(Vector<Coord> adl){automaticDoorList = adl;}
    public void setButtonTriggerList(Vector<ButtonTrigger> btl){buttonTriggerList = btl;}
+   public void setStartingLoc(int x, int y){startingLoc = new Coord(x, y);}
+   public void setStartingLoc(Coord c){setStartingLoc(c.x, c.y);}
 
 
    public ZoneMap(int w, int h, MapTile defaultTile)
@@ -76,6 +80,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       buttonTriggerList = new Vector<ButtonTrigger>();
       delayedButtonTriggerList = new Vector<DelayedButtonTrigger>();
       automaticDoorList = new Vector<Coord>();
+      startingLoc = null;
       refreshCorpseMap();
       refreshGearMap();
    }
