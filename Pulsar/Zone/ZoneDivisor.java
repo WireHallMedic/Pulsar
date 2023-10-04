@@ -14,6 +14,9 @@ public class ZoneDivisor implements ZoneConstants
    private int regionCount;
    
    public int getCellCount(){return closetList.size();}
+   public int[][] getRegionMap(){return regionMap;}
+   public Vector<Closet> getClosetList(){return closetList;}
+   public char[][] getTileMap(){return tileMap;}
    
    public ZoneDivisor(ZoneTemplate zt)
    {
@@ -23,6 +26,8 @@ public class ZoneDivisor implements ZoneConstants
       setRegionMap();
       setFloodMapCell();
       setClosetList();
+      for(int i = 0; i < regionCount; i++)
+         new Region(this, i);
    }
    
    private boolean isLowPassableTile(char c)
