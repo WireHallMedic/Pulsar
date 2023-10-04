@@ -373,7 +373,7 @@ public class ZoneDivisor implements ZoneConstants
       v.add("..c#++");
       ZoneTemplate template = new ZoneTemplate(v);
       ZoneDivisor divisor = new ZoneDivisor(template);
-      divisor.print();
+   //   divisor.print();
       System.out.println("Regions: " + divisor.regionCount);
       System.out.println("Closets: " + divisor.getCellCount());
       for(Region r : divisor.getRegionList())
