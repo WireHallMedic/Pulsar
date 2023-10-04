@@ -37,6 +37,8 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          tile.setDurability(Durability.UNBREAKABLE);
       if(baseType == TileType.RUBBLE)
          tile.setSlowsMovement(true);
+      if(baseType == TileType.EXIT)
+         tile.setExit(true);
       return tile;
    }
    
@@ -66,7 +68,7 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          case TEMPLATE_TERMINAL           : return getTerminal();
          
          // traversal tiles
-         case TEMPLATE_EXIT         : return getTile(TileType.CLEAR);
+         case TEMPLATE_EXIT         : return getTile(TileType.EXIT);
          
          default        : System.out.println("Unrecognized tile type: " + ((char)c)); return null;
       }

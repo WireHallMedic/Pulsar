@@ -15,6 +15,7 @@ public class MapTile implements ZoneConstants
    private boolean liquid;
    private boolean slowsMovement;
    private boolean hazard;
+   private boolean exit;
 
 
 	public int getIconIndex(){return iconIndex;}
@@ -30,6 +31,7 @@ public class MapTile implements ZoneConstants
    public boolean isLiquid(){return liquid;}
    public boolean slowsMovement(){return slowsMovement;}
    public boolean isHazard(){return hazard;}
+   public boolean isExit(){return exit;}
 
 
 	public void setIconIndex(int i){iconIndex = i;}
@@ -45,6 +47,7 @@ public class MapTile implements ZoneConstants
    public void setLiquid(boolean l){liquid = l;}
    public void setSlowsMovement(boolean sm){slowsMovement = sm;}
    public void setHazard(boolean h){hazard = h;}
+   public void setExit(boolean e){exit = e;}
    
    public MapTile(int i, int fg, int bg, String n, boolean lp, boolean hp, boolean t)
    {
@@ -61,6 +64,7 @@ public class MapTile implements ZoneConstants
       liquid = false;
       slowsMovement = false;
       hazard = false;
+      exit = false;
    }
    
    public MapTile(MapTile that)
@@ -78,6 +82,7 @@ public class MapTile implements ZoneConstants
       this.liquid = that.liquid;
       this.slowsMovement = that.slowsMovement;
       this.hazard = that.hazard;
+      this.exit = that.exit;
    }
    
    public boolean hasOnDestructionEffect()
