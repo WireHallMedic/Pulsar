@@ -8,7 +8,6 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
 {
    public static final boolean MOST_RESTRICTIVE = true;
    public static final boolean RANDOMIZE = false;
-   
    public static final char OPEN_ROOM = TEMPLATE_CLEAR;
    public static final char CLOSED_ROOM = '+';
    public static final char OOB_ROOM = TEMPLATE_OOB;
@@ -25,12 +24,16 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    private RoomTemplate[][] rolledRoomTemplate;
    private char[][] tileMap;
    private Vector<ButtonTrigger> triggerList;
+   private int roomWidth;
+   private int roomHeight;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
    public RoomTemplate getBaseRoomTemplate(int x, int y){return baseRoomTemplate[x][y];}
    public RoomTemplate getRolledRoomTemplate(int x, int y){return rolledRoomTemplate[x][y];}
    public char[][] getTileMap(){return tileMap;}
    public Vector<ButtonTrigger> getTriggerList(){return triggerList;}
+   public int getRoomWidth(){return roomWidth;}
+   public int getRoomHeight(){return roomHeight;}
    
    public ZoneTemplate(Vector<String> input, RoomTemplateManager openTM, RoomTemplateManager closedTM,
                        RoomTemplateManager corridorTM, ObstacleTemplateManager obstacleTM)
@@ -48,6 +51,9 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          corridorTemplateManager = new RoomTemplateManager("Corridor Templates.txt");
       if(obstacleTemplateManager == null)
          obstacleTemplateManager = new ObstacleTemplateManager("Obstacle Templates.txt");
+      RoomTemplate rt = openTemplateManager.random(RoomTemplate.RoomTemplateType.BLOCK);
+      roomWidth = rt.getWidth();
+      roomHeight = rt.getHeight();
       setPassArray();
       triggerList = new Vector<ButtonTrigger>();
       generateRooms();
@@ -166,6 +172,11 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    private boolean isCorridor(char c)
    {
       return c == INCLUSIVE_CORRIDOR || c == EXCLUSIVE_CORRIDOR;
+   }
+   
+   public boolean isCorridor(int x, int y)
+   {
+      return isCorridor(getCell(x, y));
    }
    
    private void setPassArrayCell(int x, int y)
