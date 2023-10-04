@@ -256,7 +256,7 @@ public class ZoneDivisor implements ZoneConstants
    public static void main(String[] args)
    {
       Vector<String> v = new Vector<String>();
-      v.add("#...#");
+      v.add("c...c");
       v.add("##c##");
       v.add("++C++");
       v.add("++c++");
