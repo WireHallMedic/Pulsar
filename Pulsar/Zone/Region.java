@@ -49,7 +49,7 @@ public class Region implements ZoneConstants
    {
       String str = String.format("Region %d (Tiles: %d, Closets: %d, Connections: %d)", index, tileList.size(),  
                                  closetList.size(), connectionList.size());
-      str += ", Connects to :";
+      str += ", Connects to : ";
       for(Integer connected : connectedRegionList)
          str += connected + " ";
       return str;
