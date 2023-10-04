@@ -246,7 +246,9 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       // fill with lowest priority tile (OOB)
       for(int x = 0; x < mapWidth; x++)
       for(int y = 0; y < mapHeight; y++)
+      {
          newMap[x][y] = OOB_ROOM;
+      }
       // place room at 0, 0
       placeRoom(newMap, 0, 0, rolledRoomTemplate[0][0].resolveProbTiles());
       // place all rooms at y = 0 (except 0, 0)

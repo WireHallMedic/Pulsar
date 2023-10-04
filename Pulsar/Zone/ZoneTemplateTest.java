@@ -63,9 +63,10 @@ public class ZoneTemplateTest implements ZoneConstants
    
    @Test public void test1000Zones()
    {
+      ZoneTemplateManager manager = new ZoneTemplateManager();
       for(int i = 0; i < 1000; i++)
       {
-         ZoneTemplate zt = ZoneTemplate.getDemo();
+         ZoneTemplate zt = manager.random();
          zt.setObstacles();
          zt.process();
          assertTrue("Zone Template passes validation validations", zt.validateButtons());
