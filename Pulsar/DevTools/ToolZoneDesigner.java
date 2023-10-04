@@ -151,8 +151,8 @@ public class ToolZoneDesigner extends JFrame implements ActionListener, MouseLis
       instructionPanel.add(new JLabel("X Out of Bounds"));
       instructionPanel.add(new JLabel(". Open Room"));
       instructionPanel.add(new JLabel("+ Closed Room"));
-      instructionPanel.add(new JLabel("c Inclusive Corridor"));
-      instructionPanel.add(new JLabel("C Exclusive Corridor"));
+      instructionPanel.add(new JLabel("C Inclusive Corridor"));
+      instructionPanel.add(new JLabel("c Exclusive Corridor"));
       
       layoutPanel.add(instructionPanel, .2, 1.0, .8, 0.0);
    }
