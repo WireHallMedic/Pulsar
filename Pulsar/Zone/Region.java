@@ -13,6 +13,7 @@ public class Region implements ZoneConstants
 	private Vector<Coord> tileList;
 	private Vector<Closet> closetList;
 	private Vector<Coord> connectionList;
+   private Vector<Integer> connectedRegionList;
 	private int index;
 
 
@@ -20,6 +21,7 @@ public class Region implements ZoneConstants
 	public Vector<Closet> getClosetList(){return closetList;}
 	public Vector<Coord> getConnectionList(){return connectionList;}
 	public int getIndex(){return index;}
+   public Vector<Integer> getConnectedRegionList(){return connectedRegionList;}
 
 
 	public void setTileList(Vector<Coord> t){tileList = t;}
@@ -33,6 +35,7 @@ public class Region implements ZoneConstants
       tileList = new Vector<Coord>();
       closetList = new Vector<Closet>();
       connectionList = new Vector<Coord>();
+      connectedRegionList = new Vector<Integer>();
       index = -1;
    }
    
@@ -40,14 +43,16 @@ public class Region implements ZoneConstants
    {
       this();
       setFromZoneDivisor(zd, i);
-      System.out.println(serialize());
-      
    }
    
    public String serialize()
    {
-      return String.format("Region %d (Tiles: %d, Closets: %d, Connections: %d)", index, tileList.size(),  
-                           closetList.size(), connectionList.size());
+      String str = String.format("Region %d (Tiles: %d, Closets: %d, Connections: %d)", index, tileList.size(),  
+                                 closetList.size(), connectionList.size());
+      str += ", Connects to :";
+      for(Integer connected : connectedRegionList)
+         str += connected + " ";
+      return str;
    }
    
    public void setFromZoneDivisor(ZoneDivisor zd, int i)
@@ -99,5 +104,20 @@ public class Region implements ZoneConstants
                connectionList.add(new Coord(x, y));
          }
       }
+   }
+   
+   public boolean connectsAt(Coord prospect)
+   {
+      for(Coord connection : connectionList)
+         if(connection.equals(prospect))
+            return true;
+      return false;
+   }
+   
+   public void addConnectedRegions(Vector<Integer> connectionIndexes)
+   {
+      for(Integer i : connectionIndexes)
+         if(i != index)
+            connectedRegionList.add(i);
    }
 }

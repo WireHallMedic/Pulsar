@@ -29,6 +29,8 @@ public class ZoneDivisor implements ZoneConstants
       setFloodMapCell();
       setClosetList();
       setRegionList();
+      setFloodMapConnection();
+      setRegionConnections();
    }
    
    private void setRegionList()
@@ -131,7 +133,6 @@ public class ZoneDivisor implements ZoneConstants
             !floodMap[x][y - 1])
             floodMap[x][y] = false;
       }
-      
    }
    
    public void setRegionMap()
@@ -194,6 +195,51 @@ public class ZoneDivisor implements ZoneConstants
                if(c != null)
                {
                    closetList.add(c);
+               }
+            }
+            closeFloodMapSection(subFloodMap);
+         }
+      }
+   }
+   
+   private void setRegionConnections()
+   {
+      for(int xLoc = 0; xLoc < floodMap.length; xLoc++)
+      for(int yLoc = 0; yLoc < floodMap[0].length; yLoc++)
+      {
+         // corridor/corridor door tile
+         if(floodMap[xLoc][yLoc])
+         {
+            // floodfill of just this corridor
+            boolean[][] subFloodMap = FloodFill.fill(floodMap, new Coord(xLoc, yLoc));
+            Vector<Coord> doorList = new Vector<Coord>();
+            Vector<Integer> connectedRegionList = new Vector<Integer>();
+            // check subfill
+            for(int x = 0; x < floodMap.length; x++)
+            for(int y = 0; y < floodMap[0].length; y++)
+            {
+               // tile is connection door
+               if(subFloodMap[x][y] && tileMap[x][y] == TEMPLATE_DOOR)
+               {
+                  doorList.add(new Coord(x, y));
+               }
+            }
+            // make a list of all regions connected by any door
+            for(Region region : regionList)
+            for(Coord door : doorList)
+            {
+               if(region.connectsAt(door))
+                  connectedRegionList.add(region.getIndex());
+            }
+            // notify regions of their connections
+            for(Region region : regionList)
+            {
+               for(int i : connectedRegionList)
+               {
+                  if(region.getIndex() == i)
+                  {
+                     region.addConnectedRegions(connectedRegionList);
+                  }
                }
             }
             closeFloodMapSection(subFloodMap);
@@ -329,7 +375,9 @@ public class ZoneDivisor implements ZoneConstants
       ZoneDivisor divisor = new ZoneDivisor(template);
       divisor.print();
       System.out.println("Regions: " + divisor.regionCount);
-      System.out.println("Closets:   " + divisor.getCellCount());
-      template.print();
+      System.out.println("Closets: " + divisor.getCellCount());
+      for(Region r : divisor.getRegionList())
+         System.out.println(r.serialize());
+  //    template.print();
    }
 }
