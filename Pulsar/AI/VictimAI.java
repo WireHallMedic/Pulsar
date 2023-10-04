@@ -11,17 +11,16 @@ public class VictimAI extends BasicAI implements AIConstants
    public VictimAI(Actor a)
    {
       super(a);
-      setTeam(AIConstants.Team.PLAYER);
+      setTeam(AIConstants.Team.NEUTRAL);
    }
    
    public void tryToAddLeader()
    {
-      for(Actor a : GameEngine.getActorList())
-         if(a.getAI().getTeam() == getTeam() && a != self && self.canSee(a))
-         {
-            setLeader(a);
-            self.getAlertnessManager().becomeSurprised();
-         }
+      if(self.canSee(GameEngine.getPlayer()))
+      {
+         setLeader(GameEngine.getPlayer());
+         self.getAlertnessManager().becomeSurprised();
+      }
    }
    
    
