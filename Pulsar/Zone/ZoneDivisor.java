@@ -5,16 +5,15 @@ import java.util.*;
 
 public class ZoneDivisor implements ZoneConstants
 {
-   public static final int MAX_CELL_SIZE = 16;
    
    private ZoneTemplate template;
    private char[][] tileMap;
    private boolean[][] floodMap;
    private int[][] regionMap;
-   private Vector<Room> cellList;
+   private Vector<Closet> closetList;
    private int regionCount;
    
-   public int getCellCount(){return cellList.size();}
+   public int getCellCount(){return closetList.size();}
    
    public ZoneDivisor(ZoneTemplate zt)
    {
@@ -23,7 +22,7 @@ public class ZoneDivisor implements ZoneConstants
       setFloodMapRegion();
       setRegionMap();
       setFloodMapCell();
-      setCellList();
+      setClosetList();
    }
    
    private boolean isLowPassableTile(char c)
@@ -109,16 +108,16 @@ public class ZoneDivisor implements ZoneConstants
    }
    
    // a cell is a room 4x4 or smaller, with a single door and no other entrances
-   private void setCellList()
+   private void setClosetList()
    {
-      cellList = new Vector<Room>();
+      closetList = new Vector<Closet>();
       for(int xLoc = 0; xLoc < floodMap.length; xLoc++)
       for(int yLoc = 0; yLoc < floodMap[0].length; yLoc++)
       {
          if(floodMap[xLoc][yLoc])
          {
             boolean[][] subFloodMap = FloodFill.fill(floodMap, new Coord(xLoc, yLoc));
-            if(trueCount(subFloodMap) <= MAX_CELL_SIZE)
+            if(trueCount(subFloodMap) <= MAX_CLOSET_SIZE)
             {
                // possible cell
                Coord start = new Coord(xLoc, yLoc);
@@ -134,15 +133,10 @@ public class ZoneDivisor implements ZoneConstants
                      end.y = Math.max(end.y, y);
                   }
                }
-               if(doorCount(start, end) == 1)
+               Closet c = validateCloset(start, end);
+               if(c != null)
                {
-                  Room room = new Room();
-                  room.origin = start;
-                  Coord size = new Coord(end);
-                  size.subtract(start);
-                  size.add(new Coord(1, 1));
-                  room.size = size;
-                  cellList.add(room);
+                   closetList.add(c);
                }
             }
             closeFloodMapSection(subFloodMap);
@@ -162,28 +156,55 @@ public class ZoneDivisor implements ZoneConstants
       return count;
    }
    
-   private int doorCount(Coord start, Coord end)
+   private Closet validateCloset(Coord start, Coord end)
    {
+      
       start = new Coord(start);
       end = new Coord(end);
       start.subtract(new Coord(1, 1));
       end.add(new Coord(1, 1));
       int count = 0;
+      Coord lastDoor = new Coord(-1, -1);
       for(int x = start.x; x <= end.x; x++)
       {
          if(tileMap[x][start.y] == TEMPLATE_DOOR)
+         {
+            lastDoor.x = x;
+            lastDoor.y = start.y;
             count++;
+         }
          if(tileMap[x][end.y] == TEMPLATE_DOOR)
+         {
+            lastDoor.x = x;
+            lastDoor.y = end.y;
             count++;
+         }
       }
       for(int y = start.y; y <= end.y; y++)
       {
          if(tileMap[start.x][y] == TEMPLATE_DOOR)
+         {
+            lastDoor.x = start.x;
+            lastDoor.y = y;
             count++;
+         }
          if(tileMap[end.x][y] == TEMPLATE_DOOR)
+         {
+            lastDoor.x = end.x;
+            lastDoor.y = y;
             count++;
+         }
       }
-      return count;
+      if(count == 1)
+      {
+         start.add(new Coord(1, 1));
+         end.subtract(new Coord(1, 1));
+         Coord size = new Coord(end);
+         size.subtract(start);
+         size.add(new Coord(1, 1));
+         return new Closet(start, size, lastDoor);
+      }
+      return null;
    }
    
    private void closeFloodMapSection(boolean[][] subFloodMap)
@@ -198,14 +219,30 @@ public class ZoneDivisor implements ZoneConstants
    
    public void print()
    {
-      for(int y = 0; y < floodMap[0].length; y++)
+      char[][] charMap = new char[floodMap.length][floodMap[0].length];
+      for(int x = 0; x < charMap.length; x++)
+      for(int y = 0; y < charMap[0].length; y++)
       {
-         for(int x = 0; x < floodMap.length; x++)
+         if(regionMap[x][y] != -1)
+            charMap[x][y] = (char)('0' + regionMap[x][y]);
+         else
+            charMap[x][y] = tileMap[x][y];
+      }
+      
+      for(Closet closet : closetList)
+      {
+         for(int x = 0; x < closet.getSize().x; x++)
+         for(int y = 0; y < closet.getSize().y; y++)
+            charMap[closet.getOrigin().x + x][closet.getOrigin().y + y] = '!';
+         charMap[closet.getDoorLoc().x][closet.getDoorLoc().y] = '+';
+      }
+      
+      
+      for(int y = 0; y < charMap[0].length; y++)
+      {
+         for(int x = 0; x < charMap.length; x++)
          {
-            if(regionMap[x][y] != -1)
-               System.out.print(regionMap[x][y] + "");
-            else
-               System.out.print(tileMap[x][y]);
+            System.out.print(charMap[x][y] + "");
          }
          System.out.println();
       }

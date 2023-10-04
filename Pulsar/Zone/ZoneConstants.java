@@ -11,6 +11,7 @@ public interface ZoneConstants extends WSFontConstants
    public static final int RANDOM_ICE_DURATION = 10;
    public static final int FIRE_DAMAGE = 3;
    public static final int ACID_DAMAGE = 5;
+   public static final int MAX_CLOSET_SIZE = 16;
    
    public static final int NORTH = 0;
    public static final int EAST = 1;
