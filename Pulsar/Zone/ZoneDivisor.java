@@ -11,11 +11,13 @@ public class ZoneDivisor implements ZoneConstants
    private boolean[][] floodMap;
    private int[][] regionMap;
    private Vector<Closet> closetList;
+   private Vector<Region> regionList;
    private int regionCount;
    
    public int getCellCount(){return closetList.size();}
    public int[][] getRegionMap(){return regionMap;}
    public Vector<Closet> getClosetList(){return closetList;}
+   public Vector<Region> getRegionList(){return regionList;}
    public char[][] getTileMap(){return tileMap;}
    
    public ZoneDivisor(ZoneTemplate zt)
@@ -26,19 +28,27 @@ public class ZoneDivisor implements ZoneConstants
       setRegionMap();
       setFloodMapCell();
       setClosetList();
-      for(int i = 0; i < regionCount; i++)
-         new Region(this, i);
+      setRegionList();
    }
    
-   private boolean isLowPassableTile(char c)
+   private void setRegionList()
+   {
+      regionList = new Vector<Region>();
+      for(int i = 0; i < regionCount; i++)
+         regionList.add(new Region(this, i));
+   }
+   
+   private boolean isHighPassableTile(char c)
    {
       switch(c)
       {
-         case TEMPLATE_CLEAR :
-         case TEMPLATE_RUBBLE :
-         case TEMPLATE_WATER :   return true;
+         case TEMPLATE_VACUUM :
+         case TEMPLATE_WALL :
+         case TEMPLATE_DOOR :
+         case TEMPLATE_WINDOW :
+         case TEMPLATE_OOB :     return false;
       }
-      return false;
+      return true;
    }
    
    public void setFloodMapRegion()
@@ -48,7 +58,7 @@ public class ZoneDivisor implements ZoneConstants
       for(int x = 0; x < tileMap.length; x++)
       for(int y = 0; y < tileMap[0].length; y++)
       {
-         if(isLowPassableTile(tileMap[x][y]) || tileMap[x][y] == TEMPLATE_DOOR)
+         if(isHighPassableTile(tileMap[x][y]) || tileMap[x][y] == TEMPLATE_DOOR)
             floodMap[x][y] = true;
       }
       // block off corridors
@@ -77,9 +87,51 @@ public class ZoneDivisor implements ZoneConstants
       for(int x = 0; x < tileMap.length; x++)
       for(int y = 0; y < tileMap[0].length; y++)
       {
-         if(isLowPassableTile(tileMap[x][y]))
+         if(isHighPassableTile(tileMap[x][y]))
             floodMap[x][y] = true;
       }
+   }
+   
+   public void setFloodMapConnection()
+   {
+      floodMap = new boolean[tileMap.length][tileMap[0].length];
+      // mark passability based on low/door passability
+      for(int x = 0; x < tileMap.length; x++)
+      for(int y = 0; y < tileMap[0].length; y++)
+      {
+         if(isHighPassableTile(tileMap[x][y]) || tileMap[x][y] == TEMPLATE_DOOR)
+            floodMap[x][y] = true;
+      }
+      // block off non-corridors
+      int w = template.getRoomWidth() - 1;
+      int h = template.getRoomHeight() - 1;
+      for(int x = 0; x < template.getWidth(); x++)
+      for(int y = 0; y < template.getHeight(); y++)
+      {
+         if(!template.isCorridor(x, y))
+         {
+            int startX = x * w;
+            int startY = y * h;
+            for(int xx = 0; xx < template.getRoomWidth(); xx++)
+            for(int yy = 0; yy < template.getRoomHeight(); yy++)
+            {
+               if(tileMap[xx + (x * w)][yy + (y * h)] != TEMPLATE_DOOR)
+                  floodMap[xx + (x * w)][yy + (y * h)] = false; 
+            }
+         }
+      }
+      // clean up isolated cells (doors)
+      for(int x = 1; x < tileMap.length - 1; x++)
+      for(int y = 1; y < tileMap[0].length - 1; y++)
+      {
+         if(floodMap[x][y] &&
+            !floodMap[x + 1][y] &&
+            !floodMap[x - 1][y] &&
+            !floodMap[x][y + 1] &&
+            !floodMap[x][y - 1])
+            floodMap[x][y] = false;
+      }
+      
    }
    
    public void setRegionMap()
@@ -163,7 +215,6 @@ public class ZoneDivisor implements ZoneConstants
    
    private Closet validateCloset(Coord start, Coord end)
    {
-      
       start = new Coord(start);
       end = new Coord(end);
       start.subtract(new Coord(1, 1));
@@ -231,7 +282,7 @@ public class ZoneDivisor implements ZoneConstants
          if(regionMap[x][y] != -1)
             charMap[x][y] = (char)('0' + regionMap[x][y]);
          else
-            charMap[x][y] = tileMap[x][y];
+            charMap[x][y] = ' ';//tileMap[x][y];
       }
       
       for(Closet closet : closetList)
@@ -251,22 +302,34 @@ public class ZoneDivisor implements ZoneConstants
          }
          System.out.println();
       }
+      System.out.println();
+      setFloodMapConnection();
+      for(int y = 0; y < charMap[0].length; y++)
+      {
+         for(int x = 0; x < charMap.length; x++)
+         {
+            if(floodMap[x][y])
+               System.out.print(tileMap[x][y] + "");
+            else
+               System.out.print(" ");
+         }
+         System.out.println();
+      }
    }
    
    public static void main(String[] args)
    {
       Vector<String> v = new Vector<String>();
-      v.add("c...c");
-      v.add("##c##");
-      v.add("++C++");
-      v.add("++c++");
-      v.add("++C++");
-      v.add("##c##");
-      v.add("#...#");
+      v.add("..cc++");
+      v.add("c###c#");
+      v.add("c#ccc#");
+      v.add("c#c#c#");
+      v.add("..c#++");
       ZoneTemplate template = new ZoneTemplate(v);
       ZoneDivisor divisor = new ZoneDivisor(template);
       divisor.print();
       System.out.println("Regions: " + divisor.regionCount);
-      System.out.println("Cells:   " + divisor.getCellCount());
+      System.out.println("Closets:   " + divisor.getCellCount());
+      template.print();
    }
 }
