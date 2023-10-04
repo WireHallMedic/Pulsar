@@ -10,6 +10,7 @@ public class ZoneTemplateManager implements ZoneConstants
 {
    private Vector<ZoneTemplate> templateList;
    private RoomTemplateManager openTemplateManager;
+   private RoomTemplateManager startTemplateManager;
    private RoomTemplateManager closedTemplateManager;
    private RoomTemplateManager corridorTemplateManager;
    private ObstacleTemplateManager obstacleTemplateManager;
@@ -19,6 +20,7 @@ public class ZoneTemplateManager implements ZoneConstants
       templateList = new Vector<ZoneTemplate>();
       
       openTemplateManager = new RoomTemplateManager("Open Room Templates.txt");
+      startTemplateManager = new RoomTemplateManager("Starting Room Templates.txt");
       closedTemplateManager = new RoomTemplateManager("Closed Room Templates.txt");
       corridorTemplateManager = new RoomTemplateManager("Corridor Templates.txt");
       obstacleTemplateManager = new ObstacleTemplateManager("Obstacle Templates.txt");
@@ -29,7 +31,7 @@ public class ZoneTemplateManager implements ZoneConstants
    public void add(Vector<String> strVect)
    {
       templateList.add(new ZoneTemplate(strVect, openTemplateManager, closedTemplateManager, 
-                                        corridorTemplateManager, obstacleTemplateManager));
+                                        corridorTemplateManager, obstacleTemplateManager, startTemplateManager));
    }
    
    public ZoneTemplate random()

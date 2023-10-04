@@ -11,14 +11,16 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public static final char OPEN_ROOM = TEMPLATE_CLEAR;
    public static final char CLOSED_ROOM = '+';
    public static final char OOB_ROOM = TEMPLATE_OOB;
-   public static final char INCLUSIVE_CORRIDOR = 'c';
-   public static final char EXCLUSIVE_CORRIDOR = 'C';
+   public static final char INCLUSIVE_CORRIDOR = 'C';
+   public static final char EXCLUSIVE_CORRIDOR = 'c';
+   public static final char STARTING_ROOM = 'S';
 
    
    private RoomTemplateManager openTemplateManager;
    private RoomTemplateManager closedTemplateManager;
    private RoomTemplateManager corridorTemplateManager;
    private ObstacleTemplateManager obstacleTemplateManager;
+   private RoomTemplateManager startTemplateManager;
    private boolean[][][] passArray;
    private RoomTemplate[][] baseRoomTemplate;
    private RoomTemplate[][] rolledRoomTemplate;
@@ -36,13 +38,14 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public int getRoomHeight(){return roomHeight;}
    
    public ZoneTemplate(Vector<String> input, RoomTemplateManager openTM, RoomTemplateManager closedTM,
-                       RoomTemplateManager corridorTM, ObstacleTemplateManager obstacleTM)
+                       RoomTemplateManager corridorTM, ObstacleTemplateManager obstacleTM, RoomTemplateManager startTM)
    {
       super(input);
       openTemplateManager = openTM;
       closedTemplateManager = closedTM;
       corridorTemplateManager = corridorTM;
       obstacleTemplateManager = obstacleTM;
+      startTemplateManager = startTM;
       if(openTemplateManager == null)
          openTemplateManager = new RoomTemplateManager("Open Room Templates.txt");
       if(closedTemplateManager == null)
@@ -51,6 +54,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          corridorTemplateManager = new RoomTemplateManager("Corridor Templates.txt");
       if(obstacleTemplateManager == null)
          obstacleTemplateManager = new ObstacleTemplateManager("Obstacle Templates.txt");
+      if(startTemplateManager == null)
+         startTemplateManager = new RoomTemplateManager("Starting Room Templates.txt");
       RoomTemplate rt = openTemplateManager.random(RoomTemplate.RoomTemplateType.BLOCK);
       roomWidth = rt.getWidth();
       roomHeight = rt.getHeight();
@@ -63,12 +68,12 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    public ZoneTemplate(ZoneTemplate that)
    {
       this(that.serialize(), that.openTemplateManager, that.closedTemplateManager, 
-           that.corridorTemplateManager, that.obstacleTemplateManager);
+           that.corridorTemplateManager, that.obstacleTemplateManager, that.startTemplateManager);
    }
    
    public ZoneTemplate(Vector<String> input)
    {
-      this(input, null, null, null, null);
+      this(input, null, null, null, null, null);
    }
    
    public Vector<String> serialize()
@@ -101,6 +106,8 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
                baseRoomTemplate[x][y] = openTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
             else if(getCell(x, y) == CLOSED_ROOM)
                baseRoomTemplate[x][y] = closedTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+            else if(getCell(x, y) == STARTING_ROOM)
+               baseRoomTemplate[x][y] = startTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
             else if(GameEngine.randomBoolean())
                baseRoomTemplate[x][y] = openTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
             else
@@ -166,7 +173,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
    
    private boolean isGuaranteedPassable(char c)
    {
-      return c == OPEN_ROOM || c == CLOSED_ROOM || c == INCLUSIVE_CORRIDOR;
+      return c == OPEN_ROOM || c == CLOSED_ROOM || c == INCLUSIVE_CORRIDOR || c == STARTING_ROOM;
    }
    
    private boolean isCorridor(char c)
@@ -190,7 +197,7 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
          southCell = getCell(x, y + 1);
       
       // clear
-      if(thisCell == OPEN_ROOM || thisCell == CLOSED_ROOM)
+      if(thisCell == OPEN_ROOM || thisCell == CLOSED_ROOM || thisCell == STARTING_ROOM)
       {
          if(isGuaranteedPassable(eastCell))
          {
@@ -442,13 +449,13 @@ public class ZoneTemplate extends MapTemplate implements ZoneConstants
       Vector<String> v = new Vector<String>();
       v.add("#...#");
       v.add("#...#");
-      v.add("##c##");
-      v.add("++C++");
+      v.add("##C##");
       v.add("++c++");
       v.add("++C++");
-      v.add("##c##");
+      v.add("++c++");
+      v.add("##C##");
       v.add("#...#");
-      v.add("#...#");
+      v.add("#.S.#");
       return new ZoneTemplate(v);
    }
    
