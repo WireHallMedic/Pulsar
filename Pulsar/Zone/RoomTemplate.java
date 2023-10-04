@@ -7,22 +7,6 @@ import WidlerSuite.*;
 public class RoomTemplate extends MapTemplate implements ZoneConstants
 {
    
-   public enum RoomTemplateTile
-   {
-      DEFAULT_OOB ('X'),
-      CLEAR       ('.'),
-      WALL        ('#'),
-      DOOR        ('/'),
-      VACUUM      ('V');
-      
-      public char character;
-      
-      private RoomTemplateTile(char c)
-      {
-         character = c;
-      }
-   }
-   
    public enum RoomTemplateType
    {
       BLOCK,

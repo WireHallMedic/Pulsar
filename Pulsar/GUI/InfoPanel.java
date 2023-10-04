@@ -73,6 +73,8 @@ public class InfoPanel extends RogueTilePanel implements GUIConstants, EngineCon
             MapTile t = map.getTile(curLoc);
             if(t instanceof Button)
                tilesToShow.add(t);
+            if(t.isExit())
+               tilesToShow.add(t);
          }
       }
       return tilesToShow;

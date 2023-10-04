@@ -33,7 +33,7 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          return getVacuum();
       MapTile tile = new MapTile(baseType.iconIndex, fgColor.getRGB(), bgColor.getRGB(), baseType.name, 
                                  baseType.lowPassable, baseType.highPassable, baseType.transparent);
-      if(baseType == TileType.NULL || baseType == TileType.CLEAR)
+      if(baseType == TileType.NULL || baseType == TileType.CLEAR || baseType == TileType.EXIT)
          tile.setDurability(Durability.UNBREAKABLE);
       if(baseType == TileType.RUBBLE)
          tile.setSlowsMovement(true);
