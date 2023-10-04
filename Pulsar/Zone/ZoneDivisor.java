@@ -5,26 +5,46 @@ import java.util.*;
 
 public class ZoneDivisor implements ZoneConstants
 {
+   public static final int MAX_CELL_SIZE = 16;
+   
    private ZoneTemplate template;
+   private char[][] tileMap;
    private boolean[][] floodMap;
    private int[][] regionMap;
+   private Vector<Room> cellList;
+   private int regionCount;
+   
+   public int getCellCount(){return cellList.size();}
    
    public ZoneDivisor(ZoneTemplate zt)
    {
       template = zt;
-      setFloodMap();
+      tileMap = template.getTileMap();
+      setFloodMapRegion();
       setRegionMap();
+      setFloodMapCell();
+      setCellList();
    }
    
-   public void setFloodMap()
+   private boolean isLowPassableTile(char c)
    {
-      char[][] tileMap = template.getTileMap();
+      switch(c)
+      {
+         case TEMPLATE_CLEAR :
+         case TEMPLATE_RUBBLE :
+         case TEMPLATE_WATER :   return true;
+      }
+      return false;
+   }
+   
+   public void setFloodMapRegion()
+   {
       floodMap = new boolean[tileMap.length][tileMap[0].length];
       // mark passability based on low/door passability
       for(int x = 0; x < tileMap.length; x++)
       for(int y = 0; y < tileMap[0].length; y++)
       {
-         if(tileMap[x][y] == TEMPLATE_CLEAR || tileMap[x][y] == TEMPLATE_DOOR)
+         if(isLowPassableTile(tileMap[x][y]) || tileMap[x][y] == TEMPLATE_DOOR)
             floodMap[x][y] = true;
       }
       // block off corridors
@@ -46,20 +66,35 @@ public class ZoneDivisor implements ZoneConstants
       }
    }
    
-   public void setRegionMap()
+   public void setFloodMapCell()
    {
-      char[][] tileMap = template.getTileMap();
-      regionMap = new int[tileMap.length][tileMap[0].length];
-      int index = 1;
+      floodMap = new boolean[tileMap.length][tileMap[0].length];
+      // mark passability based on low/door passability
       for(int x = 0; x < tileMap.length; x++)
       for(int y = 0; y < tileMap[0].length; y++)
       {
-         if(floodMap[x][y] && regionMap[x][y] == 0)
+         if(isLowPassableTile(tileMap[x][y]))
+            floodMap[x][y] = true;
+      }
+   }
+   
+   public void setRegionMap()
+   {
+      regionMap = new int[tileMap.length][tileMap[0].length];
+      for(int x = 0; x < tileMap.length; x++)
+      for(int y = 0; y < tileMap[0].length; y++)
+         regionMap[x][y] = -1;
+      int index = 0;
+      for(int x = 0; x < tileMap.length; x++)
+      for(int y = 0; y < tileMap[0].length; y++)
+      {
+         if(floodMap[x][y] && regionMap[x][y] == -1)
          {
             setRegion(x, y, index);
             index++;
          }
       }
+      regionCount = index;
    }
    
    private void setRegion(int xLoc, int yLoc, int index)
@@ -73,16 +108,104 @@ public class ZoneDivisor implements ZoneConstants
       }
    }
    
+   // a cell is a room 4x4 or smaller, with a single door and no other entrances
+   private void setCellList()
+   {
+      cellList = new Vector<Room>();
+      for(int xLoc = 0; xLoc < floodMap.length; xLoc++)
+      for(int yLoc = 0; yLoc < floodMap[0].length; yLoc++)
+      {
+         if(floodMap[xLoc][yLoc])
+         {
+            boolean[][] subFloodMap = FloodFill.fill(floodMap, new Coord(xLoc, yLoc));
+            if(trueCount(subFloodMap) <= MAX_CELL_SIZE)
+            {
+               // possible cell
+               Coord start = new Coord(xLoc, yLoc);
+               Coord end = new Coord(xLoc, yLoc);
+               for(int x = 0; x < floodMap.length; x++)
+               for(int y = 0; y < floodMap[0].length; y++)
+               {
+                  if(subFloodMap[x][y])
+                  {
+                     start.x = Math.min(start.x, x);
+                     end.x = Math.max(end.x, x);
+                     start.y = Math.min(start.y, y);
+                     end.y = Math.max(end.y, y);
+                  }
+               }
+               if(doorCount(start, end) == 1)
+               {
+                  Room room = new Room();
+                  room.origin = start;
+                  Coord size = new Coord(end);
+                  size.subtract(start);
+                  size.add(new Coord(1, 1));
+                  room.size = size;
+                  cellList.add(room);
+               }
+            }
+            closeFloodMapSection(subFloodMap);
+         }
+      }
+   }
+   
+   private int trueCount(boolean[][] subFloodMap)
+   {
+      int count = 0;
+      for(int x = 0; x < floodMap.length; x++)
+      for(int y = 0; y < floodMap[0].length; y++)
+      {
+         if(subFloodMap[x][y])
+            count++;
+      }
+      return count;
+   }
+   
+   private int doorCount(Coord start, Coord end)
+   {
+      start = new Coord(start);
+      end = new Coord(end);
+      start.subtract(new Coord(1, 1));
+      end.add(new Coord(1, 1));
+      int count = 0;
+      for(int x = start.x; x <= end.x; x++)
+      {
+         if(tileMap[x][start.y] == TEMPLATE_DOOR)
+            count++;
+         if(tileMap[x][end.y] == TEMPLATE_DOOR)
+            count++;
+      }
+      for(int y = start.y; y <= end.y; y++)
+      {
+         if(tileMap[start.x][y] == TEMPLATE_DOOR)
+            count++;
+         if(tileMap[end.x][y] == TEMPLATE_DOOR)
+            count++;
+      }
+      return count;
+   }
+   
+   private void closeFloodMapSection(boolean[][] subFloodMap)
+   {
+      for(int x = 0; x < floodMap.length; x++)
+      for(int y = 0; y < floodMap[0].length; y++)
+      {
+         if(subFloodMap[x][y])
+            floodMap[x][y] = false;
+      }
+   }
+   
    public void print()
    {
       for(int y = 0; y < floodMap[0].length; y++)
       {
          for(int x = 0; x < floodMap.length; x++)
          {
-            if(floodMap[x][y])
+            if(regionMap[x][y] != -1)
                System.out.print(regionMap[x][y] + "");
             else
-               System.out.print("#");
+               System.out.print(tileMap[x][y]);
          }
          System.out.println();
       }
@@ -101,5 +224,7 @@ public class ZoneDivisor implements ZoneConstants
       ZoneTemplate template = new ZoneTemplate(v);
       ZoneDivisor divisor = new ZoneDivisor(template);
       divisor.print();
+      System.out.println("Regions: " + divisor.regionCount);
+      System.out.println("Cells:   " + divisor.getCellCount());
    }
 }
