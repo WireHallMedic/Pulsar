@@ -103,7 +103,7 @@ public interface GearConstants extends WSFontConstants
    
    public enum LootType implements WeightedRandomizable
    {
-      CREDITS  (100),
+      CREDITS  (270),
       WEAPON   (10),
       GADGET   (10),
       ARMOR    (5),
