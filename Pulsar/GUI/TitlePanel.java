@@ -15,7 +15,7 @@ import Pulsar.Engine.*;
 import Pulsar.Zone.*;
 
 
-public class TitlePanel extends RogueTilePanel implements GUIConstants
+public class TitlePanel extends SelectionPanel implements GUIConstants
 {
    public static final int X_ORIGIN = 1;
    public static final int Y_ORIGIN = 1;
@@ -32,46 +32,10 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
    
    public TitlePanel()
    {
-      super(TERMINAL_WIDTH_TILES, TERMINAL_HEIGHT_TILES, RECT_TILE_PALETTE);
-      setSize(50, 50);
-      GUITools.setStandardBorder(this);
-      setBackground(BG_COLOR);
-      update();
+      super();
    }
    
-   public void next()
-   {
-      selectionIndex++;
-      if(selectionIndex >= options.length)
-         selectionIndex = 0;
-   }
-   
-   public void previous()
-   {
-      selectionIndex--;
-      if(selectionIndex < 0)
-         selectionIndex = options.length - 1;
-   }
-   
-   public void keyPressed(KeyEvent ke)
-   {
-      switch(ke.getKeyCode())
-      {
-         case KeyEvent.VK_UP :
-         case KeyEvent.VK_NUMPAD8 : previous(); 
-                                //    update();
-                                    break;
-         case KeyEvent.VK_DOWN :
-         case KeyEvent.VK_NUMPAD2 : next(); 
-                               //     update();
-                                    break;
-         case KeyEvent.VK_ENTER :
-         case KeyEvent.VK_SPACE :   doSelection(); 
-                                    break;
-      }
-   }
-   
-   private void doSelection()
+   public void doSelection()
    {
       if(options[selectionIndex].equals("Exit"))
       {
@@ -138,7 +102,8 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
       }
    }
    
-   private void update()
+   @Override
+   public void update()
    {
       int fgColor = TERMINAL_FG_COLOR.getRGB();
       int bgColor = BG_COLOR.getRGB();
@@ -161,16 +126,6 @@ public class TitlePanel extends RogueTilePanel implements GUIConstants
          else
             bgColor = BG_COLOR.getRGB();
          write(5, 18 + i, options[i], fgColor, bgColor, options[i].length(), 1);
-      }
-   }
-   
-   @Override
-   public void actionPerformed(ActionEvent ae)
-   {
-      if(isVisible())
-      {
-         update();
-         super.actionPerformed(ae);
       }
    }
    

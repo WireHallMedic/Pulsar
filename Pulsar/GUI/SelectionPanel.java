@@ -39,11 +39,9 @@ public abstract class SelectionPanel extends RogueTilePanel implements GUIConsta
       {
          case KeyEvent.VK_UP :
          case KeyEvent.VK_NUMPAD8 : previous(); 
-                                //    update();
                                     break;
          case KeyEvent.VK_DOWN :
          case KeyEvent.VK_NUMPAD2 : next(); 
-                               //     update();
                                     break;
          case KeyEvent.VK_ENTER :
          case KeyEvent.VK_SPACE :   doSelection(); 
