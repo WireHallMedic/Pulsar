@@ -1,9 +1,44 @@
 package Pulsar.Gear;
 
 import Pulsar.Actor.*;
+import Pulsar.Engine.*;
 
 public class ArmorFactory implements GearConstants, ActorConstants
 {
+   public enum ArmorType implements WeightedRandomizable
+   {
+      SCOUT_ARMOR    (10),
+      ENGINEER_ARMOR (10),
+      ASSAULT_ARMOR  (10);
+      
+      private ArmorType(int w)
+      {
+         weight = w;
+      }
+      
+      private int weight;
+      
+      public int getWeight(){return weight;}
+   }
+   
+   public static Armor generate()
+   {
+      return generateByRarity(LootFactory.rollLootRarity());
+   }
+   
+   public static Armor generateByRarity(LootRarity rarity)
+   {
+      
+      WeightedRandomizer table = new WeightedRandomizer(ArmorType.values());
+      ArmorType type = (ArmorType)table.roll();
+      switch(type)
+      {
+         case SCOUT_ARMOR     : return getScoutArmor();
+         case ENGINEER_ARMOR  : return getEngineerArmor();
+         case ASSAULT_ARMOR   : return getAssaultArmor();
+         default              : return null;
+      }
+   }
    public static Armor getScoutArmor()
    {
       Armor a = new Armor();

@@ -5,9 +5,14 @@ import java.util.*;
 
 public class LootFactory implements GearConstants
 {
-   public static GearObj rollLoot()
+   public static final boolean NON_CREDIT = true;
+   
+   public static GearObj rollLoot(){return rollLoot(false);}
+   public static GearObj rollLoot(boolean nonCredit)
    {
       LootType type = rollLootType();
+      if(nonCredit)
+         type = rollNonCreditLootType();
       LootRarity rarity = rollLootRarity();
       GearObj loot = null;
       switch(type)
@@ -15,7 +20,7 @@ public class LootFactory implements GearConstants
          case CREDITS : loot = Credits.generateByRarity(rarity); break;
          case WEAPON : loot = WeaponFactory.generateByRarity(rarity); break;
          case GADGET : loot = GadgetFactory.generateByRarity(rarity); break;
-         case ARMOR : loot = Credits.generateByRarity(rarity); break;
+         case ARMOR : loot = ArmorFactory.generateByRarity(rarity); break;
          case SHIELD : loot = Credits.generateByRarity(rarity); break;
          default : System.out.println("Unknown loot type: " + type); break;
       }
@@ -54,6 +59,6 @@ public class LootFactory implements GearConstants
    {
       
       for(int i = 0; i < 20; i++)
-         System.out.println("" + rollLoot().getName());
+         System.out.println("" + rollLoot(NON_CREDIT));
    }
 }
