@@ -7,7 +7,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
 {
    public enum ArmorType implements WeightedRandomizable
    {
-      BASIC_ARMOR    (30)
+      BASIC_ARMOR    (30),
       SCOUT_ARMOR    (10),
       ENGINEER_ARMOR (10),
       ASSAULT_ARMOR  (10);
@@ -22,14 +22,20 @@ public class ArmorFactory implements GearConstants, ActorConstants
       public int getWeight(){return weight;}
    }
    
-   public enum ArmorType implements WeightedRandomizable
+   public enum ArmorUpgrade implements WeightedRandomizable
    {
-      BASIC_ARMOR    (30)
-      SCOUT_ARMOR    (10),
-      ENGINEER_ARMOR (10),
-      ASSAULT_ARMOR  (10);
+      REINFORCED     (10), // + armor
+      TACTICAL       (10), // + gear
+      ENVIRONMENTAL  (10), // air supply
+      VIGILANT       (10), // motion sensor
+      TO_DO_1  (0),
+      TO_DO_2  (0),
+      TO_DO_3  (0),
+      TO_DO_4  (0),
+      TO_DO_5  (0),
+      TO_DO_6  (0);
       
-      private ArmorType(int w)
+      private ArmorUpgrade(int w)
       {
          weight = w;
       }

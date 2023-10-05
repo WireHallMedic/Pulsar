@@ -15,7 +15,10 @@ public class WeaponFactory implements GearConstants, ActorConstants
       HIGH_POWER     (10, "High-Powered", "HP"),
       FAST_CHARGE    (10, "Fast-Charge", "FC"),
       HIGH_CAPACITY  (10, "High Capacity", "HC"),
-      VULCAN         (10, "Vulcan", "V");
+      VULCAN         (10, "Vulcan", "V"),
+      TO_DO_1        (0, "Vulcan", "V"),
+      TO_DO_2        (0, "Vulcan", "V"),
+      TO_DO_3        (0, "Vulcan", "V");
       
       private WeaponUpgrade(int w, String n, String sn)
       {
