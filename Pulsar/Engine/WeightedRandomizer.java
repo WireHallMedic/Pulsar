@@ -29,6 +29,8 @@ public class WeightedRandomizer
    
    public void add(WeightedRandomizable entry)
    {
+      if(entry.getWeight() == 0)
+         return;
       list.add(entry);
       maxRoll += entry.getWeight();
    }

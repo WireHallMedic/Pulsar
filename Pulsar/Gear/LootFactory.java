@@ -53,5 +53,8 @@ public class LootFactory implements GearConstants
          double percent = results[i] * 100.0 / maxReps;
          System.out.println(LootType.values()[i] + ": " + percent + "%");
       }
+      
+      for(int i = 0; i < 20; i++)
+         System.out.println("" + Credits.generate().getAmount());
    }
 }
