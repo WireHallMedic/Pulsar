@@ -39,6 +39,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
          default              : return null;
       }
    }
+   
    public static Armor getScoutArmor()
    {
       Armor a = new Armor();

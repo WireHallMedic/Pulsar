@@ -1,7 +1,44 @@
 package Pulsar.Gear;
 
+import Pulsar.Engine.*;
+
 public class ShieldFactory implements GearConstants
 {
+   public enum ShieldType implements WeightedRandomizable
+   {
+      BASIC       (20),
+      FASTCHARGE  (5),
+      HEAVY       (5);
+      
+      private ShieldType(int w)
+      {
+         weight = w;
+      }
+      
+      private int weight;
+      
+      public int getWeight(){return weight;}
+   }
+   
+   public static Shield generate()
+   {
+      return generateByRarity(LootFactory.rollLootRarity());
+   }
+   
+   public static Shield generateByRarity(LootRarity rarity)
+   {
+      
+      WeightedRandomizer table = new WeightedRandomizer(ShieldType.values());
+      ShieldType type = (ShieldType)table.roll();
+      switch(type)
+      {
+         case BASIC        : return getBasicShield();
+         case FASTCHARGE   : return getFastShield();
+         case HEAVY        : return getHeavyShield();
+         default           : return null;
+      }
+   }
+   
    public static Shield getBasicShield()
    {
       Shield s = new Shield();
