@@ -24,25 +24,31 @@ public class ArmorFactory implements GearConstants, ActorConstants
    
    public enum ArmorUpgrade implements WeightedRandomizable
    {
-      REINFORCED     (10), // + armor
-      TACTICAL       (10), // + gear
-      ENVIRONMENTAL  (10), // air supply
-      VIGILANT       (10), // motion sensor
-      TO_DO_1  (0),
-      TO_DO_2  (0),
-      TO_DO_3  (0),
-      TO_DO_4  (0),
-      TO_DO_5  (0),
-      TO_DO_6  (0);
+      REINFORCED     (30, "Reinforced", "R"), // + armor
+      TACTICAL       (10, "Tactical", "T"), // + gear
+      ENVIRONMENTAL  (10, "Environmental", "E"), // air supply
+      VIGILANT       (10, "Vigilant", "V"), // motion sensor
+      TO_DO_1  (0, "To Do", "X"),
+      TO_DO_2  (0, "To Do", "X"),
+      TO_DO_3  (0, "To Do", "X"),
+      TO_DO_4  (0, "To Do", "X"),
+      TO_DO_5  (0, "To Do", "X"),
+      TO_DO_6  (0, "To Do", "X");
       
-      private ArmorUpgrade(int w)
+      private ArmorUpgrade(int w, String n, String sn)
       {
          weight = w;
+         name = n;
+         shortName = sn;
       }
       
       private int weight;
+      private String name;
+      private String shortName;
       
       public int getWeight(){return weight;}
+      public String getName(){return name;}
+      public String getShortName(){return shortName;}
       
       public boolean canApply(Armor armor)
       {
@@ -50,17 +56,31 @@ public class ArmorFactory implements GearConstants, ActorConstants
          {
             case REINFORCED      : break;
             case TACTICAL        : break;
-            case ENVIRONMENTAL   : if(armor.hasStatusEffect() &&
-                                      armor.getStatusEffect().getNeedsAir() == false)
+            case ENVIRONMENTAL   : if(armor.hasStatusEffect())
                                       return false;
                                    break;
-            case VIGILANT        : if(armor.hasGadgetEffect() &&
-                                      armor.getGadgetEffect() == GadgetSpecialEffect.MOTION_SENSOR)
+            case VIGILANT        : if(armor.hasGadgetEffect())
                                       return false;
                                    break;
          }
          return true;
       }
+   }
+   
+   public static void addUpgrade(Armor armor, ArmorUpgrade upgrade)
+   {
+      switch(upgrade)
+      {
+         case REINFORCED      : armor.setDamageReduction(armor.getDamageReduction() + 1);
+                                break;
+         case TACTICAL        : armor.setInventorySpace(armor.getInventorySpace() + 1);
+                                break;
+         case ENVIRONMENTAL   : armor.setStatusEffect(StatusEffectFactory.getEffect(StatusEffectType.AIR_SUPPLY));
+                                break;
+         case VIGILANT        : armor.setGadgetEffect(GadgetSpecialEffect.MOTION_SENSOR);
+                                break;
+      }
+      armor.setName(upgrade.getName() + " " + armor.getName());
    }
    
    public static Armor generate()
@@ -70,17 +90,29 @@ public class ArmorFactory implements GearConstants, ActorConstants
    
    public static Armor generateByRarity(LootRarity rarity)
    {
-      
       WeightedRandomizer table = new WeightedRandomizer(ArmorType.values());
       ArmorType type = (ArmorType)table.roll();
+      Armor armor = getBasicArmor();
+      int upgrades = 0;
       switch(type)
       {
-         case BASIC_ARMOR     : return getBasicArmor();
-         case SCOUT_ARMOR     : return getScoutArmor();
-         case ENGINEER_ARMOR  : return getEngineerArmor();
-         case ASSAULT_ARMOR   : return getAssaultArmor();
-         default              : return null;
+         case SCOUT_ARMOR     : armor = getScoutArmor(); break;
+         case ENGINEER_ARMOR  : armor = getEngineerArmor(); break;
+         case ASSAULT_ARMOR   : armor = getAssaultArmor(); break;
       }
+      if(rarity == LootRarity.UNCOMMON)
+         upgrades = 1;
+      if(rarity == LootRarity.RARE)
+         upgrades = 2;
+      for(int i = 0; i < upgrades; i++)
+      {
+         table = new WeightedRandomizer(ArmorUpgrade.values());
+         ArmorUpgrade upgrade = (ArmorUpgrade)table.roll();
+         while(!upgrade.canApply(armor))
+            upgrade = (ArmorUpgrade)table.roll();
+         addUpgrade(armor, upgrade);
+      }
+      return armor;
    }
    
    public static Armor getBasicArmor()
@@ -121,13 +153,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
    
    public static void main(String[] args)
    {
-      Armor a = getBasicArmor();
-      System.out.println(a.getName() + ": " + a.getSummary());
-      a = getScoutArmor();
-      System.out.println(a.getName() + ": " + a.getSummary());
-      a = getEngineerArmor();
-      System.out.println(a.getName() + ": " + a.getSummary());
-      a = getAssaultArmor();
-      System.out.println(a.getName() + ": " + a.getSummary());
+      for(int i = 0; i < 20; i++)
+         System.out.println(generate().getName());
    }
 }
