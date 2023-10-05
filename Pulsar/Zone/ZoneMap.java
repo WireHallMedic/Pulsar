@@ -262,6 +262,16 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       setTile(x, y, newTile);
       if(mt.hasOnDestructionEffect())
          GameEngine.doDestructionEffect(x, y, mt);
+      if(mt instanceof Crate)
+      {
+         Crate c = (Crate)mt;
+         if(GameEngine.random() <= c.getLootChance())
+         {
+            GearObj loot = LootFactory.rollLoot(c.isNonCreditLoot());
+            if(loot != null)
+               dropGear(x, y, loot);
+         }
+      }
       breachCheck(x, y);
    }
    

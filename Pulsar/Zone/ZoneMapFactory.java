@@ -180,7 +180,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
                case '/' : mapTile = MapTileFactory.getDoor(); break;
                case '0' : mapTile = getRandomBarrel(); break;
                case '~' : mapTile = MapTileFactory.getWater(); break;
-               case 'v' : mapTile = MapTileFactory.getVacuum();
+               case 'v' : mapTile = MapTileFactory.getVacuum(); break;
                case '>' : mapTile = MapTileFactory.getTile(TileType.EXIT); break;
             }
             m.setTile(x, y, mapTile);
