@@ -1,9 +1,33 @@
 package Pulsar.Gear;
 
 import Pulsar.Actor.*;
+import Pulsar.Engine.*;
 
 public class GadgetFactory implements ActorConstants, GearConstants
 {
+   public enum GadgetType implements WeightedRandomizable
+   {
+      ADRENAL_INJECTOR  (10),
+      GRENADES          (10),
+      NAPALM_GRENADES   (10),
+      CRYO_GRENADES     (10),
+      HOLOCLONE         (10),
+      TURRET            (10),
+      COMBAT_DRONE      (10),
+      MOTION_SENSOR     (10),
+      AIR_SUPPLY        (10),
+      QUICK_CHARGER     (10);
+      
+      private GadgetType(int w)
+      {
+         weight = w;
+      }
+      
+      private int weight;
+      
+      public int getWeight(){return weight;}
+   }
+   
    public static Gadget getAdrenalInjector()
    {
       Gadget g = new Gadget();
