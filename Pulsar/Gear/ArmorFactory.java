@@ -43,6 +43,24 @@ public class ArmorFactory implements GearConstants, ActorConstants
       private int weight;
       
       public int getWeight(){return weight;}
+      
+      public boolean canApply(Armor armor)
+      {
+         switch(this)
+         {
+            case REINFORCED      : break;
+            case TACTICAL        : break;
+            case ENVIRONMENTAL   : if(armor.hasStatusEffect() &&
+                                      armor.getStatusEffect().getNeedsAir() == false)
+                                      return false;
+                                   break;
+            case VIGILANT        : if(armor.hasGadgetEffect() &&
+                                      armor.getGadgetEffect() == GadgetSpecialEffect.MOTION_SENSOR)
+                                      return false;
+                                   break;
+         }
+         return true;
+      }
    }
    
    public static Armor generate()
