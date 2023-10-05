@@ -118,4 +118,20 @@ public interface GearConstants extends WSFontConstants
       
       public int getWeight(){return weight;}
    }
+   
+   public enum LootRarity implements WeightedRandomizable
+   {
+      COMMON   (89),
+      UNCOMMON (10),
+      RARE     (1);
+      
+      private LootRarity(int w)
+      {
+         weight = w;
+      }
+      
+      private int weight;
+      
+      public int getWeight(){return weight;}
+   }
 }
