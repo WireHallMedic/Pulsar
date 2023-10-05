@@ -28,6 +28,32 @@ public class GadgetFactory implements ActorConstants, GearConstants
       public int getWeight(){return weight;}
    }
    
+   public static Gadget generate()
+   {
+      return generateByRarity(LootFactory.rollLootRarity());
+   }
+   
+   public static Gadget generateByRarity(LootRarity rarity)
+   {
+      
+      WeightedRandomizer table = new WeightedRandomizer(GadgetType.values());
+      GadgetType type = (GadgetType)table.roll();
+      switch(type)
+      {
+         case ADRENAL_INJECTOR   : return getAdrenalInjector();
+         case GRENADES           : return getGrenades();
+         case NAPALM_GRENADES    : return getNapalmGrenades();
+         case CRYO_GRENADES      : return getCryoGrenades();
+         case HOLOCLONE          : return getHoloclone();
+         case TURRET             : return getTurret();
+         case COMBAT_DRONE       : return getCombatDrone();
+         case MOTION_SENSOR      : return getMotionSensor();
+         case AIR_SUPPLY         : return getAirSupply();
+         case QUICK_CHARGER      : return getQuickCharger();
+         default                 : return null;
+      }
+   }
+   
    public static Gadget getAdrenalInjector()
    {
       Gadget g = new Gadget();
