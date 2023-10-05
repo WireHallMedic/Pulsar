@@ -65,22 +65,26 @@ public interface GearConstants extends WSFontConstants
       }
    }
    
-   public enum WeaponType
+   public enum WeaponType implements WeightedRandomizable
    {
-      DEFAULT        ("Unknown Weapon"),
-      SLUG_RIFLE     ("Slug Rifle"),
-      BATTLE_RIFLE   ("Battle Rifle"),
-      AUTORIFLE      ("Autorifle"),
-      SHOTGUN        ("Shotgun"),
-      MELEE          ("Melee"),
-      BEAM           ("Beam Cannon"),
-      PLASMA         ("Plasma Launcher");
+      BATTLE_RIFLE   ("Battle Rifle", 20),
+      AUTORIFLE      ("Autorifle", 20),
+      SHOTGUN        ("Shotgun", 20),
+      SLUG_RIFLE     ("Slug Rifle", 20),
+      MELEE          ("Melee", 5),
+      BEAM           ("Beam Cannon", 5),
+      PLASMA         ("Plasma Launcher", 5),
+      DEFAULT        ("Unknown Weapon", 0);
       
       public String name;
+      private int weight;
       
-      private WeaponType(String n)
+      public int getWeight(){return weight;}
+      
+      private WeaponType(String n, int w)
       {
          name = n;
+         weight = w;
       }
    }
    

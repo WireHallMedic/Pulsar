@@ -43,6 +43,7 @@ public class LootFactory implements GearConstants
          double percent = results[i] * 100.0 / maxReps;
          System.out.println(LootType.values()[i] + ": " + percent + "%");
       }
+      
       System.out.println("Non-Credit Rolls:");
       results = new int[LootType.values().length];
       for(int i = 0; i < maxReps; i++)
