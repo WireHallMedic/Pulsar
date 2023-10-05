@@ -51,6 +51,7 @@ public interface ZoneConstants extends WSFontConstants
       ICE         ('-', "Ice", true, true, true),
       DOOR        ('|', "Door", false, false, false),
       TERMINAL    (CAPITAL_OMEGA_TILE, "Terminal", false, true, true),
+      CRATE       ('#', "Crate", false, false, false),
       VACUUM      (' ', "Vacuum", false, false, true),
       EXIT        ('>', "Exit", true, true, true),
       NULL        (' ', "", false, false, false);

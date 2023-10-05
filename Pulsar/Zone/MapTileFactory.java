@@ -31,6 +31,8 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          return getDoor();
       if(baseType == TileType.VACUUM)
          return getVacuum();
+      if(baseType == TileType.CRATE)
+         return getCrate();
       MapTile tile = new MapTile(baseType.iconIndex, fgColor.getRGB(), bgColor.getRGB(), baseType.name, 
                                  baseType.lowPassable, baseType.highPassable, baseType.transparent);
       if(baseType == TileType.NULL || baseType == TileType.CLEAR || baseType == TileType.EXIT)
@@ -112,13 +114,9 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       return brokenTile;
    }
    
-   public static MapTile getCrate()
+   public static Crate getCrate()
    {
-      MapTile tile = getTile(TileType.HIGH_WALL);
-      tile.setName("Crate");
-      tile.setFGColor(BROWN.getRGB());
-      tile.setDurability(Durability.FRAGILE);
-      return tile;
+      return new Crate(BROWN.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB());
    }
    
    public static MapTile getBarrel()

@@ -9,8 +9,8 @@ public class Crate extends MapTile
    
    public Crate(int fg, int bg)
    {
-      super(TileType.HIGH_WALL.iconIndex, fg, bg, "Crate", TileType.HIGH_WALL.lowPassable, 
-         TileType.HIGH_WALL.highPassable, TileType.HIGH_WALL.transparent);
+      super(TileType.CRATE.iconIndex, fg, bg, "Crate", TileType.CRATE.lowPassable, 
+         TileType.CRATE.highPassable, TileType.CRATE.transparent);
       setDurability(Durability.FRAGILE);
       lootChance = .1;
       nonCreditLoot = false;
