@@ -7,6 +7,55 @@ public class WeaponFactory implements GearConstants, ActorConstants
 {
    public static Weapon EXPLODING_BARREL = getExplodingBarrel();
    
+   public enum WeaponUpgrade implements WeightedRandomizable
+   {
+      CRYO           (10, "Cryo", "C"),
+      THERMAL        (10, "Thermal", "T"),
+      ELECTRO        (10, "Electro", "E"),
+      HIGH_POWER     (10, "High-Powered", "HP"),
+      FAST_CHARGE    (10, "Fast-Charge", "FC"),
+      HIGH_CAPACITY  (10, "High Capacity", "HC"),
+      VULCAN         (10, "Vulcan", "V");
+      
+      private WeaponUpgrade(int w, String n, String sn)
+      {
+         weight = w;
+         name = n;
+         shortName = sn;
+      }
+      
+      private int weight;
+      private String name;
+      private String shortName;
+      
+      public int getWeight(){return weight;}
+      public String getName(){return name;}
+      public String getShortName(){return shortName;}
+      
+      public boolean canApply(Weapon weapon)
+      {
+         switch(this)
+         {
+            case CRYO            : if(weapon.getDamageType() != DamageType.KINETIC)
+                                      return false;
+                                   break;
+            case THERMAL         : if(weapon.getDamageType() != DamageType.KINETIC)
+                                      return false;
+                                   break;
+            case ELECTRO         : if(weapon.getDamageType() != DamageType.KINETIC)
+                                      return false;
+                                   break;
+            case HIGH_POWER      : break;
+            case FAST_CHARGE     : break;
+            case HIGH_CAPACITY   : break;
+            case VULCAN          : if(weapon.getAttacks() < 2)
+                                      return false;
+                                   break;
+         }
+         return true;
+      }
+   }
+   
    public static Weapon getBasicWeapon(WeaponType baseType)
    {
       Weapon w = new Weapon(baseType.name);
@@ -147,6 +196,28 @@ public class WeaponFactory implements GearConstants, ActorConstants
       return w;
    }
    
+   public static void addUpgrade(Weapon weapon, WeaponUpgrade upgrade)
+   {
+      switch(upgrade)
+      {
+         case CRYO            : setElementAndStatusEffect(weapon, DamageType.CRYO);
+                                break;
+         case THERMAL         : setElementAndStatusEffect(weapon, DamageType.THERMAL);
+                                break;
+         case ELECTRO         : setElementAndStatusEffect(weapon, DamageType.ELECTRO);
+                                break;
+         case HIGH_POWER      : weapon.setBaseDamage(weapon.getBaseDamage() * 3 / 2);
+                                break;
+         case FAST_CHARGE     : weapon.setChargeRate(weapon.getChargeRate() * 2);
+                                break;
+         case HIGH_CAPACITY   : weapon.setMaxCharge(weapon.getMaxCharge() * 3 / 2);
+                                break;
+         case VULCAN          : weapon.setAttacks(weapon.getAttacks() * 3 / 2);
+                                break;
+      }
+      weapon.setName(upgrade.getName() + " " + weapon.getName());
+   }
+   
    public static void setElementAndStatusEffect(Weapon w, DamageType type)
    {
       w.setDamageType(type);
@@ -171,17 +242,41 @@ public class WeaponFactory implements GearConstants, ActorConstants
    
    public static Weapon generateByRarity(LootRarity rarity)
    {
-      WeaponType type = null;
+      Weapon weapon = null;
+      int upgrades = 0;
       if(rarity == LootRarity.COMMON)
       {
          WeightedRandomizer table = new WeightedRandomizer(WeaponType.getCommonList());
-         type = (WeaponType)table.roll();
+         weapon = getBasicWeapon((WeaponType)table.roll());
       }
       else
       {
-         WeightedRandomizer table = new WeightedRandomizer(WeaponType.getUncommonList());
-         type = (WeaponType)table.roll();
+         boolean uncommonWeapon = GameEngine.randomBoolean();
+         WeightedRandomizer table = new WeightedRandomizer(WeaponType.getCommonList());
+         if(uncommonWeapon)
+            table = new WeightedRandomizer(WeaponType.getUncommonList());
+         weapon = getBasicWeapon((WeaponType)table.roll());
+         if(!uncommonWeapon)
+            upgrades++;
       }
-      return getBasicWeapon(type);
+      if(rarity == LootRarity.RARE)
+         upgrades++;
+      for(int i = 0; i < upgrades; i++)
+      {
+         WeightedRandomizer table = new WeightedRandomizer(WeaponUpgrade.values());
+         WeaponUpgrade upgrade = (WeaponUpgrade)table.roll();
+         while(!upgrade.canApply(weapon))
+            upgrade = (WeaponUpgrade)table.roll();
+         addUpgrade(weapon, upgrade);
+      }
+      return weapon;
+   }
+   
+   public static void main(String[] args)
+   {
+      for(int i = 0; i < 20; i++)
+      {
+         System.out.println(generate().getName());
+      }
    }
 }
