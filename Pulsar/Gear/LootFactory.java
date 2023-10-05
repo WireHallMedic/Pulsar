@@ -5,6 +5,24 @@ import java.util.*;
 
 public class LootFactory implements GearConstants
 {
+   public static GearObj rollLoot()
+   {
+      LootType type = rollLootType();
+      LootRarity rarity = rollLootRarity();
+      GearObj loot = null;
+      switch(type)
+      {
+         case CREDITS : loot = Credits.generateByRarity(rarity); break;
+         case WEAPON : loot = WeaponFactory.generateByRarity(rarity); break;
+         case GADGET : loot = Credits.generateByRarity(rarity); break;
+         case ARMOR : loot = Credits.generateByRarity(rarity); break;
+         case SHIELD : loot = Credits.generateByRarity(rarity); break;
+         default : System.out.println("Unknown loot type: " + type); break;
+      }
+      
+      return loot;
+   }
+   
    public static LootType rollLootType()
    {
       WeightedRandomizer table = new WeightedRandomizer(LootType.values());
@@ -34,27 +52,8 @@ public class LootFactory implements GearConstants
    
    public static void main(String[] args)
    {
-      int maxReps = 10000;
-      int[] results = new int[LootType.values().length];
-      for(int i = 0; i < maxReps; i++)
-         results[rollLootType().ordinal()]++;
-      for(int i = 0; i < LootType.values().length; i++)
-      {
-         double percent = results[i] * 100.0 / maxReps;
-         System.out.println(LootType.values()[i] + ": " + percent + "%");
-      }
-      
-      System.out.println("Non-Credit Rolls:");
-      results = new int[LootType.values().length];
-      for(int i = 0; i < maxReps; i++)
-         results[rollNonCreditLootType().ordinal()]++;
-      for(int i = 0; i < LootType.values().length; i++)
-      {
-         double percent = results[i] * 100.0 / maxReps;
-         System.out.println(LootType.values()[i] + ": " + percent + "%");
-      }
       
       for(int i = 0; i < 20; i++)
-         System.out.println("" + Credits.generate().getAmount());
+         System.out.println("" + rollLoot().getName());
    }
 }

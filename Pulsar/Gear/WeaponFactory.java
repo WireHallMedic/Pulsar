@@ -1,6 +1,7 @@
 package Pulsar.Gear;
 
 import Pulsar.Actor.*;
+import Pulsar.Engine.*;
 
 public class WeaponFactory implements GearConstants, ActorConstants
 {
@@ -161,5 +162,26 @@ public class WeaponFactory implements GearConstants, ActorConstants
                         break;
          case ELECTRO : break;
       }
+   }
+   
+   public static Weapon generate()
+   {
+      return generateByRarity(LootFactory.rollLootRarity());
+   }
+   
+   public static Weapon generateByRarity(LootRarity rarity)
+   {
+      WeaponType type = null;
+      if(rarity == LootRarity.COMMON)
+      {
+         WeightedRandomizer table = new WeightedRandomizer(WeaponType.getCommonList());
+         type = (WeaponType)table.roll();
+      }
+      else
+      {
+         WeightedRandomizer table = new WeightedRandomizer(WeaponType.getUncommonList());
+         type = (WeaponType)table.roll();
+      }
+      return getBasicWeapon(type);
    }
 }

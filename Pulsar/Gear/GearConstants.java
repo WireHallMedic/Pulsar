@@ -1,6 +1,7 @@
 package Pulsar.Gear;
 
 import java.awt.*;
+import java.util.*;
 import WidlerSuite.*;
 import Pulsar.Engine.*;
 
@@ -67,24 +68,51 @@ public interface GearConstants extends WSFontConstants
    
    public enum WeaponType implements WeightedRandomizable
    {
-      BATTLE_RIFLE   ("Battle Rifle", 20),
-      AUTORIFLE      ("Autorifle", 20),
-      SHOTGUN        ("Shotgun", 20),
-      SLUG_RIFLE     ("Slug Rifle", 20),
-      MELEE          ("Melee", 5),
-      BEAM           ("Beam Cannon", 5),
-      PLASMA         ("Plasma Launcher", 5),
-      DEFAULT        ("Unknown Weapon", 0);
+      DEFAULT        ("Unknown Weapon", 0, false),
+      MELEE          ("Melee", 0, false),
+      BATTLE_RIFLE   ("Battle Rifle", 20, false),
+      AUTORIFLE      ("Autorifle", 20, false),
+      SHOTGUN        ("Shotgun", 20, false),
+      SLUG_RIFLE     ("Slug Rifle", 20, false),
+      BEAM           ("Beam Cannon", 5, true),
+      PLASMA         ("Plasma Launcher", 5, true);
       
       public String name;
       private int weight;
+      private boolean uncommon;
       
       public int getWeight(){return weight;}
+      public boolean isUncommon(){return uncommon;}
       
-      private WeaponType(String n, int w)
+      private WeaponType(String n, int w, boolean u)
       {
          name = n;
          weight = w;
+         uncommon = u;
+      }
+      
+      private static WeaponType[] getListByRarity(boolean uncommon)
+      {
+         Vector<WeaponType> typeList = new Vector<WeaponType>();
+         for(WeaponType type : WeaponType.values())
+         {
+            if(uncommon == type.isUncommon() && type.getWeight() > 0)
+               typeList.add(type);
+         }
+         WeaponType[] typeArray = new WeaponType[typeList.size()];
+         for(int i = 0; i < typeArray.length; i++)
+            typeArray[i] = typeList.elementAt(i);
+         return typeArray;
+      }
+      
+      public static WeaponType[] getCommonList()
+      {
+         return getListByRarity(false);
+      }
+      
+      public static WeaponType[] getUncommonList()
+      {
+         return getListByRarity(true);
       }
    }
    
