@@ -107,9 +107,15 @@ public class InventoryPanel extends SelectionPanel
       {
          name = curSelection.getName();
          summary = curSelection.getSummary();
+         if(curSelection instanceof Gadget)
+         {
+            Gadget gad = (Gadget)curSelection;
+            name = gad.getSummary();
+            summary = gad.getDescription();
+         }
       }
       write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN, name, fgColor, bgColor, DESCRIPTION_WIDTH, 1);
-      write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN + 1, summary, fgColor, bgColor, DESCRIPTION_WIDTH, 10);
+      write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN + 2, summary, fgColor, bgColor, DESCRIPTION_WIDTH, 10);
       
       if(mode == NORMAL_MODE)
       {

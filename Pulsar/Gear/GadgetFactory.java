@@ -61,7 +61,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Adrenal Inj");
       g.setStatusEffectType(StatusEffectType.HASTE);
       g.setTargetsSelf(true);
-      g.setDescription("Increases your speed.");
+      g.setDescription("Temporarily increases your speed. Speed can be limited by heavy armor.");
       return g;
    }
    
@@ -83,7 +83,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Napalm Grenades");
       g.setWeaponEffect(WeaponFactory.getNapalm());
       g.setTargetsSelf(false);
-      g.setDescription("Explodes and ignites where you throw it.");
+      g.setDescription("Explodes where you throw it, igniting the area.");
       g.setSpecialEffect(GadgetSpecialEffect.NAPALM);
       return g;
    }
@@ -95,7 +95,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Cryo Grenades");
       g.setWeaponEffect(WeaponFactory.getCryoExplosion());
       g.setTargetsSelf(false);
-      g.setDescription("Explodes and freezes where you throw it.");
+      g.setDescription("Explodes where you throw it, freezing terrain and creatures in the area.");
       return g;
    }
    
@@ -106,7 +106,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Holoclone");
       g.setTargetsSelf(false);
       g.setSpecialEffect(GadgetSpecialEffect.HOLOCLONE);
-      g.setDescription("Deploys an exploding clone.");
+      g.setDescription("Deploys a clone of you, which explodes on death.");
       g.setPlaceAdjacent(true);
       return g;
    }
@@ -118,7 +118,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Turret");
       g.setTargetsSelf(false);
       g.setSpecialEffect(GadgetSpecialEffect.TURRET);
-      g.setDescription("Depolys a stationary turret.");
+      g.setDescription("Depolys a stationary gun turret.");
       g.setPlaceAdjacent(true);
       return g;
    }
@@ -130,7 +130,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("C. Drone");
       g.setTargetsSelf(false);
       g.setSpecialEffect(GadgetSpecialEffect.COMBAT_DRONE);
-      g.setDescription("Depolys a combat drone.");
+      g.setDescription("Depolys a combat drone, who follows you and fires on enemies.");
       g.setPlaceAdjacent(true);
       g.setMaxUses(1);
       g.fullyCharge();
@@ -145,7 +145,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setTargetsSelf(false);
       g.setPassiveOnly(true);
       g.setSpecialEffect(GadgetSpecialEffect.MOTION_SENSOR);
-      g.setDescription("Detects nearby movement.");
+      g.setDescription("Detects nearby movement, even through walls.");
       return g;
    }
    
@@ -156,7 +156,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Air Supply");
       g.setPassiveOnly(true);
       g.setPassiveStatusEffect(StatusEffectFactory.getEffect(StatusEffectType.AIR_SUPPLY));
-      g.setDescription("Provides a continuous supply of air.");
+      g.setDescription("Provides a continuous supply of air, allowing you to ignore vacuum.");
       return g;
    }
    
@@ -167,7 +167,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("Quick Charger");
       g.setTargetsSelf(true);
       g.setSpecialEffect(GadgetSpecialEffect.RECHARGE);
-      g.setDescription("Immedeatly charges your shield and weapons.");
+      g.setDescription("Immedeatly fully charges your shield and weapons.");
       return g;
    }
 }
