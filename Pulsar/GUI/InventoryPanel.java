@@ -16,7 +16,7 @@ public class InventoryPanel extends SelectionPanel
    public static final int DESCRIPTION_WIDTH = 25;
    
    public static final int NORMAL_MODE = 0;
-   public static final int CHOSE_SLOT_MODE = 1;
+   public static final int CHOOSE_SLOT_MODE = 1;
    
    private Player player;
    private int spacerIndex = 5;
@@ -128,7 +128,7 @@ public class InventoryPanel extends SelectionPanel
             xInset += strArr[i].length();
          }
       }
-      else if(mode == CHOSE_SLOT_MODE)
+      else if(mode == CHOOSE_SLOT_MODE)
       {
          String str = "";
          if(getSelectedGear() instanceof Weapon)
@@ -207,7 +207,7 @@ public class InventoryPanel extends SelectionPanel
                player.equip(getSelectedGear(), 0);
             else
             {
-               mode = CHOSE_SLOT_MODE;
+               mode = CHOOSE_SLOT_MODE;
                return;
             }
          }
@@ -248,7 +248,7 @@ public class InventoryPanel extends SelectionPanel
          }
          super.keyPressed(ke);
       }
-      else if(mode == CHOSE_SLOT_MODE)
+      else if(mode == CHOOSE_SLOT_MODE)
       {
          switch(ke.getKeyCode())
          {
