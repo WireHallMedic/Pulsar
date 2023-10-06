@@ -10,8 +10,8 @@ public abstract class SelectionPanel extends RogueTilePanel implements GUIConsta
    public static final int Y_ORIGIN = 1;
    public static final int WIDTH_TILES = TERMINAL_WIDTH_TILES - 2;
    public static final int HEIGHT_TILES = TERMINAL_HEIGHT_TILES - 2;
-   private int selectionIndex = 0;
-   private String[] options = {"Unknown Option"};
+   protected int selectionIndex = 0;
+   protected String[] options = {"Unknown Option"};
    
    
    public SelectionPanel()
