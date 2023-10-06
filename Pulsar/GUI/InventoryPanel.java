@@ -12,6 +12,7 @@ public class InventoryPanel extends SelectionPanel
    public static final int ARMOR = 2;
    public static final int SHIELD = 3;
    public static final int GADGET = 4;
+   public static final int DESCRIPTION_WIDTH = 25;
    
    private Player player;
    private int spacerIndex = 5;
@@ -47,7 +48,7 @@ public class InventoryPanel extends SelectionPanel
       options[SHIELD] = str;
       for(int i = 0; i < player.getMaxGadgets(); i++)
       {
-         str = "Gadget: ";
+         str = "Gadget " + (i + 1) + ": ";
          if(player.getGadget(i) != null)
             str += player.getGadget(i).getName();
          else
@@ -65,7 +66,6 @@ public class InventoryPanel extends SelectionPanel
             str += "<Empty>";
          options[ySpace + i] = str;
       }
-      
       update();
    }
    
@@ -81,6 +81,43 @@ public class InventoryPanel extends SelectionPanel
             bgColor = BG_COLOR.getRGB();
          write(X_ORIGIN, Y_ORIGIN + i, options[i], fgColor, bgColor, options[i].length(), 1);
       }
+      fgColor = TERMINAL_FG_COLOR.getRGB();
+      bgColor = BG_COLOR.getRGB();
+      
+      GearObj curSelection = getSelectedGear();
+      String name = "";
+      String summary = "";
+      if(curSelection != null)
+      {
+         name = curSelection.getName();
+         summary = curSelection.getSummary();
+      }
+      write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN, name, fgColor, bgColor, DESCRIPTION_WIDTH, 1);
+      write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN + 1, summary, fgColor, bgColor, DESCRIPTION_WIDTH, 10);
+      
+      String str = "";
+      if(selectionIndex < spacerIndex)
+         str = "[D] to Drop, [E or ENTER] to Unquip, [ESC] to Exit";
+      if(selectionIndex > spacerIndex)
+         str ="[D] to Drop, [E or ENTER] to Equip, [ESC] to Exit";
+      write(X_ORIGIN, Y_ORIGIN + HEIGHT_TILES - 1, str, fgColor, bgColor, WIDTH_TILES, 1);
+   }
+   
+   public GearObj getSelectedGear()
+   {
+      if(selectionIndex == PRIMARY_WEAPON)
+         return player.getPrimaryWeapon();
+      if(selectionIndex == SECONDARY_WEAPON)
+         return player.getSecondaryWeapon();
+      if(selectionIndex == ARMOR)
+         return player.getArmor();
+      if(selectionIndex == SHIELD)
+         return player.getShield();
+      if(selectionIndex >= GADGET && selectionIndex < spacerIndex)
+         return player.getGadget(selectionIndex - GADGET);
+      if(selectionIndex > spacerIndex)
+         return player.getInventory().getItem(selectionIndex - spacerIndex - 1);
+      return null;
    }
    
    public void doSelection()

@@ -64,7 +64,7 @@ public class Shield extends GearObj implements GearConstants, Chargable
    
    public String getSummary()
    {
-      return getChargeSummary() + getShortSummary();
+      return getChargeSummary() + ", " + getShortSummary();
    }
    
    public String getChargeSummary()
