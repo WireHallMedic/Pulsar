@@ -74,7 +74,7 @@ public interface ZoneConstants extends WSFontConstants
    
    public enum Durability
    {
-      STANDARD, FRAGILE, UNBREAKABLE;
+      STANDARD, FRAGILE, REINFORCED, UNBREAKABLE;
       
       public boolean getBreaks(boolean heavyDamage)
       {
@@ -84,6 +84,7 @@ public interface ZoneConstants extends WSFontConstants
             {
                case FRAGILE:     return true;
                case STANDARD:    return true;
+               case REINFORCED:  return false;
                case UNBREAKABLE: return false;
             }
          }
@@ -94,6 +95,7 @@ public interface ZoneConstants extends WSFontConstants
             {
                case FRAGILE:     return true;
                case STANDARD:    return false;
+               case REINFORCED:  return false;
                case UNBREAKABLE: return false;
             }
          }

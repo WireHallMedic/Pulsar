@@ -177,9 +177,7 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       instructionPanel.add(new JLabel("! Button"));
       instructionPanel.add(new JLabel(": Window"));
       instructionPanel.add(new JLabel("T Terminal"));
-      instructionPanel.add(new JLabel("X Exit"));
-      instructionPanel.add(new JLabel("> Up Stairs"));
-      instructionPanel.add(new JLabel("< Down Stairs"));
+      instructionPanel.add(new JLabel("> Exit"));
       instructionPanel.add(new JLabel("? Obstacle (5x5)"));
       instructionPanel.add(new JLabel("1 Wall (Room Prob)"));
       instructionPanel.add(new JLabel("2 Table (Room Prob)"));
@@ -190,6 +188,8 @@ public class ToolRoomDesigner extends JFrame implements ActionListener, MouseLis
       instructionPanel.add(new JLabel("7 Crate (Instance Prob)"));
       instructionPanel.add(new JLabel("8 Unused"));
       instructionPanel.add(new JLabel("9 Unused"));
+      instructionPanel.add(new JLabel(""));
+      instructionPanel.add(new JLabel(""));
       
       layoutPanel.add(instructionPanel, .2, 1.0, .8, 0.0);
    }

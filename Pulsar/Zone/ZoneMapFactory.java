@@ -35,6 +35,7 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
                map.getTile(x, y).setName("Bulkhead");
             Color fgColor = new Color(map.getTile(x, y).getFGColor());
             map.getTile(x, y).setFGColor(fgColor.darker().getRGB());
+            map.getTile(x, y).setDurability(Durability.REINFORCED);
          }
       }
    }
