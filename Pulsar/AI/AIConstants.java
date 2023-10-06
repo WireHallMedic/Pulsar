@@ -16,6 +16,8 @@ public interface AIConstants
       USE                  (false),
       GRAB                 (false),
       SWITCH_WEAPONS       (true),
+      INVENTORY_ACTION     (true),
+      // gadgets must be listed last
       GADGET_0             (false),
       GADGET_1             (false),
       GADGET_2             (false),
@@ -31,11 +33,7 @@ public interface AIConstants
       
       public boolean isGadgetAction()
       {
-         return this == GADGET_0 ||
-                this == GADGET_1 ||
-                this == GADGET_2 ||
-                this == GADGET_3 ||
-                this == GADGET_4;
+         return this.ordinal() >= GADGET_0.ordinal();
       }
       
       public int getGadgetIndex()

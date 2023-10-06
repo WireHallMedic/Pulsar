@@ -141,6 +141,7 @@ public class BasicAI implements AIConstants
          case SWITCH_WEAPONS :   doWeaponSwitch(); break;
          case UNARMED_ATTACK :   doUnarmedAttack(); break;
          case GRAB :             doGrab(); break;
+         case INVENTORY_ACTION : doManipulateInventory(); break;
       }
       if(pendingAction.isGadgetAction())
          doGadgetAction(pendingAction.getGadgetIndex());
@@ -545,6 +546,12 @@ public class BasicAI implements AIConstants
             MessagePanel.addMessage(self.getName() + " uses a " + gadget.getName() + ".");
          }
       }
+   }
+   
+   // the actual mechanics for this are handled in the Player class
+   public void doManipulateInventory()
+   {
+      self.discharge(self.getInteractSpeed().timeCost);
    }
    
    

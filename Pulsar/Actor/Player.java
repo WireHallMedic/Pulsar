@@ -117,6 +117,43 @@ public class Player extends Actor implements GUIConstants, GearConstants
       return GUITools.getBar(getAltWeapon().getCurCharge(), getAltWeapon().getMaxCharge(), length);
    }
    
+   // inventory manipulation
+   ///////////////////////////////////////////////////
+   public void unequip(GearObj obj)
+   {
+      if(obj == null)
+         return;
+      unequipItem(obj);
+      getInventory().add(obj);
+      getAI().setPendingAction(ActorAction.INVENTORY_ACTION);
+      getAI().setPendingTarget(getMapLoc());
+   }
+   
+   public void equip(GearObj obj, int slot)
+   {
+   
+   }
+   
+   public void drop(GearObj obj)
+   {
+   
+   }
+   
+   private void unequipItem(GearObj obj)
+   {
+      if(weapon == obj)
+         weapon = null;
+      if(secondaryWeapon == obj)
+         secondaryWeapon = null;
+      if(armor == obj)
+         armor = null;
+      if(shield == obj)
+         shield = null;
+      for(int i = 0; i < gadgetList.size(); i++)
+         if(gadgetList.elementAt(i) == obj)
+            gadgetList.removeElementAt(i);
+   }
+   
    public void updateFoV()
    {
       ZoneMap map = GameEngine.getZoneMap();

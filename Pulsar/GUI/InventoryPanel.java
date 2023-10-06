@@ -12,10 +12,12 @@ public class InventoryPanel extends SelectionPanel
    public static final int ARMOR = 2;
    public static final int SHIELD = 3;
    public static final int GADGET = 4;
+   
    public static final int DESCRIPTION_WIDTH = 25;
    
    private Player player;
    private int spacerIndex = 5;
+   private boolean doDrop = false;
    
    public void set()
    {
@@ -135,7 +137,34 @@ public class InventoryPanel extends SelectionPanel
    
    public void doSelection()
    {
-   
+      if(getSelectedGear() == null)
+         return;
+      if(doDrop)
+      {
+         player.drop(getSelectedGear());
+         doDrop = false;
+      }
+      else
+      {
+         // unequip equipped item
+         if(selectionIndex < spacerIndex)
+         {
+            if(!player.getInventory().isFull())
+            {
+               player.unequip(getSelectedGear());
+            }
+            else
+               return;
+         }
+         // equip unequipped item
+         else
+         {
+            player.equip(getSelectedGear(), 0);
+         }
+      }
+      
+      InnerPanel.setActivePanel(MainGameBGPanel.class); 
+      GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
    }
    
    @Override
@@ -152,9 +181,15 @@ public class InventoryPanel extends SelectionPanel
       switch(ke.getKeyCode())
       {
          case KeyEvent.VK_I :
-         case KeyEvent.VK_ESCAPE : InnerPanel.setActivePanel(MainGameBGPanel.class); 
-                                   GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
-                                   return;
+         case KeyEvent.VK_ESCAPE :  InnerPanel.setActivePanel(MainGameBGPanel.class); 
+                                    GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
+                                    return;
+         case KeyEvent.VK_ENTER  :
+         case KeyEvent.VK_SPACE  :  doSelection(); 
+                                    return;
+         case KeyEvent.VK_D      :  doDrop = true;
+                                    doSelection(); 
+                                    return;
       }
       super.keyPressed(ke);
    }
