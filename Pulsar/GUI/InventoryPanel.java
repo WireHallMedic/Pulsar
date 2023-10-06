@@ -1,5 +1,6 @@
 package Pulsar.GUI;
 
+import Pulsar.Gear.*;
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
 import java.awt.event.*;
@@ -10,14 +11,14 @@ public class InventoryPanel extends SelectionPanel
    public static final int SECONDARY_WEAPON = 1;
    public static final int ARMOR = 2;
    public static final int SHIELD = 3;
-   public static final int GADGET = 4
-   ;
+   public static final int GADGET = 4;
+   
    private Player player;
    
    public void set()
    {
       player = GameEngine.getPlayer();
-      int listLen = 2 + 1 + 1 + player.getMaxGadgets();
+      int listLen = 2 + 1 + 1 + player.getMaxGadgets() + player.getInventory().getMaxSize();
       options = new String[listLen];
       for(int i = 0; i < listLen; i++)
       {
@@ -51,6 +52,17 @@ public class InventoryPanel extends SelectionPanel
             str += "None";
          options[GADGET + i] = str;
       }
+      Inventory inventory = player.getInventory();
+      int ySpace = GADGET + player.getMaxGadgets();
+      for(int i = 0; i < player.getInventory().getMaxSize(); i++)
+      {
+         str = "";
+         if(inventory.getItem(i) != null)
+            str = inventory.getItem(i).getName();
+         else
+            str += "None";
+         options[ySpace + i] = str;
+      }
       
       update();
    }
@@ -61,7 +73,11 @@ public class InventoryPanel extends SelectionPanel
       int bgColor = BG_COLOR.getRGB();
       for(int i = 0; i < options.length; i++)
       {
-         write(X_ORIGIN, Y_ORIGIN + 2 + i, options[i], fgColor, bgColor, options[i].length(), 1);
+         if(selectionIndex == i)
+            bgColor = ORANGE.getRGB();
+         else
+            bgColor = BG_COLOR.getRGB();
+         write(X_ORIGIN, Y_ORIGIN + i, options[i], fgColor, bgColor, options[i].length(), 1);
       }
    }
    

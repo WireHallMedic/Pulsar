@@ -119,6 +119,12 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
    
    public void keyPressed(KeyEvent ke)
    {
+      if(curPanel instanceof KeyListener)
+      {
+         KeyListener keyListenerPanel = (KeyListener)curPanel;
+         keyListenerPanel.keyPressed(ke);
+      }
+     /*    ;
       if(curPanel == characterPanel)
          characterPanel.keyPressed(ke);
       if(curPanel == titlePanel)
@@ -128,7 +134,7 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
       if(curPanel == mapTerminalPanel)
          mapTerminalPanel.keyPressed(ke);
       if(curPanel == inventoryPanel)
-         inventoryPanel.keyPressed(ke);
+         inventoryPanel.keyPressed(ke);*/
    }
    
    public void actionPerformed(ActionEvent ae)

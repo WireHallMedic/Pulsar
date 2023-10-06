@@ -15,7 +15,7 @@ import Pulsar.Gear.*;
 import Pulsar.Engine.*;
 
 
-public class CharacterPanel extends RogueTilePanel implements GUIConstants
+public class CharacterPanel extends RogueTilePanel implements GUIConstants, KeyListener
 {
    public static final int X_ORIGIN = 1;
    public static final int Y_ORIGIN = 1;
@@ -51,6 +51,8 @@ public class CharacterPanel extends RogueTilePanel implements GUIConstants
                               break;
       }
    }
+   public void keyTyped(KeyEvent ke){}
+   public void keyReleased(KeyEvent ke){}
    
    @Override
    public void setVisible(boolean v)

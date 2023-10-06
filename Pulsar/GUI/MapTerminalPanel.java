@@ -13,7 +13,7 @@ import java.util.*;
 import Pulsar.Engine.*;
 
 
-public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
+public class MapTerminalPanel extends RogueTilePanel implements GUIConstants, KeyListener
 {
    public static final int X_ORIGIN = 1;
    public static final int Y_ORIGIN = 1;
@@ -58,6 +58,8 @@ public class MapTerminalPanel extends RogueTilePanel implements GUIConstants
                                     break;
       }
    }
+   public void keyTyped(KeyEvent ke){}
+   public void keyReleased(KeyEvent ke){}
    
    public void nextPage()
    {

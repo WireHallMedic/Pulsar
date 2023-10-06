@@ -4,7 +4,7 @@ import WidlerSuite.*;
 import java.awt.event.*;
 
 
-public abstract class SelectionPanel extends RogueTilePanel implements GUIConstants
+public abstract class SelectionPanel extends RogueTilePanel implements GUIConstants, KeyListener
 {
    public static final int X_ORIGIN = 1;
    public static final int Y_ORIGIN = 1;
@@ -51,6 +51,8 @@ public abstract class SelectionPanel extends RogueTilePanel implements GUIConsta
                                     break;
       }
    }
+   public void keyTyped(KeyEvent ke){}
+   public void keyReleased(KeyEvent ke){}
    
    public abstract void doSelection();
    

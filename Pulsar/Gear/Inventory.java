@@ -72,6 +72,13 @@ public class Inventory implements GearConstants
       return gear;
    }
    
+   public GearObj getItem(int index)
+   {
+      if(index >= size())
+         return null;
+      return list.elementAt(index);
+   }
+   
    public String toString()
    {
       String str = credits.getName();

@@ -14,7 +14,7 @@ import Pulsar.Gear.*;
 import Pulsar.Engine.*;
 
 
-public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontConstants
+public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontConstants, KeyListener
 {
    public static final int X_ORIGIN = 1;
    public static final int Y_ORIGIN = 1;
@@ -59,6 +59,8 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
                                     break;
       }
    }
+   public void keyTyped(KeyEvent ke){}
+   public void keyReleased(KeyEvent ke){}
    
    public void nextPage()
    {
