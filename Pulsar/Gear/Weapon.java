@@ -73,6 +73,11 @@ public class Weapon extends GearObj implements GearConstants, Chargable, ActorCo
       curCharge = maxCharge;
    }
    
+   public void fullyDischarge()
+   {
+      curCharge = 0;
+   }
+   
    public void charge()
    {
       if(curCharge < maxCharge)

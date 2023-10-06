@@ -139,15 +139,17 @@ public class Player extends Actor implements GUIConstants, GearConstants
       removeItem(obj);
       if(obj instanceof Weapon)
       {
+         Weapon wpn = (Weapon)obj;
+         wpn.fullyDischarge();
          if(slot == 0)
          {
             getInventory().add(weapon);
-            weapon = (Weapon)obj;
+            weapon = wpn;
          }
          if(slot == 1)
          {
             getInventory().add(secondaryWeapon);
-            secondaryWeapon = (Weapon)obj;
+            secondaryWeapon = wpn;
          }
       }
       if(obj instanceof Armor)
@@ -157,8 +159,10 @@ public class Player extends Actor implements GUIConstants, GearConstants
       }
       if(obj instanceof Shield)
       {
+         Shield shd = (Shield)obj;
+         shd.fullyDischarge();
          getInventory().add(shield);
-         shield = (Shield)obj;
+         shield = shd;
       }
       if(obj instanceof Gadget)
       {

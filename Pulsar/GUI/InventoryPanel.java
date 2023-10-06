@@ -38,8 +38,13 @@ public class InventoryPanel extends SelectionPanel
       {
          options[i] = "";
       }
-      options[PRIMARY_WEAPON] = "Primary Weapon: " + player.getPrimaryWeapon().getName();
-      String str = "Secondary Weapon: ";
+      String str = "Primary Weapon: ";
+      if(player.getPrimaryWeapon() != null)
+         str += player.getPrimaryWeapon().getName();
+      else
+         str += "None";
+      options[PRIMARY_WEAPON] = str;
+      str = "Secondary Weapon: ";
       if(player.getSecondaryWeapon() != null)
          str += player.getSecondaryWeapon().getName();
       else

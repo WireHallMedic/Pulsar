@@ -62,6 +62,11 @@ public class Shield extends GearObj implements GearConstants, Chargable
       curCharge = maxCharge;
    }
    
+   public void fullyDischarge()
+   {
+      curCharge = 0;
+   }
+   
    public String getSummary()
    {
       return getChargeSummary() + ", " + getShortSummary();
