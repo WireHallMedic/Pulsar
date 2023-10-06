@@ -15,12 +15,17 @@ public class InventoryPanel extends SelectionPanel
    
    public static final int DESCRIPTION_WIDTH = 25;
    
+   public static final int NORMAL_MODE = 0;
+   public static final int CHOSE_SLOT_MODE = 1;
+   
    private Player player;
    private int spacerIndex = 5;
    private boolean doDrop = false;
+   private int mode = NORMAL_MODE;
    
    public void set()
    {
+      mode = NORMAL_MODE;
       for(int x = X_ORIGIN; x < X_ORIGIN + WIDTH_TILES; x++)
       for(int y = Y_ORIGIN; y < Y_ORIGIN + HEIGHT_TILES; y++)
          setTile(x, y, ' ', TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB());
@@ -101,24 +106,38 @@ public class InventoryPanel extends SelectionPanel
       write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN, name, fgColor, bgColor, DESCRIPTION_WIDTH, 1);
       write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN + 1, summary, fgColor, bgColor, DESCRIPTION_WIDTH, 10);
       
-      String[] strArr = {"[D] to Drop, ", "[E or ENTER] to Equip, ", "[ESC] to Exit"};
-      int[] fgColorArr = {fgColor, fgColor, fgColor};
-      if(selectionIndex < spacerIndex)
+      if(mode == NORMAL_MODE)
       {
-         strArr[1] = "[E or ENTER] to Unquip, ";
-         if(player.getInventory().isFull())
+         String[] strArr = {"[D] to Drop, ", "[E or ENTER] to Equip, ", "[ESC] to Exit"};
+         int[] fgColorArr = {fgColor, fgColor, fgColor};
+         if(selectionIndex < spacerIndex)
+         {
+            strArr[1] = "[E or ENTER] to Unquip, ";
+            if(player.getInventory().isFull())
+               fgColorArr[1] = INVALID_SELECTION_COLOR.getRGB();
+         }
+         if(curSelection == null)
+         {
+            fgColorArr[0] = INVALID_SELECTION_COLOR.getRGB();
             fgColorArr[1] = INVALID_SELECTION_COLOR.getRGB();
+         }
+         int xInset = 0;
+         for(int i = 0; i < strArr.length; i++)
+         {
+            write(X_ORIGIN + xInset, Y_ORIGIN + HEIGHT_TILES - 1, strArr[i], fgColorArr[i], bgColor, WIDTH_TILES - xInset, 1);
+            xInset += strArr[i].length();
+         }
       }
-      if(curSelection == null)
+      else if(mode == CHOSE_SLOT_MODE)
       {
-         fgColorArr[0] = INVALID_SELECTION_COLOR.getRGB();
-         fgColorArr[1] = INVALID_SELECTION_COLOR.getRGB();
-      }
-      int xInset = 0;
-      for(int i = 0; i < strArr.length; i++)
-      {
-         write(X_ORIGIN + xInset, Y_ORIGIN + HEIGHT_TILES - 1, strArr[i], fgColorArr[i], bgColor, WIDTH_TILES - xInset, 1);
-         xInset += strArr[i].length();
+         String str = "";
+         if(getSelectedGear() instanceof Weapon)
+         {
+            str = "[P]rimary or [S]econdary slot? ([ESCAPE] to cancel)";
+         }
+         else
+            str = "Which gadget slot [1-" + player.getMaxGadgets() + "]? ([ESCAPE] to cancel)";
+         write(X_ORIGIN, Y_ORIGIN + HEIGHT_TILES - 1, str, ORANGE.getRGB(), bgColor, WIDTH_TILES, 1);
       }
    }
    
@@ -137,6 +156,26 @@ public class InventoryPanel extends SelectionPanel
       if(selectionIndex > spacerIndex)
          return player.getInventory().getItem(selectionIndex - spacerIndex - 1);
       return null;
+   }
+   
+   private int getAutomaticSlot(GearObj obj)
+   {
+      if(obj instanceof Weapon)
+      {
+         if(!player.hasPrimaryWeapon())
+            return 0;
+         if(!player.hasSecondaryWeapon())
+            return 1;
+      }
+      if(obj instanceof Gadget)
+      {
+         if(player.getGadgetList().size() < player.getMaxGadgets())
+            return player.getGadgetList().size();
+      }
+      if(obj instanceof Shield ||
+         obj instanceof Armor)
+         return 0;
+      return -1;
    }
    
    public void doSelection()
@@ -163,10 +202,21 @@ public class InventoryPanel extends SelectionPanel
          // equip unequipped item
          else
          {
-            player.equip(getSelectedGear(), 0);
+            int slot = getAutomaticSlot(getSelectedGear());
+            if(slot != -1)
+               player.equip(getSelectedGear(), 0);
+            else
+            {
+               mode = CHOSE_SLOT_MODE;
+               return;
+            }
          }
       }
-      
+      exitToMainGame();
+   }
+   
+   public void exitToMainGame()
+   {
       InnerPanel.setActivePanel(MainGameBGPanel.class); 
       GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
    }
@@ -182,20 +232,59 @@ public class InventoryPanel extends SelectionPanel
    @Override
    public void keyPressed(KeyEvent ke)
    {
-      switch(ke.getKeyCode())
+      if(mode == NORMAL_MODE)
       {
-         case KeyEvent.VK_I :
-         case KeyEvent.VK_ESCAPE :  InnerPanel.setActivePanel(MainGameBGPanel.class); 
-                                    GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
-                                    return;
-         case KeyEvent.VK_ENTER  :
-         case KeyEvent.VK_SPACE  :  doSelection(); 
-                                    return;
-         case KeyEvent.VK_D      :  doDrop = true;
-                                    doSelection(); 
-                                    return;
+         switch(ke.getKeyCode())
+         {
+            case KeyEvent.VK_I :
+            case KeyEvent.VK_ESCAPE :  exitToMainGame();
+                                       return;
+            case KeyEvent.VK_ENTER  :
+            case KeyEvent.VK_SPACE  :  doSelection(); 
+                                       return;
+            case KeyEvent.VK_D      :  doDrop = true;
+                                       doSelection(); 
+                                       return;
+         }
+         super.keyPressed(ke);
       }
-      super.keyPressed(ke);
+      else if(mode == CHOSE_SLOT_MODE)
+      {
+         switch(ke.getKeyCode())
+         {
+            case KeyEvent.VK_ESCAPE :  mode = NORMAL_MODE;
+                                       break;
+            case KeyEvent.VK_P  :      if(getSelectedGear() instanceof Weapon)
+                                       {
+                                          player.equip(getSelectedGear(), 0);
+                                          mode = NORMAL_MODE;
+                                          exitToMainGame();
+                                       }
+                                       break;
+            case KeyEvent.VK_S  :      if(getSelectedGear() instanceof Weapon)
+                                       {
+                                          player.equip(getSelectedGear(), 1);
+                                          mode = NORMAL_MODE;
+                                          exitToMainGame();
+                                       }
+                                       break;
+            case KeyEvent.VK_1  :
+            case KeyEvent.VK_2  :
+            case KeyEvent.VK_3  :
+            case KeyEvent.VK_4  :
+            case KeyEvent.VK_5  :      if(getSelectedGear() instanceof Gadget)
+                                       {
+                                          int slot = ke.getKeyCode() - KeyEvent.VK_1;
+                                          if(slot < player.getMaxGadgets())
+                                          {
+                                             player.equip(getSelectedGear(), slot);
+                                             mode = NORMAL_MODE;
+                                             exitToMainGame();
+                                          }
+                                       }
+                                       break;
+         }
+      }
    }
    
    public void next()

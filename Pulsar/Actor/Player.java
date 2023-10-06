@@ -64,6 +64,7 @@ public class Player extends Actor implements GUIConstants, GearConstants
    public void setSecondaryWeapon(Weapon w){secondaryWeapon = w;}
    public Weapon getPrimaryWeapon(){return weapon;}
    public Weapon getSecondaryWeapon(){return secondaryWeapon;}
+   public boolean hasPrimaryWeapon(){return weapon != null;}
    public boolean hasSecondaryWeapon(){return secondaryWeapon != null;}
    
    @Override
