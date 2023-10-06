@@ -6,7 +6,10 @@ import java.awt.event.*;
 
 public abstract class SelectionPanel extends RogueTilePanel implements GUIConstants
 {
-   
+   public static final int X_ORIGIN = 1;
+   public static final int Y_ORIGIN = 1;
+   public static final int WIDTH_TILES = TERMINAL_WIDTH_TILES - 2;
+   public static final int HEIGHT_TILES = TERMINAL_HEIGHT_TILES - 2;
    private int selectionIndex = 0;
    private String[] options = {"Unknown Option"};
    

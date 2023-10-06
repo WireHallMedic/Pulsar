@@ -21,6 +21,7 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
    private TitlePanel titlePanel;
    private HelpPanel helpPanel;
    private MapTerminalPanel mapTerminalPanel;
+   private InventoryPanel inventoryPanel;
    private static Class pendingPanelClass = null;
    
    private RogueTilePanel curPanel = null;
@@ -43,12 +44,14 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
       titlePanel = new TitlePanel();
       helpPanel = new HelpPanel();
       mapTerminalPanel = new MapTerminalPanel();
+      inventoryPanel = new InventoryPanel();
       addPanel(mainGameFGPanel);
       addPanel(mainGameBGPanel);
       addPanel(characterPanel);
       addPanel(titlePanel);
       addPanel(helpPanel);
       addPanel(mapTerminalPanel);
+      addPanel(inventoryPanel);
       
       setVisible(true);
       setCurPanel(titlePanel);
@@ -124,6 +127,8 @@ public class InnerPanel extends JPanel implements GUIConstants, ActionListener
          helpPanel.keyPressed(ke);
       if(curPanel == mapTerminalPanel)
          mapTerminalPanel.keyPressed(ke);
+      if(curPanel == inventoryPanel)
+         inventoryPanel.keyPressed(ke);
    }
    
    public void actionPerformed(ActionEvent ae)

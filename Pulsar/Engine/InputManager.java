@@ -155,6 +155,9 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
             case KeyEvent.VK_C : InnerPanel.setActivePanel(CharacterPanel.class); 
                                  GameEngine.setGameMode(GameMode.OTHER_PANEL);
                                  break;
+            case KeyEvent.VK_I : InnerPanel.setActivePanel(InventoryPanel.class); 
+                                 GameEngine.setGameMode(GameMode.OTHER_PANEL);
+                                 break;
             case KeyEvent.VK_H : InnerPanel.setActivePanel(HelpPanel.class); 
                                  GameEngine.setGameMode(GameMode.OTHER_PANEL);
                                  break;

@@ -17,10 +17,6 @@ import Pulsar.Zone.*;
 
 public class TitlePanel extends SelectionPanel implements GUIConstants
 {
-   public static final int X_ORIGIN = 1;
-   public static final int Y_ORIGIN = 1;
-   public static final int WIDTH_TILES = TERMINAL_WIDTH_TILES - 2;
-   public static final int HEIGHT_TILES = TERMINAL_HEIGHT_TILES - 2;
    public static final Color UPPER_GREY = new Color(196, 196, 196);
    public static final Color MID_GREY = new Color(128, 128, 128);
    public static final Color LOWER_GREY = new Color(64, 64, 64);
