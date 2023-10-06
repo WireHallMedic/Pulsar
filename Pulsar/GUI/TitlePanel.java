@@ -22,13 +22,12 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
    public static final Color LOWER_GREY = new Color(64, 64, 64);
    public static final Color[] STAR_GRADIENT = WSTools.getGradient(MID_GREY, WHITE, 21);
    
-   private int selectionIndex = 0;
-   private String[] options = {"Testing", "Aliens", "Pirates", "Exit"};
-   
    
    public TitlePanel()
    {
       super();
+      String[] optionList = {"Testing", "Aliens", "Pirates", "Exit"};
+      options = optionList;
    }
    
    public void doSelection()
@@ -97,6 +96,18 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
       }
    }
+   
+   
+   @Override
+   public void keyPressed(KeyEvent ke)
+   {
+      switch(ke.getKeyCode())
+      {
+         case KeyEvent.VK_ESCAPE : System.exit(0);
+      }
+      super.keyPressed(ke);
+   }
+   
    
    @Override
    public void update()
