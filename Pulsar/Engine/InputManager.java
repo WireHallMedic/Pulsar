@@ -374,6 +374,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       }
       if(arg == ' ')
       {
+         GearObj loot = LootFactory.rollLoot(LootFactory.NON_CREDIT);
          GameEngine.getZoneMap().dropGear(GameEngine.getPlayer().getMapLoc(), new Credits(10));
          GameEngine.getZoneMap().dropGear(GameEngine.getPlayer().getMapLoc(), WeaponFactory.getCarbine());
       }

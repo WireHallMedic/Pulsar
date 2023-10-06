@@ -14,15 +14,17 @@ public class InventoryPanel extends SelectionPanel
    public static final int GADGET = 4;
    
    private Player player;
+   private int spacerIndex = 5;
    
    public void set()
    {
       player = GameEngine.getPlayer();
-      int listLen = 2 + 1 + 1 + player.getMaxGadgets() + player.getInventory().getMaxSize();
+      spacerIndex = 4 + player.getMaxGadgets();
+      int listLen = spacerIndex + player.getInventory().getMaxSize() + 1;
       options = new String[listLen];
       for(int i = 0; i < listLen; i++)
       {
-         options[i] = "Pants";
+         options[i] = "";
       }
       options[PRIMARY_WEAPON] = "Primary Weapon: " + player.getPrimaryWeapon().getName();
       String str = "Secondary Weapon: ";
@@ -53,14 +55,14 @@ public class InventoryPanel extends SelectionPanel
          options[GADGET + i] = str;
       }
       Inventory inventory = player.getInventory();
-      int ySpace = GADGET + player.getMaxGadgets();
+      int ySpace = spacerIndex + 1;
       for(int i = 0; i < player.getInventory().getMaxSize(); i++)
       {
          str = "";
          if(inventory.getItem(i) != null)
             str = inventory.getItem(i).getName();
          else
-            str += "None";
+            str += "<Empty>";
          options[ySpace + i] = str;
       }
       
@@ -105,5 +107,23 @@ public class InventoryPanel extends SelectionPanel
                                    return;
       }
       super.keyPressed(ke);
+   }
+   
+   public void next()
+   {
+      selectionIndex++;
+      if(selectionIndex == spacerIndex)
+         selectionIndex++;
+      if(selectionIndex >= options.length)
+         selectionIndex = 0;
+   }
+   
+   public void previous()
+   {
+      selectionIndex--;
+      if(selectionIndex == spacerIndex)
+         selectionIndex--;
+      if(selectionIndex < 0)
+         selectionIndex = options.length - 1;
    }
 }
