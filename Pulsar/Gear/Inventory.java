@@ -79,6 +79,18 @@ public class Inventory implements GearConstants
       return list.elementAt(index);
    }
    
+   public void drop(GearObj obj)
+   {
+      for(int i = 0; i < list.size(); i++)
+      {
+         if(list.elementAt(i) == obj)
+         {
+            list.removeElementAt(i);
+            return;
+         }
+      }
+   }
+   
    public String toString()
    {
       String str = credits.getName();

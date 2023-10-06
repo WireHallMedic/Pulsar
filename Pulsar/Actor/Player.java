@@ -119,6 +119,8 @@ public class Player extends Actor implements GUIConstants, GearConstants
    
    // inventory manipulation
    ///////////////////////////////////////////////////
+   
+   // unequip item and place in inventory, ignoring max size
    public void unequip(GearObj obj)
    {
       if(obj == null)
@@ -136,9 +138,15 @@ public class Player extends Actor implements GUIConstants, GearConstants
    
    public void drop(GearObj obj)
    {
-   
+      if(obj == null)
+         return;
+      unequipItem(obj);
+      GameEngine.getZoneMap().dropGear(getMapLoc(), obj);
+      getAI().setPendingAction(ActorAction.INVENTORY_ACTION);
+      getAI().setPendingTarget(getMapLoc());
    }
    
+   // private function that strictly unequips item
    private void unequipItem(GearObj obj)
    {
       if(weapon == obj)
@@ -150,8 +158,14 @@ public class Player extends Actor implements GUIConstants, GearConstants
       if(shield == obj)
          shield = null;
       for(int i = 0; i < gadgetList.size(); i++)
+      {
          if(gadgetList.elementAt(i) == obj)
+         {
             gadgetList.removeElementAt(i);
+            break;
+         }
+      }
+      getInventory().drop(obj);
    }
    
    public void updateFoV()
