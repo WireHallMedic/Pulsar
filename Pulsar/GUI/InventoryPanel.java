@@ -6,6 +6,12 @@ import java.awt.event.*;
 
 public class InventoryPanel extends SelectionPanel
 {
+   public static final int PRIMARY_WEAPON = 0;
+   public static final int SECONDARY_WEAPON = 1;
+   public static final int ARMOR = 2;
+   public static final int SHIELD = 3;
+   public static final int GADGET = 4
+   ;
    private Player player;
    
    public void set()
@@ -14,7 +20,38 @@ public class InventoryPanel extends SelectionPanel
       int listLen = 2 + 1 + 1 + player.getMaxGadgets();
       options = new String[listLen];
       for(int i = 0; i < listLen; i++)
+      {
          options[i] = "Pants";
+      }
+      options[PRIMARY_WEAPON] = "Primary Weapon: " + player.getPrimaryWeapon().getName();
+      String str = "Secondary Weapon: ";
+      if(player.getSecondaryWeapon() != null)
+         str += player.getSecondaryWeapon().getName();
+      else
+         str += "None";
+      options[SECONDARY_WEAPON] = str;
+      str = "Armor: ";
+      if(player.hasArmor())
+         str += player.getArmor().getName();
+      else
+         str += "None";
+      options[ARMOR] = str;
+      str = "Shield: ";
+      if(player.hasShield())
+         str += player.getShield().getName();
+      else
+         str += "None";
+      options[SHIELD] = str;
+      for(int i = 0; i < player.getMaxGadgets(); i++)
+      {
+         str = "Gadget: ";
+         if(player.getGadget(i) != null)
+            str += player.getGadget(i).getName();
+         else
+            str += "None";
+         options[GADGET + i] = str;
+      }
+      
       update();
    }
    
@@ -22,23 +59,9 @@ public class InventoryPanel extends SelectionPanel
    {
       int fgColor = TERMINAL_FG_COLOR.getRGB();
       int bgColor = BG_COLOR.getRGB();
-      String secondaryWeapon = "None";
-      write(X_ORIGIN, Y_ORIGIN, "Primary Weapon: " + player.getPrimaryWeapon().getName(), fgColor, bgColor, WIDTH_TILES, 1);
-      if(player.getSecondaryWeapon() != null)
-         secondaryWeapon = player.getSecondaryWeapon().getName();
-      write(X_ORIGIN, Y_ORIGIN + 1, "Secondary Weapon: " + secondaryWeapon, fgColor, bgColor, WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 2, "Armor: " + player.getArmor().getName(), fgColor, bgColor, WIDTH_TILES, 1);
-      write(X_ORIGIN, Y_ORIGIN + 3, "Shield: " + player.getShield().getName(), fgColor, bgColor, WIDTH_TILES, 1);
-      for(int i = 0; i < player.getMaxGadgets(); i++)
-      {
-         String gadgetStr = "<None>";
-         if(player.getGadget(i) != null)
-            gadgetStr = player.getGadget(i).getName();
-         write(X_ORIGIN, Y_ORIGIN + 4 + i, gadgetStr, fgColor, bgColor, gadgetStr.length(), 1);
-      }
       for(int i = 0; i < options.length; i++)
       {
-         write(X_ORIGIN, Y_ORIGIN + 5 + player.getMaxGadgets() + i, options[i], fgColor, bgColor, options[i].length(), 1);
+         write(X_ORIGIN, Y_ORIGIN + 2 + i, options[i], fgColor, bgColor, options[i].length(), 1);
       }
    }
    
