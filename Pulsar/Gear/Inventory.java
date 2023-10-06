@@ -54,6 +54,8 @@ public class Inventory implements GearConstants
    
    public void add(GearObj newGear)
    {
+      if(newGear == null)
+         return;
       if(newGear instanceof Credits)
       {
          Credits newCredits = (Credits)newGear;

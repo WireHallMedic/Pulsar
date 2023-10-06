@@ -21,6 +21,10 @@ public class InventoryPanel extends SelectionPanel
    
    public void set()
    {
+      for(int x = X_ORIGIN; x < X_ORIGIN + WIDTH_TILES; x++)
+      for(int y = Y_ORIGIN; y < Y_ORIGIN + HEIGHT_TILES; y++)
+         setTile(x, y, ' ', TERMINAL_FG_COLOR.getRGB(), BG_COLOR.getRGB());
+         
       player = GameEngine.getPlayer();
       spacerIndex = 4 + player.getMaxGadgets();
       int listLen = spacerIndex + player.getInventory().getMaxSize() + 1;

@@ -125,7 +125,7 @@ public class Player extends Actor implements GUIConstants, GearConstants
    {
       if(obj == null)
          return;
-      unequipItem(obj);
+      removeItem(obj);
       getInventory().add(obj);
       getAI().setPendingAction(ActorAction.INVENTORY_ACTION);
       getAI().setPendingTarget(getMapLoc());
@@ -133,21 +133,56 @@ public class Player extends Actor implements GUIConstants, GearConstants
    
    public void equip(GearObj obj, int slot)
    {
-   
+      if(obj == null)
+         return;
+      removeItem(obj);
+      if(obj instanceof Weapon)
+      {
+         if(slot == 0)
+         {
+            getInventory().add(weapon);
+            weapon = (Weapon)obj;
+         }
+         if(slot == 1)
+         {
+            getInventory().add(secondaryWeapon);
+            secondaryWeapon = (Weapon)obj;
+         }
+      }
+      if(obj instanceof Armor)
+      {
+         getInventory().add(armor);
+         armor = (Armor)obj;
+      }
+      if(obj instanceof Shield)
+      {
+         getInventory().add(shield);
+         shield = (Shield)obj;
+      }
+      if(obj instanceof Gadget)
+      {
+         if(gadgetList.size() >= getMaxGadgets())
+         {
+            getInventory().add(gadgetList.elementAt(slot));
+            gadgetList.set(slot, (Gadget)obj);
+         }
+         else
+            gadgetList.add((Gadget)obj);
+      }
    }
    
    public void drop(GearObj obj)
    {
       if(obj == null)
          return;
-      unequipItem(obj);
+      removeItem(obj);
       GameEngine.getZoneMap().dropGear(getMapLoc(), obj);
       getAI().setPendingAction(ActorAction.INVENTORY_ACTION);
       getAI().setPendingTarget(getMapLoc());
    }
    
    // private function that strictly unequips item
-   private void unequipItem(GearObj obj)
+   private void removeItem(GearObj obj)
    {
       if(weapon == obj)
          weapon = null;
