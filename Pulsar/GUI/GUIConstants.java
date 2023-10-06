@@ -63,6 +63,7 @@ public interface GUIConstants
    public static final Color SENSOR_COLOR = LIGHT_GREEN;
    public static final Color MEMORY_COLOR = SENSOR_COLOR.darker().darker();
    public static final Color OUT_OF_SIGHT_COLOR = DARK_GREY.darker().darker().darker();
+   public static final Color INVALID_SELECTION_COLOR = DARK_GREY;
    
    // gradients
    public static final Color[] FIRE_COLOR_GRADIENT = WSTools.getGradient(YELLOW, RED, 21);

@@ -95,12 +95,25 @@ public class InventoryPanel extends SelectionPanel
       write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN, name, fgColor, bgColor, DESCRIPTION_WIDTH, 1);
       write(X_ORIGIN + WIDTH_TILES - DESCRIPTION_WIDTH, Y_ORIGIN + 1, summary, fgColor, bgColor, DESCRIPTION_WIDTH, 10);
       
-      String str = "";
+      String[] strArr = {"[D] to Drop, ", "[E or ENTER] to Equip, ", "[ESC] to Exit"};
+      int[] fgColorArr = {fgColor, fgColor, fgColor};
+      int xInset = 0;
       if(selectionIndex < spacerIndex)
-         str = "[D] to Drop, [E or ENTER] to Unquip, [ESC] to Exit";
-      if(selectionIndex > spacerIndex)
-         str ="[D] to Drop, [E or ENTER] to Equip, [ESC] to Exit";
-      write(X_ORIGIN, Y_ORIGIN + HEIGHT_TILES - 1, str, fgColor, bgColor, WIDTH_TILES, 1);
+      {
+         strArr[1] = "[E or ENTER] to Unquip, ";
+         if(player.getInventory().isFull())
+            fgColorArr[1] = INVALID_SELECTION_COLOR.getRGB();
+      }
+      if(curSelection == null)
+      {
+         fgColorArr[0] = INVALID_SELECTION_COLOR.getRGB();
+         fgColorArr[1] = INVALID_SELECTION_COLOR.getRGB();
+      }
+      write(X_ORIGIN + xInset, Y_ORIGIN + HEIGHT_TILES - 1, strArr[0], fgColorArr[0], bgColor, WIDTH_TILES - xInset, 1);
+      xInset += strArr[0].length();
+      write(X_ORIGIN + xInset, Y_ORIGIN + HEIGHT_TILES - 1, strArr[1], fgColorArr[1], bgColor, WIDTH_TILES - xInset, 1);
+      xInset += strArr[1].length();
+      write(X_ORIGIN + xInset, Y_ORIGIN + HEIGHT_TILES - 1, strArr[2], fgColorArr[2], bgColor, WIDTH_TILES - xInset, 1);
    }
    
    public GearObj getSelectedGear()
