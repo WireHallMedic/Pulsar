@@ -164,13 +164,13 @@ public class GadgetFactory implements ActorConstants, GearConstants
       if(rarity == LootRarity.UNCOMMON)
       {
          g.setName(g.getName() + " MkII");
-         g.setIterations(2);
+         g.setIntensity(2);
          g.setDescription("Deploys two clones of you, which explodes on death.");
       }
       if(rarity == LootRarity.RARE)
       {
          g.setName(g.getName() + " MkIII");
-         g.setIterations(3);
+         g.setIntensity(3);
          g.setDescription("Deploys three clones of you, which explodes on death. That's a lot of exploding clones!");
       }
       return g;
@@ -189,13 +189,13 @@ public class GadgetFactory implements ActorConstants, GearConstants
       if(rarity == LootRarity.UNCOMMON)
       {
          g.setName(g.getName() + " MkII");
-         g.setIterations(2);
+         g.setIntensity(2);
          g.setDescription("Depolys a stationary gun turret with a random gun upgrade.");
       }
       if(rarity == LootRarity.RARE)
       {
          g.setName(g.getName() + " MkIII");
-         g.setIterations(3);
+         g.setIntensity(3);
          g.setDescription("Depolys a stationary gun turret with three random gun upgrades.");
       }
       return g;
@@ -216,13 +216,13 @@ public class GadgetFactory implements ActorConstants, GearConstants
       if(rarity == LootRarity.UNCOMMON)
       {
          g.setName(g.getName() + " MkII");
-         g.setIterations(2);
+         g.setIntensity(2);
          g.setDescription("Depolys a combat drone, who follows you and fires on enemies. The drone has a random gun upgrade.");
       }
       if(rarity == LootRarity.RARE)
       {
          g.setName(g.getName() + " MkIII");
-         g.setIterations(3);
+         g.setIntensity(3);
          g.setDescription("Depolys a combat drone, who follows you and fires on enemies. The drone has three random gun upgrades.");
       }
       return g;
@@ -262,6 +262,18 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setTargetsSelf(true);
       g.setSpecialEffect(GadgetSpecialEffect.RECHARGE);
       g.setDescription("Immedeatly fully charges your shield and weapons.");
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.setIntensity(2);
+         g.setDescription("Immedeatly overcharges your shield and weapons to 150%.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.setIntensity(3);
+         g.setDescription("Immedeatly overcharges your shield and weapons to 200%.");
+      }
       return g;
    }
 }
