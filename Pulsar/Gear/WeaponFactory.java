@@ -199,6 +199,15 @@ public class WeaponFactory implements GearConstants, ActorConstants
       return w;
    }
    
+   public static void applyRandomUpgrade(Weapon weapon)
+   {
+      WeightedRandomizer table = new WeightedRandomizer(WeaponUpgrade.values());
+      WeaponUpgrade upgrade = (WeaponUpgrade)table.roll();
+      while(!upgrade.canApply(weapon))
+         upgrade = (WeaponUpgrade)table.roll();
+      addUpgrade(weapon, upgrade);
+   }
+   
    public static void addUpgrade(Weapon weapon, WeaponUpgrade upgrade)
    {
       switch(upgrade)
@@ -266,11 +275,7 @@ public class WeaponFactory implements GearConstants, ActorConstants
          upgrades++;
       for(int i = 0; i < upgrades; i++)
       {
-         WeightedRandomizer table = new WeightedRandomizer(WeaponUpgrade.values());
-         WeaponUpgrade upgrade = (WeaponUpgrade)table.roll();
-         while(!upgrade.canApply(weapon))
-            upgrade = (WeaponUpgrade)table.roll();
-         addUpgrade(weapon, upgrade);
+         applyRandomUpgrade(weapon);
       }
       return weapon;
    }

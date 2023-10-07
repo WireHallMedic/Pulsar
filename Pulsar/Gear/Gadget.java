@@ -19,6 +19,8 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    private StatusEffect passiveStatusEffect;
    private boolean passiveOnly;
    private boolean placeAdjacent;
+   private double statusEffectDuration;
+   private int iterations;
 
 
 	public int getMaxUses(){return maxUses;}
@@ -36,6 +38,8 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    public boolean hasPassiveStatusEffect(){return passiveStatusEffect != null;}
    public boolean isPassiveOnly(){return passiveOnly;}
    public boolean getPlaceAdjacent(){return placeAdjacent;}
+   public double getStatusEffectDuration(){return statusEffectDuration;}
+   public int getIterations(){return iterations;}
 
 
 	public void setMaxUses(int m){maxUses = m;}
@@ -49,6 +53,8 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
    public void setPassiveStatusEffect(StatusEffect se){passiveStatusEffect = se;}
    public void setPassiveOnly(boolean po){passiveOnly = po;}
    public void setPlaceAdjacent(boolean pa){placeAdjacent = pa;}
+   public void setStatusEffectDuration(double sed){statusEffectDuration = sed;}
+   public void setIterations(int i){iterations = i;}
    
 
 
@@ -66,6 +72,8 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
       fullyCharge();
       passiveOnly = false;
       placeAdjacent = false;
+      statusEffectDuration = 1.0;
+      iterations = 1;
    }
    
    public String getSummary()
@@ -103,7 +111,11 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
       {
          Actor a = GameEngine.getActorAt(target);
          if(a != null)
-            a.add(StatusEffectFactory.getEffect(statusEffectType));
+         {
+            StatusEffect se = StatusEffectFactory.getEffect(statusEffectType);
+            se.setRemainingDuration((int)(se.getRemainingDuration() * getStatusEffectDuration()));
+            a.add(se);
+         }
       }
       if(hasWeaponEffect())
       {
@@ -121,13 +133,16 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
          }
          if(getSpecialEffect() == GadgetSpecialEffect.HOLOCLONE)
          {
-            Actor clone = ActorFactory.getHoloclone();
-            target = GameEngine.getActualTarget(user.getMapLoc(), target);
-            clone.setAllLocs(GameEngine.getClosestEmptyTile(target));
-            clone.setAlertness(Alertness.ALERT);
-            clone.getAI().setTeam(user.getAI().getTeam());
-            clone.getAI().setLeader(user);
-            GameEngine.add(clone);
+            for(int i = 0; i < getIterations(); i++)
+            {
+               Actor clone = ActorFactory.getHoloclone();
+               target = GameEngine.getActualTarget(user.getMapLoc(), target);
+               clone.setAllLocs(GameEngine.getClosestEmptyTile(target));
+               clone.setAlertness(Alertness.ALERT);
+               clone.getAI().setTeam(user.getAI().getTeam());
+               clone.getAI().setLeader(user);
+               GameEngine.add(clone);
+            }
          }
          if(getSpecialEffect() == GadgetSpecialEffect.TURRET)
          {
@@ -137,6 +152,11 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
             turret.getAI().setLeader(user);
             turret.getAI().setTeam(user.getAI().getTeam());
             turret.setAlertness(Alertness.ALERT);
+            if(getIterations() > 1)
+            {
+               for(int i = 1; i < iterations; i++)
+                  WeaponFactory.applyRandomUpgrade(turret.getWeapon());
+            }
             GameEngine.add(turret);
          }
          if(getSpecialEffect() == GadgetSpecialEffect.COMBAT_DRONE)
@@ -147,6 +167,11 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
             drone.getAI().setTeam(user.getAI().getTeam());
             drone.getAI().setLeader(user);
             drone.setAlertness(Alertness.ALERT);
+            if(getIterations() > 1)
+            {
+               for(int i = 1; i < iterations; i++)
+                  WeaponFactory.applyRandomUpgrade(drone.getWeapon());
+            }
             GameEngine.add(drone);
          }
          if(getSpecialEffect() == GadgetSpecialEffect.NAPALM)

@@ -54,7 +54,8 @@ public class GadgetFactory implements ActorConstants, GearConstants
       }
    }
    
-   public static Gadget getAdrenalInjector()
+   public static Gadget getAdrenalInjector(){return getAdrenalInjector(LootRarity.COMMON);}
+   public static Gadget getAdrenalInjector(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Adrenal Injector");
@@ -62,10 +63,23 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setStatusEffectType(StatusEffectType.HASTE);
       g.setTargetsSelf(true);
       g.setDescription("Temporarily increases your speed. Speed can be limited by heavy armor.");
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.setStatusEffectDuration(2.0);
+         g.setDescription(g.getDescription() + " Extended duration.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.setStatusEffectDuration(3.0);
+         g.setDescription(g.getDescription() + " Greatly extended duration.");
+      }
       return g;
    }
    
-   public static Gadget getGrenades()
+   public static Gadget getGrenades(){return getGrenades(LootRarity.COMMON);}
+   public static Gadget getGrenades(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Grenades");
@@ -73,10 +87,23 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setWeaponEffect(WeaponFactory.getExplodingBarrel());
       g.setTargetsSelf(false);
       g.setDescription("Explodes where you throw it.");
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 1.5));
+         g.setDescription(g.getDescription() + " Improved damage.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 2.0));
+         g.setDescription(g.getDescription() + " Greatly improved damage.");
+      }
       return g;
    }
    
-   public static Gadget getNapalmGrenades()
+   public static Gadget getNapalmGrenades(){return getNapalmGrenades(LootRarity.COMMON);}
+   public static Gadget getNapalmGrenades(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Napalm Grenades");
@@ -85,10 +112,23 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setTargetsSelf(false);
       g.setDescription("Explodes where you throw it, igniting the area.");
       g.setSpecialEffect(GadgetSpecialEffect.NAPALM);
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 1.5));
+         g.setDescription(g.getDescription() + " Improved damage.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 2.0));
+         g.setDescription(g.getDescription() + " Greatly improved damage.");
+      }
       return g;
    }
    
-   public static Gadget getCryoGrenades()
+   public static Gadget getCryoGrenades(){return getCryoGrenades(LootRarity.COMMON);}
+   public static Gadget getCryoGrenades(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Cryo Grenades");
@@ -96,10 +136,23 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setWeaponEffect(WeaponFactory.getCryoExplosion());
       g.setTargetsSelf(false);
       g.setDescription("Explodes where you throw it, freezing terrain and creatures in the area.");
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 1.5));
+         g.setDescription(g.getDescription() + " Improved damage.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 2.0));
+         g.setDescription(g.getDescription() + " Greatly improved damage.");
+      }
       return g;
    }
    
-   public static Gadget getHoloclone()
+   public static Gadget getHoloclone(){return getHoloclone(LootRarity.COMMON);}
+   public static Gadget getHoloclone(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Exploding Holoclone");
@@ -108,10 +161,23 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setSpecialEffect(GadgetSpecialEffect.HOLOCLONE);
       g.setDescription("Deploys a clone of you, which explodes on death.");
       g.setPlaceAdjacent(true);
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.setIterations(2);
+         g.setDescription("Deploys two clones of you, which explodes on death.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.setIterations(3);
+         g.setDescription("Deploys three clones of you, which explodes on death. That's a lot of exploding clones!");
+      }
       return g;
    }
    
-   public static Gadget getTurret()
+   public static Gadget getTurret(){return getTurret(LootRarity.COMMON);}
+   public static Gadget getTurret(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Portable Turret");
@@ -120,10 +186,23 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setSpecialEffect(GadgetSpecialEffect.TURRET);
       g.setDescription("Depolys a stationary gun turret.");
       g.setPlaceAdjacent(true);
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.setIterations(2);
+         g.setDescription("Depolys a stationary gun turret with a random gun upgrade.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.setIterations(3);
+         g.setDescription("Depolys a stationary gun turret with three random gun upgrades.");
+      }
       return g;
    }
    
-   public static Gadget getCombatDrone()
+   public static Gadget getCombatDrone(){return getCombatDrone(LootRarity.COMMON);}
+   public static Gadget getCombatDrone(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Combat Drone");
@@ -134,10 +213,23 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setPlaceAdjacent(true);
       g.setMaxUses(1);
       g.fullyCharge();
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.setIterations(2);
+         g.setDescription("Depolys a combat drone, who follows you and fires on enemies. The drone has a random gun upgrade.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.setIterations(3);
+         g.setDescription("Depolys a combat drone, who follows you and fires on enemies. The drone has three random gun upgrades.");
+      }
       return g;
    }
    
-   public static Gadget getMotionSensor()
+   public static Gadget getMotionSensor(){return getMotionSensor(LootRarity.COMMON);}
+   public static Gadget getMotionSensor(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Motion Sensor");
@@ -149,7 +241,8 @@ public class GadgetFactory implements ActorConstants, GearConstants
       return g;
    }
    
-   public static Gadget getAirSupply()
+   public static Gadget getAirSupply(){return getAirSupply(LootRarity.COMMON);}
+   public static Gadget getAirSupply(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Portable Air Supply");
@@ -160,7 +253,8 @@ public class GadgetFactory implements ActorConstants, GearConstants
       return g;
    }
    
-   public static Gadget getQuickCharger()
+   public static Gadget getQuickCharger(){return getQuickCharger(LootRarity.COMMON);}
+   public static Gadget getQuickCharger(LootRarity rarity)
    {
       Gadget g = new Gadget();
       g.setName("Quick Charger");
