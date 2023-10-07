@@ -39,8 +39,8 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public int getRoomWidth(){return roomWidth;}
    public int getRoomHeight(){return roomHeight;}
    
-   public ZoneBuilder(RoomTemplateManager openTM, RoomTemplateManager closedTM,
-                      RoomTemplateManager corridorTM, ObstacleTemplateManager obstacleTM, RoomTemplateManager startTM)
+   public ZoneBuilder(RoomTemplateManager openTM, RoomTemplateManager closedTM, RoomTemplateManager corridorTM,
+                      ObstacleTemplateManager obstacleTM, RoomTemplateManager startTM)
    {
       super(getDefaultVector());
       openTemplateManager = openTM;
@@ -61,31 +61,15 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       RoomTemplate rt = openTemplateManager.random(RoomTemplate.RoomTemplateType.BLOCK);
       roomWidth = rt.getWidth();
       roomHeight = rt.getHeight();
-    //  setPassArray();
       triggerList = new Vector<ButtonTrigger>();
-    //  generateRooms();
-    //  cleanUpStruts();
-    //  noteExit();
       initializePassArray();
       setCriticalPath();
-      for(int y = 0; y < height; y++)
-      {
-         for(int x = 0; x < width; x++)
-         {
-            if(criticalPath[x][y])
-               System.out.print(".");
-            else
-               System.out.print("#");
-         }
-         System.out.println();
-      }
-      System.out.println("Start = " + startRoom);
-      System.out.println("Boss  = " + bossRoom);
       setRoomTypes();
       addNonCriticalRooms();
       generateRooms();
       cleanUpStruts();
-      print();
+      addCrates(50);
+      addBossCrates(5);
    }
    
    public ZoneBuilder(ZoneBuilder that)
@@ -524,6 +508,58 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       return true;
    }
    
+   private void addCrates(int numOfCrates)
+   {
+      int cratesPlaced = 0;
+      while(cratesPlaced < numOfCrates)
+      {
+         int x = GameEngine.randomInt(0, tileMap.length);
+         int y = GameEngine.randomInt(0, tileMap[0].length);
+         if(canPlaceCrate(x, y))
+         {
+            tileMap[x][y] = TEMPLATE_CRATE;
+            cratesPlaced++;
+         }
+      }
+   }
+   
+   private void addBossCrates(int numOfCrates)
+   {
+      int cratesPlaced = 0;
+      int xOrigin = bossRoom.x * (roomWidth - 1);
+      int yOrigin = bossRoom.y * (roomHeight - 1);
+      while(cratesPlaced < numOfCrates)
+      {
+         int x = GameEngine.randomInt(xOrigin, xOrigin + roomWidth);
+         int y = GameEngine.randomInt(yOrigin, yOrigin + roomHeight);
+         if(canPlaceCrate(x, y))
+         {
+            tileMap[x][y] = TEMPLATE_LOOT_CRATE;
+            cratesPlaced++;
+         }
+      }
+   }
+   
+   // crates can be place on clear, not adjacent to a door, and not with two opposite non-clear tiles adjacent
+   private boolean canPlaceCrate(int x, int y)
+   {
+      // must be on clear
+      if(tileMap[x][y] != TEMPLATE_CLEAR)
+         return false;
+         
+      // must not be adjacent to a door
+      if(tileMap[x - 1][y] == TEMPLATE_DOOR || tileMap[x + 1][y] == TEMPLATE_DOOR ||
+         tileMap[x][y - 1] == TEMPLATE_DOOR || tileMap[x][y + 1] == TEMPLATE_DOOR)
+         return false;
+      
+      // must not block a choke point
+      if((tileMap[x - 1][y] != TEMPLATE_CLEAR && tileMap[x + 1][y] != TEMPLATE_CLEAR) ||
+         (tileMap[x][y - 1] != TEMPLATE_CLEAR && tileMap[x][y + 1] != TEMPLATE_CLEAR))
+         return false;
+         
+      return true;
+   }
+   
    @Override
    public char getCell(int x, int y)
    {
@@ -547,6 +583,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public static void main(String[] args)
    {
       ZoneBuilder zb = new ZoneBuilder();
+      zb.print();
    }
 
 }

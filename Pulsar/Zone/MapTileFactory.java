@@ -61,6 +61,7 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          case TEMPLATE_WATER_BARREL       : return getWaterBarrel();
          case TEMPLATE_EXPLODING_BARREL   : return getExplodingBarrel();
          case TEMPLATE_CRATE              : return getCrate();
+         case TEMPLATE_LOOT_CRATE         : return getLootCrate();
          case TEMPLATE_TABLE              : return getTile(TileType.LOW_WALL);
          case TEMPLATE_RUBBLE             : return getTile(TileType.RUBBLE);
          case TEMPLATE_WATER              : return getWater();
@@ -116,7 +117,16 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
    
    public static Crate getCrate()
    {
-      return new Crate(BROWN.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB());
+      return new Crate(WOOD_COLOR.getRGB(), DEFAULT_TILE_BG_COLOR.getRGB());
+   }
+   
+   public static Crate getLootCrate()
+   {
+      Crate crate = getCrate();
+      crate.setFGColor(LOOT_CRATE_COLOR.getRGB());
+      crate.setLootChance(1.0);
+	   crate.setNonCreditLoot(true);
+      return crate;
    }
    
    public static MapTile getBarrel()
