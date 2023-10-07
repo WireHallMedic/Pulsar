@@ -42,7 +42,7 @@ public class ZoneMap implements ZoneConstants, GUIConstants
    public Vector<Coord> getIceList(){return iceList;}
    public Vector<Coord> getAutomaticDoorList(){return automaticDoorList;}
    public Vector<ButtonTrigger> getButtonTriggerList(){return buttonTriggerList;}
-   public Coord getStartingLoc(){return new Coord(exit);}
+   public Coord getExit(){return new Coord(exit);}
 
 
 	public void setWidth(int w){width = w;}

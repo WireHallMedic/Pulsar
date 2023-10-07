@@ -56,7 +56,7 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
       {
          GameEngine engine = new GameEngine();
          ZoneTemplateManager ztm = new ZoneTemplateManager();
-         ZoneMap map = ZoneMapFactory.buildFromTemplates(ztm.random(), ZoneConstants.TileType.VACUUM);
+         ZoneMap map = ZoneMapFactory.buildFromTemplates(new ZoneBuilder(), ZoneConstants.TileType.VACUUM);
          Zone zone = new Zone("Random Aliens", -1, map);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
@@ -73,7 +73,7 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
                continueF = false;
             }
          }
-         p.setAllLocs(xStart, yStart);
+         p.setAllLocs(map.getExit());
          engine.setPlayer(p);
          ActorFactory.populateWithAliens(zone, p.getMapLoc());
          engine.begin();
@@ -84,11 +84,11 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
       {
          GameEngine engine = new GameEngine();
          ZoneTemplateManager ztm = new ZoneTemplateManager();
-         ZoneMap map = ZoneMapFactory.buildFromTemplates(ztm.random(), ZoneConstants.TileType.VACUUM);
+         ZoneMap map = ZoneMapFactory.buildFromTemplates(new ZoneBuilder(), ZoneConstants.TileType.VACUUM);
          Zone zone = new Zone("Random Pirates", -1, map);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
-         p.setAllLocs(2, 12);
+         p.setAllLocs(map.getExit());
          engine.setPlayer(p);
          ActorFactory.populateWithPirates(zone, p.getMapLoc());
          engine.begin();

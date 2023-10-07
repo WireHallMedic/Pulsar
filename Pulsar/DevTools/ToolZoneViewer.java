@@ -25,7 +25,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    private JRadioButton wallButton;
    private ButtonGroup borderGroup;
    
-   private ZoneTemplate zoneTemplate;
+   private ZoneBuilder zoneBuilder;
    private ZoneMap zoneMap;
    
    
@@ -138,31 +138,31 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    
    public void rerollAll()
    {
-      zoneTemplate = ZoneTemplate.getDemo();
-      zoneTemplate.setObstacles();
-      zoneTemplate.process();
-      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate, getOOBType());
+      zoneBuilder = new ZoneBuilder();
+      zoneBuilder.setObstacles();
+      zoneBuilder.process();
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneBuilder, getOOBType());
       drawMap();
    }
    
    public void rerollBorder()
    {
-      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate, getOOBType());
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneBuilder, getOOBType());
       drawMap();
    }
    
    public void rerollProbs()
    {
-      zoneTemplate.process();
-      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate, getOOBType());
+      zoneBuilder.process();
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneBuilder, getOOBType());
       drawMap();
    }
    
    public void rerollObstacles()
    {
-      zoneTemplate.setObstacles();
-      zoneTemplate.process();
-      zoneMap = ZoneMapFactory.buildFromTemplates(zoneTemplate, getOOBType());
+      zoneBuilder.setObstacles();
+      zoneBuilder.process();
+      zoneMap = ZoneMapFactory.buildFromTemplates(zoneBuilder, getOOBType());
       drawMap();
    }
       

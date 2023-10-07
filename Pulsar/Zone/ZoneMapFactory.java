@@ -58,21 +58,24 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
       }
    }
    
-   public static ZoneMap buildFromTemplates(ZoneTemplate zoneTemplate, TileType oobTile)
+   public static ZoneMap buildFromTemplates(ZoneBuilder zoneBuilder, TileType oobTile)
    {
-      char[][] charMap = zoneTemplate.getTileMap();
+      char[][] charMap = zoneBuilder.getTileMap();
       int w = charMap.length + 2;
       int h = charMap[0].length + 2;
       ZoneMap map = new ZoneMap(w, h, MapTileFactory.getTile(oobTile));
       map.setOOBTile(MapTileFactory.getTile(oobTile));
       for(int x = 0; x < charMap.length; x++)
       for(int y = 0; y < charMap[0].length; y++)
-         map.setTile(x + 1, y + 1, MapTileFactory.getTileFromTemplate(charMap[x][y], oobTile));
-      
-      map.setExit(zoneTemplate.getExit());
-      if(zoneTemplate.getTriggerList() != null)
       {
-         for(ButtonTrigger trigger : zoneTemplate.getTriggerList())
+         map.setTile(x + 1, y + 1, MapTileFactory.getTileFromTemplate(charMap[x][y], oobTile));
+         if(map.getTile(x + 1, y + 1).getIconIndex() == TileType.EXIT.iconIndex)
+            map.setExit(new Coord(x + 1, y + 1));
+      }
+      
+      if(zoneBuilder.getTriggerList() != null)
+      {
+         for(ButtonTrigger trigger : zoneBuilder.getTriggerList())
          {
             trigger.shift(1, 1); // 'cause we added the border
             if(trigger.getButtonAction() == null)
