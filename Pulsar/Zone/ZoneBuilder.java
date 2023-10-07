@@ -28,7 +28,6 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    private Vector<ButtonTrigger> triggerList;
    private int roomWidth;
    private int roomHeight;
-   private Coord exit;
    private Coord startRoom;
    private Coord bossRoom;
    
@@ -39,7 +38,6 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public Vector<ButtonTrigger> getTriggerList(){return triggerList;}
    public int getRoomWidth(){return roomWidth;}
    public int getRoomHeight(){return roomHeight;}
-   public Coord getExit(){return exit;}
    
    public ZoneBuilder(RoomTemplateManager openTM, RoomTemplateManager closedTM,
                       RoomTemplateManager corridorTM, ObstacleTemplateManager obstacleTM, RoomTemplateManager startTM)
@@ -290,17 +288,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       return adjRoomList;
    }
    
-   //////////////////////
-   
-   public void noteExit()
-   {
-      exit = null;
-      for(int x = 0; x < tileMap.length; x++)
-      for(int y = 0; y < tileMap[0].length; y++)
-         if(tileMap[x][y] == TEMPLATE_EXIT)
-            exit = new Coord(x, y);
-   }
-   
+
    public void generateRooms()
    {
       baseRoomTemplate = new RoomTemplate[width][height];
