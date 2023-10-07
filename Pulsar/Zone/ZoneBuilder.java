@@ -22,6 +22,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    private ObstacleTemplateManager obstacleTemplateManager;
    private RoomTemplateManager startTemplateManager;
    private boolean[][][] passArray;
+   private boolean[][] criticalPath;
    private RoomTemplate[][] baseRoomTemplate;
    private RoomTemplate[][] rolledRoomTemplate;
    private char[][] tileMap;
@@ -29,6 +30,8 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    private int roomWidth;
    private int roomHeight;
    private Coord exit;
+   private Coord startRoom;
+   private Coord bossRoom;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
    public RoomTemplate getBaseRoomTemplate(int x, int y){return baseRoomTemplate[x][y];}
@@ -61,11 +64,28 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       RoomTemplate rt = openTemplateManager.random(RoomTemplate.RoomTemplateType.BLOCK);
       roomWidth = rt.getWidth();
       roomHeight = rt.getHeight();
-      setPassArray();
+    //  setPassArray();
       triggerList = new Vector<ButtonTrigger>();
+    //  generateRooms();
+    //  cleanUpStruts();
+    //  noteExit();
+      initializePassArray();
+      setCriticalPath();
+      for(int y = 0; y < height; y++)
+      {
+         for(int x = 0; x < width; x++)
+         {
+            if(criticalPath[x][y])
+               System.out.print(".");
+            else
+               System.out.print("#");
+         }
+         System.out.println();
+      }
+      System.out.println("Start = " + startRoom);
+      System.out.println("Boss  = " + bossRoom);
       generateRooms();
-      cleanUpStruts();
-      noteExit();
+      print();
    }
    
    public ZoneBuilder(ZoneBuilder that)
@@ -92,6 +112,100 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          vect.add(str);
       }
       return vect;  
+   }
+   
+   private void setCriticalPath()
+   {
+      criticalPath = new boolean[width][height];
+      int xLoc = 0;
+      int yLoc = GameEngine.randomInt(0, 5);
+      boolean canGoUp;
+      boolean canGoDown;
+      startRoom = new Coord(xLoc, yLoc);
+      criticalPath[startRoom.x][startRoom.y] = true;
+      boolean continueF = true;
+      while(continueF)
+      {
+         int oldX = xLoc;
+         int oldY = yLoc;
+         canGoUp = yLoc > 0 && !criticalPath[xLoc][yLoc - 1];
+         canGoDown = yLoc < height - 1 && !criticalPath[xLoc][yLoc + 1];
+         if(canGoUp && canGoDown)
+         {
+            switch(GameEngine.randomInt(0, 3))
+            {
+               case 0 : yLoc++; break;
+               case 1 : yLoc--; break;
+               case 2 : xLoc++; break;
+            }
+         }
+         else if(canGoUp)
+         {
+            switch(GameEngine.randomInt(0, 3))
+            {
+               case 0 : 
+               case 1 : yLoc--; break;
+               case 2 : xLoc++; break;
+            }
+         }
+         else if(canGoDown)
+         {
+            switch(GameEngine.randomInt(0, 3))
+            {
+               case 0 : 
+               case 1 : yLoc++; break;
+               case 2 : xLoc++; break;
+            }
+         }
+         else
+         {
+            xLoc++;
+         }
+         if(xLoc == criticalPath.length)
+         {
+            bossRoom = new Coord(xLoc - 1, yLoc);
+            continueF = false;
+         }
+         else
+         {
+            criticalPath[xLoc][yLoc] = true;
+            addPassage(oldX, oldY, xLoc, yLoc);
+         }
+      }
+   }
+      
+   public void initializePassArray()
+   {
+      passArray = new boolean[width][height][4];
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         boolean[] defaultArr = {false, false, false, false};
+      }
+   }
+   
+   public void addPassage(int x1, int y1, int x2, int y2)
+   {
+      if(x1 < x2)
+      {
+         passArray[x1][y1][EAST] = true;
+         passArray[x2][y2][WEST] = true;
+      }
+      if(x1 > x2)
+      {
+         passArray[x1][y1][WEST] = true;
+         passArray[x2][y2][EAST] = true;
+      }
+      if(y1 < y2)
+      {
+         passArray[x1][y1][SOUTH] = true;
+         passArray[x2][y2][NORTH] = true;
+      }
+      if(y1 > y2)
+      {
+         passArray[x1][y1][NORTH] = true;
+         passArray[x2][y2][SOUTH] = true;
+      }
    }
    
    public void noteExit()
