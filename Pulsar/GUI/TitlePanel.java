@@ -55,7 +55,6 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
       if(options[selectionIndex].equals("Aliens"))
       {
          GameEngine engine = new GameEngine();
-         ZoneTemplateManager ztm = new ZoneTemplateManager();
          ZoneMap map = ZoneMapFactory.buildFromTemplates(new ZoneBuilder(), ZoneConstants.TileType.VACUUM);
          Zone zone = new Zone("Random Aliens", -1, map);
          GameEngine.setCurZone(zone);
@@ -83,7 +82,6 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
       if(options[selectionIndex].equals("Pirates"))
       {
          GameEngine engine = new GameEngine();
-         ZoneTemplateManager ztm = new ZoneTemplateManager();
          ZoneMap map = ZoneMapFactory.buildFromTemplates(new ZoneBuilder(), ZoneConstants.TileType.VACUUM);
          Zone zone = new Zone("Random Pirates", -1, map);
          GameEngine.setCurZone(zone);

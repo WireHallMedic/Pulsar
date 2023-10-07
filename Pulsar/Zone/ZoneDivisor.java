@@ -5,7 +5,7 @@ import java.util.*;
 
 public class ZoneDivisor implements ZoneConstants
 {
-   private ZoneTemplate template;
+   private ZoneBuilder template;
    private char[][] tileMap;
    private boolean[][] floodMap;
    private int[][] regionMap;
@@ -19,7 +19,7 @@ public class ZoneDivisor implements ZoneConstants
    public Vector<Region> getRegionList(){return regionList;}
    public char[][] getTileMap(){return tileMap;}
    
-   public ZoneDivisor(ZoneTemplate zt)
+   public ZoneDivisor(ZoneBuilder zt)
    {
       template = zt;
       tileMap = template.getTileMap();
@@ -318,45 +318,6 @@ public class ZoneDivisor implements ZoneConstants
       }
    }
    
-   public Vector<RegionDepth> findDepths()
-   {
-      Vector<RegionDepth> depthList = new Vector<RegionDepth>();
-      Coord exitLoc = template.getExit();
-      if(exitLoc == null)
-         return depthList;
-      int startingRegion = regionMap[exitLoc.x][exitLoc.y];
-      RegionDepth curDepth = new RegionDepth();
-      curDepth.add(startingRegion);
-      depthList.add(curDepth);
-      boolean foundNewConnection = true;
-      while(foundNewConnection)
-      {
-         foundNewConnection = false;
-         boolean alreadyNoted = false;
-         curDepth = new RegionDepth();
-         // check each region from previous pass
-         for(int region : depthList.elementAt(depthList.size() - 1).getRegionList())
-         {
-            // check each connection from each previous region
-            for(int prospect : regionList.elementAt(region).getConnectedRegionList())
-            {
-               for(int i = 0; i < depthList.size(); i++)
-               {
-                  alreadyNoted = alreadyNoted || depthList.elementAt(i).contains(prospect);
-               }
-               if(!alreadyNoted)
-               {
-                  foundNewConnection = true;
-                  curDepth.add(prospect);
-               }
-            }
-         }
-         if(curDepth.size() > 0)
-            depthList.add(curDepth);
-      }
-      return depthList;
-   }
-   
    public void print()
    {
       char[][] charMap = new char[floodMap.length][floodMap[0].length];
@@ -447,7 +408,7 @@ public class ZoneDivisor implements ZoneConstants
       v.add("C#CCC#");
       v.add("C#C#C#");
       v.add("..C#+S");
-      ZoneTemplate template = new ZoneTemplate(v);
+      ZoneBuilder template = new ZoneBuilder();
       ZoneDivisor divisor = new ZoneDivisor(template);
  //     divisor.print();
       System.out.println("Regions: " + divisor.regionCount);
@@ -455,10 +416,5 @@ public class ZoneDivisor implements ZoneConstants
       for(Region r : divisor.getRegionList())
          System.out.println(r.serialize());
  //     template.print();
-      Vector<RegionDepth> depths = divisor.findDepths();
-      for(int i = 0; i < depths.size(); i++)
-      {
-         System.out.println("Depth " + i + ": " + depths.elementAt(i).serialize());
-      }
    }
 }

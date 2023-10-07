@@ -560,6 +560,11 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       return true;
    }
    
+   public boolean isCorridor(int x, int y)
+   {
+      return getCell(x, y) == CORRIDOR;
+   }
+   
    @Override
    public char getCell(int x, int y)
    {
