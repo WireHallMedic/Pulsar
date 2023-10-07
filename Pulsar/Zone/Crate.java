@@ -21,7 +21,7 @@ public class Crate extends MapTile
       super(TileType.CRATE.iconIndex, fg, bg, "Crate", TileType.CRATE.lowPassable, 
          TileType.CRATE.highPassable, TileType.CRATE.transparent);
       setDurability(Durability.FRAGILE);
-      lootChance = .25;
+      lootChance = .5;
       nonCreditLoot = false;
    }
 }
