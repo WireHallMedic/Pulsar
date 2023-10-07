@@ -84,6 +84,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       }
       System.out.println("Start = " + startRoom);
       System.out.println("Boss  = " + bossRoom);
+      setRoomTypes();
       addNonCriticalRooms();
       generateRooms();
       cleanUpStruts();
@@ -213,19 +214,23 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    private void addNonCriticalRooms()
    {
       boolean continueF = true;
+      boolean[][] onPath = new boolean[width][height];
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+         onPath[x][y] = criticalPath[x][y];
       while(continueF)
       {
          continueF = false;
          for(int x = 0; x < width; x++)
          for(int y = 0; y < height; y++)
          {
-            if(criticalPath[x][y])
+            if(onPath[x][y])
             {
-               Vector<Coord> unconnectedRooms = getAdjoiningRooms(x, y);
+               Vector<Coord> unconnectedRooms = getAdjoiningRooms(x, y, onPath);
                if(unconnectedRooms.size() > 0)
                {
                   Coord newConnection = unconnectedRooms.elementAt(GameEngine.randomInt(0, unconnectedRooms.size()));
-                  criticalPath[newConnection.x][newConnection.y] = true;
+                  onPath[newConnection.x][newConnection.y] = true;
                   addPassage(x, y, newConnection.x, newConnection.y);
                   continueF = true;
                }
@@ -241,7 +246,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       {
          if(criticalPath[x][y])
          {
-            switch(GameEngine.randomInt(0, 4))
+            switch(GameEngine.randomInt(0, 3))
             {
                case 0 : setCell(x, y, 'C'); break;
                default: setCell(x, y, '.'); 
@@ -258,11 +263,12 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
             }
          }
       }
-      
+      setCell(startRoom.x, startRoom.y, 'S');
+      setCell(bossRoom.x, bossRoom.y, '.');
    }
    
    
-   private Vector<Coord> getAdjoiningRooms(int x, int y)
+   private Vector<Coord> getAdjoiningRooms(int x, int y, boolean[][] onPath)
    {
       int[][] adjList = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
       int xProspect;
@@ -277,7 +283,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
             xProspect < width &&
             yProspect >= 0 &&
             yProspect < height &&
-            !criticalPath[xProspect][yProspect])
+            !onPath[xProspect][yProspect])
          {
             adjRoomList.add(new Coord(xProspect, yProspect));
          }
