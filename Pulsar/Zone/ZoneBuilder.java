@@ -43,7 +43,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public Coord getExit(){return exit;}
    
    public ZoneBuilder(RoomTemplateManager openTM, RoomTemplateManager closedTM,
-                       RoomTemplateManager corridorTM, ObstacleTemplateManager obstacleTM, RoomTemplateManager startTM)
+                      RoomTemplateManager corridorTM, ObstacleTemplateManager obstacleTM, RoomTemplateManager startTM)
    {
       super(getDefaultVector());
       openTemplateManager = openTM;
@@ -84,7 +84,9 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       }
       System.out.println("Start = " + startRoom);
       System.out.println("Boss  = " + bossRoom);
+      addNonCriticalRooms();
       generateRooms();
+      cleanUpStruts();
       print();
    }
    
@@ -207,6 +209,83 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          passArray[x2][y2][SOUTH] = true;
       }
    }
+   
+   private void addNonCriticalRooms()
+   {
+      boolean continueF = true;
+      while(continueF)
+      {
+         continueF = false;
+         for(int x = 0; x < width; x++)
+         for(int y = 0; y < height; y++)
+         {
+            if(criticalPath[x][y])
+            {
+               Vector<Coord> unconnectedRooms = getAdjoiningRooms(x, y);
+               if(unconnectedRooms.size() > 0)
+               {
+                  Coord newConnection = unconnectedRooms.elementAt(GameEngine.randomInt(0, unconnectedRooms.size()));
+                  criticalPath[newConnection.x][newConnection.y] = true;
+                  addPassage(x, y, newConnection.x, newConnection.y);
+                  continueF = true;
+               }
+            }
+         }
+      }
+   }
+   
+   private void setRoomTypes()
+   {
+      for(int x = 0; x < width; x++)
+      for(int y = 0; y < height; y++)
+      {
+         if(criticalPath[x][y])
+         {
+            switch(GameEngine.randomInt(0, 4))
+            {
+               case 0 : setCell(x, y, 'C'); break;
+               default: setCell(x, y, '.'); 
+            }
+         }
+         else
+         {
+            switch(GameEngine.randomInt(0, 5))
+            {
+               case 0 : setCell(x, y, 'C'); break;
+               case 1 : 
+               case 2 : setCell(x, y, '+'); break;
+               default: setCell(x, y, '.'); 
+            }
+         }
+      }
+      
+   }
+   
+   
+   private Vector<Coord> getAdjoiningRooms(int x, int y)
+   {
+      int[][] adjList = {{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
+      int xProspect;
+      int yProspect;
+      Vector<Coord> adjRoomList = new Vector<Coord>();
+      // add all adjacent rooms that are not already added and exist
+      for(int i = 0; i < 4; i++)
+      {
+         xProspect = adjList[i][0] + x;
+         yProspect = adjList[i][1] + y;
+         if(xProspect >= 0 &&
+            xProspect < width &&
+            yProspect >= 0 &&
+            yProspect < height &&
+            !criticalPath[xProspect][yProspect])
+         {
+            adjRoomList.add(new Coord(xProspect, yProspect));
+         }
+      }
+      return adjRoomList;
+   }
+   
+   //////////////////////
    
    public void noteExit()
    {
@@ -588,11 +667,11 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public static Vector<String> getDefaultVector()
    {
       Vector<String> v = new Vector<String>();
-      v.add(".....");
-      v.add(".....");
-      v.add(".....");
-      v.add(".....");
-      v.add(".....");
+      v.add("ccccc");
+      v.add("ccccc");
+      v.add("ccccc");
+      v.add("ccccc");
+      v.add("ccccc");
       return v;
    }
    
