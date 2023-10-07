@@ -6,8 +6,6 @@ import WidlerSuite.*;
 
 public class ZoneBuilder extends MapTemplate implements ZoneConstants
 {
-   public static final boolean MOST_RESTRICTIVE = true;
-   public static final boolean RANDOMIZE = false;
    public static final char OPEN_ROOM = TEMPLATE_CLEAR;
    public static final char CLOSED_ROOM = '+';
    public static final char OOB_ROOM = TEMPLATE_OOB;
@@ -18,7 +16,6 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    private RoomTemplateManager openTemplateManager;
    private RoomTemplateManager closedTemplateManager;
    private RoomTemplateManager corridorTemplateManager;
-   private ObstacleTemplateManager obstacleTemplateManager;
    private RoomTemplateManager startTemplateManager;
    private boolean[][][] passArray;
    private boolean[][] criticalPath;
@@ -30,6 +27,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    private int roomHeight;
    private Coord startRoom;
    private Coord bossRoom;
+   private Vector<Closet> closetList;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
    public RoomTemplate getBaseRoomTemplate(int x, int y){return baseRoomTemplate[x][y];}
@@ -38,15 +36,17 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public Vector<ButtonTrigger> getTriggerList(){return triggerList;}
    public int getRoomWidth(){return roomWidth;}
    public int getRoomHeight(){return roomHeight;}
+   public Coord getStartRoom(){return startRoom;}
+   public Coord getBossRoom(){return bossRoom;}
+   public Vector<Closet> getClosetList(){return closetList;}
    
    public ZoneBuilder(RoomTemplateManager openTM, RoomTemplateManager closedTM, RoomTemplateManager corridorTM,
-                      ObstacleTemplateManager obstacleTM, RoomTemplateManager startTM)
+                      RoomTemplateManager startTM)
    {
       super(getDefaultVector());
       openTemplateManager = openTM;
       closedTemplateManager = closedTM;
       corridorTemplateManager = corridorTM;
-      obstacleTemplateManager = obstacleTM;
       startTemplateManager = startTM;
       if(openTemplateManager == null)
          openTemplateManager = new RoomTemplateManager("Open Room Templates.txt");
@@ -54,8 +54,6 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          closedTemplateManager = new RoomTemplateManager("Closed Room Templates.txt");
       if(corridorTemplateManager == null)
          corridorTemplateManager = new RoomTemplateManager("Corridor Templates.txt");
-      if(obstacleTemplateManager == null)
-         obstacleTemplateManager = new ObstacleTemplateManager("Obstacle Templates.txt");
       if(startTemplateManager == null)
          startTemplateManager = new RoomTemplateManager("Starting Room Templates.txt");
       RoomTemplate rt = openTemplateManager.random(RoomTemplate.RoomTemplateType.BLOCK);
@@ -67,20 +65,22 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       setRoomTypes();
       addNonCriticalRooms();
       generateRooms();
+      setClosetList();
       cleanUpStruts();
-      addCrates(50);
-      addBossCrates(5);
+      ZoneDecorator.decorate(this);
+      //addCrates(60);
+      //addBossCrates(5);
    }
    
    public ZoneBuilder(ZoneBuilder that)
    {
       this(that.openTemplateManager, that.closedTemplateManager, 
-           that.corridorTemplateManager, that.obstacleTemplateManager, that.startTemplateManager);
+           that.corridorTemplateManager, that.startTemplateManager);
    }
    
    public ZoneBuilder()
    {
-      this(null, null, null, null, null);
+      this(null, null, null, null);
    }
    
    public Vector<String> serialize()
@@ -296,7 +296,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          rolledRoomTemplate[x][y] = null;
          addCorridorDoors(x, y);
       }
-      setObstacles();
+      resolveProbTiles();
       process();
       validateButtons();
    }
@@ -336,12 +336,12 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       }
    }
 
-   public void setObstacles()
+   public void resolveProbTiles()
    {
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
-         rolledRoomTemplate[x][y] = baseRoomTemplate[x][y].resolveObstacles(obstacleTemplateManager);
+         rolledRoomTemplate[x][y] = baseRoomTemplate[x][y].resolveProbTiles();
       }
    }
    
@@ -508,48 +508,22 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       return true;
    }
    
-   private void addCrates(int numOfCrates)
+   public boolean isAdjacentToDoor(int x, int y)
    {
-      int cratesPlaced = 0;
-      while(cratesPlaced < numOfCrates)
-      {
-         int x = GameEngine.randomInt(0, tileMap.length);
-         int y = GameEngine.randomInt(0, tileMap[0].length);
-         if(canPlaceCrate(x, y))
-         {
-            tileMap[x][y] = TEMPLATE_CRATE;
-            cratesPlaced++;
-         }
-      }
+      // must not be adjacent to a door
+      return tileMap[x - 1][y] == TEMPLATE_DOOR || tileMap[x + 1][y] == TEMPLATE_DOOR ||
+             tileMap[x][y - 1] == TEMPLATE_DOOR || tileMap[x][y + 1] == TEMPLATE_DOOR;
    }
-   
-   private void addBossCrates(int numOfCrates)
-   {
-      int cratesPlaced = 0;
-      int xOrigin = bossRoom.x * (roomWidth - 1);
-      int yOrigin = bossRoom.y * (roomHeight - 1);
-      while(cratesPlaced < numOfCrates)
-      {
-         int x = GameEngine.randomInt(xOrigin, xOrigin + roomWidth);
-         int y = GameEngine.randomInt(yOrigin, yOrigin + roomHeight);
-         if(canPlaceCrate(x, y))
-         {
-            tileMap[x][y] = TEMPLATE_LOOT_CRATE;
-            cratesPlaced++;
-         }
-      }
-   }
-   
+      
    // crates can be place on clear, not adjacent to a door, and not with two opposite non-clear tiles adjacent
-   private boolean canPlaceCrate(int x, int y)
+   public boolean canPlaceCrate(int x, int y)
    {
       // must be on clear
       if(tileMap[x][y] != TEMPLATE_CLEAR)
          return false;
-         
+      
       // must not be adjacent to a door
-      if(tileMap[x - 1][y] == TEMPLATE_DOOR || tileMap[x + 1][y] == TEMPLATE_DOOR ||
-         tileMap[x][y - 1] == TEMPLATE_DOOR || tileMap[x][y + 1] == TEMPLATE_DOOR)
+      if(isAdjacentToDoor(x, y))
          return false;
       
       // must not block a choke point
@@ -571,6 +545,24 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       if(isInBounds(x, y))
          return super.getCell(x, y);
       return OOB_ROOM;
+   }
+   
+   public boolean inInRoom(int pointX, int pointY, int roomX, int roomY)
+   {
+      int roomMinX = roomX * (getRoomWidth() - 1);
+      int roomMinY = roomY * (getRoomHeight() - 1);
+      int roomMaxX = roomMinX + getRoomWidth();
+      int roomMaxY = roomMinY + getRoomHeight();
+      return pointX >= roomMinX && pointX < roomMaxX &&
+             pointY >= roomMinY && pointY < roomMinY;
+   }
+   
+   
+   private void setClosetList()
+   {
+      closetList = new Vector<Closet>();
+      ZoneDivisor zd = new ZoneDivisor(this);
+      closetList = zd.getClosetList();
    }
    
    

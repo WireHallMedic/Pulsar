@@ -139,7 +139,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    public void rerollAll()
    {
       zoneBuilder = new ZoneBuilder();
-      zoneBuilder.setObstacles();
+      zoneBuilder.resolveProbTiles();
       zoneBuilder.process();
       zoneMap = ZoneMapFactory.buildFromTemplates(zoneBuilder, getOOBType());
       drawMap();
@@ -160,7 +160,7 @@ public class ToolZoneViewer extends JFrame implements ActionListener, ZoneConsta
    
    public void rerollObstacles()
    {
-      zoneBuilder.setObstacles();
+      zoneBuilder.resolveProbTiles();
       zoneBuilder.process();
       zoneMap = ZoneMapFactory.buildFromTemplates(zoneBuilder, getOOBType());
       drawMap();
