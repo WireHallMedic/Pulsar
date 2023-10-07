@@ -11,8 +11,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public static final char OPEN_ROOM = TEMPLATE_CLEAR;
    public static final char CLOSED_ROOM = '+';
    public static final char OOB_ROOM = TEMPLATE_OOB;
-   public static final char INCLUSIVE_CORRIDOR = 'C';
-   public static final char EXCLUSIVE_CORRIDOR = 'c';
+   public static final char CORRIDOR = 'C';
    public static final char STARTING_ROOM = 'S';
 
    
@@ -248,23 +247,23 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          {
             switch(GameEngine.randomInt(0, 3))
             {
-               case 0 : setCell(x, y, 'C'); break;
-               default: setCell(x, y, '.'); 
+               case 0 : setCell(x, y, CORRIDOR); break;
+               default: setCell(x, y, OPEN_ROOM); 
             }
          }
          else
          {
             switch(GameEngine.randomInt(0, 5))
             {
-               case 0 : setCell(x, y, 'C'); break;
+               case 0 : setCell(x, y, CORRIDOR); break;
                case 1 : 
-               case 2 : setCell(x, y, '+'); break;
-               default: setCell(x, y, '.'); 
+               case 2 : setCell(x, y, CLOSED_ROOM); break;
+               default: setCell(x, y, OPEN_ROOM); 
             }
          }
       }
-      setCell(startRoom.x, startRoom.y, 'S');
-      setCell(bossRoom.x, bossRoom.y, '.');
+      setCell(startRoom.x, startRoom.y, STARTING_ROOM);
+      setCell(bossRoom.x, bossRoom.y, OPEN_ROOM);
    }
    
    
@@ -309,21 +308,18 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       for(int x = 0; x < width; x++)
       for(int y = 0; y < height; y++)
       {
-         if(isCorridor(getCell(x, y)))
+         if(getCell(x, y) == CORRIDOR)
             baseRoomTemplate[x][y] = corridorTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         else if(getCell(x, y) == OPEN_ROOM)
+            baseRoomTemplate[x][y] = openTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         else if(getCell(x, y) == CLOSED_ROOM)
+            baseRoomTemplate[x][y] = closedTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         else if(getCell(x, y) == STARTING_ROOM)
+            baseRoomTemplate[x][y] = startTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
+         else if(GameEngine.randomBoolean())
+            baseRoomTemplate[x][y] = openTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
          else
-         {
-            if(getCell(x, y) == OPEN_ROOM)
-               baseRoomTemplate[x][y] = openTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
-            else if(getCell(x, y) == CLOSED_ROOM)
-               baseRoomTemplate[x][y] = closedTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
-            else if(getCell(x, y) == STARTING_ROOM)
-               baseRoomTemplate[x][y] = startTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
-            else if(GameEngine.randomBoolean())
-               baseRoomTemplate[x][y] = openTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
-            else
-               baseRoomTemplate[x][y] = closedTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
-         }
+            baseRoomTemplate[x][y] = closedTemplateManager.random(RoomTemplate.determineType(passArray[x][y]));
          baseRoomTemplate[x][y].rotateUntilMatches(passArray[x][y]);
          rolledRoomTemplate[x][y] = null;
          addCorridorDoors(x, y);
@@ -332,48 +328,34 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       process();
       validateButtons();
    }
-   
-   public void setPassArray()
-   {
-      passArray = new boolean[width][height][4];
-      for(int x = 0; x < width; x++)
-      for(int y = 0; y < height; y++)
-      {
-         boolean[] defaultArr = {false, false, false, false};
-      }
-      for(int x = 0; x < width; x++)
-      for(int y = 0; y < height; y++)
-      {
-         setPassArrayCell(x, y);
-      }
-   }
+
    
    // add a door to each corrider
    private void addCorridorDoors(int x, int y)
    {
-      if(isCorridor(getCell(x, y)))
+      if(getCell(x, y) == CORRIDOR)
       {
          int w = baseRoomTemplate[x][y].getWidth();
          int h = baseRoomTemplate[x][y].getHeight();
-         if(passArray[x][y][NORTH] && !isCorridor(getCell(x, y - 1)))
+         if(passArray[x][y][NORTH] && getCell(x, y - 1) != CORRIDOR)
          {
             for(int i = 0; i < w; i++)
                baseRoomTemplate[x][y].setCell(i, 0, TEMPLATE_WALL);
             baseRoomTemplate[x][y].setCell(w / 2, 0, TEMPLATE_DOOR);
          }
-         if(passArray[x][y][SOUTH] && !isCorridor(getCell(x, y + 1)))
+         if(passArray[x][y][SOUTH] && getCell(x, y + 1) != CORRIDOR)
          {
             for(int i = 0; i < w; i++)
                baseRoomTemplate[x][y].setCell(i, h - 1, TEMPLATE_WALL);
             baseRoomTemplate[x][y].setCell(w / 2, h - 1, TEMPLATE_DOOR);
          }
-         if(passArray[x][y][EAST] && !isCorridor(getCell(x + 1, y)))
+         if(passArray[x][y][EAST] && getCell(x + 1, y) != CORRIDOR)
          {
             for(int i = 0; i < w; i++)
                baseRoomTemplate[x][y].setCell(w - 1, i, TEMPLATE_WALL);
             baseRoomTemplate[x][y].setCell(w - 1, h / 2, TEMPLATE_DOOR);
          }
-         if(passArray[x][y][WEST] && !isCorridor(getCell(x - 1, y)))
+         if(passArray[x][y][WEST] && getCell(x - 1, y) != CORRIDOR)
          {
             for(int i = 0; i < w; i++)
                baseRoomTemplate[x][y].setCell(0, i, TEMPLATE_WALL);
@@ -381,78 +363,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          }
       }
    }
-   
-   private boolean isGuaranteedPassable(char c)
-   {
-      return c == OPEN_ROOM || c == CLOSED_ROOM || c == INCLUSIVE_CORRIDOR || c == STARTING_ROOM;
-   }
-   
-   private boolean isCorridor(char c)
-   {
-      return c == INCLUSIVE_CORRIDOR || c == EXCLUSIVE_CORRIDOR;
-   }
-   
-   public boolean isCorridor(int x, int y)
-   {
-      return isCorridor(getCell(x, y));
-   }
-   
-   private void setPassArrayCell(int x, int y)
-   {
-      char thisCell = getCell(x, y);
-      char eastCell = OOB_ROOM;
-      char southCell = OOB_ROOM;
-      if(isInBounds(x + 1, y))
-         eastCell = getCell(x + 1, y);
-      if(isInBounds(x, y + 1))
-         southCell = getCell(x, y + 1);
-      
-      // clear
-      if(thisCell == OPEN_ROOM || thisCell == CLOSED_ROOM || thisCell == STARTING_ROOM)
-      {
-         if(isGuaranteedPassable(eastCell))
-         {
-            passArray[x][y][EAST] = true;
-            passArray[x + 1][y][WEST] = true;
-         }
-         if(isGuaranteedPassable(southCell))
-         {
-            passArray[x][y][SOUTH] = true;
-            passArray[x][y + 1][NORTH] = true;
-         }
-      }
-      
-      // inclusive corridor
-      if(thisCell == INCLUSIVE_CORRIDOR)
-      {
-         if(isGuaranteedPassable(eastCell)|| eastCell == EXCLUSIVE_CORRIDOR)
-         {
-            passArray[x][y][EAST] = true;
-            passArray[x + 1][y][WEST] = true;
-         }
-         if(isGuaranteedPassable(southCell) || southCell == EXCLUSIVE_CORRIDOR)
-         {
-            passArray[x][y][SOUTH] = true;
-            passArray[x][y + 1][NORTH] = true;
-         }
-      }
-      
-      // exclusive corridor
-      if(thisCell == EXCLUSIVE_CORRIDOR)
-      {
-         if(eastCell == EXCLUSIVE_CORRIDOR || eastCell == INCLUSIVE_CORRIDOR)
-         {
-            passArray[x][y][EAST] = true;
-            passArray[x + 1][y][WEST] = true;
-         }
-         if(southCell == EXCLUSIVE_CORRIDOR || southCell == INCLUSIVE_CORRIDOR)
-         {
-            passArray[x][y][SOUTH] = true;
-            passArray[x][y + 1][NORTH] = true;
-         }
-      }
-   }
-   
+
    public void setObstacles()
    {
       for(int x = 0; x < width; x++)
@@ -600,28 +511,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          throw new java.lang.Error("ZoneTemplate has " + triggerList.size() + " ButtonTriggers, but " + buttonsFound + "buttons were found.");
       return true;
    }
-   
-   private boolean[][] getFloodMap(Coord start)
-   {
-      boolean[][] boolMap = new boolean[width * 3][height * 3];
-      for(int x = 0; x < width; x++)
-      for(int y = 0; y < height; y++)
-      {
-         int xTranslation = (3 * x) + 1;
-         int yTranslation = (3 * y) + 1;
-         if(getCell(x, y) != OOB_ROOM)
-            boolMap[xTranslation][yTranslation] = true;
-         if(passArray[x][y][NORTH])
-            boolMap[xTranslation][yTranslation - 1] = true;
-         if(passArray[x][y][SOUTH])
-            boolMap[xTranslation][yTranslation + 1] = true;
-         if(passArray[x][y][EAST])
-            boolMap[xTranslation + 1][yTranslation] = true;
-         if(passArray[x][y][WEST])
-            boolMap[xTranslation - 1][yTranslation] = true;
-      }
-      return FloodFill.fill(boolMap, (start.x * 3) + 1, (start.y * 3) + 1);
-   }
+
    
    public void cleanUpStruts()
    {
@@ -654,21 +544,6 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       return OOB_ROOM;
    }
    
-   // returns a zone template that includes at least one of each RoomTemplate
-   public static ZoneTemplate getDemo()
-   {
-      Vector<String> v = new Vector<String>();
-      v.add("#...#");
-      v.add("#...#");
-      v.add("##C##");
-      v.add("++c++");
-      v.add("++C++");
-      v.add("++c++");
-      v.add("##C##");
-      v.add("#...#");
-      v.add("#.S.#");
-      return new ZoneTemplate(v);
-   }
    
    public static Vector<String> getDefaultVector()
    {
