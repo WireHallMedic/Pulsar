@@ -174,16 +174,6 @@ public class BasicAI implements AIConstants
       {
          setPendingAction(ActorAction.STEP);
       }
-      else if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof ToggleTile)
-      {
-         if(unlockedCheck(pendingTarget))
-            setPendingAction(ActorAction.TOGGLE);
-         else
-         {
-            MessagePanel.addMessage("It's locked.");
-            clearPlan();
-         }
-      }
       // actor
       else if(GameEngine.isActorAt(pendingTarget))
       {
@@ -204,6 +194,21 @@ public class BasicAI implements AIConstants
             MessagePanel.addMessage("There's a dude there.");
             clearPlan();
          }
+      }
+      else if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof ToggleTile)
+      {
+         if(unlockedCheck(pendingTarget))
+            setPendingAction(ActorAction.TOGGLE);
+         else
+         {
+            MessagePanel.addMessage("It's locked.");
+            clearPlan();
+         }
+      }
+      // melee a crate
+      else if(GameEngine.getZoneMap().getTile(pendingTarget) instanceof Crate)
+      {
+         setPendingAction(ActorAction.UNARMED_ATTACK);
       }
       // no possible action
       else
