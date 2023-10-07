@@ -13,20 +13,6 @@ XXXX##:##XXXX
 XXXXXXXXXXXXX
 XXXXXXXXXXXXX
 
-#####...#####
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX:...:XXXX
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#7..#XXXX
-XXXX#c7.#XXXX
-XXXX##:##XXXX
-XXXXXXXXXXXXX
-XXXXXXXXXXXXX
-
 
 #####...#####
 XXXX#...#XXXX
@@ -35,26 +21,13 @@ XXXX:...:XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
 XXX###/###XXX
-XXX#6...6#XXX
-XXX#66.66#XXX
-XXX#e666e#XXX
+XXX#.....#XXX
+XXX#.....#XXX
+XXX#.....#XXX
 XXX###:###XXX
 XXXXXXXXXXXXX
 XXXXXXXXXXXXX
 
-#####...#####
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX:...:XXXX
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXX###/###XXX
-XXX#c...c#XXX
-XXX#77.77#XXX
-XXX#c777c#XXX
-XXX###:###XXX
-XXXXXXXXXXXXX
-XXXXXXXXXXXXX
 
 
 @ straight
@@ -87,49 +60,6 @@ XXXX#...#XXXX
 #####...#####
 
 
-#####...#####
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#...###XX
-XXXX#....7#XX
-XXXX#.....#XX
-XXXX:....7#XX
-XXXX#.....#XX
-XXXX#....7#XX
-XXXX#...###XX
-XXXX#...#XXXX
-XXXX#...#XXXX
-#####...#####
-
-
-#####...#####
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#...###XX
-XXXX#...7c#XX
-XXXX#...7c#XX
-XXXX:....7#XX
-XXXX#....7#XX
-XXXX#...7c#XX
-XXXX#...###XX
-XXXX#...#XXXX
-XXXX#...#XXXX
-#####...#####
-
-#####...#####
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX:...:XXXX
-XXXX#...#XXXX
-XXXX#...#XXXX
-XXXX#7..#XXXX
-XXXX#c7.#XXXX
-XXXX#7..#XXXX
-#####...#####
-
 
 
 @ elbow
@@ -147,19 +77,6 @@ XXXXXXXXXXXX#
 XXXXXXXXXXXX#
 XXXXXXXXXXXX#
 
-#####...#####
-XXXX#...#XXX#
-XXXX#...#XXX#
-XXXX#...#XXX#
-XXXX#...#####
-XXXX#........
-XXXX:7.......
-XXXX#c7......
-XXXX##:######
-XXXXXXXXXXXX#
-XXXXXXXXXXXX#
-XXXXXXXXXXXX#
-XXXXXXXXXXXX#
 
 #####...#####
 XXXX#...#XXX#
@@ -206,20 +123,6 @@ XXXX#...#XXX#
 XXXX#...#XXX#
 #####...#####
 
-#####...#####
-XXXX#...#XXX#
-XXXX#...#XXX#
-XXXX#...#XXX#
-XXXX#...#####
-XXXX#........
-XXXX:7.......
-XXXX#c7......
-XXXX#7..#####
-XXXX#...#XXX#
-XXXX#...#XXX#
-XXXX#...#XXX#
-#####...#####
-
 
 
 @ cross
@@ -252,20 +155,6 @@ XXXX#...#XXX#
 #XXX#...#XXX#
 #####...#####
 
-
-#####...#####
-#XXX#...#XXX#
-#XXX#...#XXX#
-#XXX#...#XXX#
-#####...#####
-......7......
-.....777.....
-......7......
-#####...#####
-#XXX#...#XXX#
-#XXX#...#XXX#
-#XXX#...#XXX#
-#####...#####
 
 
 #####...#####
