@@ -18,7 +18,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       //a.setWeapon(weapon);
       a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
       a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.BEAM));
-      WeaponFactory.setElementAndStatusEffect(a.getPrimaryWeapon(), DamageType.CRYO);
+      WeaponFactory.setElementAndStatusEffect(a.getPrimaryWeapon(), DamageType.THERMAL);
       a.setShield(ShieldFactory.getBasicShield());
       a.setArmor(ArmorFactory.getScoutArmor());
  //     a.setArmor(ArmorFactory.getEngineerArmor());
@@ -30,8 +30,8 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
  //     a.addGadget(GadgetFactory.getGrenades());
       a.addGadget(GadgetFactory.getNapalmGrenades());
  //     a.addGadget(GadgetFactory.getCryoGrenades());
- //     a.addGadget(GadgetFactory.getHoloclone());
-      a.addGadget(GadgetFactory.getTurret());
+      a.addGadget(GadgetFactory.getHoloclone());
+ //     a.addGadget(GadgetFactory.getTurret());
       a.addGadget(GadgetFactory.getCombatDrone());
  //     a.addGadget(GadgetFactory.getMotionSensor());
  //     a.addGadget(GadgetFactory.getAirSupply());
