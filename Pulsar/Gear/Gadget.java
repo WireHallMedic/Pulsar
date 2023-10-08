@@ -144,6 +144,14 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
                GameEngine.add(clone);
             }
          }
+         if(getSpecialEffect() == GadgetSpecialEffect.BREACH)
+         {
+            Actor charge = ActorFactory.getBreachingCharge();
+            target = GameEngine.getActualTarget(user.getMapLoc(), target);
+            charge.setAllLocs(GameEngine.getClosestEmptyTile(target));
+            charge.setAlertness(Alertness.ALERT);
+            GameEngine.add(charge);
+         }
          if(getSpecialEffect() == GadgetSpecialEffect.TURRET)
          {
             Actor turret = ActorFactory.getTurret();

@@ -33,7 +33,8 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
  //     a.addGadget(GadgetFactory.getHoloclone(LootRarity.RARE));
  //     a.addGadget(GadgetFactory.getTurret());
       a.addGadget(GadgetFactory.getCombatDrone());
-      a.addGadget(GadgetFactory.getLoveBomb());
+ //     a.addGadget(GadgetFactory.getLoveBomb());
+      a.addGadget(GadgetFactory.getBreachingCharge());
  //     a.addGadget(GadgetFactory.getMotionSensor());
  //     a.addGadget(GadgetFactory.getAirSupply());
  //     a.addGadget(GadgetFactory.getEMPGrenades());
@@ -170,6 +171,27 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setMaxHealth(20);
       a.fullyHeal();
       a.setDeathEffect(DeathEffect.EXPLODE);
+      a.setTurnEnergy(FULLY_CHARGED);
+      a.setMechanical(true);
+      a.setBiological(false);
+      a.setBloodColor(ROBOT_BLOOD);
+      a.setColor(ROBOT_FLESH);
+      a.setNeedsAir(false);
+      return a;
+   }
+   
+   public static Actor getBreachingCharge()
+   {
+      Actor a = new Actor('0');
+      a.setColor(ORANGE);
+      a.setName("Breaching Charge");
+      CloneAI ai = new CloneAI(a);
+      ai.setCountsDown(true);
+      ai.setTeam(Team.NONE);
+      a.setAI(ai);
+      a.setMaxHealth(50);
+      a.fullyHeal();
+      a.setDeathEffect(DeathEffect.BREACH);
       a.setTurnEnergy(FULLY_CHARGED);
       a.setMechanical(true);
       a.setBiological(false);

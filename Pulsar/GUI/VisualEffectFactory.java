@@ -195,6 +195,17 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
       add(ut);
    }
    
+   public static void addFloatEffect(Actor a, char c, Color color, double sizeMultMod)
+   {
+      UnboundTile ut = getPalette().getUnboundTile(c, color.getRGB(), getSizeMultiplier() * sizeMultMod);
+      ut.setSpeed(0.0, -FLOAT_EFFECT_SPEED);
+      UnboundTile actorSprite = a.getSprite();
+      ut.setLoc(new Coord(actorSprite.getXLoc(), actorSprite.getYLoc()));
+      ut.setXOffset(actorSprite.getXOffset() - .4 + (GameEngine.random() * .8));
+      ut.setYOffset(actorSprite.getYOffset()- .25 + (GameEngine.random() * .5));
+      add(ut);
+   }
+   
    public static void addFireParticle(Actor a)
    {
       int fireColor = FIRE_COLOR_GRADIENT[GUITools.getAnimationManager().mediumPulse()].getRGB();

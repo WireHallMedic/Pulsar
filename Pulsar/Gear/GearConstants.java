@@ -118,6 +118,7 @@ public interface GearConstants extends WSFontConstants, GUIConstants
    public enum GadgetSpecialEffect
    {
       HOLOCLONE         ("Holoclone"),
+      BREACH            ("Breach"),
       TURRET            ("Turret"),
       COMBAT_DRONE      ("Combat Drone"),
       NAPALM            ("Napalm"),

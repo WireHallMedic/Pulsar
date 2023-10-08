@@ -18,7 +18,8 @@ public class GadgetFactory implements ActorConstants, GearConstants
       MOTION_SENSOR     (10),
       AIR_SUPPLY        (10),
       LOVE_BOMB         (10),
-      QUICK_CHARGER     (10);
+      QUICK_CHARGER     (10),
+      BREACH_CHARGE     (10);
       
       private GadgetType(int w)
       {
@@ -64,6 +65,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          case AIR_SUPPLY         : return getAirSupply(rarity);
          case LOVE_BOMB          : return getLoveBomb(rarity);
          case QUICK_CHARGER      : return getQuickCharger(rarity);
+         case BREACH_CHARGE      : return getBreachingCharge(rarity);
          default                 : return null;
       }
    }
@@ -209,6 +211,30 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setDescription("Deploys three clones of you, which explodes on death. That's a lot of exploding clones!");
       }
       g.setColorByRarity(rarity);
+      return g;
+   }
+   
+   public static Gadget getBreachingCharge(){return getBreachingCharge(LootRarity.COMMON);}
+   public static Gadget getBreachingCharge(LootRarity rarity)
+   {
+      Gadget g = new Gadget();
+      g.setName("Breaching Charge");
+      g.setShortName("B. Charge");
+      g.setTargetsSelf(false);
+      g.setSpecialEffect(GadgetSpecialEffect.BREACH);
+      g.setDescription("Deploys a breaching charge, which can blast holes in bulkhead walls.");
+      g.setPlaceAdjacent(true);
+      g.setMaxUses(1);
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setMaxUses(2);
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setMaxUses(3);
+      }
+      g.setColorByRarity(rarity);
+      g.fullyCharge();
       return g;
    }
    

@@ -2,8 +2,9 @@ package Pulsar.AI;
 
 import Pulsar.Actor.*;
 import Pulsar.Engine.*;
+import Pulsar.GUI.*;
 
-public class CloneAI extends BasicAI
+public class CloneAI extends BasicAI implements GUIConstants
 {
 	private boolean countsDown;
 	private int turnsRemaining;
@@ -26,16 +27,29 @@ public class CloneAI extends BasicAI
       turnsRemaining = 4;
    }
    
+   @Override
    public void plan()
    {
       setPendingAction(ActorAction.DELAY);
       setPendingTarget(self.getMapLoc());
-      
+   }
+   
+   @Override
+   public void act()
+   { 
       if(countsDown)
       {
          turnsRemaining--;
          if(turnsRemaining == 0)
-            self.kill();
+         {
+            self.discharge(self.getMoveSpeed().timeCost);
+            clearPlan();
+            self.killNoCorpse();
+            return;
+         }
+         char countdownChar = (char)('0' + turnsRemaining);
+         VisualEffectFactory.addFloatEffect(self, countdownChar, ORANGE, 1.0);
       }
+      super.act();
    }
 }

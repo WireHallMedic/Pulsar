@@ -25,7 +25,7 @@ public interface ActorConstants
    
    public enum DeathEffect
    {
-      EXPLODE;
+      EXPLODE, BREACH;
    }
    
    

@@ -437,8 +437,19 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    
    public void doDeathEffect()
    {
-      if(getDeathEffect() == DeathEffect.EXPLODE)
+      if(getDeathEffect() == DeathEffect.EXPLODE || getDeathEffect() == DeathEffect.BREACH)
          Combat.nonWeaponExplosion(getMapLoc());
+      if(getDeathEffect() == DeathEffect.BREACH)
+      {
+         for(int x = getMapLoc().x - 1; x < getMapLoc().x + 2; x++)
+         for(int y = getMapLoc().y - 1; y < getMapLoc().y + 2; y++)
+         {
+            if(GameEngine.getZoneMap().getTile(x, y).getDurability() != ZoneConstants.Durability.UNBREAKABLE)
+            {
+               GameEngine.getZoneMap().breakTile(x, y);
+            }
+         }
+      }
    }
    
    public int[] getHealthBar(int length)
