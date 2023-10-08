@@ -16,7 +16,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setAI(new PlayerAI(a));
       //Weapon weapon = WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE);
       //a.setWeapon(weapon);
-      a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
+      a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SLUG_RIFLE));
  //     a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
  //     WeaponFactory.setElementAndStatusEffect(a.getPrimaryWeapon(), DamageType.THERMAL);
       a.setShield(ShieldFactory.getBasicShield());
@@ -32,7 +32,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
  //     a.addGadget(GadgetFactory.getCryoGrenades());
  //     a.addGadget(GadgetFactory.getHoloclone(LootRarity.RARE));
  //     a.addGadget(GadgetFactory.getTurret());
- //     a.addGadget(GadgetFactory.getCombatDrone());
+      a.addGadget(GadgetFactory.getCombatDrone());
  //     a.addGadget(GadgetFactory.getMotionSensor());
  //     a.addGadget(GadgetFactory.getAirSupply());
  //     a.addGadget(GadgetFactory.getEMPGrenades());

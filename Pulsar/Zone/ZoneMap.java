@@ -265,11 +265,14 @@ public class ZoneMap implements ZoneConstants, GUIConstants
       if(mt instanceof Crate)
       {
          Crate c = (Crate)mt;
-         if(GameEngine.random() <= c.getLootChance())
+         for(int i = 0; i < c.getNumberOfRolls(); i++)
          {
-            GearObj loot = LootFactory.rollLoot(c.isNonCreditLoot());
-            if(loot != null)
-               dropGear(x, y, loot);
+            if(GameEngine.random() <= c.getLootChance())
+            {
+               GearObj loot = LootFactory.rollLoot(c.isNonCreditLoot());
+               if(loot != null)
+                  dropGear(x, y, loot);
+            }
          }
       }
       breachCheck(x, y);

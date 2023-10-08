@@ -1,6 +1,7 @@
 package Pulsar.Zone;
 
 import Pulsar.GUI.*;
+import Pulsar.Engine.*;
 import java.awt.*;
 
 public class MapTileFactory implements ZoneConstants, GUIConstants
@@ -126,6 +127,8 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
       crate.setFGColor(LOOT_CRATE_COLOR.getRGB());
       crate.setLootChance(1.0);
 	   crate.setNonCreditLoot(true);
+      if(GameEngine.randomBoolean())
+         crate.setNumberOfRolls(crate.getNumberOfRolls() + 1);
       return crate;
    }
    

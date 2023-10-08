@@ -18,10 +18,12 @@ public class BasicAI implements AIConstants
 	protected Coord previousTarget;
    protected Actor lastActorTargeted;
    protected Team team;
+   protected Team tempTeam;
    protected int pathfindingRadius;
    protected boolean usesDoors;
    protected boolean avoidsHazards;
    protected Actor leader;
+   protected Actor tempLeader;
    protected int followDistance;
 
 
@@ -31,15 +33,13 @@ public class BasicAI implements AIConstants
 	public ActorAction getPreviousAction(){return previousAction;}
 	public Coord getPreviousTarget(){if(pendingTarget == null) return null; return new Coord(previousTarget);}
    public Actor getLastActorTargeted(){return lastActorTargeted;}
-   public Team getTeam(){return team;}
    public int getPathfindingRadius(){return pathfindingRadius;}
    public boolean getUsesDoors(){return usesDoors;}
    public boolean getAvoidsHazards(){return avoidsHazards;}
-   public Actor getLeader(){return leader;}
    public int getFollowDistance(){return followDistance;}
-   public boolean hasLeader(){return leader != null;}
-
-
+   public boolean hasLeader(){return getLeader() != null;}
+   
+   
 	public void setSelf(Actor s){self = s;}
 	public void setPendingAction(ActorAction p){pendingAction = p;}
 	public void setPendingTarget(Coord p){setPendingTarget(p.x, p.y);}
@@ -51,6 +51,8 @@ public class BasicAI implements AIConstants
    public void setAvoidsHazards(boolean ah){avoidsHazards = ah;}
    public void setLeader(Actor a){leader = a;}
    public void setFollowDistance(int fd){followDistance = fd;}
+   public void setTempTeam(Team t){tempTeam = t;}
+   public void setTempLeader(Actor l){tempLeader = l;}
 
 
    public BasicAI(Actor s)
@@ -60,12 +62,29 @@ public class BasicAI implements AIConstants
       previousAction = null;
       lastActorTargeted = null;
       team = Team.VILLAIN;
+      tempTeam = null;
       pathfindingRadius = PATHFINDING_MAP_RADIUS;
       usesDoors = true;
       avoidsHazards = true;
       leader = null;
+      tempLeader = null;
       followDistance = 4;
       clearPlan();
+   }
+   
+
+   public Team getTeam()
+   {
+      if(tempTeam != null)
+         return tempTeam;
+      return team;
+   }
+   
+   public Actor getLeader()
+   {
+      if(tempLeader != null)
+         return tempLeader;
+      return leader;
    }
    
    // override in child classes
@@ -82,7 +101,7 @@ public class BasicAI implements AIConstants
    
    public boolean isFollowerOf(Actor that)
    {
-      return that == leader;
+      return that == getLeader();
    }
    
    public boolean hasPlan()

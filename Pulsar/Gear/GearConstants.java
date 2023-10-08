@@ -122,6 +122,7 @@ public interface GearConstants extends WSFontConstants, GUIConstants
       COMBAT_DRONE      ("Combat Drone"),
       NAPALM            ("Napalm"),
       MOTION_SENSOR     ("Motion Sensor"),
+      CHARM             ("Charm"),
       RECHARGE          ("Quick Charger");
       
       public String name;

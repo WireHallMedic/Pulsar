@@ -45,6 +45,14 @@ public class StatusEffectFactory implements ActorConstants, GearConstants
                            se.setDescriptor("disrupted");
                            se.setDisrupts(true);
                            break;
+         case CHARMED :    se.setName("Charmed");
+                           se.setRemainingDuration(STATUS_EFFECT_LONG_DURATION);
+	                        se.setExpires(true);
+	                        se.setStacks(false);
+                           se.setNegative(true);
+                           se.setDescriptor("charmed");
+                           se.setCharms(true);
+                           break;
          case EAGLE_EYE  : se.setName("Eagle Eye");
                            se.setRemainingDuration(STATUS_EFFECT_LONG_DURATION);
 	                        se.setExpires(true);

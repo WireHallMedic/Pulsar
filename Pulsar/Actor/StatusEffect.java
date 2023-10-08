@@ -18,6 +18,7 @@ public class StatusEffect implements GearConstants
 	private int visionRange;
    private boolean needsAir;
    private boolean disrupts;
+   private boolean charms;
 
 
 	public String getName(){return name;}
@@ -34,6 +35,7 @@ public class StatusEffect implements GearConstants
 	public int getVisionRange(){return visionRange;}
    public boolean getNeedsAir(){return needsAir;}
    public boolean getDisrupts(){return disrupts;}
+   public boolean getCharms(){return charms;}
 
 
 	public void setName(String n){name = n;}
@@ -50,6 +52,7 @@ public class StatusEffect implements GearConstants
 	public void setVisionRange(int v){visionRange = v;}
    public void setNeedsAir(boolean na){needsAir = na;}
    public void setDisrupts(boolean d){disrupts = d;}
+   public void setCharms(boolean c){charms = c;}
 
 
 
@@ -76,6 +79,7 @@ public class StatusEffect implements GearConstants
    	visionRange = 0;
       needsAir = true;
       disrupts = false;
+      charms = false;
    }
    
    public boolean shouldCombine(StatusEffect that)
