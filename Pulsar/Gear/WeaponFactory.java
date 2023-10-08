@@ -186,6 +186,32 @@ public class WeaponFactory implements GearConstants, ActorConstants
       return w;
    }
    
+   public static Weapon getEMPExplosion(int power)
+   {
+      Weapon w = getExplodingBarrel();
+      w.setName("Exploding EMP Barrel");
+      w.setStatusEffectType(StatusEffectType.DISRUPTED);
+      w.setDamageType(DamageType.ELECTRO);
+      w.setStatusEffectChance(1.0);
+      if(power == 0)
+      {
+         w.setBaseDamage(0);
+	      w.setVariableDamage(0);
+         w.removeWeaponTag(WeaponTag.KNOCKBACK);
+         w.removeWeaponTag(WeaponTag.HEAVY);
+      }
+      if(power == 1)
+      {
+         w.removeWeaponTag(WeaponTag.KNOCKBACK);
+         w.removeWeaponTag(WeaponTag.HEAVY);
+      }
+      if(power == 2)
+      {
+         w.setBaseDamage(w.getBaseDamage() * 2);
+      }
+      return w;
+   }
+   
    public static Weapon getNapalm()
    {
       Weapon w = getExplodingBarrel();

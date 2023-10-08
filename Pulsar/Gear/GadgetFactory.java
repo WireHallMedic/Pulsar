@@ -11,6 +11,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       GRENADES          (10),
       NAPALM_GRENADES   (10),
       CRYO_GRENADES     (10),
+      EMP_GRENADES      (10),
       HOLOCLONE         (10),
       TURRET            (10),
       COMBAT_DRONE      (10),
@@ -44,6 +45,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          case GRENADES           : return getGrenades();
          case NAPALM_GRENADES    : return getNapalmGrenades();
          case CRYO_GRENADES      : return getCryoGrenades();
+         case EMP_GRENADES       : return getEMPGrenades();
          case HOLOCLONE          : return getHoloclone();
          case TURRET             : return getTurret();
          case COMBAT_DRONE       : return getCombatDrone();
@@ -147,6 +149,28 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setName(g.getName() + " MkIII");
          g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 2.0));
          g.setDescription(g.getDescription() + " Greatly improved damage.");
+      }
+      return g;
+   }
+   
+   public static Gadget getEMPGrenades(){return getEMPGrenades(LootRarity.COMMON);}
+   public static Gadget getEMPGrenades(LootRarity rarity)
+   {
+      Gadget g = new Gadget();
+      g.setName("EMP Grenades");
+      g.setShortName("EMP Grenades");
+      g.setWeaponEffect(WeaponFactory.getEMPExplosion(rarity.ordinal()));
+      g.setTargetsSelf(false);
+      g.setDescription("Explodes, disrupting shields and mechanical foes.");
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.setDescription(g.getDescription() + " Also deals damage.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.setDescription(g.getDescription() + " Also deals improved damage.");
       }
       return g;
    }
