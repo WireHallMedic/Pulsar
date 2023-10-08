@@ -241,14 +241,18 @@ public class Player extends Actor implements GUIConstants, GearConstants
    protected void startOfTurn()
    {
       super.startOfTurn();
+      if(GameEngine.getZoneMap().isGearAt(getMapLoc()) && GameEngine.getZoneMap().getGearAt(getMapLoc()) instanceof Credits)
+      {
+         getAI().doGrab(false);
+      }
       updateFoV();
    }
    
    @Override
    protected void endOfTurn()
    {
-     super.endOfTurn();
-     updateFoV();
+      super.endOfTurn();
+      updateFoV();
    }
    
    @Override

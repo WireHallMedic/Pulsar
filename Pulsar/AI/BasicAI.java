@@ -497,7 +497,8 @@ public class BasicAI implements AIConstants
       }
    }
    
-   private void doGrab()
+   public void doGrab(){doGrab(true);}
+   public void doGrab(boolean spendCharge)
    {
       boolean pickupF = false;
       // nothing at location
@@ -540,7 +541,8 @@ public class BasicAI implements AIConstants
             VisualEffectFactory.addPickupIndicator(self, gear);
          }
          self.getInventory().add(gear);
-         self.discharge(self.getInteractSpeed().timeCost);
+         if(spendCharge)
+            self.discharge(self.getInteractSpeed().timeCost);
       }
    }
    
