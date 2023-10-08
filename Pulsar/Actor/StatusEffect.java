@@ -17,6 +17,7 @@ public class StatusEffect implements GearConstants
 	private GearConstants.DamageType damageType;
 	private int visionRange;
    private boolean needsAir;
+   private boolean disrupts;
 
 
 	public String getName(){return name;}
@@ -32,6 +33,7 @@ public class StatusEffect implements GearConstants
 	public GearConstants.DamageType getDamageType(){return damageType;}
 	public int getVisionRange(){return visionRange;}
    public boolean getNeedsAir(){return needsAir;}
+   public boolean getDisrupts(){return disrupts;}
 
 
 	public void setName(String n){name = n;}
@@ -47,6 +49,7 @@ public class StatusEffect implements GearConstants
 	public void setDamageType(GearConstants.DamageType d){damageType = d;}
 	public void setVisionRange(int v){visionRange = v;}
    public void setNeedsAir(boolean na){needsAir = na;}
+   public void setDisrupts(boolean d){disrupts = d;}
 
 
 
@@ -72,6 +75,7 @@ public class StatusEffect implements GearConstants
    	damageType = null;
    	visionRange = 0;
       needsAir = true;
+      disrupts = false;
    }
    
    public boolean shouldCombine(StatusEffect that)
