@@ -112,6 +112,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
             upgrade = (ArmorUpgrade)table.roll();
          addUpgrade(armor, upgrade);
       }
+      armor.setColorByRarity(rarity);
       return armor;
    }
    

@@ -66,6 +66,9 @@ public interface GUIConstants
    public static final Color INVALID_SELECTION_COLOR = DARK_GREY;
    public static final Color WOOD_COLOR = BROWN;
    public static final Color LOOT_CRATE_COLOR = GOLD;
+   public static final Color COMMON_GEAR_COLOR = WHITE;
+   public static final Color UNCOMMON_GEAR_COLOR = LIGHT_GREEN;
+   public static final Color RARE_GEAR_COLOR = LIGHT_BLUE;
    
    // gradients
    public static final Color[] FIRE_COLOR_GRADIENT = WSTools.getGradient(YELLOW, RED, 21);

@@ -87,6 +87,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setStatusEffectDuration(3.0);
          g.setDescription(g.getDescription() + " Greatly extended duration.");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -109,6 +110,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setName(g.getName() + " MkIII");
          g.setDescription(g.getDescription() + " Greatly improved damage.");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -132,6 +134,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setName(g.getName() + " MkIII");
          g.setDescription(g.getDescription() + " Greatly improved damage.");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -154,6 +157,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setName(g.getName() + " MkIII");
          g.setDescription(g.getDescription() + " Greatly improved damage.");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -176,6 +180,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setName(g.getName() + " MkIII");
          g.setDescription(g.getDescription() + " Also deals improved damage.");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -201,6 +206,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setIntensity(3);
          g.setDescription("Deploys three clones of you, which explodes on death. That's a lot of exploding clones!");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -226,6 +232,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setIntensity(3);
          g.setDescription("Depolys a stationary gun turret with three random gun upgrades.");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -253,6 +260,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setIntensity(3);
          g.setDescription("Depolys a combat drone, who follows you and fires on enemies. The drone has three random gun upgrades.");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -266,6 +274,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setPassiveOnly(true);
       g.setSpecialEffect(GadgetSpecialEffect.MOTION_SENSOR);
       g.setDescription("Detects nearby movement, even through walls.");
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -278,6 +287,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setPassiveOnly(true);
       g.setPassiveStatusEffect(StatusEffectFactory.getEffect(StatusEffectType.AIR_SUPPLY));
       g.setDescription("Provides a continuous supply of air, allowing you to ignore vacuum.");
+      g.setColorByRarity(rarity);
       return g;
    }
    
@@ -302,6 +312,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setIntensity(3);
          g.setDescription("Immedeatly overcharges your shield and weapons to 200%.");
       }
+      g.setColorByRarity(rarity);
       return g;
    }
 }

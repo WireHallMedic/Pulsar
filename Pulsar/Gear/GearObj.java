@@ -27,7 +27,7 @@ public abstract class GearObj implements GearConstants, GUIConstants
    {
       name = n;
       iconIndex = ii;
-      color = DEFAULT_TILE_FG_COLOR;
+      color = LootRarity.COMMON.getColor();
       description = "<No Description>";
    }
 
@@ -38,4 +38,9 @@ public abstract class GearObj implements GearConstants, GUIConstants
    }
    
    abstract public String getSummary();
+   
+   public void setColorByRarity(LootRarity rarity)
+   {
+      setColor(rarity.getColor());
+   }
 }

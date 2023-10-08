@@ -3,9 +3,10 @@ package Pulsar.Gear;
 import java.awt.*;
 import java.util.*;
 import WidlerSuite.*;
+import Pulsar.GUI.*;
 import Pulsar.Engine.*;
 
-public interface GearConstants extends WSFontConstants
+public interface GearConstants extends WSFontConstants, GUIConstants
 {
    public static final int WEAPON_ICON = '}';
    public static final int SHIELD_ICON = ')';
@@ -14,8 +15,6 @@ public interface GearConstants extends WSFontConstants
    public static final int CREDIT_ICON = CENT_TILE;
    
    public static final int DEFAULT_MAX_INVENTORY = 5;
-   
-   public static final Color DEFAULT_WEAPON_COLOR = Color.WHITE;
    
    // weapon defaults
    public static final int DEFAULT_BASE_DAMAGE = 6;
@@ -153,17 +152,20 @@ public interface GearConstants extends WSFontConstants
    
    public enum LootRarity implements WeightedRandomizable
    {
-      COMMON   (89),
-      UNCOMMON (10),
-      RARE     (1);
+      COMMON   (89, COMMON_GEAR_COLOR),
+      UNCOMMON (10, UNCOMMON_GEAR_COLOR),
+      RARE     (1, RARE_GEAR_COLOR);
       
-      private LootRarity(int w)
+      private LootRarity(int w, Color c)
       {
          weight = w;
+         color = c;
       }
       
       private int weight;
+      private Color color;
       
       public int getWeight(){return weight;}
+      public Color getColor(){return color;}
    }
 }

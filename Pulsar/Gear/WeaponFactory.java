@@ -179,15 +179,17 @@ public class WeaponFactory implements GearConstants, ActorConstants
    {
       Weapon w = getExplodingBarrel();
       w.setName("Grenade");
-      if(power == 0)
-         ;
-      if(power == 1)
+      switch(power)
       {
-         w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
-      }
-      if(power == 2)
-      {
-         w.setBaseDamage(w.getBaseDamage() * 2);
+         case 0 :
+            break;
+         case 1 :
+            w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
+            break;
+         case 2 :
+            w.setBaseDamage(w.getBaseDamage() * 2);
+            break;
+         default : throw new java.lang.Error("Out of bounds power level: " + power);
       }
       return w;
    }
@@ -200,22 +202,21 @@ public class WeaponFactory implements GearConstants, ActorConstants
       w.setDamageType(DamageType.CRYO);
       w.setStatusEffectType(StatusEffectType.FROZEN);
       w.setStatusEffectChance(1.0);
-      if(power == 0)
+      switch(power)
       {
-         w.setBaseDamage(0);
-	      w.setVariableDamage(0);
-         w.removeWeaponTag(WeaponTag.KNOCKBACK);
-         w.removeWeaponTag(WeaponTag.HEAVY);
-      }
-      if(power == 1)
-      {
-         w.removeWeaponTag(WeaponTag.KNOCKBACK);
-         w.removeWeaponTag(WeaponTag.HEAVY);
-         w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
-      }
-      if(power == 2)
-      {
-         w.setBaseDamage(w.getBaseDamage() * 2);
+         case 0 :
+            w.removeWeaponTag(WeaponTag.KNOCKBACK);
+            w.removeWeaponTag(WeaponTag.HEAVY);
+            break;
+         case 1 :
+            w.removeWeaponTag(WeaponTag.KNOCKBACK);
+            w.removeWeaponTag(WeaponTag.HEAVY);
+            w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
+            break;
+         case 2 :
+            w.setBaseDamage(w.getBaseDamage() * 2);
+            break;
+         default : throw new java.lang.Error("Out of bounds power level: " + power);
       }
       return w;
    }
@@ -228,21 +229,22 @@ public class WeaponFactory implements GearConstants, ActorConstants
       w.setStatusEffectType(StatusEffectType.DISRUPTED);
       w.setDamageType(DamageType.ELECTRO);
       w.setStatusEffectChance(1.0);
-      if(power == 0)
+      switch(power)
       {
-         w.setBaseDamage(0);
-	      w.setVariableDamage(0);
-         w.removeWeaponTag(WeaponTag.KNOCKBACK);
-         w.removeWeaponTag(WeaponTag.HEAVY);
-      }
-      if(power == 1)
-      {
-         w.removeWeaponTag(WeaponTag.KNOCKBACK);
-         w.removeWeaponTag(WeaponTag.HEAVY);
-      }
-      if(power == 2)
-      {
-         w.setBaseDamage(w.getBaseDamage() * 2);
+         case 0 :
+            w.setBaseDamage(0);
+   	      w.setVariableDamage(0);
+            w.removeWeaponTag(WeaponTag.KNOCKBACK);
+            w.removeWeaponTag(WeaponTag.HEAVY);
+            break;
+         case 1 :
+            w.removeWeaponTag(WeaponTag.KNOCKBACK);
+            w.removeWeaponTag(WeaponTag.HEAVY);
+            break;
+         case 2 :
+            w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
+            break;
+         default : throw new java.lang.Error("Out of bounds power level: " + power);
       }
       return w;
    }
@@ -256,22 +258,21 @@ public class WeaponFactory implements GearConstants, ActorConstants
       w.setStatusEffectType(StatusEffectType.BURNING);
       w.setStatusEffectChance(1.0);
       w.setChargeCost(0);
-      if(power == 0)
+      switch(power)
       {
-         w.setBaseDamage(0);
-	      w.setVariableDamage(0);
-         w.removeWeaponTag(WeaponTag.KNOCKBACK);
-         w.removeWeaponTag(WeaponTag.HEAVY);
-      }
-      if(power == 1)
-      {
-         w.removeWeaponTag(WeaponTag.KNOCKBACK);
-         w.removeWeaponTag(WeaponTag.HEAVY);
-         w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
-      }
-      if(power == 2)
-      {
-         w.setBaseDamage(w.getBaseDamage() * 2);
+         case 0 :
+            w.removeWeaponTag(WeaponTag.KNOCKBACK);
+            w.removeWeaponTag(WeaponTag.HEAVY);
+            break;
+         case 1 :
+            w.removeWeaponTag(WeaponTag.KNOCKBACK);
+            w.removeWeaponTag(WeaponTag.HEAVY);
+            w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
+            break;
+         case 2 :
+            w.setBaseDamage(w.getBaseDamage() * 2);
+            break;
+         default : throw new java.lang.Error("Out of bounds power level: " + power);
       }
       return w;
    }
@@ -354,6 +355,7 @@ public class WeaponFactory implements GearConstants, ActorConstants
       {
          applyRandomUpgrade(weapon);
       }
+      weapon.setColorByRarity(rarity);
       return weapon;
    }
    
