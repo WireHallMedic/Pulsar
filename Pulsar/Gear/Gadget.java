@@ -188,14 +188,20 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
          }
          if(getSpecialEffect() == GadgetSpecialEffect.CHARM)
          {
+            if(getWeaponEffect().hasWeaponTag(WeaponTag.BLAST))
+               target = GameEngine.getDetonationLoc(user.getMapLoc(), target);
+            else 
+               target = GameEngine.getActualTarget(user.getMapLoc(), target);
             for(int x = -1; x < 2; x++)
             for(int y = -1; y < 2; y++)
             {
-               if(getWeaponEffect().hasWeaponTag(WeaponTag.BLAST))
-                  target = GameEngine.getDetonationLoc(user.getMapLoc(), target);
-               else 
-                  target = GameEngine.getActualTarget(user.getMapLoc(), target);
-               GameEngine.getZoneMap().tryToIgnite(target.x + x, target.y + y);
+               Actor a = GameEngine.getActorAt(target.x + x, target.y + y);
+               if(a != null)
+               {
+                  a.getAI().setTempLeader(user);
+                  a.getAI().setTempTeam(user.getAI().getTeam());
+                  a.add(StatusEffectFactory.getEffect(StatusEffectType.CHARMED));
+               }
             }
          }
          if(getSpecialEffect() == GadgetSpecialEffect.RECHARGE)

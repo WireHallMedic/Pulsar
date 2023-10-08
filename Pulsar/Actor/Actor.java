@@ -41,6 +41,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    protected boolean needsAir;
    protected boolean onFire;
    protected boolean disrupted;
+   protected boolean charmed;
    protected boolean dropsCorpse;
    protected boolean forcedMovementSinceLastTurn;
 
@@ -71,6 +72,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public boolean isMechanical(){return mechanical;}
    public boolean isOnFire(){return onFire;}
    public boolean isDisrupted(){return disrupted;}
+   public boolean isCharmed(){return charmed;}
    public boolean getDropsCorpse(){return dropsCorpse;}
    public boolean didForcedMovement(){return forcedMovementSinceLastTurn;}
 
@@ -97,7 +99,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void setInteractSpeed(ActionSpeed is){interactSpeed = is;}
    public void setAlertness(Alertness a){alertness = a;}
    public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
-   public void setTempStatusEffectList(Vector<StatusEffect> list){tempStatusEffectList = list; burningCheck(); disruptionCheck();}
+   public void setTempStatusEffectList(Vector<StatusEffect> list){tempStatusEffectList = list; updateStatusEffectFlags();}
    public void setDeathEffect(DeathEffect de){deathEffect = de;}
    public void setBiological(boolean b){biological = b;}
    public void setMechanical(boolean m){mechanical = m;}
@@ -136,6 +138,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       mechanical = false;
       needsAir = true;
       onFire = false;
+      charmed = false;
       disrupted = false;
       dropsCorpse = true;
       forcedMovementSinceLastTurn = false;
@@ -368,8 +371,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       fullyHeal();
       setTempStatusEffectList(new Vector<StatusEffect>());
-      burningCheck();
-      disruptionCheck();
+      updateStatusEffectFlags();
       if(hasWeapon())
          getWeapon().fullyCharge();
       if(hasShield())
@@ -581,8 +583,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
          if(se.isExpired())
          {
             tempStatusEffectList.removeElementAt(i);
-            burningCheck();
-            disruptionCheck();
+            updateStatusEffectFlags();
             i--;
          }
       }
@@ -660,6 +661,13 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       }
    }
    
+   public void updateStatusEffectFlags()
+   {
+      burningCheck(); 
+      disruptionCheck(); 
+      charmedCheck();
+   }
+   
    public void burningCheck()
    {
       boolean burning = false;
@@ -680,6 +688,22 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
             dis = true;
       }
       disrupted = dis;
+   }
+   
+   public void charmedCheck()
+   {
+      boolean c = false;
+      for(StatusEffect se : tempStatusEffectList)
+      {
+         if(se.getCharms())
+            c = true;
+      }
+      charmed = c;
+      if(!charmed)
+      {
+         getAI().setTempTeam(null);
+         getAI().setTempLeader(null);
+      }
    }
    
    public void extinguish()
