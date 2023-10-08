@@ -31,18 +31,23 @@ public class GadgetFactory implements ActorConstants, GearConstants
    
    public static Gadget generate()
    {
-      return generateByRarity(LootFactory.rollLootRarity());
+      return generate(LootFactory.rollLootRarity());
    }
    
-   public static Gadget generateByRarity(LootRarity rarity)
+   public static Gadget generate(LootRarity rarity)
    {
       WeightedRandomizer table = new WeightedRandomizer(GadgetType.values());
       GadgetType type = (GadgetType)table.roll();
-      return generateByType(type, rarity);
+      return generate(type, rarity);
    }
    
-   public static Gadget generateByType(GadgetType type){return generateByType(type, LootRarity.COMMON);}
-   public static Gadget generateByType(GadgetType type, LootRarity rarity)
+   public static Gadget generate(GadgetType type)
+   {
+      return generate(type, LootRarity.COMMON);
+   }
+   
+   
+   public static Gadget generate(GadgetType type, LootRarity rarity)
    {
       switch(type)
       {

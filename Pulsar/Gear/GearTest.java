@@ -125,7 +125,7 @@ public class GearTest implements GearConstants, ActorConstants
       for(LootRarity rarity : LootRarity.values())
       {
          String str = "Generating " + rarity + " " + type + " does not return null.";
-         assertTrue(str, GadgetFactory.generateByType(type, rarity) != null);
+         assertTrue(str, GadgetFactory.generate(type, rarity) != null);
       }
    }
    

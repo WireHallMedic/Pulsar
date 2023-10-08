@@ -47,7 +47,7 @@ public class Credits extends GearObj implements GearConstants, GUIConstants
    
    
    // factory methods
-   public static Credits generateByRarity(LootRarity rarity)
+   public static Credits generate(LootRarity rarity)
    {
       int min = COMMON_MIN;
       int max = COMMON_MAX;
@@ -67,6 +67,6 @@ public class Credits extends GearObj implements GearConstants, GUIConstants
    
    public static Credits generate()
    {
-      return generateByRarity(LootFactory.rollLootRarity());
+      return generate(LootFactory.rollLootRarity());
    }
 }

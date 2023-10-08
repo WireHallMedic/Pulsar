@@ -326,10 +326,10 @@ public class WeaponFactory implements GearConstants, ActorConstants
    
    public static Weapon generate()
    {
-      return generateByRarity(LootFactory.rollLootRarity());
+      return generate(LootFactory.rollLootRarity());
    }
    
-   public static Weapon generateByRarity(LootRarity rarity)
+   public static Weapon generate(LootRarity rarity)
    {
       Weapon weapon = null;
       int upgrades = 0;

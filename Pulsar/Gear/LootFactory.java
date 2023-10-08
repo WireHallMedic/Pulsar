@@ -17,11 +17,11 @@ public class LootFactory implements GearConstants
       GearObj loot = null;
       switch(type)
       {
-         case CREDITS : loot = Credits.generateByRarity(rarity); break;
-         case WEAPON : loot = WeaponFactory.generateByRarity(rarity); break;
-         case GADGET : loot = GadgetFactory.generateByRarity(rarity); break;
-         case ARMOR : loot = ArmorFactory.generateByRarity(rarity); break;
-         case SHIELD : loot = ShieldFactory.generateByRarity(rarity); break;
+         case CREDITS : loot = Credits.generate(rarity); break;
+         case WEAPON : loot = WeaponFactory.generate(rarity); break;
+         case GADGET : loot = GadgetFactory.generate(rarity); break;
+         case ARMOR : loot = ArmorFactory.generate(rarity); break;
+         case SHIELD : loot = ShieldFactory.generate(rarity); break;
          default : System.out.println("Unknown loot type: " + type); break;
       }
       

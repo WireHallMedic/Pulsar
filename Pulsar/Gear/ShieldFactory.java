@@ -22,10 +22,10 @@ public class ShieldFactory implements GearConstants
    
    public static Shield generate()
    {
-      return generateByRarity(LootFactory.rollLootRarity());
+      return generate(LootFactory.rollLootRarity());
    }
    
-   public static Shield generateByRarity(LootRarity rarity)
+   public static Shield generate(LootRarity rarity)
    {
       
       WeightedRandomizer table = new WeightedRandomizer(ShieldType.values());

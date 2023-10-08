@@ -85,10 +85,10 @@ public class ArmorFactory implements GearConstants, ActorConstants
    
    public static Armor generate()
    {
-      return generateByRarity(LootFactory.rollLootRarity());
+      return generate(LootFactory.rollLootRarity());
    }
    
-   public static Armor generateByRarity(LootRarity rarity)
+   public static Armor generate(LootRarity rarity)
    {
       WeightedRandomizer table = new WeightedRandomizer(ArmorType.values());
       ArmorType type = (ArmorType)table.roll();
