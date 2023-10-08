@@ -91,19 +91,17 @@ public class GadgetFactory implements ActorConstants, GearConstants
       Gadget g = new Gadget();
       g.setName("Grenades");
       g.setShortName("Grenades");
-      g.setWeaponEffect(WeaponFactory.getExplodingBarrel());
+      g.setWeaponEffect(WeaponFactory.getGrenadeExplosion(rarity.ordinal()));
       g.setTargetsSelf(false);
       g.setDescription("Explodes where you throw it.");
       if(rarity == LootRarity.UNCOMMON)
       {
          g.setName(g.getName() + " MkII");
-         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 1.5));
          g.setDescription(g.getDescription() + " Improved damage.");
       }
       if(rarity == LootRarity.RARE)
       {
          g.setName(g.getName() + " MkIII");
-         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 2.0));
          g.setDescription(g.getDescription() + " Greatly improved damage.");
       }
       return g;
@@ -115,20 +113,18 @@ public class GadgetFactory implements ActorConstants, GearConstants
       Gadget g = new Gadget();
       g.setName("Napalm Grenades");
       g.setShortName("Napalm Grenades");
-      g.setWeaponEffect(WeaponFactory.getNapalm());
+      g.setWeaponEffect(WeaponFactory.getNapalm(rarity.ordinal()));
       g.setTargetsSelf(false);
       g.setDescription("Explodes where you throw it, igniting the area.");
       g.setSpecialEffect(GadgetSpecialEffect.NAPALM);
       if(rarity == LootRarity.UNCOMMON)
       {
          g.setName(g.getName() + " MkII");
-         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 1.5));
          g.setDescription(g.getDescription() + " Improved damage.");
       }
       if(rarity == LootRarity.RARE)
       {
          g.setName(g.getName() + " MkIII");
-         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 2.0));
          g.setDescription(g.getDescription() + " Greatly improved damage.");
       }
       return g;
@@ -140,19 +136,17 @@ public class GadgetFactory implements ActorConstants, GearConstants
       Gadget g = new Gadget();
       g.setName("Cryo Grenades");
       g.setShortName("Cryo Grenades");
-      g.setWeaponEffect(WeaponFactory.getCryoExplosion());
+      g.setWeaponEffect(WeaponFactory.getCryoExplosion(rarity.ordinal()));
       g.setTargetsSelf(false);
       g.setDescription("Explodes where you throw it, freezing terrain and creatures in the area.");
       if(rarity == LootRarity.UNCOMMON)
       {
          g.setName(g.getName() + " MkII");
-         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 1.5));
          g.setDescription(g.getDescription() + " Improved damage.");
       }
       if(rarity == LootRarity.RARE)
       {
          g.setName(g.getName() + " MkIII");
-         g.getWeaponEffect().setBaseDamage((int)(g.getWeaponEffect().getBaseDamage() * 2.0));
          g.setDescription(g.getDescription() + " Greatly improved damage.");
       }
       return g;
@@ -166,7 +160,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       g.setShortName("EMP Grenades");
       g.setWeaponEffect(WeaponFactory.getEMPExplosion(rarity.ordinal()));
       g.setTargetsSelf(false);
-      g.setDescription("Explodes, disrupting shields and mechanical foes.");
+      g.setDescription("Disrupting shields and mechanical foes.");
       if(rarity == LootRarity.UNCOMMON)
       {
          g.setName(g.getName() + " MkII");

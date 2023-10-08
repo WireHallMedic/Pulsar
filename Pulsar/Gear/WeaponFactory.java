@@ -160,7 +160,7 @@ public class WeaponFactory implements GearConstants, ActorConstants
       w.setDamageType(DamageType.THERMAL);
       w.setStatusEffectChance(.25);
       w.setStatusEffectType(StatusEffectType.BLIND);
-      w.setHitDescriptor("spits acidic goo on");
+      w.setHitDescriptor("spits burning goo on");
       return w;
    }
    
@@ -174,22 +174,57 @@ public class WeaponFactory implements GearConstants, ActorConstants
       return w;
    }
    
-   public static Weapon getCryoExplosion()
+   public static Weapon getGrenadeExplosion(){return getGrenadeExplosion(0);}
+   public static Weapon getGrenadeExplosion(int power)
    {
       Weapon w = getExplodingBarrel();
-      w.setName("Exploding Cryo Barrel");
-      w.removeWeaponTag(WeaponTag.KNOCKBACK);
-      w.removeWeaponTag(WeaponTag.HEAVY);
-      w.setDamageType(DamageType.CRYO);
-      w.setStatusEffectType(StatusEffectType.FROZEN);
-      w.setStatusEffectChance(1.0);
+      w.setName("Grenade");
+      if(power == 0)
+         ;
+      if(power == 1)
+      {
+         w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
+      }
+      if(power == 2)
+      {
+         w.setBaseDamage(w.getBaseDamage() * 2);
+      }
       return w;
    }
    
+   public static Weapon getCryoExplosion(){return getCryoExplosion(0);}
+   public static Weapon getCryoExplosion(int power)
+   {
+      Weapon w = getExplodingBarrel();
+      w.setName("Exploding Cryo Barrel");
+      w.setDamageType(DamageType.CRYO);
+      w.setStatusEffectType(StatusEffectType.FROZEN);
+      w.setStatusEffectChance(1.0);
+      if(power == 0)
+      {
+         w.setBaseDamage(0);
+	      w.setVariableDamage(0);
+         w.removeWeaponTag(WeaponTag.KNOCKBACK);
+         w.removeWeaponTag(WeaponTag.HEAVY);
+      }
+      if(power == 1)
+      {
+         w.removeWeaponTag(WeaponTag.KNOCKBACK);
+         w.removeWeaponTag(WeaponTag.HEAVY);
+         w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
+      }
+      if(power == 2)
+      {
+         w.setBaseDamage(w.getBaseDamage() * 2);
+      }
+      return w;
+   }
+   
+   public static Weapon getEMPExplosion(){return getEMPExplosion(0);}
    public static Weapon getEMPExplosion(int power)
    {
       Weapon w = getExplodingBarrel();
-      w.setName("Exploding EMP Barrel");
+      w.setName(" EMP");
       w.setStatusEffectType(StatusEffectType.DISRUPTED);
       w.setDamageType(DamageType.ELECTRO);
       w.setStatusEffectChance(1.0);
@@ -212,16 +247,32 @@ public class WeaponFactory implements GearConstants, ActorConstants
       return w;
    }
    
-   public static Weapon getNapalm()
+   public static Weapon getNapalm(){return getNapalm(0);}
+   public static Weapon getNapalm(int power)
    {
       Weapon w = getExplodingBarrel();
-      w.setName("Exploding Barrel");
-      w.removeWeaponTag(WeaponTag.KNOCKBACK);
-      w.removeWeaponTag(WeaponTag.HEAVY);
+      w.setName("Napalm");
       w.setDamageType(DamageType.THERMAL);
       w.setStatusEffectType(StatusEffectType.BURNING);
       w.setStatusEffectChance(1.0);
       w.setChargeCost(0);
+      if(power == 0)
+      {
+         w.setBaseDamage(0);
+	      w.setVariableDamage(0);
+         w.removeWeaponTag(WeaponTag.KNOCKBACK);
+         w.removeWeaponTag(WeaponTag.HEAVY);
+      }
+      if(power == 1)
+      {
+         w.removeWeaponTag(WeaponTag.KNOCKBACK);
+         w.removeWeaponTag(WeaponTag.HEAVY);
+         w.setBaseDamage((int)(w.getBaseDamage() * 1.5));
+      }
+      if(power == 2)
+      {
+         w.setBaseDamage(w.getBaseDamage() * 2);
+      }
       return w;
    }
    
