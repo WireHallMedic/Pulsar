@@ -14,7 +14,7 @@ import Pulsar.Gear.*;
 import Pulsar.Engine.*;
 
 
-public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontConstants, KeyListener
+public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontConstants, KeyListener, GearConstants
 {
    public static final int X_ORIGIN = 1;
    public static final int Y_ORIGIN = 1;
@@ -108,7 +108,7 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
    
    public String[][] getPages()
    {
-      String[] pageOne = {
+      String[] keyBinds = {
          GUITools.centerString("Key Bindings [^/$]", WIDTH_TILES),
          "Numpad   Movement",
          "Arrows   Movement; hold shift to allow diagonal input",
@@ -132,7 +132,7 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
          "",
          GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
-      String[] pageTwo = {
+      String[] tileDescriptions = {
          GUITools.centerString("Terrain [^/$]", WIDTH_TILES),
          " " + (char)SMALL_BULLET_TILE + "  Clear. A normal, open tile.",
          " =  Low wall or similar. Blocks non-flying movement.",
@@ -145,18 +145,18 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
          " " + (char)CAPITAL_OMEGA_TILE + "  Terminal. Interact to read.",
          " ^  Fire.",
          (char)DOT_TILE + " " + (char)RING_TILE + " Button. Some buttons can be pressed repeatedly, some just once.",
+         " " + (char)DIAMOND_TILE + "  Exit. You leave each level where you came in.",
          "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
-         "",
+         GUITools.centerString("Loot", WIDTH_TILES),
+         " " + (char)CREDIT_ICON + "  Credits. You can spend these in between missions. Picked up automatically.",
+         " " + (char)WEAPON_ICON + "  Weapon. You can have two weapons equipped at a time.",
+         " " + (char)SHIELD_ICON + "  Shield. Shields recharge if you don't get hit for a few turns.",
+         " " + (char)ARMOR_ICON + "  Armor. Protects against damage (usually), and may have other benefits.",
+         " " + (char)GADGET_ICON + "  Gadgets. These don't recharge during a mission.",
          "",
          GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
-      String[] pageThree = {
+      String[] weaponProperties = {
          GUITools.centerString("Weapon Properties [^/$]", WIDTH_TILES),
          "Standard:  Can fire over low barriers.",
          "Blast:     Hits everything in a 3x3 area.",
@@ -180,10 +180,10 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
          "",
          GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
-      String[] pageFour = {
+      String[] speed = {
          GUITools.centerString("Speed [^/$]", WIDTH_TILES),
          "This game is entirely turn-based. You have as much time as you want to take",
-         "  your turns. A standard length turn is \"1 second.\"",
+         "  on your turns. A standard length turn is \"1 second.\"",
          "",
          "Fast actions take half a standard turn (0.5 seconds).",
          "Slow actions take two standard turns (2.0 seconds).",
@@ -204,7 +204,7 @@ public class HelpPanel extends RogueTilePanel implements GUIConstants, WSFontCon
          "",
          GUITools.centerString("Press Escape to exit", WIDTH_TILES)
       };
-      String[][] pageArr = {pageOne, pageTwo, pageThree, pageFour};
+      String[][] pageArr = {keyBinds, tileDescriptions, weaponProperties, speed};
       for(int i = 0; i < pageArr.length; i++)
       {
          String newStr = pageArr[i][0];

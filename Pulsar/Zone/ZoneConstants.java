@@ -54,7 +54,7 @@ public interface ZoneConstants extends WSFontConstants
       TERMINAL    (CAPITAL_OMEGA_TILE, "Terminal", false, true, true),
       CRATE       ('#', "Crate", false, false, false),
       VACUUM      (' ', "Vacuum", false, false, true),
-      EXIT        ('>', "Exit", true, true, true),
+      EXIT        (DIAMOND_TILE, "Exit", true, true, true),
       NULL        (' ', "", false, false, false);
       
       public int iconIndex;
