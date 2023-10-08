@@ -455,7 +455,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       if(!isReadyToAct())
       {
-         if(!(isDisrupted() && mechanical))
+         if(!(isDisrupted() && isMechanical()))
             turnEnergy++;
          if(hasShield())
             shield.charge();
@@ -616,6 +616,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
             break;
          }
       }
+      if(se.getDisrupts() && !isMechanical())
+         needToAdd = false;
       if(needToAdd)
       {
          tempStatusEffectList.add(se);
