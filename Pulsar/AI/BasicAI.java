@@ -501,13 +501,39 @@ public class BasicAI implements AIConstants
    public void doGrab(boolean spendCharge)
    {
       boolean pickupF = false;
+      boolean hasRoomToEquip = false;
+      int slot = 0;
+      GearObj prospectiveItem = GameEngine.getZoneMap().getGearAt(self.getMapLoc());
+      Player playerSelf = (Player)self;
+      if(prospectiveItem instanceof Weapon)
+      {
+         if(!self.hasWeapon())
+            hasRoomToEquip = true;
+         else if(self instanceof Player && !playerSelf.hasAltWeapon())
+         {
+            hasRoomToEquip = true;
+            slot = 1;
+         }
+      }
+      if(prospectiveItem instanceof Shield && !self.hasShield())
+         hasRoomToEquip = true;
+      if(prospectiveItem instanceof Armor && !self.hasArmor())
+         hasRoomToEquip = true;
+      if(prospectiveItem instanceof Gadget)
+      {
+         if(playerSelf.getGadgetList().size() < playerSelf.getMaxGadgets())
+         {
+            hasRoomToEquip = true;
+            slot = playerSelf.getGadgetList().size();
+         }
+      }
       // nothing at location
       if(!GameEngine.getZoneMap().isGearAt(self.getMapLoc()))
       {
          MessagePanel.addMessage("Nothing to pick up here.");
       }
       // credits
-      else if(GameEngine.getZoneMap().getGearAt(self.getMapLoc()) instanceof Credits)
+      else if(prospectiveItem instanceof Credits)
       {
          pickupF = true;
       }
@@ -526,21 +552,22 @@ public class BasicAI implements AIConstants
       }
       if(pickupF)
       {
-         GearObj gear = GameEngine.getZoneMap().getGearAt(self.getMapLoc());
          GameEngine.getZoneMap().setGearAt(self.getMapLoc(), null);
          // must be before pickup, as adding credits to inventory sets original amt to 0
          if(self instanceof Player)
          {
             String particle = "a ";
-            if(gear instanceof Credits)
+            if(prospectiveItem instanceof Credits)
                particle = "";
-            MessagePanel.addMessage("You pick up " + particle + gear.getName() + ".");
+            MessagePanel.addMessage("You pick up " + particle + prospectiveItem.getName() + ".");
          }
          if(GameEngine.playerCanSee(self.getMapLoc()))
          {
-            VisualEffectFactory.addPickupIndicator(self, gear);
+            VisualEffectFactory.addPickupIndicator(self, prospectiveItem);
          }
-         self.getInventory().add(gear);
+         self.getInventory().add(prospectiveItem);
+         if(hasRoomToEquip && self instanceof Player)
+            playerSelf.equip(prospectiveItem, slot);
          if(spendCharge)
             self.discharge(self.getInteractSpeed().timeCost);
       }

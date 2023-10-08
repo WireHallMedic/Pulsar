@@ -374,8 +374,7 @@ public class InputManager implements KeyListener, AIConstants, EngineConstants, 
       }
       if(arg == ' ')
       {
-         for(Actor a : GameEngine.getActorList())
-            System.out.println(a + " charmed: " + a.isCharmed());
+      
       }
    }
 }
