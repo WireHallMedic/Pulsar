@@ -143,11 +143,13 @@ public class Player extends Actor implements GUIConstants, GearConstants
          wpn.fullyDischarge();
          if(slot == 0)
          {
+            System.out.println("Equipping to primary slot.");
             getInventory().add(weapon);
             weapon = wpn;
          }
          if(slot == 1)
          {
+            System.out.println("Equipping to secondary slot.");
             getInventory().add(secondaryWeapon);
             secondaryWeapon = wpn;
          }

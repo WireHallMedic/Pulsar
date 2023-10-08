@@ -17,28 +17,28 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       //Weapon weapon = WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE);
       //a.setWeapon(weapon);
       a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
-      a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.BEAM));
-      WeaponFactory.setElementAndStatusEffect(a.getPrimaryWeapon(), DamageType.THERMAL);
+ //     a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
+ //     WeaponFactory.setElementAndStatusEffect(a.getPrimaryWeapon(), DamageType.THERMAL);
       a.setShield(ShieldFactory.getBasicShield());
- //     a.setArmor(ArmorFactory.getScoutArmor());
-      a.setArmor(ArmorFactory.getEngineerArmor());
+      a.setArmor(ArmorFactory.getScoutArmor());
+ //     a.setArmor(ArmorFactory.getEngineerArmor());
   //    a.setArmor(ArmorFactory.getAssaultArmor());
       a.setMaxHealth(50);
       a.fullyHeal();
       a.setAlertness(Alertness.CAUTIOUS);
  //     a.addGadget(GadgetFactory.getAdrenalInjector());
  //     a.addGadget(GadgetFactory.getGrenades());
- //     a.addGadget(GadgetFactory.getNapalmGrenades());
+      a.addGadget(GadgetFactory.getNapalmGrenades());
  //     a.addGadget(GadgetFactory.getCryoGrenades());
  //     a.addGadget(GadgetFactory.getHoloclone(LootRarity.RARE));
  //     a.addGadget(GadgetFactory.getTurret());
-      a.addGadget(GadgetFactory.getCombatDrone());
+ //     a.addGadget(GadgetFactory.getCombatDrone());
  //     a.addGadget(GadgetFactory.getMotionSensor());
  //     a.addGadget(GadgetFactory.getAirSupply());
-      a.addGadget(GadgetFactory.getEMPGrenades(LootRarity.COMMON));
-  //     a.addGadget(GadgetFactory.getEMPGrenades(LootRarity.UNCOMMON));
-//       a.addGadget(GadgetFactory.getEMPGrenades(LootRarity.RARE));
-  //    a.addGadget(GadgetFactory.getQuickCharger(LootRarity.RARE));
+ //     a.addGadget(GadgetFactory.getEMPGrenades());
+  //    a.addGadget(GadgetFactory.getQuickCharger());
+  
+      a.getInventory().add(WeaponFactory.getBasicWeapon(WeaponType.SLUG_RIFLE));
  
  
       return a;

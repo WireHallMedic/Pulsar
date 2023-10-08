@@ -39,14 +39,14 @@ public class InventoryPanel extends SelectionPanel
          options[i] = "";
       }
       String str = "Primary Weapon: ";
-      if(player.getPrimaryWeapon() != null)
-         str += player.getPrimaryWeapon().getName();
+      if(player.hasWeapon())
+         str += player.getWeapon().getName();
       else
          str += "None";
       options[PRIMARY_WEAPON] = str;
       str = "Secondary Weapon: ";
-      if(player.getSecondaryWeapon() != null)
-         str += player.getSecondaryWeapon().getName();
+      if(player.hasAltWeapon())
+         str += player.getAltWeapon().getName();
       else
          str += "None";
       options[SECONDARY_WEAPON] = str;
@@ -154,10 +154,10 @@ public class InventoryPanel extends SelectionPanel
    
    public GearObj getSelectedGear()
    {
-      if(selectionIndex == PRIMARY_WEAPON)
-         return player.getPrimaryWeapon();
-      if(selectionIndex == SECONDARY_WEAPON)
-         return player.getSecondaryWeapon();
+      if(selectionIndex == PRIMARY_WEAPON && player.hasWeapon())
+         return player.getWeapon();
+      if(selectionIndex == SECONDARY_WEAPON && player.hasAltWeapon())
+         return player.getAltWeapon();
       if(selectionIndex == ARMOR)
          return player.getArmor();
       if(selectionIndex == SHIELD)
