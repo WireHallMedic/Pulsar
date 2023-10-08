@@ -48,6 +48,12 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
          Actor victim = ActorFactory.getVictim();
          victim.setAllLocs(20, 12);
          engine.add(victim);
+         Actor alien = ActorFactory.getAlienLarva();
+         alien.setAllLocs(8, 12);
+         engine.add(alien);
+         alien = ActorFactory.getAlienWorker();
+         alien.setAllLocs(8, 13);
+         engine.add(alien);
          engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);

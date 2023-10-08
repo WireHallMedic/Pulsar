@@ -174,6 +174,16 @@ public class WeaponFactory implements GearConstants, ActorConstants
       return w;
    }
    
+   public static Weapon getHarmlessExplosion()
+   {
+      Weapon w = getExplodingBarrel();
+      w.setBaseDamage(0);
+      w.setVariableDamage(0);
+      w.removeWeaponTag(WeaponTag.HEAVY);
+      w.removeWeaponTag(WeaponTag.KNOCKBACK);
+      return w;
+   }
+   
    public static Weapon getGrenadeExplosion(){return getGrenadeExplosion(0);}
    public static Weapon getGrenadeExplosion(int power)
    {

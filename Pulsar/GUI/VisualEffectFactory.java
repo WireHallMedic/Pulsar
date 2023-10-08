@@ -207,6 +207,17 @@ public class VisualEffectFactory implements GUIConstants, ActionListener, WSFont
       add(ut);
    }
    
+   public static void addCharmedParticle(Actor a)
+   {
+      UnboundTile ut = getPalette().getUnboundTile(HEART_TILE, RED.getRGB(), getSizeMultiplier() / 2.0);
+      ut.setSpeed(0.0, -FLOAT_EFFECT_SPEED);
+      UnboundTile actorSprite = a.getSprite();
+      ut.setLoc(new Coord(actorSprite.getXLoc(), actorSprite.getYLoc()));
+      ut.setXOffset(actorSprite.getXOffset() - .4 + (GameEngine.random() * .8));
+      ut.setYOffset(actorSprite.getYOffset()- .25 + (GameEngine.random() * .5));
+      add(ut);
+   }
+   
    public static void addWithDelay(UnboundTile ut, MovementScript ms, int delay)
    {
       DelayedVisualEffect delayVE;

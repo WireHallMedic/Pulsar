@@ -74,6 +74,8 @@ public class MainGameFGPanel extends RogueTilePanel implements GUIConstants, Eng
             Actor a = GameEngine.getActorList().elementAt(i);
             if(a.isOnFire() && GameEngine.playerCanSee(a))
                VisualEffectFactory.addFireParticle(a);
+            if(a.isCharmed() && GameEngine.playerCanSee(a))
+               VisualEffectFactory.addCharmedParticle(a);
          }
       }
       

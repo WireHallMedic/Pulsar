@@ -622,11 +622,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       if(needToAdd)
       {
          tempStatusEffectList.add(se);
-         if(se.isBurningEffect())
-            onFire = true;
-         if(se.getDisrupts())
-            disrupted = true;
       }
+      updateStatusEffectFlags();
    }
    
    public Vector<StatusEffect> getAllStatusEffects()

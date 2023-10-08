@@ -200,7 +200,9 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
                {
                   a.getAI().setTempLeader(user);
                   a.getAI().setTempTeam(user.getAI().getTeam());
-                  a.add(StatusEffectFactory.getEffect(StatusEffectType.CHARMED));
+                  StatusEffect se = StatusEffectFactory.getEffect(StatusEffectType.CHARMED);
+                  se.setRemainingDuration(se.getRemainingDuration() * (getIntensity() + 1));
+                  a.add(se);
                }
             }
          }

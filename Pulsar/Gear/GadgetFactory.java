@@ -17,6 +17,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
       COMBAT_DRONE      (10),
       MOTION_SENSOR     (10),
       AIR_SUPPLY        (10),
+      LOVE_BOMB         (10),
       QUICK_CHARGER     (10);
       
       private GadgetType(int w)
@@ -61,6 +62,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          case COMBAT_DRONE       : return getCombatDrone(rarity);
          case MOTION_SENSOR      : return getMotionSensor(rarity);
          case AIR_SUPPLY         : return getAirSupply(rarity);
+         case LOVE_BOMB          : return getLoveBomb(rarity);
          case QUICK_CHARGER      : return getQuickCharger(rarity);
          default                 : return null;
       }
@@ -312,6 +314,31 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setIntensity(3);
          g.setDescription("Immedeatly overcharges your shield and weapons to 200%.");
       }
+      g.setColorByRarity(rarity);
+      return g;
+   }
+   
+   public static Gadget getLoveBomb(){return getLoveBomb(LootRarity.COMMON);}
+   public static Gadget getLoveBomb(LootRarity rarity)
+   {
+      Gadget g = new Gadget();
+      g.setName("Love Bombs");
+      g.setShortName("Love Bombs");
+      g.setWeaponEffect(WeaponFactory.getHarmlessExplosion());
+      g.setIntensity(rarity.ordinal());
+      g.setTargetsSelf(false);
+      g.setDescription("Explodes where you throw it, charming the those it hits.");
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.setDescription(g.getDescription() + " Improved duration.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.setDescription(g.getDescription() + " Greatly improved duration.");
+      }
+      g.setSpecialEffect(GadgetSpecialEffect.CHARM);
       g.setColorByRarity(rarity);
       return g;
    }
