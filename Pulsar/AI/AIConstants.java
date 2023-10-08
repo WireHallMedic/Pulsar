@@ -49,11 +49,12 @@ public interface AIConstants
       PLAYER,
       VILLAIN,
       ALIEN,
-      NEUTRAL;
+      NEUTRAL,
+      NONE;
       
       public boolean isHostile(Team that)
       {
-         if(this == that)
+         if(this == that || this == NONE)
             return false;
          if(this == PLAYER)
          {
@@ -84,6 +85,8 @@ public interface AIConstants
       
       public boolean isFriendly(Team that)
       {
+         if(this == NONE)
+            return false;
          if(this == that)
             return true;
          return false;
