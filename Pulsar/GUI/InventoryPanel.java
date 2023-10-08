@@ -173,9 +173,9 @@ public class InventoryPanel extends SelectionPanel
    {
       if(obj instanceof Weapon)
       {
-         if(!player.hasPrimaryWeapon())
+         if(!player.hasWeapon())
             return 0;
-         if(!player.hasSecondaryWeapon())
+         if(!player.hasAltWeapon())
             return 1;
       }
       if(obj instanceof Gadget)
@@ -215,7 +215,7 @@ public class InventoryPanel extends SelectionPanel
          {
             int slot = getAutomaticSlot(getSelectedGear());
             if(slot != -1)
-               player.equip(getSelectedGear(), 0);
+               player.equip(getSelectedGear(), slot);
             else
             {
                mode = CHOOSE_SLOT_MODE;

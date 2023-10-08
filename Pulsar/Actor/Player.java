@@ -75,6 +75,13 @@ public class Player extends Actor implements GUIConstants, GearConstants
       else
          setSecondaryWeapon(w);
    }
+   public void setAltWeapon(Weapon w)
+   {
+      if(usingPrimaryWeapon)
+         setSecondaryWeapon(w);
+      else
+         setPrimaryWeapon(w);
+   }
    
    public void switchWeapons()
    {
@@ -143,15 +150,15 @@ public class Player extends Actor implements GUIConstants, GearConstants
          wpn.fullyDischarge();
          if(slot == 0)
          {
-            System.out.println("Equipping to primary slot.");
-            getInventory().add(weapon);
-            weapon = wpn;
+            if(hasWeapon())
+               getInventory().add(getWeapon());
+            setWeapon(wpn);
          }
          if(slot == 1)
          {
-            System.out.println("Equipping to secondary slot.");
-            getInventory().add(secondaryWeapon);
-            secondaryWeapon = wpn;
+            if(hasAltWeapon())
+               getInventory().add(secondaryWeapon);
+            setAltWeapon(wpn);
          }
       }
       if(obj instanceof Armor)
