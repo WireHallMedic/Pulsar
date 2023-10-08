@@ -36,22 +36,27 @@ public class GadgetFactory implements ActorConstants, GearConstants
    
    public static Gadget generateByRarity(LootRarity rarity)
    {
-      
       WeightedRandomizer table = new WeightedRandomizer(GadgetType.values());
       GadgetType type = (GadgetType)table.roll();
+      return generateByType(type, rarity);
+   }
+   
+   public static Gadget generateByType(GadgetType type){return generateByType(type, LootRarity.COMMON);}
+   public static Gadget generateByType(GadgetType type, LootRarity rarity)
+   {
       switch(type)
       {
-         case ADRENAL_INJECTOR   : return getAdrenalInjector();
-         case GRENADES           : return getGrenades();
-         case NAPALM_GRENADES    : return getNapalmGrenades();
-         case CRYO_GRENADES      : return getCryoGrenades();
-         case EMP_GRENADES       : return getEMPGrenades();
-         case HOLOCLONE          : return getHoloclone();
-         case TURRET             : return getTurret();
-         case COMBAT_DRONE       : return getCombatDrone();
-         case MOTION_SENSOR      : return getMotionSensor();
-         case AIR_SUPPLY         : return getAirSupply();
-         case QUICK_CHARGER      : return getQuickCharger();
+         case ADRENAL_INJECTOR   : return getAdrenalInjector(rarity);
+         case GRENADES           : return getGrenades(rarity);
+         case NAPALM_GRENADES    : return getNapalmGrenades(rarity);
+         case CRYO_GRENADES      : return getCryoGrenades(rarity);
+         case EMP_GRENADES       : return getEMPGrenades(rarity);
+         case HOLOCLONE          : return getHoloclone(rarity);
+         case TURRET             : return getTurret(rarity);
+         case COMBAT_DRONE       : return getCombatDrone(rarity);
+         case MOTION_SENSOR      : return getMotionSensor(rarity);
+         case AIR_SUPPLY         : return getAirSupply(rarity);
+         case QUICK_CHARGER      : return getQuickCharger(rarity);
          default                 : return null;
       }
    }

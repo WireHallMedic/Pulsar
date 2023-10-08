@@ -117,4 +117,16 @@ public class GearTest implements GearConstants, ActorConstants
       Assert.assertEquals("Slow armor restricts moving", ActionSpeed.SLOW, actor.getMoveSpeed());
       Assert.assertEquals("Slow armor does not restrict or boost interacting", ActionSpeed.STANDARD, actor.getInteractSpeed());
    }
+   
+   
+   @Test public void gadgetValidityTest() 
+   {
+      for(GadgetFactory.GadgetType type : GadgetFactory.GadgetType.values())
+      for(LootRarity rarity : LootRarity.values())
+      {
+         String str = "Generating " + rarity + " " + type + " does not return null.";
+         assertTrue(str, GadgetFactory.generateByType(type, rarity) != null);
+      }
+   }
+   
 }
