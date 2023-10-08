@@ -40,6 +40,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    protected boolean mechanical;
    protected boolean needsAir;
    protected boolean onFire;
+   protected boolean disrupted;
    protected boolean dropsCorpse;
    protected boolean forcedMovementSinceLastTurn;
 
@@ -69,6 +70,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public boolean isBiological(){return biological;}
    public boolean isMechanical(){return mechanical;}
    public boolean isOnFire(){return onFire;}
+   public boolean isDisrupted(){return disrupted;}
    public boolean getDropsCorpse(){return dropsCorpse;}
    public boolean didForcedMovement(){return forcedMovementSinceLastTurn;}
 
@@ -95,12 +97,11 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    public void setInteractSpeed(ActionSpeed is){interactSpeed = is;}
    public void setAlertness(Alertness a){alertness = a;}
    public void setAlertnessManager(AlertnessManager am){alertnessManager = am;}
-   public void setTempStatusEffectList(Vector<StatusEffect> list){tempStatusEffectList = list; burningCheck();}
+   public void setTempStatusEffectList(Vector<StatusEffect> list){tempStatusEffectList = list; burningCheck(); disruptionCheck();}
    public void setDeathEffect(DeathEffect de){deathEffect = de;}
    public void setBiological(boolean b){biological = b;}
    public void setMechanical(boolean m){mechanical = m;}
    public void setNeedsAir(boolean na){needsAir = na;}
-   public void setOnFire(boolean of){onFire = of;}
    public void setDropsCorpse(boolean dc){dropsCorpse = dc;}
    public void setDidForcedMovement(boolean dfm){forcedMovementSinceLastTurn = dfm;}
 
@@ -135,6 +136,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       mechanical = false;
       needsAir = true;
       onFire = false;
+      disrupted = false;
       dropsCorpse = true;
       forcedMovementSinceLastTurn = false;
    }
@@ -367,6 +369,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
       fullyHeal();
       setTempStatusEffectList(new Vector<StatusEffect>());
       burningCheck();
+      disruptionCheck();
       if(hasWeapon())
          getWeapon().fullyCharge();
       if(hasShield())
@@ -452,7 +455,8 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       if(!isReadyToAct())
       {
-         turnEnergy++;
+         if(!(isDisrupted() && mechanical))
+            turnEnergy++;
          if(hasShield())
             shield.charge();
          if(weapon != null)
@@ -578,6 +582,7 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
          {
             tempStatusEffectList.removeElementAt(i);
             burningCheck();
+            disruptionCheck();
             i--;
          }
       }
@@ -587,6 +592,10 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
    {
       if(isDead())
          return;
+      if(se.getDisrupts() && hasShield())
+      {
+         getShield().fullyDischarge();
+      }
       if(GameEngine.playerCanSee(this))
       {
          Color color = TERMINAL_FG_COLOR;
@@ -656,6 +665,17 @@ public class Actor implements ActorConstants, GUIConstants, AIConstants, EngineC
             burning = true;
       }
       onFire = burning;
+   }
+   
+   public void disruptionCheck()
+   {
+      boolean dis = false;
+      for(StatusEffect se : tempStatusEffectList)
+      {
+         if(se.getDisrupts())
+            dis = true;
+      }
+      disrupted = dis;
    }
    
    public void extinguish()
