@@ -7,6 +7,7 @@ import Pulsar.Gear.*;
 import Pulsar.Zone.*;
 import Pulsar.Engine.*;
 import WidlerSuite.*;
+import java.util.*;
 
 public class ActorFactory implements ActorConstants, GearConstants, AIConstants, GUIConstants
 {
@@ -162,6 +163,28 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
             z.add(e);
          }
       }
+   }
+   
+   public static boolean add(Zone zone, Actor actor, Coord target)
+   {
+      target = zone.getClosestEmptyTile(target);
+      if(target != null)
+      {
+         actor.setAllLocs(target);
+         zone.add(actor);
+         return true;
+      }
+      return false;
+   }
+   
+   public static boolean add(Zone zone, Vector<Actor> actorList, Coord target)
+   {
+      for(Actor actor : actorList)
+      {
+         if(!add(zone, actor, target))
+            return false;
+      }
+      return true;
    }
    
    public static Actor getHoloclone()
