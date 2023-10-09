@@ -266,6 +266,7 @@ public class RoomTemplateTest implements ZoneConstants
       rtm.loadFromFile("Open Room Templates.txt");
       rtm.loadFromFile("Closed Room Templates.txt");
       rtm.loadFromFile("Starting Room Templates.txt");
+      rtm.loadFromFile("Corridor Templates.txt");
       Vector<RoomTemplate> bigList = rtm.getAll();
       for(RoomTemplate template : bigList)
       {
