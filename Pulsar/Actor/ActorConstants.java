@@ -23,6 +23,7 @@ public interface ActorConstants
    public static final double MEDIUM_DENSITY = .03;
    public static final double LOW_DENSITY = .015;
    
+   
    public enum DeathEffect
    {
       EXPLODE, BREACH;
@@ -58,10 +59,10 @@ public interface ActorConstants
    
    public enum AlienType implements EnemyType
    {
-      ALIEN_LARVA       (5,  4, 8),
-      ALIEN_WORKER      (20, 3, 5),
+      ALIEN_LARVA       (5,  5, 10),
+      ALIEN_WORKER      (20, 3, 6),
       ALIEN_SOLDIER     (5,  1, 2),
-      ALIEN_HUNTER      (5,  1, 3),
+      ALIEN_HUNTER      (5,  1, 2),
       ALIEN_QUEEN       (0,  1, 1);
       
       private AlienType(int w, int min, int max)
@@ -80,7 +81,17 @@ public interface ActorConstants
       public int getMaxGroupSize(){return maxGroupSize;}
       
       public EnemyType getMinion(){return ALIEN_WORKER;}
-      public int getMinionCount(){return 4;}
+      
+      public int getMinionCount()
+      {
+         if(this == ALIEN_QUEEN)
+            return 5;
+         if(this == ALIEN_SOLDIER)
+            return GameEngine.randomInt(2, 5);
+         if(this == ALIEN_HUNTER)
+            return GameEngine.randomInt(2, 5);
+         return 0;
+      }
    }
    
    public enum PirateType implements EnemyType
@@ -111,7 +122,9 @@ public interface ActorConstants
       {
          if(this == PIRATE_OFFICER)
             return 4;
-         return 2;
+         if(this == PIRATE_COMMANDO)
+            return 2;
+         return 0;
       }
    }
 }

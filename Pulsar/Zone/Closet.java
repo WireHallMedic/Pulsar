@@ -30,4 +30,11 @@ public class Closet
       size = new Coord(s);
       doorLoc = new Coord(dl);
    }
+   
+   public void shift(int x, int y){shift(new Coord(x, y));}
+   public void shift(Coord c)
+   {
+      origin.add(c);
+      doorLoc.add(c);
+   }
 }

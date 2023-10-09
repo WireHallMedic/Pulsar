@@ -73,11 +73,13 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
             map.setExit(new Coord(x + 1, y + 1));
       }
       
+      zoneBuilder.shift(1, 1);  // 'cause we added the border
+      
       if(zoneBuilder.getTriggerList() != null)
       {
          for(ButtonTrigger trigger : zoneBuilder.getTriggerList())
          {
-            trigger.shift(1, 1); // 'cause we added the border
+            trigger.shift(1, 1);
             if(trigger.getButtonAction() == null)
                System.out.println("Bad button");
             setButtonValues(map, trigger);

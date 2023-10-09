@@ -69,19 +69,9 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
          int xStart = 0;
          int yStart = 0;
          boolean continueF = true;
-         for(int x = 0; x < 20 && continueF; x++)
-         for(int y = 5; y < map.getHeight() && continueF; y += 3)
-         {
-            if(map.getTile(x, y).isLowPassable())
-            {
-               xStart = x;
-               yStart = y;
-               continueF = false;
-            }
-         }
          p.setAllLocs(map.getExit());
          engine.setPlayer(p);
-         ActorFactory.populateWithAliens(zone, p.getMapLoc());
+         ActorFactory.populateWithAliens(zone, zoneBuilder);
          engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);
@@ -96,7 +86,7 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
          Player p = ActorFactory.getPlayer();
          p.setAllLocs(map.getExit());
          engine.setPlayer(p);
-         ActorFactory.populateWithPirates(zone, p.getMapLoc());
+         ActorFactory.populateWithPirates(zone, zoneBuilder);
          engine.begin();
          InnerPanel.setActivePanel(MainGameBGPanel.class); 
          GameEngine.setGameMode(EngineConstants.GameMode.STANDARD);

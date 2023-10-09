@@ -565,6 +565,15 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       closetList = zd.getClosetList();
    }
    
+   public void shift(int x, int y){shift(new Coord(x, y));}
+   public void shift(Coord c)
+   {
+      for(ButtonTrigger trigger : triggerList)
+         trigger.shift(c);
+      for(Closet closet : closetList)
+         closet.shift(c);
+   }
+   
    
    public static Vector<String> getDefaultVector()
    {

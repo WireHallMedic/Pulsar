@@ -11,13 +11,23 @@ import java.util.*;
 
 public class ActorFactory implements ActorConstants, GearConstants, AIConstants, GUIConstants
 {
+   
+   public static final double POPULATE_CHANCE_CORRIDOR = 0.50;
+   public static final double POPULATE_CHANCE_OPEN     = 0.90;
+   public static final double POPULATE_CHANCE_CLOSED   = 0.90;
+   public static final double POPULATE_CHANCE_BOSS     = 1.00;
+   
+   private static boolean[][] enemyPlacableMap;
+   private static boolean[][] allTrueMap;  // for spiralsearching for placable locations
+   
+   
    public static Player getPlayer()
    {
       Player a = new Player();
       a.setAI(new PlayerAI(a));
       //Weapon weapon = WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE);
       //a.setWeapon(weapon);
-      a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SLUG_RIFLE));
+      a.setPrimaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.SHOTGUN));
  //     a.setSecondaryWeapon(WeaponFactory.getBasicWeapon(WeaponType.PLASMA));
  //     WeaponFactory.setElementAndStatusEffect(a.getPrimaryWeapon(), DamageType.THERMAL);
       a.setShield(ShieldFactory.getBasicShield());
@@ -33,14 +43,14 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
  //     a.addGadget(GadgetFactory.getCryoGrenades());
  //     a.addGadget(GadgetFactory.getHoloclone(LootRarity.RARE));
  //     a.addGadget(GadgetFactory.getTurret());
-      a.addGadget(GadgetFactory.getCombatDrone());
+ //     a.addGadget(GadgetFactory.getCombatDrone());
  //     a.addGadget(GadgetFactory.getLoveBomb());
  //     a.addGadget(GadgetFactory.getBreachingCharge());
  //     a.addGadget(GadgetFactory.getMotionSensor());
  //     a.addGadget(GadgetFactory.getAirSupply());
  //     a.addGadget(GadgetFactory.getEMPGrenades());
   //    a.addGadget(GadgetFactory.getQuickCharger());
-      a.addGadget(GadgetFactory.getAcidBomb());
+ //     a.addGadget(GadgetFactory.getAcidBomb());
   
       a.getInventory().add(WeaponFactory.getBasicWeapon(WeaponType.SLUG_RIFLE));
  
@@ -72,7 +82,16 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       }
       return null;
    }
-      
+   
+   
+   public static Actor generate(EnemyType e)
+   {
+      if(e instanceof AlienType)
+         return getAlien((AlienType)e);
+      if(e instanceof PirateType)
+         return getPirate((PirateType)e);
+      throw new java.lang.Error("Unknown EnemyType: " + e);
+   }
    
    public static void populateWithAliens(Zone z, Coord playerLoc){populateWithAliens(z, playerLoc, MEDIUM_DENSITY);}
    public static void populateWithAliens(Zone z, Coord playerLoc, double density)
@@ -140,6 +159,16 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       }
    }
    
+   public static void populateWithAliens(Zone zone, ZoneBuilder zoneBuilder)
+   {
+      populateByRoom(zone, zoneBuilder, AlienType.values());
+   }
+   
+   public static void populateWithPirates(Zone zone, ZoneBuilder zoneBuilder)
+   {
+      populateByRoom(zone, zoneBuilder, PirateType.values());
+   }
+   
    public static boolean add(Zone zone, Actor actor, Coord target)
    {
       target = zone.getClosestEmptyTile(target);
@@ -160,6 +189,106 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
             return false;
       }
       return true;
+   }
+   
+   public static void setEnemyPlacableMap(Zone zone, ZoneBuilder zoneBuilder)
+   {
+      ZoneMap map = zone.getMap();
+      Coord startLoc = map.getExit();
+      int w = map.getWidth();
+      int h = map.getHeight();
+      
+      enemyPlacableMap = new boolean[w][w];
+      allTrueMap = new boolean[w][w];
+      
+      // set all low passable true
+      for(int x = 0; x < w; x++)
+      for(int y = 0; y < h; y++)
+      {
+         enemyPlacableMap[x][y] = map.getTile(x, y).isLowPassable();
+         allTrueMap[x][y] = true;
+      }
+      
+      // mask off closets
+      for(Closet closet : zoneBuilder.getClosetList())
+      {
+         for(int x = closet.getOrigin().x; x < closet.getOrigin().x + closet.getSize().x; x++)
+         for(int y = closet.getOrigin().y; y < closet.getOrigin().y + closet.getSize().y; y++)
+            enemyPlacableMap[x][y] = false;
+      }
+      
+      // mask off starting area
+      for(int x = startLoc.x - 10; x < startLoc.x + 11; x++)
+      for(int y = startLoc.y - 1; y < startLoc.y + 11; y++)
+      {
+         if(map.isInBounds(x, y))
+            enemyPlacableMap[x][y] = false;
+      }
+   }
+   
+   public static boolean populateNearPoint(Zone zone, int xTarget, int yTarget, EnemyType enemyType)
+   {
+      SpiralSearch search = new SpiralSearch(allTrueMap, xTarget, yTarget);
+      Coord c = search.getNext();
+      while(c != null && enemyPlacableMap[c.x][c.y] == false)
+         c = search.getNext();
+      if(c == null)
+      {
+         System.out.println("Unable to place");
+         return false;
+      }
+      int count = GameEngine.randomInt(enemyType.getMinGroupSize(), enemyType.getMaxGroupSize() + 1);
+      for(int i = 0; i < count; i++)
+         add(zone, generate(enemyType), c);
+      if(enemyType.getMinionCount() > 0)
+      {
+         EnemyType minionType = enemyType.getMinion();
+         for(int i = 0; i < enemyType.getMinionCount(); i++)
+            add(zone, generate(minionType), c);
+      }
+      return true;
+   }
+   
+   public static void populateByRoom(Zone zone, ZoneBuilder zoneBuilder, EnemyType[] enemyTable)
+   {
+      char[][] roomMap = zoneBuilder.getCellMap();
+      int w = roomMap.length;
+      int h = roomMap[0].length;
+      int roomWidth = zoneBuilder.getRoomWidth() - 1;
+      int roomHeight = zoneBuilder.getRoomHeight() - 1;
+      setEnemyPlacableMap(zone, zoneBuilder);
+      WeightedRandomizer table = new WeightedRandomizer(enemyTable);
+      for(int x = 0; x < w; x++)
+      for(int y = 0; y < h; y++)
+      {
+         int xTarget = (x * roomWidth) + (roomWidth / 2);
+         int yTarget = (y * roomHeight) + (roomHeight / 2);
+         switch(roomMap[x][y])
+         {
+            case ZoneBuilder.OPEN_ROOM :
+               if(GameEngine.random() <= POPULATE_CHANCE_OPEN)
+               {
+                  populateNearPoint(zone, xTarget, yTarget, (EnemyType)table.roll());
+               }
+               break;
+            case ZoneBuilder.CLOSED_ROOM :
+               if(GameEngine.random() <= POPULATE_CHANCE_CLOSED)
+               {
+                  populateNearPoint(zone, xTarget, yTarget, (EnemyType)table.roll());
+               }
+               break;
+            case ZoneBuilder.CORRIDOR :
+               if(GameEngine.random() <= POPULATE_CHANCE_CORRIDOR)
+               {
+                  populateNearPoint(zone, xTarget, yTarget, (EnemyType)table.roll());
+               }
+               break;
+            case ZoneBuilder.OOB_ROOM :
+               break;
+            case ZoneBuilder.STARTING_ROOM :
+               break;
+         }
+      }
    }
    
    public static Actor getHoloclone()
@@ -369,5 +498,43 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setMaxHealth(a.getMaxHealth() * 4);
       a.fullyHeal();
       return a;
+   }
+   
+   
+   
+   public static void main(String[] args)
+   {
+      ZoneBuilder zoneBuilder = new ZoneBuilder();
+      ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneBuilder, ZoneConstants.TileType.VACUUM);
+      Zone zone = new Zone("Random Pirates", -1, map, zoneBuilder);
+      GameEngine.setCurZone(zone);
+      Player p = ActorFactory.getPlayer();
+      ActorFactory.populateWithPirates(zone, zoneBuilder);
+      char[][] outMap = new char[map.getWidth()][map.getHeight()];
+      for(int x = 0; x < outMap.length; x++)
+      for(int y = 0; y < outMap[0].length; y++)
+      {
+         MapTile tile = map.getTile(x, y);
+         if(tile.isLowPassable())
+            outMap[x][y] = '.';
+         else if (tile instanceof Door)
+            outMap[x][y] = '/';
+         else
+            outMap[x][y] = ' ';
+      }
+      
+      for(Actor a : GameEngine.getActorList())
+      {
+         outMap[a.getMapLoc().x][a.getMapLoc().y] = 'X';
+      }
+      
+      for(int y = 0; y < outMap[0].length; y++)
+      {
+         for(int x = 0; x < outMap.length; x++)
+         {
+            System.out.print("" + outMap[x][y]);
+         }
+         System.out.println();
+      }
    }
 }

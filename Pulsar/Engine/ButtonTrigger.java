@@ -83,6 +83,7 @@ public class ButtonTrigger implements EngineConstants
       }
    }
    
+   public void shift(Coord c){shift(c.x, c.y);}
    public void shift(int x, int y)
    {
       for(Coord c : targetList)
