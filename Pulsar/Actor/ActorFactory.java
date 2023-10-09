@@ -90,25 +90,17 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
          }
          if(type == AlienType.ALIEN_LARVA)
          {
-            int count = GameEngine.randomInt(5, 8);
             i--;
+            int count = GameEngine.randomInt(5, 8);
             for(int j = 0; j < count; j++)
             {
-               Coord c2 = z.getClosestEmptyTile(c);
-               if(c2 != null)
-               {
-                  Actor e = getAlien(type);
-                  e.setAllLocs(c2);
-                  z.add(e);
-                  i++;
-               }
+               add(z, getAlien(type), c);
+               i++;
             }
          }
          else
          {
-            Actor e = getAlien(type);
-            e.setAllLocs(c);
-            z.add(e);
+            add(z, getAlien(type), c);
          }
       }
    }
@@ -139,6 +131,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
             add(z, boss, c);
             add(z, d1, c);
             add(z, d2, c);
+            i += 2;
          }
          else
          {
