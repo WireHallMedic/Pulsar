@@ -135,32 +135,14 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
             Actor d2 = getPirate(PirateType.PIRATE_DRONE);
             d1.getAI().setLeader(boss);
             d2.getAI().setLeader(boss);
-            Coord c2 = z.getClosestEmptyTile(c);
-            if(c2 != null)
-            {
-               boss.setAllLocs(c2);
-               z.add(boss);
-            }
-            c2 = z.getClosestEmptyTile(c);
-            if(c2 != null)
-            {
-               d1.setAllLocs(c2);
-               z.add(d1);
-               i++;
-            }
-            c2 = z.getClosestEmptyTile(c);
-            if(c2 != null)
-            {
-               d2.setAllLocs(c2);
-               z.add(d2);
-               i++;
-            }
+            
+            add(z, boss, c);
+            add(z, d1, c);
+            add(z, d2, c);
          }
          else
          {
-            Actor e = getPirate(type);
-            e.setAllLocs(c);
-            z.add(e);
+            add(z, getPirate(type), c);
          }
       }
    }
