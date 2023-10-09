@@ -413,7 +413,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    {
       
       ZoneMap map = ZoneMapFactory.getTestMap2();
-      Zone zone = new Zone("Test Zone", -1, map);
+      Zone zone = new Zone("Test Zone", -1, map, null);
       GameEngine.setCurZone(zone);
       
       Player p = ActorFactory.getPlayer();

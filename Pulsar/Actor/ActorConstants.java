@@ -48,38 +48,56 @@ public interface ActorConstants
       }
    }
    
-   public enum AlienType implements WeightedRandomizable
+   public abstract interface EnemyType extends WeightedRandomizable
    {
-      ALIEN_LARVA       (5),
-      ALIEN_WORKER      (20),
-      ALIEN_SOLDIER     (5),
-      ALIEN_HUNTER      (5),
-      ALIEN_QUEEN       (0);
-      
-      private AlienType(int w)
-      {
-         weight = w;
-      }
-      
-      private int weight;
-      
-      public int getWeight(){return weight;}
+      public int getMinGroupSize();
+      public int getMaxGroupSize();
    }
    
-   public enum PirateType implements WeightedRandomizable
+   public enum AlienType implements EnemyType
    {
-      PIRATE_GRUNT       (30),
-      PIRATE_COMMANDO    (10),
-      PIRATE_DRONE       (0),
-      PIRATE_OFFICER     (5);
+      ALIEN_LARVA       (5,  4, 8),
+      ALIEN_WORKER      (20, 3, 5),
+      ALIEN_SOLDIER     (5,  1, 2),
+      ALIEN_HUNTER      (5,  1, 3),
+      ALIEN_QUEEN       (0,  1, 1);
       
-      private PirateType(int w)
+      private AlienType(int w, int min, int max)
       {
          weight = w;
+         minGroupSize = min;
+         maxGroupSize = max;
       }
       
       private int weight;
+      private int minGroupSize;
+      private int maxGroupSize;
       
       public int getWeight(){return weight;}
+      public int getMinGroupSize(){return minGroupSize;}
+      public int getMaxGroupSize(){return maxGroupSize;}
+   }
+   
+   public enum PirateType implements EnemyType
+   {
+      PIRATE_GRUNT       (30, 3, 5),
+      PIRATE_COMMANDO    (10, 1, 2),
+      PIRATE_DRONE       (0,  1, 1),
+      PIRATE_OFFICER     (5,  1, 1);
+      
+      private PirateType(int w, int min, int max)
+      {
+         weight = w;
+         minGroupSize = min;
+         maxGroupSize = max;
+      }
+      
+      private int weight;
+      private int minGroupSize;
+      private int maxGroupSize;
+      
+      public int getWeight(){return weight;}
+      public int getMinGroupSize(){return minGroupSize;}
+      public int getMaxGroupSize(){return maxGroupSize;}
    }
 }

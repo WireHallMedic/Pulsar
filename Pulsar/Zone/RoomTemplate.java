@@ -115,33 +115,6 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
       return newTemplate;
    }
    
-   // returns a copy of the roomTemplate with obstacles filled in
-   public RoomTemplate resolveObstacles(ObstacleTemplateManager otm)
-   {
-      RoomTemplate newTemplate = new RoomTemplate(this);
-      for(int x = 0; x < width - 4; x++)
-      for(int y = 0; y < height - 4; y++)
-      {
-         if(newTemplate.getCell(x, y) == TEMPLATE_OBSTACLE)
-         {
-            ObstacleTemplate obstacle = otm.random();
-            for(int xx = 0; xx < ObstacleTemplate.REQUIRED_WIDTH; xx++)
-            for(int yy = 0; yy < ObstacleTemplate.REQUIRED_HEIGHT; yy++)
-            {
-               newTemplate.setCell(x + xx, y + yy, obstacle.getCell(xx, yy));
-            }
-            if(obstacle.hasButtonTrigger())
-            {
-               ButtonTrigger trigger = new ButtonTrigger(obstacle.getButtonTrigger());
-               Coord oldLoc = new Coord(trigger.getCallerLoc());
-               trigger.shift(x, y);
-               newTemplate.addButtonTrigger(trigger);
-            }
-         }
-      }
-      return newTemplate;
-   }
-   
    public boolean matchesPassArray(boolean[] target)
    {
       boolean[] current = getPassArray();

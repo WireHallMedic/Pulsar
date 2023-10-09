@@ -11,30 +11,34 @@ public class Zone
 	private ZoneMap map;
 	private Vector<Actor> actorList;
 	private String name;
+   private ZoneBuilder zoneBuilder;
 
 
 	public int getID(){return id;}
 	public ZoneMap getMap(){return map;}
 	public Vector<Actor> getActorList(){return actorList;}
 	public String getName(){return name;}
+   public ZoneBuilder getZoneBuilder(){return zoneBuilder;}
 
 
 	public void setID(int i){id = i;}
 	public void setMap(ZoneMap m){map = m;}
 	public void setActorList(Vector<Actor> a){actorList = a;}
 	public void setName(String n){name = n;}
+   public void setZoneBuilder(ZoneBuilder zb){zoneBuilder = zb;}
 
 
    public Zone()
    {
-      this("Unknown Zone", -1, null);
+      this("Unknown Zone", -1, null, null);
    }
    
-   public Zone(String n, int zoneID, ZoneMap zoneMap)
+   public Zone(String n, int zoneID, ZoneMap zoneMap, ZoneBuilder zb)
    {
       id = zoneID;
       name = n;
       map = zoneMap;
+      zoneBuilder = zb;
       actorList = new Vector<Actor>();
    }
    

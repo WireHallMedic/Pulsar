@@ -40,7 +40,7 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
       {
          GameEngine engine = new GameEngine();
          ZoneMap map = ZoneMapFactory.getTestMap2();
-         Zone zone = new Zone("Testing zone", -1, map);
+         Zone zone = new Zone("Testing zone", -1, map, null);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
          p.setAllLocs(4, 12);
@@ -61,8 +61,9 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
       if(options[selectionIndex].equals("Aliens"))
       {
          GameEngine engine = new GameEngine();
-         ZoneMap map = ZoneMapFactory.buildFromTemplates(new ZoneBuilder(), ZoneConstants.TileType.VACUUM);
-         Zone zone = new Zone("Random Aliens", -1, map);
+         ZoneBuilder zoneBuilder = new ZoneBuilder();
+         ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneBuilder, ZoneConstants.TileType.VACUUM);
+         Zone zone = new Zone("Random Aliens", -1, map, zoneBuilder);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
          int xStart = 0;
@@ -88,8 +89,9 @@ public class TitlePanel extends SelectionPanel implements GUIConstants
       if(options[selectionIndex].equals("Pirates"))
       {
          GameEngine engine = new GameEngine();
-         ZoneMap map = ZoneMapFactory.buildFromTemplates(new ZoneBuilder(), ZoneConstants.TileType.VACUUM);
-         Zone zone = new Zone("Random Pirates", -1, map);
+         ZoneBuilder zoneBuilder = new ZoneBuilder();
+         ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneBuilder, ZoneConstants.TileType.VACUUM);
+         Zone zone = new Zone("Random Pirates", -1, map, zoneBuilder);
          GameEngine.setCurZone(zone);
          Player p = ActorFactory.getPlayer();
          p.setAllLocs(map.getExit());
