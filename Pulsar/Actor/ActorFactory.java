@@ -56,7 +56,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
          case ALIEN_WORKER    : return getAlienWorker();
          case ALIEN_SOLDIER   : return getAlienSoldier();
          case ALIEN_HUNTER    : return getAlienHunter();
-         case ALIEN_QUEEN     : return null;//getAlienQueen();
+         case ALIEN_QUEEN     : return getAlienQueen();
       }
       return null;
    }
@@ -167,7 +167,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       Actor a = new Actor('@');
       a.setName("Holoclone");
       a.setAI(new CloneAI(a));
-      a.setMaxHealth(20);
+      a.setMaxHealth(40);
       a.fullyHeal();
       a.setDeathEffect(DeathEffect.EXPLODE);
       a.setTurnEnergy(FULLY_CHARGED);
@@ -242,18 +242,6 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       return a;
    }
    
-   public static Actor getTestEnemy()
-   {
-      Actor a = new Actor('e');
-      a.setName("Standard Enemy");
-      a.setAI(new StandardAI(a));
-      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.BATTLE_RIFLE));
-      a.setShield(ShieldFactory.getBasicShield());
-      a.setMaxHealth(20);
-      a.fullyHeal();
-      return a;
-   }
-   
    public static Actor getVictim()
    {
       Actor a = new Actor('v');
@@ -262,26 +250,6 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setMaxHealth(20);
       a.fullyHeal();
       a.setAlertness(Alertness.ALERT);
-      return a;
-   }
-   
-   public static Actor getMeleeTestEnemy()
-   {
-      Actor a = getTestEnemy();
-      a.setName("Melee Enemy");
-      a.getSprite().setFGColor(Color.ORANGE.getRGB());
-      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
-      a.getWeapon().setBaseDamage(DEFAULT_BASE_DAMAGE * 2);
-      return a;
-   }
-   
-   public static Actor getWanderTestEnemy()
-   {
-      Actor a = getTestEnemy();
-      a.setName("Wander Test Enemy");
-      a.setAI(new WanderAI(a));
-      a.setAlertness(Alertness.INACTIVE);
-      a.setWeapon(WeaponFactory.getBasicWeapon(WeaponType.MELEE));
       return a;
    }
    
@@ -388,6 +356,17 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       a.setIconIndex('l');
       a.setName("Alien Larva");
       a.setMaxHealth(a.getMaxHealth() / 2);
+      a.fullyHeal();
+      return a;
+   }
+   
+   // this enemy is lame, make them cool
+   public static Actor getAlienQueen()
+   {
+      Actor a = getAlienWorker();
+      a.setIconIndex('s');
+      a.setName("Alien Queen");
+      a.setMaxHealth(a.getMaxHealth() * 4);
       a.fullyHeal();
       return a;
    }

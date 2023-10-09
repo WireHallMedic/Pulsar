@@ -52,6 +52,7 @@ public interface ActorConstants
    {
       public int getMinGroupSize();
       public int getMaxGroupSize();
+      public abstract EnemyType getMinion();
    }
    
    public enum AlienType implements EnemyType
@@ -76,6 +77,8 @@ public interface ActorConstants
       public int getWeight(){return weight;}
       public int getMinGroupSize(){return minGroupSize;}
       public int getMaxGroupSize(){return maxGroupSize;}
+      
+      public EnemyType getMinion(){return ALIEN_WORKER;}
    }
    
    public enum PirateType implements EnemyType
@@ -99,5 +102,7 @@ public interface ActorConstants
       public int getWeight(){return weight;}
       public int getMinGroupSize(){return minGroupSize;}
       public int getMaxGroupSize(){return maxGroupSize;}
+      
+      public EnemyType getMinion(){return PIRATE_DRONE;}
    }
 }
