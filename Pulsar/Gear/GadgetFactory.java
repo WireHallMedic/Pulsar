@@ -19,7 +19,8 @@ public class GadgetFactory implements ActorConstants, GearConstants
       AIR_SUPPLY        (10),
       LOVE_BOMB         (10),
       QUICK_CHARGER     (10),
-      BREACH_CHARGE     (10);
+      BREACH_CHARGE     (10),
+      ACID_BOMB         (10);
       
       private GadgetType(int w)
       {
@@ -66,6 +67,7 @@ public class GadgetFactory implements ActorConstants, GearConstants
          case LOVE_BOMB          : return getLoveBomb(rarity);
          case QUICK_CHARGER      : return getQuickCharger(rarity);
          case BREACH_CHARGE      : return getBreachingCharge(rarity);
+         case ACID_BOMB          : return getAcidBomb(rarity);
          default                 : return null;
       }
    }
@@ -365,6 +367,30 @@ public class GadgetFactory implements ActorConstants, GearConstants
          g.setDescription(g.getDescription() + " Greatly improved duration.");
       }
       g.setSpecialEffect(GadgetSpecialEffect.CHARM);
+      g.setColorByRarity(rarity);
+      return g;
+   }
+   
+   public static Gadget getAcidBomb(){return getAcidBomb(LootRarity.COMMON);}
+   public static Gadget getAcidBomb(LootRarity rarity)
+   {
+      Gadget g = new Gadget();
+      g.setName("Acid Bomb");
+      g.setShortName("Acid Bomb");
+      g.setTargetsSelf(false);
+      g.setSpecialEffect(GadgetSpecialEffect.ACID_BOMB);
+      g.setDescription("Floods an area with acid.");
+      g.setIntensity((rarity.ordinal() + 1) * 6);
+      if(rarity == LootRarity.UNCOMMON)
+      {
+         g.setName(g.getName() + " MkII");
+         g.setDescription("Floods an area with quite a lot of acid.");
+      }
+      if(rarity == LootRarity.RARE)
+      {
+         g.setName(g.getName() + " MkIII");
+         g.setDescription("Floods an area with, just, like a ton of acid.");
+      }
       g.setColorByRarity(rarity);
       return g;
    }

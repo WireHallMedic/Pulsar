@@ -124,7 +124,8 @@ public interface GearConstants extends WSFontConstants, GUIConstants
       NAPALM            ("Napalm"),
       MOTION_SENSOR     ("Motion Sensor"),
       CHARM             ("Charm"),
-      RECHARGE          ("Quick Charger");
+      RECHARGE          ("Quick Charger"),
+      ACID_BOMB         ("Acid Bomb");
       
       public String name;
       

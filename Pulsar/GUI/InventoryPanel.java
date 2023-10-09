@@ -236,7 +236,10 @@ public class InventoryPanel extends SelectionPanel
    public void setVisible(boolean v)
    {
       if(v)
+      {
          set();
+         selectionIndex = 0;
+      }
       super.setVisible(v);
    }
    

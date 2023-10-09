@@ -2,6 +2,7 @@ package Pulsar.Gear;
 
 import Pulsar.Engine.*;
 import Pulsar.Actor.*;
+import Pulsar.Zone.*;
 import Pulsar.AI.*;
 import WidlerSuite.*;
 import java.util.*;
@@ -227,6 +228,11 @@ public class Gadget extends GearObj implements GearConstants, ActorConstants, AI
                if(player.hasAltWeapon())
                   player.getAltWeapon().overcharge(overcharge);
             }
+         }
+         if(getSpecialEffect() == GadgetSpecialEffect.ACID_BOMB)
+         {
+            target = GameEngine.getActualTarget(user.getMapLoc(), target);
+            GameEngine.registerOngoingFlood(ZoneConstants.TileType.ACID, target, getIntensity(), 3);
          }
       }
    }

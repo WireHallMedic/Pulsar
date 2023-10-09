@@ -23,6 +23,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    private static Vector<Actor> deadActorList = new Vector<Actor>();
    private static Vector<Actor> movingActorList = new Vector<Actor>();
    private static boolean allLockingAreWalking = false;
+   private static Vector<OngoingFlood> ongoingFloodList = new Vector<OngoingFlood>();
 
 	public static Player getPlayer(){return player;}
 	public static Vector<Actor> getActorList(){if(curZone != null) return curZone.getActorList(); return null;}
@@ -34,6 +35,7 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
    public static Coord getCursorLoc(){return new Coord(cursorLoc);}
    public static boolean getRunFlag(){return runFlag;}
    public static Vector<Actor> getMovingActorList(){return movingActorList;}
+   public static Vector<OngoingFlood> getOngoingFloodList(){return ongoingFloodList;}
 
 
 	public static void setActorList(Vector<Actor> a){if(curZone != null) curZone.setActorList(a);}
@@ -313,6 +315,17 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(getZoneMap() != null)
          {
             getZoneMap().takeTurn();
+            for(int i = 0; i < ongoingFloodList.size(); i++)
+            {
+               OngoingFlood flood = ongoingFloodList.elementAt(i);
+               getZoneMap().flood(flood.getTarget(), flood.getIntensity(), flood.getType());
+               flood.increment();
+               if(flood.isExpired())
+               {
+                  ongoingFloodList.removeElementAt(i);
+                  i--;
+               }
+            }
             cleanUpDead();
          }
       }
@@ -539,5 +552,49 @@ public class GameEngine implements Runnable, AIConstants, EngineConstants
          if(curActor != player)
             return curActor.getAI().getPendingAction().canUseDuringAnimationLock;
       return false;
+   }
+   
+   public static void registerOngoingFlood(ZoneConstants.TileType type, Coord t, int dur, int size)
+   {
+      ongoingFloodList.add(new OngoingFlood(type, t, dur, size));
+   }
+   
+   private static class OngoingFlood
+   {
+      private ZoneConstants.TileType type;
+   	private Coord target;
+   	private int remainingTurns;
+   	private int intensity;
+   
+   
+   	public ZoneConstants.TileType getType(){return type;}
+   	public Coord getTarget(){return new Coord(target);}
+   	public int getRemainingTurns(){return remainingTurns;}
+   	public int getIntensity(){return intensity;}
+   
+   
+   	public void setType(ZoneConstants.TileType f){type = f;}
+   	public void setTarget(Coord t){setTarget(t.x, t.y);}
+   	public void setTarget(int x, int y){target = new Coord(x, y);}
+   	public void setRemainingTurns(int r){remainingTurns = r;}
+   	public void setIntensity(int i){intensity = i;}
+      
+      private OngoingFlood(ZoneConstants.TileType ty, Coord tar, int dur, int size)
+      {
+         type = ty;
+         target = new Coord(tar);
+         remainingTurns = dur;
+         intensity = size;
+      }
+      
+      public void increment()
+      {
+         remainingTurns--;
+      }
+      
+      public boolean isExpired()
+      {
+         return remainingTurns <= 0;
+      }
    }
 }

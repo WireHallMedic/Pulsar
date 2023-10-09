@@ -34,11 +34,12 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
  //     a.addGadget(GadgetFactory.getTurret());
       a.addGadget(GadgetFactory.getCombatDrone());
  //     a.addGadget(GadgetFactory.getLoveBomb());
-      a.addGadget(GadgetFactory.getBreachingCharge());
+ //     a.addGadget(GadgetFactory.getBreachingCharge());
  //     a.addGadget(GadgetFactory.getMotionSensor());
  //     a.addGadget(GadgetFactory.getAirSupply());
  //     a.addGadget(GadgetFactory.getEMPGrenades());
   //    a.addGadget(GadgetFactory.getQuickCharger());
+      a.addGadget(GadgetFactory.getAcidBomb());
   
       a.getInventory().add(WeaponFactory.getBasicWeapon(WeaponType.SLUG_RIFLE));
  
