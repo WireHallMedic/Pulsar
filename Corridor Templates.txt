@@ -4,7 +4,7 @@ XXXX#...#XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
-XXXX:...:XXXX
+XXXX:.e.:XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
@@ -17,7 +17,7 @@ XXXXXXXXXXXXX
 #####...#####
 XXXX#...#XXXX
 XXXX#...#XXXX
-XXXX:...:XXXX
+XXXX:.e.:XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
 XXX###/###XXX
@@ -37,7 +37,7 @@ XXXX#...#XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
-XXXX:...:XXXX
+XXXX:.e.:XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
 XXXX#...#XXXX
@@ -51,7 +51,7 @@ XXXX#...#XXXX
 XXXX#...###XX
 XXXX#.....#XX
 XXXX#..22.#XX
-XXXX:..22.#XX
+XXXX:.e22.#XX
 XXXX#..22.#XX
 XXXX#.....#XX
 XXXX#...###XX
@@ -69,7 +69,7 @@ XXXX#...#XXX#
 XXXX#...#XXX#
 XXXX#...#####
 XXXX#........
-XXXX:........
+XXXX:.e......
 XXXX#........
 XXXX##:######
 XXXXXXXXXXXX#
@@ -84,7 +84,7 @@ XXXX#...#XXX#
 XX###...##XX#
 XX#......####
 XX#..........
-XX:.22.......
+XX:.22e......
 XX#.22.......
 XX#.....#####
 XX###:###XXX#
@@ -101,7 +101,7 @@ XXXX#...#XXX#
 XXXX#...#XXX#
 XXXX#...#####
 XXXX#........
-XXXX:........
+XXXX:.e......
 XXXX#........
 XXXX#...#####
 XXXX#...#XXX#
@@ -115,7 +115,7 @@ XXXX#...#XXX#
 XXXX#...#XXX#
 XXXX#...#####
 XXXX#.5......
-XXXX:.555....
+XXXX:e555....
 XXXX#.5......
 XXXX#...#####
 XXXX#...#XXX#
@@ -132,7 +132,7 @@ XXXX#...#XXX#
 #XXX#...#XXX#
 #####...#####
 .............
-.............
+......e......
 .............
 #####...#####
 #XXX#...#XXX#
@@ -148,7 +148,7 @@ XXXX#...#XXX#
 #####...#####
 .............
 ......#......
-.............
+......e......
 #####...#####
 #XXX#...#XXX#
 #XXX#...#XXX#
@@ -164,7 +164,7 @@ XXXX#...#XXX#
 #####...#####
 ......5......
 .....555.....
-......5......
+.....e5......
 #####...#####
 #XXX#...#XXX#
 #XXX#...#XXX#
