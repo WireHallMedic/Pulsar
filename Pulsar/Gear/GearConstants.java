@@ -154,9 +154,9 @@ public interface GearConstants extends WSFontConstants, GUIConstants
    
    public enum LootRarity implements WeightedRandomizable
    {
-      COMMON   (89, COMMON_GEAR_COLOR),
-      UNCOMMON (10, UNCOMMON_GEAR_COLOR),
-      RARE     (1, RARE_GEAR_COLOR);
+      COMMON   (80, COMMON_GEAR_COLOR),
+      UNCOMMON (17, UNCOMMON_GEAR_COLOR),
+      RARE     (3, RARE_GEAR_COLOR);
       
       private LootRarity(int w, Color c)
       {
