@@ -2,6 +2,7 @@ package Pulsar.Zone;
 
 import java.util.*;
 import Pulsar.Engine.*;
+import Pulsar.Actor.*;
 import WidlerSuite.*;
 
 public class RoomTemplate extends MapTemplate implements ZoneConstants
@@ -209,7 +210,8 @@ public class RoomTemplate extends MapTemplate implements ZoneConstants
    private boolean isPassCell(char c)
    {
       return c == '.' ||
-             c == '/';
+             c == '/' ||
+             c == 'e';
    }
    
    private void setType()

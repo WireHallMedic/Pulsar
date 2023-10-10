@@ -373,17 +373,17 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          newMap[x][y] = OOB_ROOM;
       }
       // place room at 0, 0
-      placeRoom(newMap, 0, 0, rolledRoomTemplate[0][0].resolveProbTiles());
+      placeRoom(newMap, 0, 0, rolledRoomTemplate[0][0]);
       // place all rooms at y = 0 (except 0, 0)
       for(int x = 1; x < width; x++)
-         placeRoom(newMap, x * (roomWidth - 1), 0, rolledRoomTemplate[x][0].resolveProbTiles());
+         placeRoom(newMap, x * (roomWidth - 1), 0, rolledRoomTemplate[x][0]);
       // place all rooms at x = 0 (except 0, 0)
       for(int y = 1; y < height; y++)
-         placeRoom(newMap, 0, y * (roomHeight - 1), rolledRoomTemplate[0][y].resolveProbTiles());
+         placeRoom(newMap, 0, y * (roomHeight - 1), rolledRoomTemplate[0][y]);
       // place all other rooms
       for(int x = 1; x < width; x++)
       for(int y = 1; y < height; y++)
-         placeRoom(newMap, x * (roomWidth - 1), y * (roomHeight - 1), rolledRoomTemplate[x][y].resolveProbTiles());
+         placeRoom(newMap, x * (roomWidth - 1), y * (roomHeight - 1), rolledRoomTemplate[x][y]);
       tileMap = newMap;
    }
    
