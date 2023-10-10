@@ -14,7 +14,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    
    public static final double POPULATE_CHANCE_CORRIDOR = 0.50;
    public static final double POPULATE_CHANCE_OPEN     = 0.90;
-   public static final double POPULATE_CHANCE_CLOSED   = 0.90;
+   public static final double POPULATE_CHANCE_CLOSED   = 0.75;
    public static final double POPULATE_CHANCE_BOSS     = 1.00;
    
    private static boolean[][] enemyPlacableMap;
@@ -161,12 +161,14 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    
    public static void populateWithAliens(Zone zone, ZoneBuilder zoneBuilder)
    {
-      populateByRoom(zone, zoneBuilder, AlienType.values());
+  //    populateByRoom(zone, zoneBuilder, AlienType.values());
+      populateFromSpawnPoints(zone, zoneBuilder, AlienType.values());
    }
    
    public static void populateWithPirates(Zone zone, ZoneBuilder zoneBuilder)
    {
-      populateByRoom(zone, zoneBuilder, PirateType.values());
+    //  populateByRoom(zone, zoneBuilder, PirateType.values());
+      populateFromSpawnPoints(zone, zoneBuilder, PirateType.values());
    }
    
    public static boolean add(Zone zone, Actor actor, Coord target)
@@ -301,6 +303,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    
    public static void populateFromSpawnPoints(Zone zone, ZoneBuilder zoneBuilder, EnemyType[] enemyTable)
    {
+      setEnemyPlacableMap(zone, zoneBuilder);
       WeightedRandomizer table = new WeightedRandomizer(enemyTable);
       Vector<SpawnPoint> bossRoomList = new Vector<SpawnPoint>();
       for(SpawnPoint spawnPoint : zoneBuilder.getSpawnPointList())
