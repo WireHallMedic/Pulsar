@@ -226,6 +226,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       }
    }
    
+   public static boolean populateNearPoint(Zone zone, Coord c, EnemyType enemyType){return populateNearPoint(zone, c.x, c.y, enemyType);}
    public static boolean populateNearPoint(Zone zone, int xTarget, int yTarget, EnemyType enemyType)
    {
       SpiralSearch search = new SpiralSearch(allTrueMap, xTarget, yTarget);
@@ -295,6 +296,66 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
       {
          populateNearPoint(zone, xTarget, yTarget, (EnemyType)table.roll());
       }
+   }
+
+   
+   public static void populateFromSpawnPoints(Zone zone, ZoneBuilder zoneBuilder, EnemyType[] enemyTable)
+   {
+      WeightedRandomizer table = new WeightedRandomizer(enemyTable);
+      Vector<SpawnPoint> bossRoomList = new Vector<SpawnPoint>();
+      for(SpawnPoint spawnPoint : zoneBuilder.getSpawnPointList())
+      {
+         if(spawnPoint.isBoss())
+         {
+            bossRoomList.add(spawnPoint);
+         }
+         else
+         {
+            switch(spawnPoint.getRoom())
+            {
+               case ZoneBuilder.OPEN_ROOM :
+                  if(GameEngine.random() <= POPULATE_CHANCE_OPEN)
+                  {
+                     populateNearPoint(zone, spawnPoint.getLoc(), (EnemyType)table.roll());
+                  }
+                  break;
+               case ZoneBuilder.CLOSED_ROOM :
+                  if(GameEngine.random() <= POPULATE_CHANCE_CLOSED)
+                  {
+                     populateNearPoint(zone, spawnPoint.getLoc(), (EnemyType)table.roll());
+                  }
+                  break;
+               case ZoneBuilder.CORRIDOR :
+                  if(GameEngine.random() <= POPULATE_CHANCE_CORRIDOR)
+                  {
+                     populateNearPoint(zone, spawnPoint.getLoc(), (EnemyType)table.roll());
+                  }
+                  break;
+               case ZoneBuilder.OOB_ROOM :
+                  break;
+               case ZoneBuilder.STARTING_ROOM :
+                  break;
+            }
+         }
+         if(bossRoomList.size() > 0)
+         {
+            int bossIndex = GameEngine.randomInt(0, bossRoomList.size() + 1);
+            for(int i = 0; i < bossRoomList.size(); i++)
+            {
+               if(i == bossIndex)
+                  populateNearPoint(zone, spawnPoint.getLoc(), enemyTable[0].getBoss());
+               else
+                  populateNearPoint(zone, spawnPoint.getLoc(), (EnemyType)table.roll());
+            }
+         }
+      }
+      /*
+      // add another one to the boss room
+      int xTarget = (zoneBuilder.getBossRoom().x * roomWidth) + (roomWidth / 2);
+      int yTarget = (zoneBuilder.getBossRoom().y * roomHeight) + (roomHeight / 2);
+      {
+         populateNearPoint(zone, xTarget, yTarget, (EnemyType)table.roll());
+      }*/
    }
    
    public static Actor getHoloclone()

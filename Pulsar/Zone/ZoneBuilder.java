@@ -394,11 +394,18 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    {
       spawnPointList = new Vector<SpawnPoint>();
       // non-border cells
-      for(int x = 0; x < roomWidth; x++)
-      for(int y = 0; y < roomHeight; y++)
+      for(int x = 0; x < tileMap.length; x++)
+      for(int y = 0; y < tileMap[0].length; y++)
       {
          if(tileMap[x][y] == TEMPLATE_SPAWN_POINT)
-            spawnPointList.add(new SpawnPoint(x, y, getCell(x % (roomWidth - 1), y % (roomHeight - 1))));
+         {
+            SpawnPoint sp = new SpawnPoint(x, y, getCell(x / (roomWidth - 1), y / (roomHeight - 1)));
+            if(getBossRoom().equals(x / (roomWidth - 1), y / (roomHeight - 1)))
+            {
+               sp.setBoss(true);
+            }
+            spawnPointList.add(sp);
+         }
       }
    } 
    

@@ -54,6 +54,7 @@ public interface ActorConstants
       public int getMinGroupSize();
       public int getMaxGroupSize();
       public EnemyType getMinion();
+      public EnemyType getBoss();
       public int getMinionCount();
    }
    
@@ -81,6 +82,7 @@ public interface ActorConstants
       public int getMaxGroupSize(){return maxGroupSize;}
       
       public EnemyType getMinion(){return ALIEN_WORKER;}
+      public EnemyType getBoss(){return ALIEN_QUEEN;}
       
       public int getMinionCount()
       {
@@ -117,6 +119,7 @@ public interface ActorConstants
       public int getMaxGroupSize(){return maxGroupSize;}
       
       public EnemyType getMinion(){return PIRATE_DRONE;}
+      public EnemyType getBoss(){return PIRATE_OFFICER;}
       
       public int getMinionCount()
       {
