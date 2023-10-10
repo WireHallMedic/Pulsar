@@ -32,6 +32,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    private Coord startRoom;
    private Coord bossRoom;
    private Vector<Closet> closetList;
+   private Vector<SpawnPoint> spawnPointList;
    private int size;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
@@ -44,6 +45,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public Coord getStartRoom(){return startRoom;}
    public Coord getBossRoom(){return bossRoom;}
    public Vector<Closet> getClosetList(){return closetList;}
+   public Vector<SpawnPoint> getSpawnPointList(){return spawnPointList;}
    
    public ZoneBuilder(int s, RoomTemplateManager openTM, RoomTemplateManager closedTM, RoomTemplateManager corridorTM,
                       RoomTemplateManager startTM)
@@ -309,6 +311,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
       }
       resolveProbTiles();
       process();
+      registerSpawnPoints();
       validateButtons();
    }
 
@@ -358,7 +361,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    
    public void process()
    {
-      // clear trigger list
+      // clear lists
       triggerList = new Vector<ButtonTrigger>();
       // create tile map
       int roomWidth = rolledRoomTemplate[0][0].getWidth();
@@ -386,6 +389,18 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          placeRoom(newMap, x * (roomWidth - 1), y * (roomHeight - 1), rolledRoomTemplate[x][y]);
       tileMap = newMap;
    }
+   
+   private void registerSpawnPoints()
+   {
+      spawnPointList = new Vector<SpawnPoint>();
+      // non-border cells
+      for(int x = 0; x < roomWidth; x++)
+      for(int y = 0; y < roomHeight; y++)
+      {
+         if(tileMap[x][y] == TEMPLATE_SPAWN_POINT)
+            spawnPointList.add(new SpawnPoint(x, y, getCell(x % (roomWidth - 1), y % (roomHeight - 1))));
+      }
+   } 
    
    private void placeRoom(char[][] tileMap, int xOrigin, int yOrigin, RoomTemplate roomTemplate)
    {
@@ -583,6 +598,8 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
          trigger.shift(c);
       for(Closet closet : closetList)
          closet.shift(c);
+      for(SpawnPoint spawnPoint : spawnPointList)
+         spawnPoint.shift(c);
    }
    
    

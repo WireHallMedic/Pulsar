@@ -36,6 +36,7 @@ public interface ZoneConstants extends WSFontConstants
    public static final char TEMPLATE_WINDOW = ':';
    public static final char TEMPLATE_EXIT = '>';
    public static final char TEMPLATE_TERMINAL = 'T';
+   public static final char TEMPLATE_SPAWN_POINT = 'S';
    
    public static final char TEMPLATE_OBSTACLE = '?';
       

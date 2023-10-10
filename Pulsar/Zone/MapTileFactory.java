@@ -71,6 +71,9 @@ public class MapTileFactory implements ZoneConstants, GUIConstants
          case TEMPLATE_WINDOW             : return getTile(TileType.WINDOW);
          case TEMPLATE_TERMINAL           : return getTerminal();
          
+         // spawn points are clear
+         case TEMPLATE_SPAWN_POINT        : return getTile(TileType.CLEAR);
+         
          // traversal tiles
          case TEMPLATE_EXIT         : return getTile(TileType.EXIT);
          
