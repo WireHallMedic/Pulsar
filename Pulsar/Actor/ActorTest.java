@@ -25,7 +25,7 @@ public class ActorTest
    
    @Test public void inventoryTest()
    {
-      Actor a = ActorFactory.getTestEnemy();
+      Actor a = ActorFactory.getDrone();
       Inventory inv = a.getInventory();
       inv.setMaxSize(2);
       assertEquals("Starting inventory has no credits.", 0, inv.getCredits().getAmount());
@@ -63,7 +63,7 @@ public class ActorTest
    
    @Test public void modifiedInventoryTest()
    {
-      Actor a = ActorFactory.getTestEnemy();
+      Actor a = ActorFactory.getDrone();
       Inventory inv = a.getInventory();
       inv.setMaxSize(2);
       a.setArmor(ArmorFactory.getEngineerArmor());

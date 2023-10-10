@@ -70,7 +70,6 @@ public interface GearConstants extends WSFontConstants, GUIConstants
       DEFAULT        ("Unknown Weapon", 0, false),
       MELEE          ("Melee", 0, false),
       BATTLE_RIFLE   ("Battle Rifle", 20, false),
-      AUTORIFLE      ("Autorifle", 20, false),
       SHOTGUN        ("Shotgun", 20, false),
       SLUG_RIFLE     ("Slug Rifle", 20, false),
       BEAM           ("Beam Cannon", 5, true),
