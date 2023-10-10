@@ -289,6 +289,12 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
                break;
          }
       }
+      // add another one to the boss room
+      int xTarget = (zoneBuilder.getBossRoom().x * roomWidth) + (roomWidth / 2);
+      int yTarget = (zoneBuilder.getBossRoom().y * roomHeight) + (roomHeight / 2);
+      {
+         populateNearPoint(zone, xTarget, yTarget, (EnemyType)table.roll());
+      }
    }
    
    public static Actor getHoloclone()
@@ -506,7 +512,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
    {
       ZoneBuilder zoneBuilder = new ZoneBuilder();
       ZoneMap map = ZoneMapFactory.buildFromTemplates(zoneBuilder, ZoneConstants.TileType.VACUUM);
-      Zone zone = new Zone("Random Pirates", -1, map, zoneBuilder);
+      Zone zone = new Zone("Test Map", -1, map, zoneBuilder);
       GameEngine.setCurZone(zone);
       Player p = ActorFactory.getPlayer();
       ActorFactory.populateWithPirates(zone, zoneBuilder);
@@ -520,7 +526,7 @@ public class ActorFactory implements ActorConstants, GearConstants, AIConstants,
          else if (tile instanceof Door)
             outMap[x][y] = '/';
          else
-            outMap[x][y] = ' ';
+            outMap[x][y] = '#';
       }
       
       for(Actor a : GameEngine.getActorList())

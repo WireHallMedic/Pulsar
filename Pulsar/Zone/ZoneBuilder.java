@@ -11,6 +11,10 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public static final char OOB_ROOM = TEMPLATE_OOB;
    public static final char CORRIDOR = 'C';
    public static final char STARTING_ROOM = 'S';
+   
+   public static final int SMALL = 0;
+   public static final int MEDIUM = 1;
+   public static final int LARGE = 2;
 
    
    private RoomTemplateManager openTemplateManager;
@@ -28,6 +32,7 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    private Coord startRoom;
    private Coord bossRoom;
    private Vector<Closet> closetList;
+   private int size;
    
    public boolean[] getPassArray(int x, int y){return passArray[x][y];}
    public RoomTemplate getBaseRoomTemplate(int x, int y){return baseRoomTemplate[x][y];}
@@ -40,10 +45,11 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    public Coord getBossRoom(){return bossRoom;}
    public Vector<Closet> getClosetList(){return closetList;}
    
-   public ZoneBuilder(RoomTemplateManager openTM, RoomTemplateManager closedTM, RoomTemplateManager corridorTM,
+   public ZoneBuilder(int s, RoomTemplateManager openTM, RoomTemplateManager closedTM, RoomTemplateManager corridorTM,
                       RoomTemplateManager startTM)
    {
-      super(getDefaultVector());
+      super(getDefaultVector(s));
+      size = s;
       openTemplateManager = openTM;
       closedTemplateManager = closedTM;
       corridorTemplateManager = corridorTM;
@@ -74,13 +80,18 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    
    public ZoneBuilder(ZoneBuilder that)
    {
-      this(that.openTemplateManager, that.closedTemplateManager, 
+      this(that.size, that.openTemplateManager, that.closedTemplateManager, 
            that.corridorTemplateManager, that.startTemplateManager);
    }
    
    public ZoneBuilder()
    {
-      this(null, null, null, null);
+      this(SMALL, null, null, null, null);
+   }
+   
+   public ZoneBuilder(int s)
+   {
+      this(s, null, null, null, null);
    }
    
    public Vector<String> serialize()
@@ -575,20 +586,30 @@ public class ZoneBuilder extends MapTemplate implements ZoneConstants
    }
    
    
-   public static Vector<String> getDefaultVector()
+   public static Vector<String> getDefaultVector(int size)
    {
+      int w = 5;
+      int h = 5;
+      if(size == 1)
+         w = 6;
+      if(size == 2)
+         w = 7;
       Vector<String> v = new Vector<String>();
-      v.add("ccccc");
-      v.add("ccccc");
-      v.add("ccccc");
-      v.add("ccccc");
-      v.add("ccccc");
+      for(int y = 0; y < h; y++)
+      {
+         String str = "";
+         for(int x = 0; x < w; x++)
+         {
+            str += ".";
+         }
+         v.add(str);
+      }
       return v;
    }
    
    public static void main(String[] args)
    {
-      ZoneBuilder zb = new ZoneBuilder();
+      ZoneBuilder zb = new ZoneBuilder(LARGE);
       zb.print();
    }
 
