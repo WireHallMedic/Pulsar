@@ -42,10 +42,11 @@ public class ZoneMapFactory implements ZoneConstants, EngineConstants
    
    public static boolean isAdjacentToVacuum(ZoneMap map, int x, int y)
    {
-      return map.getTile(x + 1, y) instanceof Vacuum ||
-             map.getTile(x - 1, y) instanceof Vacuum ||
-             map.getTile(x, y + 1) instanceof Vacuum ||
-             map.getTile(x, y - 1) instanceof Vacuum;
+      for(int xx = -1; xx < 2; xx++)
+      for(int yy = -1; yy < 2; yy++)
+         if(map.getTile(x + xx, y + yy) instanceof Vacuum)
+            return true;
+      return false;
    }
    
    public static MapTile getRandomBarrel()
