@@ -7,7 +7,7 @@ public class ArmorFactory implements GearConstants, ActorConstants
 {
    public enum ArmorType implements WeightedRandomizable
    {
-      BASIC_ARMOR    (30),
+      BASIC_ARMOR    (20),
       SCOUT_ARMOR    (10),
       ENGINEER_ARMOR (10),
       ASSAULT_ARMOR  (10);
